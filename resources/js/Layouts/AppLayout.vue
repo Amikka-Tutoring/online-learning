@@ -1,13 +1,10 @@
 <template>
-    <Head :title="title" />
     <h1>Test</h1>
-
+    <Link :href="route('dashboard')">Link</Link>
 </template>
 
-
 <script>
-
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
     props: {
@@ -15,29 +12,31 @@ export default {
     },
 
     components: {
-        Head,
         Link,
     },
 
     data() {
         return {
             showingNavigationDropdown: false,
-        }
+        };
     },
 
     methods: {
         switchToTeam(team) {
-            this.$inertia.put(route('current-team.update'), {
-                'team_id': team.id
-            }, {
-                preserveState: false
-            })
+            this.$inertia.put(
+                route("current-team.update"),
+                {
+                    team_id: team.id,
+                },
+                {
+                    preserveState: false,
+                }
+            );
         },
 
         logout() {
-            this.$inertia.post(route('logout'));
+            this.$inertia.post(route("logout"));
         },
-    }
-}
+    },
+};
 </script>
-
