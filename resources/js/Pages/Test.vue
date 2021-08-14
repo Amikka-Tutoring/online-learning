@@ -1,22 +1,24 @@
 <template>
-    <div class="col-span-6 sm:col-span-4">
-        <jet-label for="current_password" value="Current Password" />
-        <jet-input id="current_password" type="password" class="mt-1 block w-full"  ref="current_password" autocomplete="current-password" />
-        <jet-input-error class="mt-2" />
-    </div>
-
+    <app-layout>
+        <col-3>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" :src="'/images/banner.png'"  alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </col-3>
+    </app-layout>
 </template>
+
 <script>
-import Input from "@/Jetstream/Input";
-import JetFormSection from "@/Jetstream/FormSection";
-import JetInput from "@/Jetstream/Input";
-import JetInputError from "@/Jetstream/InputError";
-import JetLabel from "@/Jetstream/Label";
+import AppLayout from '@/Layouts/AppLayout'
+
 export default {
-    components: {Input,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,}
+    components: {
+        AppLayout,
+    },
 }
 </script>

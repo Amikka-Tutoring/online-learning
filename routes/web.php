@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +29,7 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+Route::get('test',[PageController::class,'test'])->name('test');
+Route::get('test2',[PageController::class,'test2'])->name('test2');
+Route::get('initial-questionnaire',[PageController::class,'initialQuestionnaire'])->name('initial.questionnaire');
