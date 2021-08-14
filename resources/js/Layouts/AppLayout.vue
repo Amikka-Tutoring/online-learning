@@ -48,7 +48,7 @@
         <img :src="'/images/banner.png'" alt="" style="width: 100%; height:140px">
         <div class="container">
                 <main>
-                    <div class="row p-5">
+                    <div class="row p-5 d-block">
                         <slot></slot>
                     </div>
                 </main>
