@@ -51,6 +51,15 @@ body {
     font-weight: 500;
     color: #888888;
 }
+
+.side-bar ul li a {
+    color: #888888;
+    text-decoration: none;
+}
+.side-bar ul li a:hover {
+    color: #263238;
+}
+
 .blue-text {
     color: #4C6ED7;
 }
@@ -69,14 +78,41 @@ body {
 .first-step h1 {
     margin-bottom: 75px;
 }
-.first-step ul{
-    list-style-type: none;
+
+.first-step ol {
+    counter-reset: my-awesome-counter;
+    list-style: none;
     padding-left: 0;
+    /*padding-left: 0;*/
 }
-.first-step ul li{
+.first-step ol li {
+    counter-increment: my-awesome-counter;
+    padding-left: 80px;
+    position: relative;
     font-size: 24px;
     line-height: 30px;
     margin-bottom: 57px;
+}
+.first-step ol li::before {
+    content: counter(my-awesome-counter) ". ";
+    background: rgba(14, 111, 255, 0.1);
+    color: white;
+    position: absolute;
+    --size: 40px;
+    left: calc(-1 * var(--size) - 10px);
+    line-height: var(--size);
+    width: var(--size);
+    height: var(--size);
+    top: 0;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 18px;
+}
+.first-step ol li:nth-child(2)::before{
+    background: rgba(14, 111, 255, 0.25);
+}
+.first-step ol li:last-child::before {
+    display: none;
 }
 
 .question-box {
@@ -117,6 +153,11 @@ body {
     transform: rotate(45deg);
 }
 
+.week-days input {
+    width: 25px;
+    height: 25px;
+}
+
 .input-cards {
     background: #FDFDFD;
     border: 1px solid #E0E0E0;
@@ -147,7 +188,7 @@ body {
     height: 40px;
     border: 1px solid #4C6ED7;
     border-radius: 6px;
-    margin-bottom: 300px;
+    margin-bottom: 200px;
     padding: 7px;
 }
 .days-box {
@@ -189,6 +230,10 @@ body {
     margin-bottom: 15px;
 }
 
+.datepicker {
+    margin-bottom: 50px;
+}
+
 
 @media (max-width: 767.98px) {
     .page-wrapper {
@@ -217,4 +262,9 @@ body {
     .email-box input {
         width: 100%;
     }
+    .first-step ol li {
+        padding-left: 0;
+    }
 }
+
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");

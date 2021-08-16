@@ -19,23 +19,23 @@
             </nav>
 <div class="row m-0">
 <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
-    <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;">
+    <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" >
         <ul>
             <h4>My Account</h4>
 <!--            <li>My Account</li>-->
-            <li>Home</li>
-            <li>Profile</li>
+            <li><a href="">Home</a></li>
+            <li><a href="">Profile</a></li>
         </ul>
         <ul>
             <h4>Course Content</h4>
-            <li>My Courses</li>
-            <li>Review</li>
+            <li><a href="">My Courses</a></li>
+            <li><a href="">Review</a></li>
         </ul>
         <ul>
             <h4>Tools</h4>
-            <li>Notes</li>
-            <li>1-on-1 Tutoring</li>
-            <li>Calendar</li>
+            <li><a href="">Notes</a></li>
+            <li><a href="">1-on-1 Tutoring</a></li>
+            <li><a href="">Calendar</a></li>
         </ul>
     </div>
 

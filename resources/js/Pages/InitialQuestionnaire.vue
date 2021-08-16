@@ -10,33 +10,26 @@
 
 <!--            </div>-->
             <p v-if="form.errors.length">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                    <li class="red-text" v-for="error in form.errors">{{ error }}</li>
-                </ul>
+                    <div class="alert alert-danger" v-for="error in form.errors">{{ error }}</div>
             </p>
         <div>
             <form class="form">
                 <div v-if="form.currentstep === 1" class="first-step">
                     <h1><span class="blue-text">Initial</span> Questionnaire</h1>
-                    <div class="row">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-10">
-                            <ul>
+                    <div class="row" style="margin-left: 100px">
+                            <ol>
                                 <li>
                                     The <span class="blue-text">initial questionnaire</span> helps us understand which courses you want to <span class="blue-text">improve on, your goals,</span> and <span class="blue-text">your availability.</span>
                                 </li>
                                 <li>
                                     Based on your <span class="blue-text">responses</span> we build you a personalized course with <span class="blue-text">email</span> and <span class="blue-text">text reminders</span> so that you don’t ever miss a lesson.
                                 </li>
-                            </ul>
-                            <button v-if="form.currentstep === 1" @click.prevent="next()" class="blue-button">Start</button>
-<!--                            <div class="row">-->
+                                <li>
+                                    <button v-if="form.currentstep === 1" @click.prevent="next()" class="blue-button">Start</button>
+                                </li>
 
-<!--                            </div>-->
-                        </div>
+                            </ol>
+
                     </div>
                 </div>
                 <div v-if="form.currentstep === 2">
@@ -122,7 +115,7 @@
                     <div class="row justify-content-center align-items-center">
 <!--                        <img :src="'/images/calendar.png'">-->
 <!--                        <input type="checkbox" name="calendar" v-model="form.calendar">-->
-                        <input type="date" id="date">
+                        <input type="date" id="date" class="datepicker" v-model="form.calendar">
                     </div>
                 </div>
                 <div v-if="form.currentstep === 5">
@@ -132,7 +125,7 @@
                         </p>
                     </div>
                     <div class="row justify-content-center align-items-center">
-                        <div class="days-box">
+                        <div class="days-box week-days">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-7">
@@ -324,37 +317,51 @@ export default {
 
 
         function next () {
-
-            // console.log(form.currentstep)
-            // if(form.currentstep === 2 && !form.course){
-            //    return form.errors.push('Course is required')
-            // }
-            // if(form.currentstep === 3 && !form.desire_score){
-            //     return form.errors.push('Desire Score is required')
-            // }
-            // if(form.currentstep === 4 && !form.calendar){
-            //     return form.errors.push('Calendar required')
-            // }
-            // if(form.currentstep === 5 && !form.days){
-            //     return form.errors.push('Days required')
-            // }
-            // if(form.currentstep === 6 && (!form.start_time || !form.end_time)){
-            //     return form.errors.push('Start end End Time are required')
-            // }
-            // if(form.currentstep === 7 && (!form.email || !form.tel)){
-            //     return form.errors.push('Start end End Time are required')
-            // }
-            // else {
+            console.log(form.currentstep)
+            if(form.currentstep === 2 && !form.course.length){
                 form.errors = []
+               return form.errors.push('Course is required')
+            }
+            if(form.currentstep === 3 && !form.desire_score){
+                form.errors = []
+                return form.errors.push('Desire Score is required')
+            }
+            if(form.currentstep === 4 && !form.calendar){
+                form.errors = []
+                return form.errors.push('Calendar required')
+            }
+            if(form.currentstep === 5 && !form.days.length){
+                form.errors = []
+                return form.errors.push('Days required')
+            }
+            if(form.currentstep === 6 && (!form.start_time || !form.end_time)){
+                form.errors = []
+                return form.errors.push('Start end End Time are required')
+            }
+
+            else {
                 form.currentstep++
+                form.errors = []
                 console.log(form.currentstep)
                 form.progress_value = form.progress_value + 15
                 console.log(form.progress_value)
-            // }
+            }
+        }
+        function validEmail(email) {
+            var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
         }
         function submit(){
-            form.progress_value = 100
-            console.log(form)
+            if(form.currentstep === 7 && (!form.email || !form.tel)){
+                return form.errors.push('Email and Phone Number are required')
+            } else if(!validEmail(form.email)){
+                return form.errors.push('Valid email required')
+            }
+            else {
+                form.errors = []
+                form.progress_value = 100
+                console.log(form)
+            }
         }
         function checkForm(e){
             // console.log('checkForm')
@@ -372,7 +379,7 @@ export default {
             }
         }
 
-        return {form, submit, next, checkForm}
+        return {form, submit, next, checkForm, validEmail}
     }
 }
 </script>
