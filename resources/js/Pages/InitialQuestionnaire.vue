@@ -80,8 +80,8 @@
                                         <h4>Algebra 2 Self-Paced</h4>
                                     </div>
                                     <div class="col-3">
-                                        <label for="check-box-1"></label>
-                                        <input id="check-box-1" type="checkbox" name="course-2" value="algebra2-self-paced" v-model="form.course">
+                                        <label for="get-up-6"></label>
+                                        <input type="checkbox" name="course-2" value="algebra2-self-paced" v-model="form.course" class="checkbox-effect checkbox-effect-6" id="get-up-6">
                                     </div>
                                 </div>
                             </div>
@@ -120,8 +120,9 @@
                         </p>
                     </div>
                     <div class="row justify-content-center align-items-center">
-                        <img :src="'/images/calendar.png'">
-                        <input type="checkbox" name="calendar" v-model="form.calendar">
+<!--                        <img :src="'/images/calendar.png'">-->
+<!--                        <input type="checkbox" name="calendar" v-model="form.calendar">-->
+                        <input type="date" id="date">
                     </div>
                 </div>
                 <div v-if="form.currentstep === 5">
@@ -212,7 +213,7 @@
                         </p>
                     </div>
                     <div class="row justify-content-center align-items-center">
-                        <div class="days-box">
+                        <div class="days-box work-times">
                             <div class="row">
                                 <div class="col-6">
                                     <label for="monday-time">Monday</label>
@@ -239,9 +240,9 @@
                         </p>
                     </div>
                     <div class="row justify-content-center align-items-center">
-                        <div class="days-box">
+                        <div class="days-box email-box">
                             <div class="row">
-                                <div class="col-5">
+                                <div class="col-4">
                                     <label for="email">Email</label>
                                 </div>
                                 <div class="col-7">
@@ -249,7 +250,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-5">
+                                <div class="col-4">
                                     <label for="phone">Phone Number</label>
                                 </div>
                                 <div class="col-7">
@@ -259,20 +260,20 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="form.currentstep === 8">
-                    <label for="first_name">First name:</label>
-                    <input name="firstname" required id="first_name" v-model="form.first_name" />
-                    <label for="last_name">Last name:</label>
-                    <input name="lastname" id="last_name" v-model="form.last_name" />
-                </div>
-                <div v-if="form.currentstep === 9">
-                    <label>Email:</label>
-                    <input name="email" v-model="form.email" />
-                </div>
-                <div v-if="form.currentstep === 10">
-                    <label for="test">Test:</label>
-                    <input id="test" v-model="form.test" />
-                </div>
+<!--                <div v-if="form.currentstep === 8">-->
+<!--                    <label for="first_name">First name:</label>-->
+<!--                    <input name="firstname" required id="first_name" v-model="form.first_name" />-->
+<!--                    <label for="last_name">Last name:</label>-->
+<!--                    <input name="lastname" id="last_name" v-model="form.last_name" />-->
+<!--                </div>-->
+<!--                <div v-if="form.currentstep === 9">-->
+<!--                    <label>Email:</label>-->
+<!--                    <input name="email" v-model="form.email" />-->
+<!--                </div>-->
+<!--                <div v-if="form.currentstep === 10">-->
+<!--                    <label for="test">Test:</label>-->
+<!--                    <input id="test" v-model="form.test" />-->
+<!--                </div>-->
 
                 <div class="row justify-content-center align-items-center">
                     <button v-if="form.currentstep!=7 && form.currentstep!=1" @click.prevent="next()" class="blue-button" style="font-size: 24px">Next</button>
@@ -288,6 +289,7 @@
 import AppLayout from '@/Layouts/AppLayout'
 import { ref } from 'vue'
 import { reactive } from 'vue'
+import $ from 'jquery'
 
 import { Inertia } from '@inertiajs/inertia'
 
@@ -295,9 +297,13 @@ export default {
     components: {
         AppLayout,
     },
+    mount() {
+        // $("#date").data("DateTimePicker").show();
+    },
+
     data() {
       return {
-          currenstep: 1
+          currenstep: 1,
       }
     },
 

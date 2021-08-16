@@ -34,6 +34,8 @@
         "webpack-cli": "^4.7.2"
     },
     "dependencies": {
+        "v-calendar": "^2.3.2",
+        "vuejs-datepicker": "^1.6.2",
         "vuelidate": "^0.7.6"
     }
 }
