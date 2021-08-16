@@ -16,7 +16,7 @@
                 </ul>
             </p>
         <div>
-            <form @submit="submit" class="form">
+            <form class="form">
                 <div v-if="form.currentstep === 1" class="first-step">
                     <h1><span class="blue-text">Initial</span> Questionnaire</h1>
                     <div class="row">
@@ -32,9 +32,10 @@
                                     Based on your <span class="blue-text">responses</span> we build you a personalized course with <span class="blue-text">email</span> and <span class="blue-text">text reminders</span> so that you don’t ever miss a lesson.
                                 </li>
                             </ul>
-                            <div class="row">
-                                <button v-if="form.currentstep === 1" @click.prevent="next()" class="blue-button">Start</button>
-                            </div>
+                            <button v-if="form.currentstep === 1" @click.prevent="next()" class="blue-button">Start</button>
+<!--                            <div class="row">-->
+
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -275,7 +276,7 @@
 
                 <div class="row justify-content-center align-items-center">
                     <button v-if="form.currentstep!=7 && form.currentstep!=1" @click.prevent="next()" class="blue-button" style="font-size: 24px">Next</button>
-                    <button v-if="form.currentstep==7" type="submit" class="blue-button" style="font-size: 24px">Finish</button>
+                    <button v-if="form.currentstep==7" @click.prevent="submit()" class="blue-button" style="font-size: 24px">Finish</button>
                 </div>
 
             </form>

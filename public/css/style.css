@@ -1,15 +1,39 @@
+body {
+    background: white !important;
+}
+
+
 .side-bar {
     background: rgba(240, 244, 243, 1);
     padding-top: 50px;
     min-height: 100vh;
+    width: 293px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+}
+.side-bar-0 {
+   width: 0;
+}
+.side-bar-0 ul {
+    display: none;
 }
 
-.hidden {
-    width: 0 !important;
-    overflow: hidden;
+.main-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
+.main-content-1 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 293px;
+}
+
 .transition {
-    transition: all 0.5s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    /*transition: width 2s, height 2s, background-color 2s, transform 2s;*/
 }
 
 .side-bar ul {
@@ -148,6 +172,17 @@
         padding-left: 5% !important;
     }
     .third-step input {
-        margin-bottom: 100px;
+        margin-bottom: 20px;
+    }
+    .main-content-1 {
+        /*display: none;*/
+        overflow-x: hidden;
+    }
+    .side-bar {
+        width: 80%;
+        overflow-x: hidden;
+    }
+    .blue-button {
+        width: 100%;
     }
 }
