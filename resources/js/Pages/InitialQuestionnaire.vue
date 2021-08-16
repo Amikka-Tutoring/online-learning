@@ -109,7 +109,7 @@
                 <div v-if="form.currentstep === 4">
                     <div class="row justify-content-center align-items-center">
                         <p class="question-box">
-                            What is your SAT exam?
+                            When is your SAT exam?
                         </p>
                     </div>
                     <div class="row justify-content-center align-items-center">
