@@ -102,7 +102,7 @@
                         </p>
                     </div>
                     <div class="row justify-content-center align-items-center">
-                        <input type="text" name="desire_score" v-model="form.desire_score">
+                        <input placeholder="ex. 87" type="number" name="desire_score" v-model="form.desire_score">
                     </div>
 
                 </div>
@@ -132,7 +132,7 @@
                                         <label for="monday">Monday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="monday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="monday" name="monday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                                         <label for="tuesday">Tuesday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="tuesday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="tuesday" name="tuesday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                                         <label for="wednesday">Wednesday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="wednesday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="wednesday" name="wednesday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@
                                         <label for="thursday">Thursday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="thursday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="thursday" name="thursday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
                                         <label for="friday">Friday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="friday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="friday" name="friday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                                         <label for="saturday">Saturday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="saturday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="saturday" name="saturday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                                         <label for="sunday">Sunday</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="checkbox" id="sunday" name="days" v-model="form.days">
+                                        <input type="checkbox" id="sunday" name="sunday" v-model="form.days">
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
                                     <label for="email">Email</label>
                                 </div>
                                 <div class="col-7">
-                                    <input type="email" id="email" name="email" v-model="form.email">
+                                    <input placeholder="test@gmail.com" type="email" id="email" name="email" v-model="form.email">
                                 </div>
                             </div>
                             <div class="row">
@@ -247,7 +247,7 @@
                                     <label for="phone">Phone Number</label>
                                 </div>
                                 <div class="col-7">
-                                    <input type="text" id="phone" name="tel" v-model="form.tel">
+                                    <input v-mask="['(###) ###-####']" type="text" id="phone" name="tel" v-model="form.tel" placeholder="(123) 456-7890">
                                 </div>
                             </div>
                         </div>
@@ -282,13 +282,17 @@
 import AppLayout from '@/Layouts/AppLayout'
 import { ref } from 'vue'
 import { reactive } from 'vue'
+import {mask} from 'vue-the-mask'
+import VueToastr from "vue-toastr";
 import $ from 'jquery'
 
 import { Inertia } from '@inertiajs/inertia'
 
 export default {
+    directives:{mask},
     components: {
         AppLayout,
+        mask,
     },
     mount() {
         // $("#date").data("DateTimePicker").show();
@@ -322,9 +326,9 @@ export default {
                 form.errors = []
                return form.errors.push('Course is required')
             }
-            if(form.currentstep === 3 && !form.desire_score){
+            if(form.currentstep === 3 && (!form.desire_score || validateNumber(form.desire_score))){
                 form.errors = []
-                return form.errors.push('Desire Score is required')
+                return form.errors.push('Desire Score is required (Number only)')
             }
             if(form.currentstep === 4 && !form.calendar){
                 form.errors = []
@@ -353,15 +357,26 @@ export default {
         }
         function submit(){
             if(form.currentstep === 7 && (!form.email || !form.tel)){
+                form.errors = []
                 return form.errors.push('Email and Phone Number are required')
             } else if(!validEmail(form.email)){
+                form.errors = []
                 return form.errors.push('Valid email required')
             }
             else {
                 form.errors = []
                 form.progress_value = 100
                 console.log(form)
+                // form.$toastr("SUCCESS MESSAGE", "Success Toast Title");
             }
+        }
+        function validateNumber(e){
+            let keyCode = e.keyCode;
+            if (keyCode < 48 || keyCode > 57) {
+                e.preventDefault();
+                return true
+            }
+            return false
         }
         function checkForm(e){
             // console.log('checkForm')
