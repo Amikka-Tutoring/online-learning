@@ -22261,7 +22261,7 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_11 = {
-  "class": "row"
+  "class": "row m-0"
 };
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<ul><h4>My Account</h4><!--            &lt;li&gt;My Account&lt;/li&gt;--><li>Home</li><li>Profile</li></ul><ul><h4>Course Content</h4><li>My Courses</li><li>Review</li></ul><ul><h4>Tools</h4><li>Notes</li><li>1-on-1 Tutoring</li><li>Calendar</li></ul>", 3);
@@ -22303,7 +22303,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, _hoisted_15, 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([[$data.isHidden ? 'col-12' : 'col-lg-10 col-md-8 pl-0'], "bg-white"])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([[$data.isHidden ? 'col-12' : 'col-lg-10 col-md-8'], "bg-white p-0"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: '/images/banner.png',
     alt: "",

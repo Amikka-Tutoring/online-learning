@@ -22,7 +22,7 @@
 <!--        <div class="" style="width: 100px">-->
 <!--        </div>-->
     </div>
-<div class="row">
+<div class="row m-0">
 <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
     <div v-bind:class="[isHidden ? 'hidden' : 'side-bar col-lg-2 col-md-4 col-sm-12']" style="z-index: 1;">
         <ul>
@@ -44,7 +44,7 @@
         </ul>
     </div>
 
-    <div  v-bind:class="[isHidden ? 'col-12' : 'col-lg-10 col-md-8 pl-0']" class="bg-white">
+    <div  v-bind:class="[isHidden ? 'col-12' : 'col-lg-10 col-md-8']" class="bg-white p-0">
         <img :src="'/images/banner.png'" alt="" style="width: 100%; height:140px">
         <div class="container">
                 <main>
