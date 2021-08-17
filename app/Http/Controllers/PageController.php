@@ -22,4 +22,9 @@ class PageController extends Controller
     public function dashboard(){
         return Inertia::render('Dashboard');
     }
+
+    public function profile(){
+//        $user = auth()->user();
+        return Inertia::render('Profile');
+    }
 }

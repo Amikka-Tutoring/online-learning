@@ -301,6 +301,110 @@ body {
     border-radius: 67px 67px 67px 0;
 }
 
+
+.profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-wrapper h1 {
+    font-size: 21px;
+    font-weight: 500;
+    margin-top: 24px;
+}
+
+.profile-wrapper .premium-btn {
+    background: #FDFDFD;
+    border: 1px solid #4C6ED7;
+    border-radius: 5px;
+    width: 310px;
+    height: 70px;
+    margin-top: 70px;
+}
+
+.profile-wrapper .premium-btn:hover {
+    background: #4C6ED7;
+    color: white;
+    border: white;
+}
+
+.profile-wrapper .active-button {
+    background: #4C6ED7;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 260px;
+    height: 50px;
+    margin-top: 120px;
+}
+
+.profile-wrapper .passive-button {
+    background: #E6E6E6;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 260px;
+    height: 50px;
+    margin-top: 120px;
+}
+
+.profile-wrapper .profile-course-listing {
+    width: 760px;
+    margin-top: 85px;
+}
+
+.profile-wrapper .profile-course-listing ul {
+    list-style-type: none;
+    padding: 0;
+}
+.profile-wrapper .profile-course-listing ul li {
+    margin-bottom: 25px;
+}
+
+.profile-wrapper .profile-course-listing .courses-list-box {
+    background: #FDFDFD;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    width: 50px;
+    height: 30px;
+}
+.profile-wrapper .profile-course-listing h1 {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+}
+.profile-wrapper .profile-course-listing h6 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+}
+.profile-wrapper .profile-course-listing p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+}
+.profile-wrapper a {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 90px;
+}
+.profile-wrapper a:hover {
+    text-decoration: none;
+}
+
+.component-fade-enter-active, .component-fade-leave-active {
+    transition: all .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+    /* .component-fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+
 @media (max-width: 767.98px) {
     .page-wrapper {
         padding-left: 5% !important;
@@ -346,6 +450,15 @@ body {
     }
     .notes-box {
         margin-bottom: 50px;
+    }
+    .profile-wrapper .active-button, .passive-button {
+        width: 100%;
+    }
+    .profile-wrapper .profile-course-listing {
+        width: 100%;
+    }
+    .profile-wrapper .profile-course-listing h5, h6 {
+        padding-left: 5px;
     }
 }
 

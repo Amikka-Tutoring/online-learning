@@ -22,9 +22,8 @@
     <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" >
         <ul>
             <h4>My Account</h4>
-<!--            <li>My Account</li>-->
-            <li><a href="">Home</a></li>
-            <li><a href="">Profile</a></li>
+            <li><a :href="route('dashboard')">Home</a></li>
+            <li><a :href="route('profile')">Profile</a></li>
         </ul>
         <ul>
             <h4>Course Content</h4>
