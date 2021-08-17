@@ -24,6 +24,7 @@ class PageController extends Controller
     }
 
     public function profile(){
+
 //        $user = auth()->user();
         return Inertia::render('Profile');
     }

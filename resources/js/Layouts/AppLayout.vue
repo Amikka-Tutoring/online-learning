@@ -8,7 +8,7 @@
 
                 <div class="dropdown">
                     <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img style="object-fit: cover; margin-right: 20px; margin-top: 20px; width: 47px; height: 47px" class="d-flex align-items-center rounded-circle" src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png" alt="">
+                        <img style="object-fit: cover; margin-right: 20px; margin-top: 20px; width: 47px; height: 47px" class="d-flex align-items-center rounded-circle"  alt="" :src="user.profile_photo_path">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" @click="logout()" href="" >Logout</a>
@@ -55,18 +55,23 @@
 
 
 // import { Link, Head } from "@inertiajs/inertia-vue3";
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/inertia-vue3'
 
 export default {
-    props: {
-
-    },
     components: {
 
     },
+    setup() {
+        const user = computed(() => usePage().props.value.auth.user)
+        return { user }
+    },
+    // props: ['user'],
     data() {
         return {
             showingNavigationDropdown: false,
-            isHidden: true
+            isHidden: true,
+            // avatar: user.profile_photo_url,
         };
     },
 

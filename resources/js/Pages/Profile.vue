@@ -129,7 +129,7 @@ export default {
     props: ['user'],
     data() {
         return {
-            avatar: this.user.profile_photo_url,
+            avatar: this.user.profile_photo_path,
             tab: 'specific',
         }
     },
