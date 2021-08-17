@@ -18,4 +18,8 @@ class PageController extends Controller
     public function initialQuestionnaire(){
         return Inertia::render('InitialQuestionnaire');
     }
+
+    public function dashboard(){
+        return Inertia::render('Dashboard');
+    }
 }

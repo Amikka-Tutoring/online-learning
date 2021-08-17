@@ -6,7 +6,7 @@
                             <div style="background: #56C880;" :style="{width: form.progress_value +'%'}" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     <div class="blue-text">Skip</div>
-                    </div>
+                </div>
 
 <!--            </div>-->
             <p v-if="form.errors.length">
