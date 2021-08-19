@@ -2,7 +2,10 @@ body {
     background: white !important;
 }
 
-
+.active {
+    color: #0E6FFF !important;
+    text-decoration: underline !important;
+}
 .side-bar {
     background: rgba(240, 244, 243, 1);
     padding-top: 50px;
@@ -108,7 +111,7 @@ body {
     text-align: center;
     font-size: 18px;
 }
-.first-step ol li:nth-child(2)::before{
+.first-step ol li:nth-last-child(2)::before{
     background: rgba(14, 111, 255, 0.25);
 }
 .first-step ol li:last-child::before {
@@ -397,12 +400,300 @@ body {
 }
 
 .component-fade-enter-active, .component-fade-leave-active {
-    transition: all .3s ease;
+    transition: all 0.5s;
 }
 .component-fade-enter, .component-fade-leave-to
     /* .component-fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
 }
+
+
+
+/*Math Questions*/
+.math-questions {
+    margin-top: 120px;
+    margin-bottom: 120px;
+}
+.math-questions img {
+    max-height: 260px;
+}
+.results {
+    padding-bottom: 70px;
+}
+.results h1 {
+    font-weight: bold;
+}
+.results .results-content p {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #888888;
+}
+
+.strengths {
+    background: rgba(14, 111, 255, 0.1);
+    padding-top: 75px;
+}
+.strengths h1 {
+    font-weight: bold;
+}
+.weaknesses {
+    padding-top: 75px;
+}
+.weaknesses h1 {
+    font-weight: bold;
+}
+
+.strengths-content ol {
+    counter-reset: my-awesome-counter;
+    list-style: none;
+    padding-left: 0;
+    /*padding-left: 0;*/
+}
+.strengths-content ol li {
+    counter-increment: my-awesome-counter;
+    padding-left: 80px;
+    position: relative;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 57px;
+}
+.strengths-content ol li::before {
+    content: counter(my-awesome-counter);
+    background: rgba(76, 110, 215, 0.9);
+    color: white;
+    position: absolute;
+    --size: 40px;
+    left: calc(-1 * var(--size) - 10px);
+    line-height: var(--size);
+    width: var(--size);
+    height: var(--size);
+    top: 0;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 18px;
+}
+
+
+/*Exams*/
+
+.practice-exams-content {
+    padding-left: 200px;
+}
+.practice-exams-content .question-box {
+    margin-top: 45px;
+    margin-bottom: 100px;
+    color: #888888;
+    text-align: left;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.video-exams-content {
+    padding-left: 200px;
+}
+.video-exams-content .question-box {
+    margin-top: 45px;
+    margin-bottom: 100px;
+    color: #888888;
+    text-align: left;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.exam-box {
+    width: 500px;
+    max-width: 500px;
+    margin-bottom: 150px;
+}
+.exam-box .exam-box-tile {
+    background: rgba(76, 110, 215, 0.44);
+    border: 1px solid #4C6ED7;
+    border-radius: 5px 5px 0 0;
+    height: 70px;
+    display: flex;
+}
+.exam-box .exam-box-tile h1 {
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 27px;
+    padding: 20px;
+}
+.exam-box .exam-box-list {
+    border: 1px solid #4C6ED7;
+}
+.exam-box .exam-name {
+    font-weight: normal;
+    font-size: 19px;
+    line-height: 27px;
+    letter-spacing: 0.002em;
+    color: #888888;
+}
+
+.recommended h1 {
+    margin-bottom: 70px;
+}
+.recommended .recommended-content {
+    padding-left: 100px;
+}
+
+.recommended .recommended-content p {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
+}
+
+.recommended .recommended-content .recommended-box {
+    margin-top: 70px;
+}
+.recommended-title {
+    background: rgba(14, 111, 255, 0.4);
+    border-radius: 9px;
+    color: white;
+    padding: 20px 50px;
+}
+.recommended-item {
+    border: 1px solid rgba(14, 111, 255, 0.75);
+    border-radius: 9px;
+    padding: 15px;
+}
+.recommended-list {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.recommended-item {
+    margin: 20px 0;
+}
+
+.w-60 {
+    width: 60% !important;
+}
+
+.grammar-course {
+    margin-top: 200px;
+    margin-bottom: 100px;
+}
+.grammar-course h1 {
+    margin-bottom: 70px;
+}
+.grammar-course .grammar-course-content {
+    padding-left: 100px;
+}
+
+.grammar-course .grammar-course-content p {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
+    margin-bottom: 100px;
+}
+.grammar-course .grammar-course-content .grammar-list {
+    border-radius: 7px;
+    color: white;
+    padding: 20px 50px;
+    margin-bottom: 5px;
+}
+.grammar-course .grammar-course-content .first-list {
+    background: rgba(14, 111, 255, 0.5);
+}
+.grammar-course .grammar-course-content .second-list {
+     background: rgba(252, 203, 159, 0.75);
+}
+.grammar-course .grammar-course-content .third-list {
+    background: rgba(255, 184, 184, 0.44);
+}
+.grammar-course .grammar-course-content .fourth-list {
+    background: rgba(143, 225, 215, 0.44);
+}
+
+.lesson {
+    padding-bottom: 100px;
+}
+
+.lesson h1 {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 35px;
+    text-align: center;
+}
+.lesson img {
+    margin: 90px 0;
+}
+.notes-section {
+    background: rgba(14, 111, 255, 0.1);
+    padding: 100px 0;
+}
+.notes-section .notes-section-content {
+    padding-left: 100px;
+}
+.notes-section .notes-section-content p {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
+    margin: 70px 0;
+}
+
+
+.notes-section .notes-section-content .notes-box .rounded-circle {
+    width: 50px;
+    height: 50px;
+    background: rgba(14, 111, 255, 0.2);
+    color: rgba(14, 111, 255, 0.5);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(14, 111, 255, 0.2);
+    align-items: center;
+}
+.notes-section .notes-section-content .notes-box {
+    margin: 0;
+    padding: 0;
+    border: 3px solid rgb(14, 111, 255);
+    border-radius: 8px;
+}
+.notes-section .notes-section-content .notes-box .row {
+    border-right: 3px solid rgb(14, 111, 255);
+    border-bottom: 3px solid rgb(14, 111, 255);
+    padding: 35px;
+    justify-content: center;
+}
+.notes-section .notes-section-content .notes-box .row:last-child{
+    border-bottom: none;
+}
+.notes-section .notes-section-content .notes-box h1 {
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 36px;
+    text-decoration-line: underline;
+}
+.notes-section .notes-section-content .notes-box textarea {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 10px;
+    color: rgb(14, 111, 255);
+}
+
+.light-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(14, 111, 255, 0.2);
+    border-radius: 8px;
+    color: #4C6ED7;
+    padding: 0 10px;
+    border: none;
+    max-width: 136px;
+    width: 100%;
+    height: 40px;
+}
+
 
 
 @media (max-width: 767.98px) {
@@ -447,6 +738,9 @@ body {
     }
     .badges {
         margin-bottom: 5px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 8px;
     }
     .notes-box {
         margin-bottom: 50px;
@@ -459,6 +753,35 @@ body {
     }
     .profile-wrapper .profile-course-listing h5, h6 {
         padding-left: 5px;
+    }
+    .results .results-content {
+        padding-left: 0 !important;
+    }
+    .strengths-content {
+        padding-left: 0 !important;
+    }
+
+    .exam-box {
+        padding: 10px;
+    }
+    .practice-exams-content, .video-exams-content, .recommended-content, .grammar-course-content, .notes-section-content {
+        padding: 10px !important;
+    }
+    .recommended-list {
+        padding: 0;
+    }
+    p {
+        padding: 5px;
+    }
+    .w-60, .w-75, .w-50 {
+        width: 100% !important;
+    }
+    .mobile-margin {
+        margin-bottom: 20px;
+    }
+
+    .notes-section .notes-section-content .notes-box .row:last-child{
+        border-bottom: 3px solid rgb(14, 111, 255);
     }
 }
 

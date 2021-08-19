@@ -1,7 +1,7 @@
 <template>
     <app-layout>
-
-        <div class="profile-wrapper">
+<div class="container">
+        <div class="profile-wrapper" data-aos="fade-up">
             <div class="row">
                 <img class="rounded-circle" style="width: 120px" :src="avatar">
             </div>
@@ -111,6 +111,7 @@
             </transition>
             <a href="" @click="logout()" class="blue-text">LOG OUT</a>
         </div>
+</div>
     </app-layout>
 </template>
 

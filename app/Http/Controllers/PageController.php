@@ -28,4 +28,28 @@ class PageController extends Controller
 //        $user = auth()->user();
         return Inertia::render('Profile');
     }
+
+    public function mathDiagnostic(){
+        return Inertia::render('MathDiagnostic');
+    }
+
+    public function postMathDiagnostic(Request $request){
+        return Inertia::render('DiagnosticResults');
+    }
+
+    public function exams(){
+        return Inertia::render('Exams');
+    }
+
+    public function myCourses(){
+        return Inertia::render('MyCourses');
+    }
+
+    public function recommended(){
+        return Inertia::render('Recommended');
+    }
+
+    public function course(){
+        return Inertia::render('Course');
+    }
 }

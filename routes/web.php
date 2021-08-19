@@ -37,4 +37,10 @@ Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnair
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('profile', [PageController::class, 'profile'])->name('profile');
+    Route::get('math-diagnostic', [PageController::class, 'mathDiagnostic'])->name('math-diagnostic');
+    Route::post('math-diagnostic', [PageController::class, 'postMathDiagnostic'])->name('math-diagnostic-post');
+    Route::get('exams', [PageController::class, 'exams'])->name('exams');
+    Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
+    Route::get('my-courses/course', [PageController::class, 'course'])->name('course');
+    Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
 });

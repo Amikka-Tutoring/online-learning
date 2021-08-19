@@ -1,6 +1,6 @@
 <template>
     <app-layout>
-
+<div class="container">
         <div class="academic">
             <h1 class="blue-text">Academic Diagnostic</h1>
             <div class="academic-content pl-5" style="margin-top: 90px">
@@ -394,6 +394,7 @@
                 </div>
             </div>
         </div>
+</div>
 
 
     </app-layout>

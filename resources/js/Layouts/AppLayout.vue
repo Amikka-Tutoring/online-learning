@@ -1,13 +1,13 @@
 <template>
             <nav class="navbar navbar-light sticky-top" style="height: 86px; background: white">
                 <button @click="toggleClass()" style="z-index: 2" class="border-0 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="47" height="47" fill="#4C6ED7" class="bi bi-list" viewBox="0 0 16 16">
+                    <svg @mouseenter="isHidden = false" xmlns="http://www.w3.org/2000/svg" width="47" height="47" fill="#4C6ED7" class="bi bi-list" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                     </svg>
                 </button>
 
                 <div class="dropdown">
-                    <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button  class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img style="object-fit: cover; margin-right: 20px; margin-top: 20px; width: 47px; height: 47px" class="d-flex align-items-center rounded-circle"  alt="" :src="user.profile_photo_path">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -19,15 +19,15 @@
             </nav>
 <div class="row m-0">
 <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
-    <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" >
+    <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" @mouseleave="isHidden = true">
         <ul>
             <h4>My Account</h4>
-            <li><a :href="route('dashboard')">Home</a></li>
-            <li><a :href="route('profile')">Profile</a></li>
+            <li><a v-bind:class="route().current('dashboard') ? 'active' : ''" :href="route('dashboard')">Home</a></li>
+            <li><a v-bind:class="route().current('profile') ? 'active' : ''" :href="route('profile')">Profile</a></li>
         </ul>
         <ul>
             <h4>Course Content</h4>
-            <li><a href="">My Courses</a></li>
+            <li><a v-bind:class="route().current('my-courses') ? 'active' : ''" :href="route('my-courses')">My Courses</a></li>
             <li><a href="">Review</a></li>
         </ul>
         <ul>
@@ -39,12 +39,10 @@
     </div>
 
     <div  v-bind:class="[isHidden ? 'main-content' : 'main-content-1']" class="bg-white p-0 transition">
-        <img :src="'/images/banner.png'" alt="" style="width: 100%; height:140px">
-        <div class="container">
+        <img :src="'/images/banner.png'" alt="" style="width: 100%; height:140px; margin-bottom: 100px">
+        <div class="container-fluid p-0">
                 <main>
-                    <div class="row p-5 d-block">
-                        <slot></slot>
-                    </div>
+                    <slot></slot>
                 </main>
         </div>
     </div>
