@@ -69,6 +69,7 @@
             </div>
         </div>
     </div>
+    <!--    <h1>{{avatar}}</h1>-->
 </template>
 
 <script>
@@ -85,6 +86,7 @@ export default {
         console.log(user)
         return {user}
     },
+    props: ['user'],
     data() {
         return {
             showingNavigationDropdown: false,

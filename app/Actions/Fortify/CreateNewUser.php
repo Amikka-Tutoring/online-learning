@@ -15,7 +15,7 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array  $input
+     * @param array $input
      * @return \App\Models\User
      */
     public function create(array $input)
@@ -31,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'profile_photo_path' => 'https://ui-avatars.com/api/?name='.$input['name'],
+            'profile_photo_path' => 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF',
         ]);
     }
 }

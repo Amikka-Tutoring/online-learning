@@ -119,6 +119,7 @@
             </div>
         </div>
         <CheckList/>
+
     </app-layout>
 </template>
 
