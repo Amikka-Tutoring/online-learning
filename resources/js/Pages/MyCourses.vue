@@ -7,85 +7,44 @@
                     <transition name="list">
                         <p v-if="courses" class="question-box text-left">
                         <div class="row">
-                            <div class="col-11">
-                                These course recommendations are based on a variety of factors including your diagnostic, goal score, time until exam, and progress.
+                            <div class="col-lg-11 col-10">
+                                These course recommendations are based on a variety of factors including your
+                                diagnostic, goal score, time until exam, and progress.
                             </div>
-                            <div class="col-1 d-flex align-items-center">
+                            <div class="col-lg-1 col-2 d-flex align-items-center">
                                 <i v-on:click="courses = !courses" class="fas fa-times red-text"></i>
                             </div>
                         </div>
                         </p>
                     </transition>
                     <div class="row">
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="50" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Mathematics</h4>
-                                <div class="row justify-content-center align-items-center" style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%"  class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div v-for="course in coursesApi" class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="50"
+                             data-aos-once="true">
+                            <a :href="route('course')">
+                                <div class="input-cards">
+                                    <img class="w-100" :src="'images/course-img.png'">
+                                    <h4>{{ course.title }}</h4>
+                                    <div class="row justify-content-center align-items-center"
+                                         style="margin-top: 60px; margin-bottom: 10px">
+                                        <div class="col-9">
+                                            <div class="progress" style="height: 5px; margin-left: 20px">
+                                                <div :style="{width: course.completion +'%'}"
+                                                     style="background: #4C6ED7;"
+                                                     class="progress-bar"
+                                                     role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                     aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="blue-text">{{ course.modules }}/10</div>
                                         </div>
                                     </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </a>
 
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Reading</h4>
-                                <div class="row justify-content-center align-items-center" style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 40%"  class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="150" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Grammar</h4>
-                                <div class="row justify-content-center align-items-center" style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%"  class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="200" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Practice Exams</h4>
-                                <div class="row justify-content-center align-items-center" style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%"  class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p>Why should I do this?</p>
                     </div>
+                    <p>Why should I do this?</p>
                 </div>
             </div>
         </div>
@@ -100,13 +59,33 @@ export default {
     components: {
         AppLayout,
     },
-    methods: {
-
-    },
+    methods: {},
 
     data() {
         return {
             courses: true,
+            coursesApi: [
+                {
+                    title: 'Mathematics',
+                    completion: '50',
+                    modules: '5'
+                },
+                {
+                    title: 'Reading',
+                    completion: '30',
+                    modules: '3'
+                },
+                {
+                    title: 'Grammar',
+                    completion: '70',
+                    modules: '7'
+                },
+                {
+                    title: 'Reading',
+                    completion: '90',
+                    modules: '9'
+                }
+            ]
         }
     },
 }

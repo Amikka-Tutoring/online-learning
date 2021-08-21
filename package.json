@@ -34,6 +34,7 @@
         "webpack-cli": "^4.7.2"
     },
     "dependencies": {
+        "@ivanv/vue-collapse-transition": "^1.0.2",
         "aos": "^2.3.4",
         "v-calendar": "^2.3.2",
         "vue-the-mask": "^0.11.1",

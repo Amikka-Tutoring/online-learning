@@ -1,6 +1,48 @@
 <template>
     <app-layout>
         <div class="container">
+
+            <div class="practice-exams">
+                <h1 class="blue-text">Quick Calendar Changes</h1>
+                <div class="practice-exams-content">
+                    <p class="question-box mb-0">If your schedule changes last minute, edit specific lessons or exams by
+                        clicking on the date. This will allow yoiu to change the time, duration, or type of lesson right
+                        below it. </p>
+                    <div class="row justify-content-center align-items-center">
+                        <img :src="'/images/calendar.png'" style="width: 100%; max-width: 580px">
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-exams" data-aos="fade-up">
+                <h1 class="blue-text">Recurring Calendar Changes</h1>
+                <div class="practice-exams-content">
+                    <p class="question-box">If your schedule changes completely, you can edit the recurring lesson dates
+                        and times for all of your future sessions below. Beware that this will change your entire
+                        schedule moving forward. </p>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="days-box work-times">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="monday-time">Monday</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="time" id="monday-time" name="start_time">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="friday-time">Friday</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="time" id="friday-time" name="end_time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="practice-exams" data-aos="fade-up">
                 <h1 class="blue-text">Practice Exams</h1>
                 <div class="practice-exams-content">
@@ -50,8 +92,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="video-exams" data-aos="fade-up">
                 <h1 class="blue-text">Videos and Quizzes</h1>
                 <div class="video-exams-content">
@@ -116,19 +156,16 @@
                 </div>
             </div>
         </div>
-        <CheckList/>
     </app-layout>
 </template>
 
 
 <script>
 import AppLayout from '@/Layouts/AppLayout'
-import CheckList from "../components/CheckList";
 
 export default {
     components: {
         AppLayout,
-        CheckList
     },
     methods: {},
 

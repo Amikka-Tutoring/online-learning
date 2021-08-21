@@ -43,4 +43,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
     Route::get('my-courses/course', [PageController::class, 'course'])->name('course');
     Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
+    Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
+    Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
+    Route::get('notes', [PageController::class, 'notesList'])->name('notes-list');
+    Route::get('notes/block', [PageController::class, 'notesBlock'])->name('notes-block');
+    Route::get('notes/create', [PageController::class, 'createNotes'])->name('notes-create');
+    Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
+    Route::get('review', [PageController::class, 'review'])->name('review');
 });
