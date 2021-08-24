@@ -17,15 +17,6 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
@@ -35,6 +26,7 @@ Route::get('test2', [PageController::class, 'test2'])->name('test2');
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('profile', [PageController::class, 'profile'])->name('profile');
     Route::get('math-diagnostic', [PageController::class, 'mathDiagnostic'])->name('math-diagnostic');

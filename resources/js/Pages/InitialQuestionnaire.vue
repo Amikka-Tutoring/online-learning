@@ -391,6 +391,7 @@ export default {
                 form.errors = []
                 form.progress_value = 100
                 console.log(form)
+                return '/dashboard'
                 // form.$toastr("SUCCESS MESSAGE", "Success Toast Title");
             }
         }
