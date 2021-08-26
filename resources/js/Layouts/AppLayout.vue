@@ -18,8 +18,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" @click="logout()" href="">Logout</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" :href="route('admin.dashboard')">Admin Panel</a>
             </div>
         </div>
 
