@@ -1,6 +1,6 @@
 <template>
     <admin-layout>
-        <div class="container user-show">
+        <div class="container user-show" data-aos="fade-up">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-12">
                     <form action="">
@@ -172,7 +172,7 @@
 
                                 </div>
                                 <div class="col-6">
-                                    <a>Back</a>
+                                    <a @click="back()">Back</a>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +192,11 @@ export default {
         AdminLayout,
     },
     props: ['user'],
-    methods: {},
+    methods: {
+        back() {
+            history.back();
+        }
+    },
 
     data() {
         return {}

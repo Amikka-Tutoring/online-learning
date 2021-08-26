@@ -1,6 +1,6 @@
 <template>
     <admin-layout>
-        <div class="container users">
+        <div class="container users" data-aos="fade-up">
             <h1 class="blue-text">Users</h1>
             <div class="users-table">
                 <table>
@@ -32,7 +32,7 @@
                         <td>{{ user.number }}</td>
                         <td>{{ user.created }}</td>
                         <td>
-                            <button @click="printUser(user)">View</button>
+                            <a class="text-white" @click="printUser(user)">View</a>
                         </td>
                     </tr>
                     <p v-if="!sortedUsers.length">No row found</p>

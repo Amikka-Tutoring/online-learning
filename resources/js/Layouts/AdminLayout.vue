@@ -29,23 +29,33 @@
         <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" @mouseleave="isHidden = true"
              class="admin-sidebar">
             <ul>
-                <h1>Ammika Admin</h1>
+                <h1><a :href="route('admin.dashboard')" style="color: black">Ammika Admin</a></h1>
             </ul>
             <ul class="list">
-                <li><a>Users</a></li>
-                <li><a>Courses</a></li>
-                <li><a>Practice Exams</a></li>
-                <li><a>Academic Diagnostics</a></li>
-                <li><a>Personality Diagnostics</a></li>
-                <li><a>Personality Diagnostics</a></li>
-                <li><a style="color: red; text-decoration: underline;">Logout</a></li>
+                <li><a
+                    v-bind:class="route().current('admin.users') || route().current('admin.user') ? 'active' : ''"
+                    :href="route('admin.users')">Users</a>
+                </li>
+                <li><a
+                    v-bind:class="route().current('admin.courses') || route().current('admin.courses.create') ? 'active' : ''"
+                    :href="route('admin.courses')">Courses</a></li>
+                <li><a v-bind:class="route().current('admin.exams') ? 'active' : ''"
+                       :href="route('admin.exams')">Practice Exams</a></li>
+                <li><a
+                    v-bind:class="route().current('academic.diagnostics') || route().current('academic.diagnostics.create') ? 'active' : ''"
+                    :href="route('academic.diagnostics')">Academic Diagnostics</a></li>
+                <li><a
+                    v-bind:class="route().current('personality.diagnostics') || route().current('personality.diagnostics.create') ? 'active' : ''"
+                    :href="route('personality.diagnostics')">Personality Diagnostics</a></li>
+                <li><a @click="logout" style="color: red; cursor: pointer; text-decoration: underline;">Logout</a></li>
             </ul>
         </div>
 
-        <div v-bind:class="[isHidden ? 'main-content' : 'main-content-1']" class="bg-white p-0 transition">
+        <div v-bind:class="[isHidden ? 'main-content' : 'main-content-1']"
+             class="bg-white p-0 transition">
             <img class="banner-img" :src="'/images/admin-banner.png'" alt=""
                  style="width: 100%; height:140px; margin-bottom: 100px; object-fit: cover">
-            <div class="container-fluid p-0">
+            <div class="container-fluid p-0" data-aos="zoom-in">
                 <main>
                     <slot></slot>
                 </main>
@@ -85,7 +95,6 @@ export default {
         },
         toggleClass: function (event) {
             this.isHidden = !this.isHidden;
-
         }
     },
 };

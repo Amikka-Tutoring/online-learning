@@ -26,7 +26,7 @@ Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('profile', [PageController::class, 'profile'])->name('profile');
@@ -46,8 +46,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('users/user', [AdminController::class, 'showUser'])->name('admin.user');
+    Route::get('courses', [AdminController::class, 'courses'])->name('admin.courses');
+    Route::get('courses/create', [AdminController::class, 'createCourse'])->name('admin.courses.create');
+    Route::get('diagnostics/academic', [AdminController::class, 'academicDiagnostics'])->name('academic.diagnostics');
+    Route::get('diagnostics/academic/create', [AdminController::class, 'createAcademicDiagnostics'])->name('academic.diagnostics.create');
+    Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
+    Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
+    Route::get('exams', [AdminController::class, 'createExam'])->name('admin.exams');
 });

@@ -11,6 +11,7 @@
             <div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
                 {{ status }}
             </div>
+            <h1 class="blue-text my-4 text-center login-title">Amikka</h1>
 
             <form @submit.prevent="submit">
                 <div class="form-group">
@@ -44,10 +45,13 @@
                         </a>
 
 
-                        <jet-button class="ml-4" :class="{ 'text-white-50': form.processing }"
-                                    :disabled="form.processing">
-                            Log in
-                        </jet-button>
+                        <!--                        <jet-button class="ml-4" :class="{ 'text-white-50': form.processing }"-->
+                        <!--                                    :disabled="form.processing">-->
+                        <!--                            Log in-->
+                        <!--                        </jet-button>-->
+                        <loading-button :loading="form.processing" class="ml-4"
+                                        :class="{ 'text-white-50': form.processing }" type="submit">Log in
+                        </loading-button>
                     </div>
                 </div>
             </form>
@@ -63,6 +67,7 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from '@/Jetstream/Checkbox'
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
+import LoadingButton from "@/Jetstream/LoadingButton";
 
 export default {
     components: {
@@ -72,7 +77,8 @@ export default {
         JetInput,
         JetCheckbox,
         JetLabel,
-        JetValidationErrors
+        JetValidationErrors,
+        LoadingButton
     },
 
     props: {

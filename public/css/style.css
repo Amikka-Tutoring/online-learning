@@ -1344,12 +1344,89 @@ input[type="radio"] {
     text-align: center;
     text-decoration-line: underline;
     color: #4C6ED7;
+    cursor: pointer;
+}
+
+.course-edit {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    text-decoration-line: underline;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.csv-table {
+    margin: 60px 0;
+}
+
+.csv-table table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.csv-table table tr {
+    height: 30px;
+}
+
+.csv-table table thead th {
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    width: 20%;
+}
+
+.csv-table table td {
+    border: 1px solid #4C6ED7;
+    padding: 5px 10px;
+}
+
+.csv-buttons {
+    line-height: 24px;
+    font-weight: 500;
+}
+
+.csv-buttons .upload-csv {
+    width: 125px;
+    height: 40px;
+    background: #4C6ED7;
+    border-radius: 7px;
+    color: white;
+    padding: 8px 12px;
+    margin-right: 30px;
+    font-size: 20px;
+
+}
+
+.csv-buttons .delete-csv {
+    font-size: 20px;
+    text-decoration-line: underline;
+    color: #E61339;
+}
+
+.log-in-btn {
+    background: rgb(14, 111, 255);
+    border-radius: 7px;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+}
+
+.login-title {
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 152px;
 }
 
 
 @media (max-width: 767.98px), (max-width: 991.98px) {
 
-    .notes-table, .users-table {
+    .action-buttons {
+        width: 100%;
+        margin-bottom: 2px;
+    }
+
+    .notes-table, .users-table, .csv-table {
         overflow-x: scroll;
     }
 
@@ -1439,7 +1516,7 @@ input[type="radio"] {
     }
 
     .banner-img {
-        margin-bottom: 20px !important;
+        margin-bottom: 35px !important;
     }
 
     .reach-out .reach-form button {
@@ -1504,7 +1581,7 @@ input[type="radio"] {
         padding-left: 0;
     }
 
-    .academic-content, .personality-content, .courses-content, .calendar-content, .notes-content {
+    .academic-content, .personality-content, .courses-content, .calendar-content, .notes-content, .dashboard-content {
         padding-left: 0 !important;
         margin-top: 40px !important;
     }
