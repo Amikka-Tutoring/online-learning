@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -50,4 +51,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('notes/create', [PageController::class, 'createNotes'])->name('notes-create');
     Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
     Route::get('review', [PageController::class, 'review'])->name('review');
+});
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('users/user', [AdminController::class, 'showUser'])->name('admin.user');
 });
