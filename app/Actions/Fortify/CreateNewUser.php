@@ -20,6 +20,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+//        dd(123);
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -27,11 +28,19 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'profile_photo_path' => 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF',
-        ]);
+        $user = new User();
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->password = Hash::make($input['password']);
+        $user->profile_photo_path = 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF';
+        $user->save();
+        return $user;
+
+//        return User::create([
+//            'name' => $input['name'],
+//            'email' => $input['email'],
+//            'password' => Hash::make($input['password']),
+//            'profile_photo_path' => 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF',
+//        ]);
     }
 }
