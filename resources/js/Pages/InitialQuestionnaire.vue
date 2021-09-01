@@ -190,7 +190,10 @@
                                             <label for="friday">Friday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="friday" name="friday" v-model="form.days">
+                                            <input :value="n"
+                                                   :disabled="form.days.length > 1  && inputs.indexOf(n) === -1"
+                                                   type="checkbox" id="friday"
+                                                   name="friday" v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +203,10 @@
                                             <label for="saturday">Saturday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="saturday" name="saturday" v-model="form.days">
+                                            <input :value="n"
+                                                   :disabled="form.days.length > 1  && inputs.indexOf(n) === -1"
+                                                   type="checkbox" id="saturday"
+                                                   name="saturday" v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +216,10 @@
                                             <label for="sunday">Sunday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="sunday" name="sunday" v-model="form.days">
+                                            <input :value="n"
+                                                   :disabled="form.days.length > 1  && inputs.indexOf(n) === -1"
+                                                   type="checkbox" id="sunday"
+                                                   name="sunday" v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -273,20 +282,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--                <div v-if="form.currentstep === 8">-->
-                    <!--                    <label for="first_name">First name:</label>-->
-                    <!--                    <input name="firstname" required id="first_name" v-model="form.first_name" />-->
-                    <!--                    <label for="last_name">Last name:</label>-->
-                    <!--                    <input name="lastname" id="last_name" v-model="form.last_name" />-->
-                    <!--                </div>-->
-                    <!--                <div v-if="form.currentstep === 9">-->
-                    <!--                    <label>Email:</label>-->
-                    <!--                    <input name="email" v-model="form.email" />-->
-                    <!--                </div>-->
-                    <!--                <div v-if="form.currentstep === 10">-->
-                    <!--                    <label for="test">Test:</label>-->
-                    <!--                    <input id="test" v-model="form.test" />-->
-                    <!--                </div>-->
 
                     <div class="row justify-content-center align-items-center">
                         <button v-if="form.currentstep!=7 && form.currentstep!=1" @click.prevent="next()"
@@ -391,7 +386,7 @@ export default {
                 form.errors = []
                 form.progress_value = 100
                 console.log(form)
-                return '/dashboard'
+                window.location.href = '/dashboard';
                 // form.$toastr("SUCCESS MESSAGE", "Success Toast Title");
             }
         }

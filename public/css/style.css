@@ -2,6 +2,10 @@ body {
     background: white !important;
 }
 
+a {
+    cursor: pointer;
+}
+
 .active {
     color: #0E6FFF !important;
     text-decoration: underline !important;
@@ -15,10 +19,11 @@ body {
     display: flex;
     flex-direction: column;
     position: fixed;
+    /*transition: all 0.2s ease-in-out;*/
 }
 
 .side-bar-0 {
-    width: 0;
+    width: 300px;
 }
 
 .side-bar-0 ul {
@@ -1374,6 +1379,14 @@ input[type="radio"] {
     padding: 20px;
     cursor: pointer;
     width: 20%;
+}
+
+.rotate {
+    transition: transform .7s ease-in-out;
+}
+
+.rotate-effect {
+    transform: rotate(180deg);
 }
 
 .csv-table table td {

@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LayerController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DiagnosticController;
 
 
 /*
@@ -26,7 +29,7 @@ Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('profile', [PageController::class, 'profile'])->name('profile');
@@ -43,14 +46,15 @@ Route::middleware('auth')->group(function () {
     Route::get('notes/create', [PageController::class, 'createNotes'])->name('notes-create');
     Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
     Route::get('review', [PageController::class, 'review'])->name('review');
+    Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
 });
 
 
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.main');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('users', [AdminController::class, 'users'])->name('admin.users');
-    Route::get('users/user', [AdminController::class, 'showUser'])->name('admin.user');
+    Route::get('users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('users/{id}', [UserController::class, 'show'])->name('admin.user');
     Route::get('courses', [AdminController::class, 'courses'])->name('admin.courses');
     Route::get('courses/create', [AdminController::class, 'createCourse'])->name('admin.courses.create');
     Route::get('diagnostics/academic', [AdminController::class, 'academicDiagnostics'])->name('academic.diagnostics');
@@ -59,3 +63,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
     Route::get('exams', [AdminController::class, 'createExam'])->name('admin.exams');
 });
+
+
+Route::get('layers', [LayerController::class, 'index'])->name('layers');
+Route::get('diagnostics', [LayerController::class, 'diagnostics'])->name('diagnostics');

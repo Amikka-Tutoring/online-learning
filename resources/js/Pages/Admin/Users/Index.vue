@@ -2,6 +2,12 @@
     <admin-layout>
         <div class="container users" data-aos="fade-up">
             <h1 class="blue-text">Users</h1>
+            <!--            <div class="p-4">-->
+            <!--                <div class="form-group">-->
+            <!--                    <label for="search">Name:</label>-->
+            <!--                    <input type="text" id="search" v-model="name" @keyup="search" class="form-control">-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div class="users-table">
                 <table>
                     <thead>
@@ -25,17 +31,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="user in sortedUsers">
+                    <tr v-for="user in users.data">
                         <td>{{ user.id }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.number }}</td>
-                        <td>{{ user.created }}</td>
+                        <td>{{ moment(user.created_at).format("DD-MM-YYYY") }}</td>
                         <td>
-                            <a class="text-white" @click="printUser(user)">View</a>
+                            <a class="text-white" @click="show(user.id)">View</a>
                         </td>
                     </tr>
-                    <p v-if="!sortedUsers.length">No row found</p>
+                    <p v-if="!users.data.length">No row found</p>
                     </tbody>
                 </table>
             </div>
@@ -47,46 +53,28 @@
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
 import {Inertia} from '@inertiajs/inertia'
+import moment from 'moment'
 
 export default {
     components: {
         AdminLayout,
         Inertia
     },
+    props: {
+        users: Object,
+    },
     data() {
         return {
+            moment: moment,
             currentSort: 'class',
             currentSortDir: 'asc',
             query: '',
             selectedUser: null,
             id: false,
-            name: false,
+            name: '',
             email: false,
             number: false,
             created: false,
-            users: [
-                {
-                    id: 1,
-                    name: 'Anthony Hawkins',
-                    email: 'anthony@gmail.com',
-                    number: '(123)-541-9594',
-                    created: '1 day ago',
-                },
-                {
-                    id: 2,
-                    name: 'Michele Mccoy',
-                    email: 'michele.mccoy@gmail.com',
-                    number: '(342)-689-9594',
-                    created: '1 week ago',
-                },
-                {
-                    id: 3,
-                    name: 'Harold Hoffman',
-                    email: 'harold.hoffman@gmail.com',
-                    number: '(270)-546-9338',
-                    created: '1 month ago',
-                },
-            ]
         }
     },
     methods: {
@@ -99,8 +87,15 @@ export default {
         },
         printUser(e) {
             this.selectedUser = e;
-            Inertia.get('users/user', this.selectedUser);
+            // Inertia.get('users/user', this.selectedUser);
             console.log(this.selectedUser)
+        },
+        show: function (user) {
+            this.$inertia.get('users/' + user)
+        },
+        search: function () {
+            console.log('search');
+            this.$inertia.replace('users?name=' + this.name)
         }
     },
     computed: {
