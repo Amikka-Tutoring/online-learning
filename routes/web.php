@@ -47,6 +47,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
     Route::get('review', [PageController::class, 'review'])->name('review');
     Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
+    Route::post('diagnostics/result', [DiagnosticController::class, 'result'])->name('diagnostic.result');
 });
 
 

@@ -29,13 +29,15 @@
         "sass": "^1.37.5",
         "sass-loader": "^12.1.0",
         "tailwindcss": "^2.0.1",
-        "vue": "^3.0.5",
+        "vue": "^3.2.7",
         "vue-loader": "^16.1.2",
         "webpack-cli": "^4.7.2"
     },
     "dependencies": {
         "@ivanv/vue-collapse-transition": "^1.0.2",
         "aos": "^2.3.4",
+        "bootstrap-icons": "^1.5.0",
+        "bootstrap-vue": "^2.21.2",
         "moment": "^2.29.1",
         "v-calendar": "^2.3.2",
         "vue-the-mask": "^0.11.1",

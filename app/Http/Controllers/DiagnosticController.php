@@ -28,4 +28,9 @@ class DiagnosticController extends Controller
 //        }
         return Inertia::render('Diagnostic/Index', ['diagnostic' => $diagnostic]);
     }
+
+    public function result(Request $request)
+    {
+        dd($request->all());
+    }
 }
