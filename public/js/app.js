@@ -16021,8 +16021,8 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(props) {
     var form = (0,vue__WEBPACK_IMPORTED_MODULE_1__.reactive)({
       errors: [],
-      questions: [],
-      answers: [],
+      answers: {},
+      answer_list: [],
       progress_value: 0,
       currentstep: 1
     });
@@ -16031,26 +16031,32 @@ __webpack_require__.r(__webpack_exports__);
       form.currentstep++;
       form.errors = [];
       form.progress_value = (form.currentstep - 1) * 100 / props.diagnostic.questions.length;
-      console.log(answers);
+      form.answer_list.push(form.answers);
+      console.log(form.answer_list);
+
+      if (form.currentstep === props.diagnostic.questions.length + 2) {
+        console.log("submitted");
+        form.errors = [];
+        form.progress_value = 100;
+        console.log(form);
+        _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/diagnostics/result", form);
+      }
+    }
+
+    function start() {
+      form.currentstep++;
     }
 
     function back() {
       form.currentstep--;
       form.errors = [];
       form.progress_value = (form.currentstep - 1) * 100 / props.diagnostic.questions.length;
-    }
-
-    function submit() {
-      console.log('submitted');
-      form.errors = [];
-      form.progress_value = 100;
-      console.log(form);
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post('/diagnostics/result', form);
+      form.answer_list.pop(form.answers);
     }
 
     return {
       form: form,
-      submit: submit,
+      start: start,
       next: next,
       back: back
     };
@@ -23708,7 +23714,7 @@ var _hoisted_21 = {
   "class": "col-lg-6 col-12"
 };
 var _hoisted_22 = {
-  "class": "\n                                    col-lg-6 col-12\n                                    d-flex\n                                    align-items-center\n                                "
+  "class": "\r\n                                    col-lg-6 col-12\r\n                                    d-flex\r\n                                    align-items-center\r\n                                "
 };
 var _hoisted_23 = {
   "class": "row w-100"
@@ -23784,7 +23790,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ), _hoisted_14, _hoisted_15, _hoisted_16, _hoisted_17]), _hoisted_18, _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [$setup.form.currentstep === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: 0,
         onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return $setup.next();
+          return $setup.start();
         }, ["prevent"])),
         "class": "blue-button"
       }, " Start ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.diagnostic.questions, function (question, index) {
@@ -23795,7 +23801,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             index: question.key,
             key: answer,
             "class": "col-6"
-          }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+          }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
             style: {
               "display": "block"
             },
@@ -23804,11 +23810,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
               return $setup.form.answers = $event;
             }),
-            value: answer.is_correct,
+            value: answer,
+            key: answer.answer,
             id: 'option-' + answer.id
           }, null, 8
           /* PROPS */
-          , _hoisted_28), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.form.answers]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+          , _hoisted_28)), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.form.answers]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
             "for": 'option-' + answer.id,
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('option option-' + answer.id)
           }, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(answer.answer), 1
@@ -23846,7 +23853,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, _hoisted_35)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.form.currentstep === $props.diagnostic.questions.length + 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: 2,
         onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return $setup.submit();
+          return $setup.next();
         }, ["prevent"])),
         "class": "blue-button",
         style: {

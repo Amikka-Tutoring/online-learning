@@ -46,23 +46,23 @@
                                     <li>
                                         The
                                         <span class="blue-text"
-                                        >{{
+                                            >{{
                                                 diagnostic.diagnostic.name
                                             }}
                                             Diagnostic</span
                                         >
                                         helps us access your
                                         <span class="blue-text"
-                                        >strengths and weaknesses </span
+                                            >strengths and weaknesses </span
                                         >in order to
                                         <span class="blue-text"
-                                        >maximize your score.</span
+                                            >maximize your score.</span
                                         >
                                     </li>
                                     <li>
                                         Based on your
                                         <span class="blue-text"
-                                        >performance</span
+                                            >performance</span
                                         >
                                         we build you a personalized course that
                                         teaches you exactly what you need to
@@ -72,13 +72,13 @@
                                         Please answer the next ten questions to
                                         the
                                         <span class="blue-text"
-                                        >best of your ability.</span
+                                            >best of your ability.</span
                                         >
                                     </li>
                                     <li>
                                         <button
                                             v-if="form.currentstep === 1"
-                                            @click.prevent="next()"
+                                            @click.prevent="start()"
                                             class="blue-button"
                                         >
                                             Start
@@ -90,7 +90,10 @@
                     </div>
 
                     <div v-for="(question, index) in diagnostic.questions">
-                        <div class="row math-questions w-100" v-show="form.currentstep === index + 2">
+                        <div
+                            class="row math-questions w-100"
+                            v-show="form.currentstep === index + 2"
+                        >
                             <div class="col-lg-6 col-12">
                                 <p>{{ question.question }}</p>
                                 <!--                                <img :src="'/images/math-question.png'" style="width: 100%">-->
@@ -106,17 +109,40 @@
                                     <div class="wrapper d-flex flex-column">
                                         <div class="row w-100">
                                             <div
-                                                v-for="(answer, index) in question.answers" :index="question.key"
-                                                :key="answer" class="col-6">
+                                                v-for="(
+                                                    answer, index
+                                                ) in question.answers"
+                                                :index="question.key"
+                                                :key="answer"
+                                                class="col-6"
+                                            >
                                                 <div class="options">
-                                                    <input style="display: block" type="radio" name="select[]"
-                                                           v-model="form.answers" :value="answer.is_correct"
-                                                           :id="'option-' +answer.id"/>
+                                                    <input
+                                                        style="display: block"
+                                                        type="radio"
+                                                        name="select[]"
+                                                        v-model="form.answers"
+                                                        :value="answer"
+                                                        :key="answer.answer"
+                                                        :id="
+                                                            'option-' +
+                                                            answer.id
+                                                        "
+                                                    />
                                                     <label
-                                                        :for="'option-' +answer.id"
-                                                        :class="'option option-' +answer.id">
+                                                        :for="
+                                                            'option-' +
+                                                            answer.id
+                                                        "
+                                                        :class="
+                                                            'option option-' +
+                                                            answer.id
+                                                        "
+                                                    >
                                                         <div class="dot"></div>
-                                                        <span>{{ answer.answer }}</span>
+                                                        <span>{{
+                                                            answer.answer
+                                                        }}</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -131,20 +157,32 @@
                             v-if="form.currentstep > 1"
                             @click.prevent="back()"
                             class="blue-button"
-                            style="font-size: 24px">
+                            style="font-size: 24px"
+                        >
                             <i class="bi bi-arrow-left-circle"></i>
                         </button>
                         <button
-                            v-if="form.currentstep !== diagnostic.questions.length + 1 && form.currentstep !== 1"
+                            v-if="
+                                form.currentstep !==
+                                    diagnostic.questions.length + 1 &&
+                                form.currentstep !== 1
+                            "
                             @click.prevent="next()"
                             class="blue-button"
-                            style="font-size: 24px">
+                            style="font-size: 24px"
+                        >
                             <i class="bi bi-arrow-right-circle"></i>
                         </button>
 
                         <button
-                            v-if="form.currentstep === diagnostic.questions.length + 1" @click.prevent="submit()"
-                            class="blue-button" style="font-size: 24px">
+                            v-if="
+                                form.currentstep ===
+                                diagnostic.questions.length + 1
+                            "
+                            @click.prevent="next()"
+                            class="blue-button"
+                            style="font-size: 24px"
+                        >
                             Finish
                         </button>
                     </div>
@@ -156,8 +194,8 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-import {reactive} from "vue";
-import {Inertia} from "@inertiajs/inertia";
+import { reactive } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     components: {
@@ -179,8 +217,8 @@ export default {
     setup(props) {
         const form = reactive({
             errors: [],
-            questions: [],
-            answers: [],
+            answers: {},
+            answer_list: [],
             progress_value: 0,
             currentstep: 1,
         });
@@ -188,25 +226,34 @@ export default {
         function next() {
             form.currentstep++;
             form.errors = [];
-            form.progress_value = ((form.currentstep - 1) * 100) / props.diagnostic.questions.length;
-            console.log(answers);
+            form.progress_value =
+                ((form.currentstep - 1) * 100) /
+                props.diagnostic.questions.length;
+            form.answer_list.push(form.answers);
+            console.log(form.answer_list);
+
+            if (form.currentstep === props.diagnostic.questions.length + 2) {
+                console.log("submitted");
+                form.errors = [];
+                form.progress_value = 100;
+                console.log(form);
+                Inertia.post("/diagnostics/result", form);
+            }
+        }
+        function start() {
+            form.currentstep++;
         }
 
         function back() {
             form.currentstep--;
             form.errors = [];
-            form.progress_value = ((form.currentstep - 1) * 100) / props.diagnostic.questions.length;
+            form.progress_value =
+                ((form.currentstep - 1) * 100) /
+                props.diagnostic.questions.length;
+            form.answer_list.pop(form.answers);
         }
 
-        function submit() {
-            console.log('submitted');
-            form.errors = [];
-            form.progress_value = 100;
-            console.log(form)
-            Inertia.post('/diagnostics/result', form)
-        }
-
-        return {form, submit, next, back};
+        return { form, start, next, back };
     },
 };
 </script>
