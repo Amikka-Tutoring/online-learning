@@ -31,6 +31,24 @@ class DiagnosticController extends Controller
 
     public function result(Request $request)
     {
-        dd($request->all());
+
+        $answers = $request->answer_list;
+
+        $sum = count($answers);
+
+
+        $correct = 0;
+        foreach ($answers as $answer) {
+            if ($answer['is_correct'] == 1) {
+                $correct++;
+            }
+        }
+
+        $score = $correct / $sum * 100;
+//        dd($score);
+
+//        dd($request->answer_list);
+
+        return Inertia::render('Diagnostic/Result', ['results' => $request->answer_list, 'score' => $score]);
     }
 }

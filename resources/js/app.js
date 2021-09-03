@@ -7,6 +7,7 @@ import {InertiaProgress} from '@inertiajs/progress';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+
 // import CollapseTransition from '@ivanv/vue-collapse-transition';
 
 const el = document.getElementById('app');

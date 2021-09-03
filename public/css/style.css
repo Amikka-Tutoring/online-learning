@@ -92,6 +92,10 @@ a {
     color: red;
 }
 
+.green-text {
+    color: green;
+}
+
 .first-step h1 {
     margin-bottom: 75px;
 }
@@ -443,7 +447,8 @@ a {
 }
 
 .component-fade-enter, .component-fade-leave-to
-    /* .component-fade-leave-active below version 2.1.8 */ {
+    /* .component-fade-leave-active below version 2.1.8 */
+{
     opacity: 0;
     visibility: hidden;
     height: 0;
@@ -1215,6 +1220,18 @@ input[type="radio"] {
 
 .header-menu ol li:last-child::before {
     background: rgba(14, 111, 255, 0.25);
+}
+
+.quiz-question-box {
+    padding: 10px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 35px;
+    color: #263238;
+    background-color: rgba(151, 151, 151, 0.05);
+    border-radius: 10px;
+    border: none;
+    text-align: center;
 }
 
 /*ADMIN PANEL*/
