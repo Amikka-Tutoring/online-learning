@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model
+class Video extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'title',
-        'explanation',
-        'is_correct',
-        'question_id'
+        'url',
+        'description',
+        'layer_id',
     ];
 
-    public function question()
+
+    public function layer()
     {
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Layer::class);
     }
 }

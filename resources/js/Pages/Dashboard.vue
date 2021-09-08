@@ -299,7 +299,7 @@
             </div>
 
 
-            <!--        Notes-->
+            <!--        Note-->
             <div class="notes" data-aos="fade-up">
                 <h1 class="blue-text">Notes</h1>
                 <div class="notes-content pl-5" style="margin-top: 90px">

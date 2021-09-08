@@ -12,6 +12,7 @@ class Layer extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'course_id'
     ];
 
     public function children()
@@ -27,5 +28,15 @@ class Layer extends Model
     public function questions()
     {
         return $this->morphMany(Question::class, 'questionable');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
     }
 }

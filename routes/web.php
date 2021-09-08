@@ -66,5 +66,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 });
 
 
-Route::get('layers', [LayerController::class, 'index'])->name('layers');
+Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');
 Route::get('diagnostics', [LayerController::class, 'diagnostics'])->name('diagnostics');

@@ -31,19 +31,19 @@ class DiagnosticSeeder extends Seeder
             'diagnostic_id' => $personality->id
         ]);
         $diagnostic_quiz = DiagnosticQuiz::find($learning_style->id);
-        $question1->question = "Test Question";
+        $question1->title = "Test Question";
         $diagnostic_quiz->questions()->save($question1);
         Answer::create([
-            'answer' => 'First Answer - false',
+            'title' => 'First Answer - false',
             'is_correct' => 0,
             'question_id' => $question1->id,
         ]);
         Answer::create([
-            'answer' => 'Second Answer - true',
+            'title' => 'Second Answer - true',
             'is_correct' => 1,
             'question_id' => $question1->id,
         ]);
-        $question2->question = "Test Question 2";
+        $question2->title = "Test Question 2";
         $diagnostic_quiz->questions()->save($question2);
 
 
@@ -53,7 +53,7 @@ class DiagnosticSeeder extends Seeder
             'diagnostic_id' => $personality->id
         ]);
         $diagnostic_quiz = DiagnosticQuiz::find($tutor_match->id);
-        $question3->question = "Test Question";
+        $question3->title = "Test Question";
         $diagnostic_quiz->questions()->save($question3);
 
 

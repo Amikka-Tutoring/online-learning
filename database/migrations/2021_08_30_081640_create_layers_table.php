@@ -17,6 +17,7 @@ class CreateLayersTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('parent_id')->nullable()->constrained('layers')->cascadeOnDelete();
+            $table->foreignId('course_id')->nullable()->constrained('courses')->cascadeOnDelete();
             $table->timestamps();
         });
     }
