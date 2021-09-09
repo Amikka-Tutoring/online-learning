@@ -63,20 +63,8 @@ class LayerController extends Controller
 
     public function diagnostics()
     {
-        $diagnostics = Diagnostic::all();
-
-        foreach ($diagnostics as $diagnostic) {
-            print_r('<strong>' . $diagnostic->name . ':</strong><br>');
-            foreach ($diagnostic->questions as $question) {
-                print_r(' - ' . $question->question . '<br>');
-            }
-        }
-
-//        $diagnostic = Diagnostic::find(1);
-//
-//        $question = new Question;
-//        $question->question = "Test";
-//        $diagnostic->questions()->save($question);
-//        dd($diagnostics->first()->questions);
+        $personality = Diagnostic::where('name', 'Personality')->first()->quizzes;
+        $academic = Diagnostic::where('name', 'Academic')->first()->quizzes;
+        dd($academic);
     }
 }

@@ -15,21 +15,21 @@
                     style="height: 5px; width: 370px; margin: 0 20px"
                 >
                     <div
-                        style="background: #56c880"
                         :style="{ width: form.progress_value + '%' }"
+                        aria-valuemax="100"
+                        aria-valuemin="0"
+                        aria-valuenow="50"
                         class="progress-bar"
                         role="progressbar"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
+                        style="background: #56c880"
                     ></div>
                 </div>
                 <div class="blue-text">Skip</div>
             </div>
             <div
+                v-for="error in form.errors"
                 v-if="form.errors.length"
                 class="alert alert-danger"
-                v-for="error in form.errors"
             >
                 {{ error }}
             </div>
@@ -78,8 +78,8 @@
                                     <li>
                                         <button
                                             v-if="form.currentstep === 1"
-                                            @click.prevent="start()"
                                             class="blue-button"
+                                            @click.prevent="start()"
                                         >
                                             Start
                                         </button>
@@ -91,13 +91,16 @@
 
                     <div v-for="(question, index) in diagnostic.questions">
                         <div
-                            class="row math-questions w-100"
-                            v-show="form.currentstep === index + 2">
+                            v-show="form.currentstep === index + 2"
+                            class="row w-100">
                             <div class="col-lg-6 col-12">
-                                <p class="quiz-question-box">{{ question.question }}</p>
+                                <p class="quiz-question-box">{{ question.title }}</p>
+                                <div class="image-box text-center">
+                                    <img :src="question.image">
+                                </div>
                                 <p class="quiz-question-box text-left">
                                 <ol>
-                                    <li v-for="(answer, index) in question.answers">{{ answer.answer }}</li>
+                                    <li v-for="(answer, index) in question.answers">{{ answer.title }}</li>
                                 </ol>
                                 </p>
 
@@ -116,29 +119,29 @@
                                             <div v-for="(
                                                     answer, index
                                                 ) in question.answers"
-                                                 :index="question.key"
                                                  :key="answer"
+                                                 :index="question.key"
                                                  class="col-6"
                                             >
                                                 <div class="options">
-                                                    <input required
-                                                           type="radio"
-                                                           name="select[]"
+                                                    <input :id="
+                                                            'option-' +
+                                                            answer.id
+                                                        "
+                                                           :key="answer.title"
                                                            v-model="form.answers"
                                                            :value="answer"
-                                                           :key="answer.answer"
-                                                           :id="
-                                                            'option-' +
-                                                            answer.id
-                                                        "
+                                                           name="select[]"
+                                                           required
+                                                           type="radio"
                                                     />
                                                     <label
-                                                        :for="
-                                                            'option-' +
-                                                            answer.id
-                                                        "
                                                         :class="
                                                             'option option-' +
+                                                            answer.id
+                                                        "
+                                                        :for="
+                                                            'option-' +
                                                             answer.id
                                                         "
                                                     >
@@ -159,9 +162,9 @@
                         <div class="col-6">
                             <button
                                 v-if="form.currentstep > 1"
-                                @click.prevent="back()"
                                 class="blue-button w-100"
                                 style="font-size: 24px"
+                                @click.prevent="back()"
                             >
                                 <i class="bi bi-arrow-left-circle"></i>
                             </button>
@@ -173,9 +176,9 @@
                                     diagnostic.questions.length + 1 &&
                                 form.currentstep !== 1
                             "
-                                @click.prevent="next()"
                                 class="blue-button w-100"
                                 style="font-size: 24px"
+                                @click.prevent="next()"
                             >
                                 <i class="bi bi-arrow-right-circle"></i>
                             </button>
@@ -184,9 +187,9 @@
                                 form.currentstep ===
                                 diagnostic.questions.length + 1
                             "
-                                @click.prevent="next()"
                                 class="blue-button w-100"
                                 style="font-size: 24px"
+                                @click.prevent="next()"
                             >
                                 Finish
                             </button>
@@ -275,6 +278,8 @@ export default {
 
         return {form, start, next, back};
     },
+    mounted(props) {
+        console.log(this.diagnostic);
+    }
 }
-;
 </script>

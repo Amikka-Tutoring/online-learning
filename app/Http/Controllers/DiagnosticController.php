@@ -13,19 +13,6 @@ class DiagnosticController extends Controller
     {
         $diagnostic = DiagnosticQuiz::where('slug', $slug)->with('questions', 'diagnostic', 'questions.answers')->first();
 
-//        dd($diagnostic);
-
-//        dd(count($diagnostic->questions));
-
-////        dd($diagnostic->questions);
-//
-//        $questions = $diagnostic->questions;
-//        foreach ($questions as $q) {
-//            print_r($q->question . '<br>');
-//            foreach ($q->answers as $a) {
-//                print_r('-' . $a->answer . '<br>');
-//            }
-//        }
         return Inertia::render('Diagnostic/Index', ['diagnostic' => $diagnostic]);
     }
 

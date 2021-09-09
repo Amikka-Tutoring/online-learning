@@ -136,47 +136,38 @@
                     <p>These recommendations are based on a variety of factors including your diagnostic, goal
                         score,
                         time until exam, and progress.</p>
-                    <div class="first-list grammar-list w-100" @click="full_course = !full_course">
-                        <div class="row">
-                            <div class="col-10">
-                                Full Course
-                            </div>
-                            <div class="col-2 text-right">
-                                <i v-bind:class="full_course ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                   class="text-white"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <collapse-transition>
-                        <div v-show="full_course" class="full-course">
-                            <div class="second-list grammar-list w-75"
-                                 @click="english_strategy = !english_strategy">
-                                <div class="row">
-                                    <div class="col-10">
-                                        English Strategy
-                                    </div>
-                                    <div class="col-2 text-right">
-                                        <i v-bind:class="english_strategy ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                           class="text-white"></i>
-                                    </div>
+                    <template v-for="course in courses">
+                        <div class="first-list grammar-list w-100" @click="full_course = !full_course">
+                            <div class="row">
+                                <div class="col-10">
+                                    {{ course.name }}
+                                </div>
+                                <div class="col-2 text-right">
+                                    <i v-bind:class="full_course ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
+                                       class="text-white"></i>
                                 </div>
                             </div>
-                            <collapse-transition>
-                                <div v-if="english_strategy" class="english_strategy">
-                                    <div class="third-list grammar-list w-60" @click="concision1 = !concision1">
+                        </div>
+                        <collapse-transition>
+                            <div v-show="full_course" class="full-course">
+                                <template v-for="topLayer in course.layers">
+                                    <div class="second-list grammar-list w-75"
+                                         @click="english_strategy = !english_strategy">
                                         <div class="row">
                                             <div class="col-10">
-                                                Concision
+                                                {{ topLayer.name }}
                                             </div>
                                             <div class="col-2 text-right">
-                                                <i v-bind:class="concision1 ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
+                                                <i v-bind:class="english_strategy ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
                                                    class="text-white"></i>
                                             </div>
                                         </div>
                                     </div>
+
                                     <collapse-transition>
-                                        <div v-if="concision1" class="concision1">
-                                            <div class="recommended-item w-60">
+                                        <div v-if="english_strategy" class="english_strategy">
+                                            <div v-for="top_videos in topLayer.videos"
+                                                 class="recommended-item w-75">
                                                 <div class="row">
                                                     <div
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -184,9 +175,10 @@
                                                            style="color: #4C6ED7"></i>
                                                     </div>
                                                     <div class="col-8 d-flex align-items-center">
-                                                        <h5>Concision<span
+                                                        <h5>{{ top_videos.title }}<span
                                                             class="ml-2 badges gray-badge">Strategy</span><span
-                                                            class="ml-2 badges gray-badge">All</span></h5>
+                                                            class="ml-2 badges gray-badge">All</span>
+                                                        </h5>
                                                     </div>
                                                     <div
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -194,22 +186,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="w-50">
-                                                <div class="fourth-list grammar-list"
-                                                     @click="wordy_phrases = !wordy_phrases">
+                                            <template v-for="midLayer in topLayer.children">
+                                                <div class="third-list grammar-list w-60"
+                                                     @click="concision1 = !concision1">
                                                     <div class="row">
                                                         <div class="col-10">
-                                                            Wordy Phrases
+                                                            {{ midLayer.name }}
                                                         </div>
                                                         <div class="col-2 text-right">
-                                                            <i v-bind:class="wordy_phrases ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
+                                                            <i v-bind:class="concision1 ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
                                                                class="text-white"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <collapse-transition>
-                                                    <div v-if="wordy_phrases" class="wordy_phrases">
-                                                        <div class="recommended-item">
+                                                    <div v-if="concision1" class="concision1">
+                                                        <div v-for="mid_videos in midLayer.videos"
+                                                             class="recommended-item w-60">
                                                             <div class="row">
                                                                 <div
                                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -217,7 +210,7 @@
                                                                        style="color: #4C6ED7"></i>
                                                                 </div>
                                                                 <div class="col-8 d-flex align-items-center">
-                                                                    <h5>Concision<span
+                                                                    <h5>{{ mid_videos.title }}<span
                                                                         class="ml-2 badges gray-badge">Strategy</span><span
                                                                         class="ml-2 badges gray-badge">All</span>
                                                                     </h5>
@@ -228,162 +221,51 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="recommended-item">
-                                                            <div class="row">
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <i class="fas fa-play-circle fa-2x"
-                                                                       style="color: #4C6ED7"></i>
+                                                        <div class="w-50">
+                                                            <template v-for="lesson in midLayer.children">
+                                                                <div class="fourth-list grammar-list"
+                                                                     @click="wordy_phrases = !wordy_phrases">
+                                                                    <div class="row">
+                                                                        <div class="col-10">
+                                                                            {{ lesson.name }}
+                                                                        </div>
+                                                                        <div class="col-2 text-right">
+                                                                            <i v-bind:class="wordy_phrases ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
+                                                                               class="text-white"></i>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-8 d-flex align-items-center">
-                                                                    <h5>Concision<span
-                                                                        class="ml-2 badges gray-badge">Strategy</span><span
-                                                                        class="ml-2 badges gray-badge">All</span>
-                                                                    </h5>
+                                                                <div v-for="less_videos in lesson.videos"
+                                                                     class="recommended-item">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                                            <i class="fas fa-play-circle fa-2x"
+                                                                               style="color: #4C6ED7"></i>
+                                                                        </div>
+                                                                        <div class="col-8 d-flex align-items-center">
+                                                                            <h5>{{ less_videos.title }}<span
+                                                                                class="ml-2 badges gray-badge">Strategy</span><span
+                                                                                class="ml-2 badges gray-badge">All</span>
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                                            <h5>03:23</h5>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <h5>03:23</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="recommended-item">
-                                                            <div class="row">
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <i class="fas fa-play-circle fa-2x"
-                                                                       style="color: #4C6ED7"></i>
-                                                                </div>
-                                                                <div class="col-8 d-flex align-items-center">
-                                                                    <h5>Concision<span
-                                                                        class="ml-2 badges gray-badge">Strategy</span><span
-                                                                        class="ml-2 badges gray-badge">All</span>
-                                                                    </h5>
-                                                                </div>
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <h5>03:23</h5>
-                                                                </div>
-                                                            </div>
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </collapse-transition>
-                                                <div class="fourth-list grammar-list"
-                                                     @click="redundancy = !redundancy">
-                                                    <div class="row">
-                                                        <div class="col-10">
-                                                            Redundancy
-                                                        </div>
-                                                        <div class="col-2 text-right">
-                                                            <i v-bind:class="redundancy ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                                               class="text-white"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <collapse-transition>
-                                                    <div v-if="redundancy" class="redundancy">
-                                                        <div class="recommended-item">
-                                                            <div class="row">
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <i class="fas fa-play-circle fa-2x"
-                                                                       style="color: #4C6ED7"></i>
-                                                                </div>
-                                                                <div class="col-8 d-flex align-items-center">
-                                                                    <h5>Concision<span
-                                                                        class="ml-2 badges gray-badge">Strategy</span><span
-                                                                        class="ml-2 badges gray-badge">All</span>
-                                                                    </h5>
-                                                                </div>
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <h5>03:23</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="recommended-item">
-                                                            <div class="row">
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <i class="fas fa-play-circle fa-2x"
-                                                                       style="color: #4C6ED7"></i>
-                                                                </div>
-                                                                <div class="col-8 d-flex align-items-center">
-                                                                    <h5>Concision<span
-                                                                        class="ml-2 badges gray-badge">Strategy</span><span
-                                                                        class="ml-2 badges gray-badge">All</span>
-                                                                    </h5>
-                                                                </div>
-                                                                <div
-                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <h5>03:23</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </collapse-transition>
-                                            </div>
+                                            </template>
                                         </div>
                                     </collapse-transition>
-
-                                    <div class="w-60">
-                                        <div class="third-list grammar-list" @click="concision = !concision">
-                                            <div class="row">
-                                                <div class="col-10">
-                                                    Concision
-                                                </div>
-                                                <div class="col-2 text-right">
-                                                    <i v-bind:class="concision ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                                       class="text-white"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <collapse-transition>
-                                            <div v-show="concision" class="concision">
-                                                <div class="recommended-item">
-                                                    <div class="row">
-                                                        <div
-                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                            <i class="fas fa-play-circle fa-2x"
-                                                               style="color: #4C6ED7"></i>
-                                                        </div>
-                                                        <div class="col-8 d-flex align-items-center">
-                                                            <h5>Concision<span
-                                                                class="ml-2 badges gray-badge">Strategy</span><span
-                                                                class="ml-2 badges gray-badge">All</span></h5>
-                                                        </div>
-                                                        <div
-                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                            <h5>03:23</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="recommended-item">
-                                                    <div class="row">
-                                                        <div
-                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                            <i class="fas fa-play-circle fa-2x"
-                                                               style="color: #4C6ED7"></i>
-                                                        </div>
-                                                        <div class="col-8 d-flex align-items-center">
-                                                            <h5>Concision<span
-                                                                class="ml-2 badges gray-badge">Strategy</span><span
-                                                                class="ml-2 badges gray-badge">All</span></h5>
-                                                        </div>
-                                                        <div
-                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                            <h5>03:23</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </collapse-transition>
-                                    </div>
-                                </div>
-                            </collapse-transition>
-                        </div>
-                    </collapse-transition>
+                                </template>
+                            </div>
+                        </collapse-transition>
+                    </template>
                 </div>
             </div>
         </div>
@@ -401,17 +283,21 @@ export default {
         CollapseTransition
     },
     methods: {},
+    props: ['courses'],
 
     data() {
         return {
-            concision: false,
-            redundancy: false,
-            wordy_phrases: false,
-            concision1: false,
-            english_strategy: false,
-            full_course: false,
-            rec: false,
+            concision: true,
+            redundancy: true,
+            wordy_phrases: true,
+            concision1: true,
+            english_strategy: true,
+            full_course: true,
+            rec: true,
         }
     },
+    mounted(props) {
+        console.log(this.courses)
+    }
 }
 </script>

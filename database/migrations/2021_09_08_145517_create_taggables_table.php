@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateTaggablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->nullable();
-            $table->text('image')->nullable();
-            $table->string('explanation')->nullable();
-            $table->morphs('questionable');
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->integer('tag_id');
+            $table->morphs('taggable');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('taggables');
     }
 }

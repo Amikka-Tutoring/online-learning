@@ -21,4 +21,9 @@ class Video extends Model
     {
         return $this->belongsTo(Layer::class);
     }
+
+    public function tags()
+    {
+        return $this->morphMany(Tag::class, 'taggable');
+    }
 }

@@ -18,50 +18,11 @@
                         </p>
                     </transition>
                     <div class="row">
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="50" data-aos-once="true">
+                        <div v-for="a_q in academic_data.quizzes" class="col-lg-3 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Mathematics</h4>
-                                <div class="row justify-content-center align-items-center"
-                                     style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%" class="progress-bar"
-                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                                 aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Reading</h4>
-                                <div class="row justify-content-center align-items-center"
-                                     style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 40%" class="progress-bar"
-                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                                 aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="150" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Grammar</h4>
+                                <a :href="route('diagnostic.show',a_q.slug)"><h4>{{ a_q.name }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
@@ -119,35 +80,16 @@
                         </p>
                     </transition>
                     <div class="row">
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="50" data-aos-once="true">
+                        <div v-for="p_q in personality_data.quizzes" class="col-lg-3 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Learning Style</h4>
+                                <a :href="route('diagnostic.show',p_q.slug)"><h4>{{ p_q.name }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7; width: 50%" class="progress-bar"
-                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                                 aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="blue-text">5/10</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
-                            <div class="input-cards">
-                                <img class="w-100" :src="'images/course-img.png'">
-                                <h4>Perfect Tutor Match</h4>
-                                <div class="row justify-content-center align-items-center"
-                                     style="margin-top: 60px; margin-bottom: 10px">
-                                    <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 40%" class="progress-bar"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
@@ -441,6 +383,7 @@ export default {
     components: {
         AppLayout,
     },
+    props: ['academic_data', 'personality_data'],
     data() {
         return {
             academic: true,

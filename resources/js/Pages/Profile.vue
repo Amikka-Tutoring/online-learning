@@ -7,9 +7,9 @@
                 </div>
                 <h1>{{ user.name }}</h1>
                 <p>@{{ user.email }}</p>
-                <button class="premium-btn">
-                    Become Premium
-                </button>
+                <!--                <button class="premium-btn">-->
+                <!--                    Become Premium-->
+                <!--                </button>-->
                 <div class="btn-group">
                     <button @click="tab = 'specific'"
                             v-bind:class="[tab==='specific' ? 'active-button' : 'passive-button']">Course Specific

@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LayerSeeder::class,
             UserSeeder::class,
-            DiagnosticSeeder::class
+            DiagnosticSeeder::class,
+            TagSeeder::class
         ]);
     }
 }
