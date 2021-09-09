@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Diagnostic;
 use App\Models\Layer;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -31,14 +32,14 @@ class PageController extends Controller
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes')->where('name', 'Academic')->first();
 
-//        dd($academic);
+        //        dd($academic);
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic]);
     }
 
     public function profile()
     {
 
-//        $user = auth()->user();
+        //        $user = auth()->user();
         return Inertia::render('Profile');
     }
 
@@ -68,11 +69,11 @@ class PageController extends Controller
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
         }])->get();
 
-//        dd($courses->first());
+        //        dd($courses->first());
 
 
-//        $course = Course::first()->topLayers()->first();
-//        dd($course->children);
+        //        $course = Course::first()->topLayers()->first();
+        //        dd($course->children);
         return Inertia::render('Recommended', ['courses' => $courses]);
     }
 
@@ -119,29 +120,20 @@ class PageController extends Controller
 
     public function test()
     {
-        $layer = Layer::find(1);
+        $layer = Layer::find(2);
         $tag = Tag::where('name', 'easy')->first();
+        // dd($layers);
 
-        $user = Auth::user();
-//        $user->tags()->save($tag);
-//        dd($user->tags->pluck('name'));
-        $userTag = $user->tags->last();
-
-
-//        $courses = Course::with(['layers' => function ($query) {
-//            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
-//        }])->get();
+        // $user = Auth::user();
+        //    $layer->tags()->save($tag);
+        //        dd($user->tags->pluck('name'));
+        // $userTag = $user->tags->last();
 
 
-        $concision = Layer::find(3);
-//        $concision->tags()->save($tag);
+        $courses = Course::with(['layers' => function ($query) {
+            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
+        }])->get();
 
-
-        $query = $userTag->layers->whereNull('parent_id')->first()->children;
-        dd($userTag->layers->first());
-
-//        $layer->tags()->save($tag);
-//        dd($userTag->layers);
-
+        dd($courses);
     }
 }

@@ -23637,7 +23637,7 @@ var _hoisted_25 = {
   "class": "quiz-question-box text-left"
 };
 var _hoisted_26 = {
-  "class": "\n                                    col-lg-6 col-12\n                                    d-flex\n                                    align-items-center\n                                "
+  "class": "\r\n                                    col-lg-6 col-12\r\n                                    d-flex\r\n                                    align-items-center\r\n                                "
 };
 var _hoisted_27 = {
   "class": "row w-100"

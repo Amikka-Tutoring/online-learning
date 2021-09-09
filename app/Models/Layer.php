@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\LayerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,14 @@ class Layer extends Model
         'course_id'
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new LayerScope);
+    }
+
     public function children()
     {
         return $this->hasMany(Layer::class, 'parent_id');
-//        dd($this->tags()->first()->name);
-//        dd(Auth::user()->tags()->first()->name == $this->tags()->first()->name);
     }
 
     public function parent()
@@ -47,5 +51,4 @@ class Layer extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
-
 }

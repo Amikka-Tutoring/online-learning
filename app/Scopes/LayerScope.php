@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\Auth;
 
-class TagsScope implements Scope
+class LayerScope implements Scope
 {
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -17,13 +17,12 @@ class TagsScope implements Scope
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
+    // protected const $user_tag = Auth::user()->tags->last();
+
     public function apply(Builder $builder, Model $model)
     {
-        $user = Auth::user();
-//        $user->tags()->save($tag);
-//        dd($user->tags->pluck('name'));
-        $userTag = $user->tags->last();
-        $userTag->layers->first()->$userTag->children->$userTag->children;
-        $builder->whereHasMorph('taggable', [Layer::class,]);
+        $builder->whereHas('tags', function ($query) {
+            $query->whereIn('tags.name', Auth::user()->tags->pluck('name'));
+        });
     }
 }
