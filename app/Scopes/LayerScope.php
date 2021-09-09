@@ -22,7 +22,7 @@ class LayerScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         $builder->whereHas('tags', function ($query) {
-            $query->whereIn('tags.name', Auth::user()->tags->pluck('name'));
+            $query->where('tags.name', Auth::user()->tags->pluck('name')->last());
         });
     }
 }

@@ -51,4 +51,22 @@ class Layer extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function setEasy()
+    {
+        $tag = Tag::where('name', 'easy')->first();
+        $this->tags()->save($tag);
+    }
+
+    public function setMedium()
+    {
+        $tag = Tag::where('name', 'medium')->first();
+        $this->tags()->save($tag);
+    }
+
+    public function setHard()
+    {
+        $tag = Tag::where('name', 'hard')->first();
+        $this->tags()->save($tag);
+    }
 }

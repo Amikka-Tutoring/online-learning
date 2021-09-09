@@ -79,7 +79,7 @@
                                         <h6>Auditory</h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
+                                        <p class="text-right"><i class="blue-text fas fa-angle-right"></i>
                                         </p>
                                     </div>
                                 </div>
@@ -91,10 +91,16 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Course Level</h5>
-                                        <h6>Easy</h6>
+                                        <h6>{{ user_tag }}</h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right"><i class="blue-text fas fa-lock"></i></p>
+                                        <!--                                        <p class="text-right"><i class="blue-text fas fa-angle-down"></i></p>-->
+                                        <p class="text-right"><select v-model="key" name="tag" id=""
+                                                                      @change="onChange($event)">
+                                            <option value="easy">Easy</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="hard">Hard</option>
+                                        </select></p>
                                     </div>
                                 </div>
                             </li>
@@ -136,13 +142,23 @@ export default {
         logout() {
             this.$inertia.post(route("logout"));
         },
+        onChange(event) {
+            console.log(event.target.value);
+            this.$inertia.post(route('change.tag'), event.target.value);
+            this.$forceUpdate();
+        }
     },
-    props: ['user'],
+    props: ['user', 'tags', 'user_tag'],
     data() {
         return {
             avatar: this.user.profile_photo_path,
             tab: 'specific',
         }
-    },
+    }
+    ,
+    mounted(props) {
+        // console.log(this.tags)
+        // console.log(this.user_tag)
+    }
 }
 </script>

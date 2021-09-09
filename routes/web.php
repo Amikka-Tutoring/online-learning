@@ -27,12 +27,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
-Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire');
 
+Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::middleware(['auth', 'initial'])->group(function () {
+
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('profile', [PageController::class, 'profile'])->name('profile');
+    Route::post('change/tag', [PageController::class, 'changeTag'])->name('change.tag');
     Route::get('math-diagnostic', [PageController::class, 'mathDiagnostic'])->name('math-diagnostic');
     Route::post('math-diagnostic', [PageController::class, 'postMathDiagnostic'])->name('math-diagnostic-post');
     Route::get('exams', [PageController::class, 'exams'])->name('exams');

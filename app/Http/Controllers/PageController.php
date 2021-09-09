@@ -38,9 +38,10 @@ class PageController extends Controller
 
     public function profile()
     {
+        $tags = Tag::all();
 
-        //        $user = auth()->user();
-        return Inertia::render('Profile');
+        $userTag = Auth::user()->getTag();
+        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag]);
     }
 
     public function mathDiagnostic()
@@ -117,7 +118,6 @@ class PageController extends Controller
         return Inertia::render('Review');
     }
 
-
     public function test()
     {
         $layer = Layer::find(2);
@@ -135,5 +135,21 @@ class PageController extends Controller
         }])->get();
 
         dd($courses);
+    }
+
+    public function changeTag(Request $request)
+    {
+        $tag = $request->keys()[0];
+        switch ($tag) {
+            case 'medium':
+                Auth::user()->setMedium();
+                break;
+            case 'hard':
+                Auth::user()->setHard();
+                break;
+            default:
+                Auth::user()->setEasy();
+        }
+        return back();
     }
 }

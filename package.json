@@ -39,6 +39,7 @@
         "bootstrap-icons": "^1.5.0",
         "bootstrap-vue": "^2.21.2",
         "moment": "^2.29.1",
+        "toastr": "^2.1.4",
         "v-calendar": "^2.3.2",
         "vee-validate": "^4.4.10",
         "vue-the-mask": "^0.11.1",

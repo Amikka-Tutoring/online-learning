@@ -29,10 +29,12 @@ class LayerSeeder extends Seeder
             'name' => 'English Strategy',
             'course_id' => $course->id,
         ]);
+        $parent_1->setEasy();
         $parent_2 = Layer::create([
             'name' => 'About the SAT English',
             'course_id' => $course->id,
         ]);
+        $parent_1->setMedium();
 
         $video_parent = Video::create([
             'title' => 'New video',
@@ -60,6 +62,7 @@ class LayerSeeder extends Seeder
             'parent_id' => $parent_1->id,
             'course_id' => $course->id,
         ]);
+        $children_1->setEasy();
 
         $video_children = Video::create([
             'title' => 'New video 1',
@@ -88,12 +91,14 @@ class LayerSeeder extends Seeder
             'parent_id' => $parent_1->id,
             'course_id' => $course->id,
         ]);
+        $children_2->setMedium();
 
         $grand_children = Layer::create([
             'name' => 'Wordy Phrases',
             'parent_id' => $children_1->id,
             'course_id' => $course->id,
         ]);
+        $children_2->setEasy();
 
         $video_grand_children = Video::create([
             'title' => 'New video 2',
