@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -25,7 +26,8 @@ class AdminController extends Controller
 
     public function courses()
     {
-        return Inertia::render('Admin/Courses/Index');
+        $courses = Course::all();
+        return Inertia::render('Admin/Courses/Index', ['courses' => $courses]);
     }
 
     public function academicDiagnostics()

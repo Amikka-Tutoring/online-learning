@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LayerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiagnosticController;
+use App\Http\Controllers\CourseController;
 
 
 /*
@@ -29,6 +30,7 @@ Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
+Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
 Route::middleware(['auth', 'initial'])->group(function () {
 
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
@@ -60,6 +62,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('users/{id}', [UserController::class, 'show'])->name('admin.user');
     Route::get('courses', [AdminController::class, 'courses'])->name('admin.courses');
     Route::get('courses/create', [AdminController::class, 'createCourse'])->name('admin.courses.create');
+    Route::post('courses/create', [CourseController::class, 'store'])->name('admin.courses.store');
     Route::get('diagnostics/academic', [AdminController::class, 'academicDiagnostics'])->name('academic.diagnostics');
     Route::get('diagnostics/academic/create', [AdminController::class, 'createAcademicDiagnostics'])->name('academic.diagnostics.create');
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');

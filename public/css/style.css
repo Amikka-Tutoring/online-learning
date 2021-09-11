@@ -12,6 +12,11 @@ a {
     text-decoration: underline !important;
 }
 
+.tag-select {
+    border: none;
+    outline: none;
+}
+
 .side-bar {
     background: rgba(240, 244, 243, 1);
     padding-top: 50px;

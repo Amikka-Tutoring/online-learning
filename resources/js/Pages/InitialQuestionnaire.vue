@@ -49,63 +49,17 @@
                             covered by your subscription, any additonal courses will cost $30/month extra.
                         </p>
                         <div class="row">
-                            <div class="col-lg-3 col-12">
+                            <div class="col-lg-3 col-12" v-for="c in courses_data">
                                 <div class="input-cards">
                                     <img class="w-100" :src="'images/course-img.png'">
                                     <div class="row">
                                         <div class="col-9">
-                                            <h4>SAT Self-Paced</h4>
+                                            <h4>{{ c.name }}</h4>
                                         </div>
                                         <div class="col-3">
                                             <label for="check-box"></label>
-                                            <input id="check-box" type="checkbox" name="course-0" value="sat-self-paced"
-                                                   v-model="form.course">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-12">
-                                <div class="input-cards">
-                                    <img class="w-100" :src="'images/course-img.png'">
-                                    <div class="row">
-                                        <div class="col-9">
-                                            <h4>Algebra 1 Self-Paced</h4>
-                                        </div>
-                                        <div class="col-3">
-                                            <label for="check-box-0"></label>
-                                            <input id="check-box-0" type="checkbox" name="course-1"
-                                                   value="algebra1-self-paced" v-model="form.course">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-12">
-                                <div class="input-cards">
-                                    <img class="w-100" :src="'images/course-img.png'">
-                                    <div class="row">
-                                        <div class="col-9">
-                                            <h4>Algebra 2 Self-Paced</h4>
-                                        </div>
-                                        <div class="col-3">
-                                            <label for="get-up-6"></label>
-                                            <input type="checkbox" name="course-2" value="algebra2-self-paced"
-                                                   v-model="form.course" class="checkbox-effect checkbox-effect-6"
-                                                   id="get-up-6">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-12">
-                                <div class="input-cards">
-                                    <img class="w-100" :src="'images/course-img.png'">
-                                    <div class="row">
-                                        <div class="col-9">
-                                            <h4>Pre-Calculus Self Paced</h4>
-                                        </div>
-                                        <div class="col-3">
-                                            <label for="check-box-2"></label>
-                                            <input id="check-box-2" type="checkbox" name="course-3"
-                                                   value="calculus-self-paced" v-model="form.course">
+                                            <input id="check-box" type="checkbox" :value="c.id"
+                                                   v-model="form.courses">
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +86,7 @@
                         <div class="row justify-content-center align-items-center">
                             <!--                        <img :src="'/images/calendar.png'">-->
                             <!--                        <input type="checkbox" name="calendar" v-model="form.calendar">-->
-                            <input type="date" id="date" class="datepicker" v-model="form.calendar">
+                            <input type="date" id="date" class="datepicker" v-model="form.exam_date">
                         </div>
                     </div>
                     <div v-if="form.currentstep === 5">
@@ -150,7 +104,8 @@
                                             <label for="monday">Monday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="monday" name="monday" v-model="form.days">
+                                            <input type="checkbox" id="monday" name="monday" value="Monday"
+                                                   v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +115,8 @@
                                             <label for="tuesday">Tuesday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="tuesday" name="tuesday" v-model="form.days">
+                                            <input type="checkbox" id="tuesday" name="tuesday" value="Tuesday"
+                                                   v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +126,8 @@
                                             <label for="wednesday">Wednesday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="wednesday" name="wednesday" v-model="form.days">
+                                            <input type="checkbox" id="wednesday" name="wednesday" value="Wednesday"
+                                                   v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +137,8 @@
                                             <label for="thursday">Thursday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="thursday" name="thursday" v-model="form.days">
+                                            <input type="checkbox" id="thursday" value="thursday" name="Thursday"
+                                                   v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -190,10 +148,8 @@
                                             <label for="friday">Friday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input :value="n"
-                                                   :disabled="form.days.length > 1  && inputs.indexOf(n) === -1"
-                                                   type="checkbox" id="friday"
-                                                   name="friday" v-model="form.days">
+                                            <input type="checkbox" id="friday"
+                                                   name="friday" v-model="form.days" value="Friday">
                                         </div>
                                     </div>
                                 </div>
@@ -203,10 +159,8 @@
                                             <label for="saturday">Saturday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input :value="n"
-                                                   :disabled="form.days.length > 1  && inputs.indexOf(n) === -1"
-                                                   type="checkbox" id="saturday"
-                                                   name="saturday" v-model="form.days">
+                                            <input type="checkbox" id="saturday" name="saturday" value="Saturday"
+                                                   v-model="form.days">
                                         </div>
                                     </div>
                                 </div>
@@ -216,9 +170,7 @@
                                             <label for="sunday">Sunday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input :value="n"
-                                                   :disabled="form.days.length > 1  && inputs.indexOf(n) === -1"
-                                                   type="checkbox" id="sunday"
+                                            <input type="checkbox" id="sunday" value="Sunday"
                                                    name="sunday" v-model="form.days">
                                         </div>
                                     </div>
@@ -239,7 +191,8 @@
                                         <label for="monday-time">Monday</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="time" id="monday-time" name="start_time" v-model="form.start_time">
+                                        <input type="time" id="monday-time" name="first_day_time"
+                                               v-model="form.first_day_time">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -247,7 +200,8 @@
                                         <label for="friday-time">Friday</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="time" id="friday-time" name="end_time" v-model="form.end_time">
+                                        <input type="time" id="friday-time" name="second_day_time"
+                                               v-model="form.second_day_time">
                                     </div>
                                 </div>
                             </div>
@@ -314,6 +268,7 @@ export default {
         AppLayout,
         mask,
     },
+    props: ['courses_data'],
     mount() {
         // $("#date").data("DateTimePicker").show();
     },
@@ -327,12 +282,12 @@ export default {
     setup() {
         const form = reactive({
             errors: [],
-            course: [],
+            courses: [],
             desire_score: null,
             days: [],
-            calendar: null,
-            start_time: null,
-            end_time: null,
+            exam_date: null,
+            first_day_time: null,
+            second_day_time: null,
             email: null,
             tel: null,
             progress_value: 0,
@@ -342,7 +297,7 @@ export default {
 
         function next() {
             console.log(form.currentstep)
-            if (form.currentstep === 2 && !form.course.length) {
+            if (form.currentstep === 2 && !form.courses.length) {
                 form.errors = []
                 return form.errors.push('Course is required')
             }
@@ -350,15 +305,15 @@ export default {
                 form.errors = []
                 return form.errors.push('Desire Score is required (Number only)')
             }
-            if (form.currentstep === 4 && !form.calendar) {
+            if (form.currentstep === 4 && !form.exam_date) {
                 form.errors = []
-                return form.errors.push('Calendar required')
+                return form.errors.push('Exam date required')
             }
             if (form.currentstep === 5 && !form.days.length) {
                 form.errors = []
                 return form.errors.push('Days required')
             }
-            if (form.currentstep === 6 && (!form.start_time || !form.end_time)) {
+            if (form.currentstep === 6 && (!form.first_day_time || !form.second_day_time)) {
                 form.errors = []
                 return form.errors.push('Start end End Time are required')
             } else {
@@ -386,8 +341,7 @@ export default {
                 form.errors = []
                 form.progress_value = 100
                 console.log(form)
-                window.location.href = '/dashboard';
-                // form.$toastr("SUCCESS MESSAGE", "Success Toast Title");
+                Inertia.post(route('user.initial'), form);
             }
         }
 
@@ -417,6 +371,9 @@ export default {
         }
 
         return {form, submit, next, checkForm, validEmail}
+    },
+    mounted(props) {
+        console.log(this.courses_data)
     }
 }
 </script>

@@ -7,6 +7,7 @@ use App\Models\Diagnostic;
 use App\Models\Layer;
 use App\Models\Tag;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -21,10 +22,11 @@ class PageController extends Controller
 
     public function initialQuestionnaire()
     {
+        $courses = Course::all();
         if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
-        return Inertia::render('InitialQuestionnaire');
+        return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
     }
 
     public function dashboard()
@@ -41,7 +43,10 @@ class PageController extends Controller
         $tags = Tag::all();
 
         $userTag = Auth::user()->getTag();
-        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag]);
+        $user = User::with(['enrollments', 'enrollments.course', 'profile'])->find(Auth::id());
+        $user_days_available = unserialize($user->profile->days_available);
+//        dd($user->enrollments->last()->course->name);
+        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'user_days_available' => $user_days_available]);
     }
 
     public function mathDiagnostic()
@@ -141,15 +146,15 @@ class PageController extends Controller
     {
         $tag = $request->keys()[0];
         switch ($tag) {
-            case 'medium':
+            case 'Medium':
                 Auth::user()->setMedium();
                 break;
-            case 'hard':
+            case 'Hard':
                 Auth::user()->setHard();
                 break;
             default:
                 Auth::user()->setEasy();
         }
-        return back();
+        return redirect()->back()->with('message', 'Post Created Successfully.');
     }
 }

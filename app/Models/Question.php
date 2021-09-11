@@ -28,6 +28,24 @@ class Question extends Model
 
     public function tags()
     {
-        return $this->morphToMany(Tag::class, 'taggable');
+        return $this->morphTo(Tag::class, 'taggable');
+    }
+
+    public function setEasy()
+    {
+        $tag = Tag::where('name', 'Easy')->first();
+        $this->tags()->save($tag);
+    }
+
+    public function setMedium()
+    {
+        $tag = Tag::where('name', 'Medium')->first();
+        $this->tags()->save($tag);
+    }
+
+    public function setHard()
+    {
+        $tag = Tag::save('name', 'Hard')->first();
+        $this->tags()->attach($tag);
     }
 }

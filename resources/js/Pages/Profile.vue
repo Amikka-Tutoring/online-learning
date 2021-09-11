@@ -28,7 +28,9 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Enrolled Courses</h5>
-                                        <h6>SAT</h6>
+                                        <span class="h6 mr-2" v-for="c in user_data.enrollments">{{
+                                                c.course.name
+                                            }}</span>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
@@ -43,7 +45,7 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Exam Date</h5>
-                                        <h6>7/11</h6>
+                                        <h6>{{ moment(user_data.profile.exam_date).format("MM/DD") }}</h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right">Edit</p>
@@ -57,7 +59,9 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Dates</h5>
-                                        <h6>Tuesday and Thursday</h6>
+                                        <!--                                        <h6>Tuesday and Thursday</h6>-->
+                                        <h6><span class="mr-2" v-for="days in user_days_available">{{ days }}</span>
+                                        </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right">Edit</p>
@@ -95,11 +99,12 @@
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <!--                                        <p class="text-right"><i class="blue-text fas fa-angle-down"></i></p>-->
-                                        <p class="text-right"><select v-model="key" name="tag" id=""
+                                        <p class="text-right"><select class="blue-text tag-select" v-model="key"
+                                                                      name="tag" id=""
                                                                       @change="onChange($event)">
-                                            <option value="easy">Easy</option>
-                                            <option value="medium">Medium</option>
-                                            <option value="hard">Hard</option>
+                                            <option :value="user_tag" selected="">{{ user_tag }}</option>
+                                            <option :value="user_tag">--</option>
+                                            <option v-for="tag in tags" v-bind:value="tag.name">{{ tag.name }}</option>
                                         </select></p>
                                     </div>
                                 </div>
@@ -132,6 +137,7 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import CheckList from "../components/CheckList";
+import moment from "moment";
 
 export default {
     components: {
@@ -145,19 +151,19 @@ export default {
         onChange(event) {
             console.log(event.target.value);
             this.$inertia.post(route('change.tag'), event.target.value);
-            this.$forceUpdate();
         }
     },
-    props: ['user', 'tags', 'user_tag'],
+    props: ['user', 'tags', 'user_tag', 'user_data', 'user_days_available'],
     data() {
         return {
             avatar: this.user.profile_photo_path,
             tab: 'specific',
+            moment: moment,
         }
     }
     ,
     mounted(props) {
-        // console.log(this.tags)
+        console.log(this.tags)
         // console.log(this.user_tag)
     }
 }

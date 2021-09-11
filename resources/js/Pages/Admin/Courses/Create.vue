@@ -4,6 +4,16 @@
             <div class="csv-buttons">
                 <a href="" class="upload-csv">Upload CSV</a>
                 <a href="" class="delete-csv">Delete</a>
+                <form class="my-4" enctype="multipart/form-data" action=""
+                      @submit.prevent="form.post(route('admin.courses.store'))">
+                    <input id="csv" class="form-control" type="file"
+                           @input="form.file = $event.target.files[0]"/>
+                    <input class="my-4" type="submit" value="Submit">
+                </form>
+
+                <progress style="width: 100%" v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
             </div>
             <div class="csv-table">
                 <table>
@@ -44,14 +54,20 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
+import {useForm} from '@inertiajs/inertia-vue3'
 
 export default {
+    setup() {
+        const form = useForm({
+            file: null,
+        })
+        return {form}
+    },
     components: {
         AdminLayout,
     },
     props: ['user'],
     methods: {},
-
     data() {
         return {}
     },

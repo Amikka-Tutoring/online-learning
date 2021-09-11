@@ -6,12 +6,12 @@
                     <h1 class="blue-text">Courses</h1>
                     <div class="courses-content" style="margin-top: 90px">
                         <div class="row">
-                            <div v-for="course in coursesApi" class="col-lg-3 col-12" data-aos="fade-up"
+                            <div v-for="course in courses" class="col-lg-3 col-12" data-aos="fade-up"
                                  data-aos-delay="50"
                                  data-aos-once="true">
                                 <div class="input-cards mb-4">
                                     <img class="w-100" :src="'../images/course-img.png'">
-                                    <h4>{{ course.title }}</h4>
+                                    <h4>{{ course.name }}</h4>
                                     <div class="row justify-content-center align-items-center"
                                          style="margin-top: 60px; margin-bottom: 10px">
                                         <div class="col-9">
@@ -56,30 +56,10 @@ export default {
         AdminLayout,
     },
     methods: {},
+    props: ['courses'],
 
     data() {
-        return {
-            coursesApi: [
-                {
-                    title: 'SAT Math Self-Paced',
-                },
-                {
-                    title: 'Algebra 1 Self-Paced',
-                },
-                {
-                    title: 'Algebra 2 Self-Paced',
-                },
-                {
-                    title: 'Pre-Calculus Self-Paced',
-                },
-                {
-                    title: 'SAT Reading Self-Paced'
-                },
-                {
-                    title: 'SAT Grammar Self-Paced'
-                }
-            ]
-        }
+        return {}
     },
 }
 </script>

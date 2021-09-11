@@ -15,13 +15,13 @@ class TagSeeder extends Seeder
     public function run()
     {
         Tag::create([
-            'name' => 'easy'
+            'name' => 'Easy'
         ]);
         Tag::create([
-            'name' => 'medium'
+            'name' => 'Medium'
         ]);
         Tag::create([
-            'name' => 'hard'
+            'name' => 'Hard'
         ]);
     }
 }

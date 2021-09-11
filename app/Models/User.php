@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -71,19 +72,19 @@ class User extends Authenticatable
 
     public function setEasy()
     {
-        $tag = Tag::where('name', 'easy')->first();
+        $tag = Tag::where('name', 'Easy')->first();
         $this->tags()->attach($tag);
     }
 
     public function setMedium()
     {
-        $tag = Tag::where('name', 'medium')->first();
+        $tag = Tag::where('name', 'Medium')->first();
         $this->tags()->attach($tag);
     }
 
     public function setHard()
     {
-        $tag = Tag::where('name', 'hard')->first();
+        $tag = Tag::where('name', 'Hard')->first();
         $this->tags()->attach($tag);
     }
 
@@ -99,5 +100,10 @@ class User extends Authenticatable
         self::created(function ($model) {
             $model->setEasy();
         });
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class, 'user_id', 'id');
     }
 }

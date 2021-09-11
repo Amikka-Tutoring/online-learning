@@ -15,8 +15,8 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('explanation')->nullable();
+            $table->text('title')->nullable();
+            $table->text('explanation')->nullable();
             $table->boolean('is_correct')->default(0)->nullable();
             $table->foreignId('question_id')->nullable()->constrained('questions')->cascadeOnDelete();
             $table->timestamps();
