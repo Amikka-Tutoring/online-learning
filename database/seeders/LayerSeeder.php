@@ -25,6 +25,11 @@ class LayerSeeder extends Seeder
             'slug' => Str::slug('Grammar'),
 
         ]);
+        $course5 = Course::create([
+            'name' => 'Reading',
+            'slug' => Str::slug('Reading'),
+
+        ]);
         $parent_1 = Layer::create([
             'name' => 'English Strategy',
             'course_id' => $course->id,

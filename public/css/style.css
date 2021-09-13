@@ -107,43 +107,24 @@ a {
 }
 
 .first-step ol {
-    counter-reset: my-awesome-counter;
-    list-style: none;
     padding-left: 0;
     /*padding-left: 0;*/
 }
 
 .first-step ol li {
-    counter-increment: my-awesome-counter;
-    padding-left: 80px;
-    position: relative;
     font-size: 24px;
     line-height: 30px;
     margin-bottom: 57px;
+    padding-left: 80px;
 }
 
-.first-step ol li::before {
-    content: counter(my-awesome-counter) ". ";
-    background: rgba(14, 111, 255, 0.1);
-    color: white;
-    position: absolute;
-    --size: 40px;
-    left: calc(-1 * var(--size) - 10px);
-    line-height: var(--size);
-    width: var(--size);
-    height: var(--size);
-    top: 0;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 18px;
+.first-step ol li::marker {
+    color: #4c6ed7;
 }
 
-.first-step ol li:nth-last-child(2)::before {
-    background: rgba(14, 111, 255, 0.25);
-}
 
-.first-step ol li:last-child::before {
-    display: none;
+.first-step ol li:last-child::marker {
+    color: transparent;
 }
 
 .question-box {
@@ -702,8 +683,8 @@ a {
 }
 
 .notes-section {
-    background: rgba(14, 111, 255, 0.1);
     padding: 100px 0;
+    border: 1px solid black;
 }
 
 .notes-section .notes-section-content {
@@ -1448,6 +1429,15 @@ input[type="radio"] {
     .action-buttons {
         width: 100%;
         margin-bottom: 2px;
+    }
+
+    .button-row {
+        margin-left: 0 !important;
+    }
+
+
+    .first-step .row {
+        margin-left: 30px !important;
     }
 
     .notes-table,

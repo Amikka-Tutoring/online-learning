@@ -62,10 +62,8 @@ class CourseController extends Controller
                     $importData_arr = array();
                     $i = 0;
 
-                    while (($filedata = fgetcsv($file, 20000, ",")) !== FALSE) {
-
+                    while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
                         $num = count($filedata);
-
 //                        Skip first row(Remove below comment if you want to skip the first row)
                         if ($i == 0) {
                             $i++;
@@ -73,17 +71,13 @@ class CourseController extends Controller
                         }
                         for ($c = 0; $c < $num; $c++) {
                             $importData_arr[$i][] = $filedata [$c];
-
                         }
                         $i++;
                     }
                     fclose($file);
 
                     // Insert to MySQL database
-                    foreach ($importData_arr as $importData) {
-                        $test = implode('.', $importData);
-                        $row = explode(';', $test);
-
+                    foreach ($importData_arr as $row) {
                         if (count($row) != 67) {
                             return dd('Wrong format');
                         }
@@ -352,7 +346,7 @@ class CourseController extends Controller
                 dd('Invalid extension');
             }
         }
-        return back();
+        dd("File not selected");
     }
 
 }

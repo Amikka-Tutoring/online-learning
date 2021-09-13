@@ -11,9 +11,11 @@
                     <input class="my-4" type="submit" value="Submit">
                 </form>
 
-                <progress style="width: 100%" v-if="form.progress" :value="form.progress.percentage" max="100">
+                <progress style="width: 100%; height: 45px;" v-if="form.progress" :value="form.progress.percentage"
+                          max="100">
                     {{ form.progress.percentage }}%
                 </progress>
+                <span style="position: absolute; top:27.5%; left:50%; font-size: 12px" v-if="form.progress">{{ form.progress.percentage }}%</span>
             </div>
             <div class="csv-table">
                 <table>

@@ -73,19 +73,19 @@ class User extends Authenticatable
     public function setEasy()
     {
         $tag = Tag::where('name', 'Easy')->first();
-        $this->tags()->attach($tag);
+        $this->tags()->sync($tag);
     }
 
     public function setMedium()
     {
         $tag = Tag::where('name', 'Medium')->first();
-        $this->tags()->attach($tag);
+        $this->tags()->sync($tag);
     }
 
     public function setHard()
     {
         $tag = Tag::where('name', 'Hard')->first();
-        $this->tags()->attach($tag);
+        $this->tags()->sync($tag);
     }
 
     public function getTag()

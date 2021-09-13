@@ -20,23 +20,25 @@
             <div>
                 <form class="form">
                     <div v-if="form.currentstep === 1" class="first-step">
-                        <h1><span class="blue-text">Initial</span> Questionnaire</h1>
+                        <h1 class="blue-text">Initial Questionnaire</h1>
                         <div class="row" style="margin-left: 100px">
                             <ol>
                                 <li>
-                                    The <span class="blue-text">initial questionnaire</span> helps us understand which
-                                    courses you want to <span class="blue-text">improve on, your goals,</span> and <span
-                                    class="blue-text">your availability.</span>
+                                    The initial questionnaire helps us understand which
+                                    courses you want to <strong>improve on, your goals, and your availability.</strong>
                                 </li>
                                 <li>
-                                    Based on your <span class="blue-text">responses</span> we build you a personalized
-                                    course with <span class="blue-text">email</span> and <span class="blue-text">text reminders</span>
-                                    so that you don’t ever miss a lesson.
+                                    Based on your responses we build you a personalized
+                                    course with email and text reminders so that you don’t ever miss a lesson.
                                 </li>
                                 <li>
-                                    <button v-if="form.currentstep === 1" @click.prevent="next()" class="blue-button">
-                                        Start
-                                    </button>
+                                    <div class="button-row row">
+                                        <button v-if="form.currentstep === 1" @click.prevent="next()"
+                                                class="blue-button">
+                                            Start
+                                        </button>
+                                    </div>
+
                                 </li>
 
                             </ol>
