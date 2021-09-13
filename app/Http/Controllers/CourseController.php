@@ -48,7 +48,7 @@ class CourseController extends Controller
                 // Check file size
                 if ($fileSize <= $maxFileSize) {
                     // File upload location
-                    $location = 'uploads';
+                    $location = 'storage/uploads';
                     // Upload file
                     $file->move($location, $filename);
 
