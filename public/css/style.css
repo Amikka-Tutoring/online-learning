@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+* {
+    font-family: Inert;
+    font-weight: 500;
+}
+
 body {
     background: white !important;
 }
+
 
 a {
     cursor: pointer;
@@ -545,6 +553,49 @@ a {
     padding-bottom: 40px;
 }
 
+.results-wrapper {
+    background: rgba(210, 225, 245, 0.3);
+    margin: 35px;
+    margin-top: -4%;
+}
+
+.results-wrapper .result {
+    height: 450px;
+}
+
+.results-wrapper h1 {
+    font-weight: 600;
+}
+
+.results-wrapper .strengths-weakness {
+    background: rgba(122, 171, 220, 0.2);
+}
+
+.results-wrapper .strengths-weakness h4 {
+    font-weight: 600;
+}
+
+.results-wrapper .plan {
+    display: flex;
+    align-items: center;
+    height: 400px;
+}
+
+@media (max-width: 767.98px), (max-width: 991.98px) {
+    .results-wrapper .plan, .result {
+        height: 100% !important;
+        padding: 25px 0;
+    }
+
+    .results-wrapper img {
+        display: none;
+    }
+}
+
+.results-wrapper ol li {
+    padding: 15px;
+}
+
 .exam-box {
     width: 500px;
     max-width: 500px;
@@ -656,15 +707,15 @@ a {
 }
 
 .grammar-course .grammar-course-content .second-list {
-    background: rgba(252, 203, 159, 0.75);
+    background: rgba(103, 162, 69, 0.75);
 }
 
 .grammar-course .grammar-course-content .third-list {
-    background: rgba(255, 184, 184, 0.44);
+    background: rgba(255, 0, 0, 0.44);
 }
 
 .grammar-course .grammar-course-content .fourth-list {
-    background: rgba(143, 225, 215, 0.44);
+    background: rgba(255, 146, 0, 0.6);
 }
 
 .lesson {

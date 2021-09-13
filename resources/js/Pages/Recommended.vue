@@ -137,35 +137,34 @@
                         score,
                         time until exam, and progress.</p>
                     <template v-for="course in courses">
-                        <div class="first-list grammar-list w-100" @click="full_course = !full_course">
+                        <div class="first-list grammar-list w-100" @click="hide(course.id)">
                             <div class="row">
                                 <div class="col-10">
                                     {{ course.name }}
                                 </div>
                                 <div class="col-2 text-right">
-                                    <i v-bind:class="full_course ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                       class="text-white"></i>
+                                    <i :class="'course-icon-'+course.id" class="fas fa-chevron-down text-white"></i>
                                 </div>
                             </div>
                         </div>
                         <collapse-transition>
-                            <div v-show="full_course" class="full-course">
+                            <div class="d-none" :class="'full-course-' +course.id">
                                 <template v-for="topLayer in course.layers">
                                     <div class="second-list grammar-list w-75"
-                                         @click="english_strategy = !english_strategy">
+                                         @click="hideTop(topLayer.id)">
                                         <div class="row">
                                             <div class="col-10">
                                                 {{ topLayer.name }}
                                             </div>
                                             <div class="col-2 text-right">
-                                                <i v-bind:class="english_strategy ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                                   class="text-white"></i>
+                                                <i :class="'top-icon-'+course.id"
+                                                   class="fas fa-chevron-down text-white"></i>
                                             </div>
                                         </div>
                                     </div>
 
                                     <collapse-transition>
-                                        <div v-if="english_strategy" class="english_strategy">
+                                        <div class="d-none" :class="'toplayer-' +topLayer.id">
                                             <div v-for="top_videos in topLayer.videos"
                                                  class="recommended-item w-75">
                                                 <div class="row">
@@ -188,19 +187,19 @@
                                             </div>
                                             <template v-for="midLayer in topLayer.children">
                                                 <div class="third-list grammar-list w-60"
-                                                     @click="concision1 = !concision1">
+                                                     @click="hideMid(midLayer.id)">
                                                     <div class="row">
                                                         <div class="col-10">
                                                             {{ midLayer.name }}
                                                         </div>
                                                         <div class="col-2 text-right">
-                                                            <i v-bind:class="concision1 ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                                               class="text-white"></i>
+                                                            <i :class="'mid-icon-'+course.id"
+                                                               class="fas fa-chevron-down text-white"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <collapse-transition>
-                                                    <div v-if="concision1" class="concision1">
+                                                    <div class="d-none" :class="'midlayer-' +midLayer.id">
                                                         <div v-for="mid_videos in midLayer.videos"
                                                              class="recommended-item w-60">
                                                             <div class="row">
@@ -224,34 +223,37 @@
                                                         <div class="w-50">
                                                             <template v-for="lesson in midLayer.children">
                                                                 <div class="fourth-list grammar-list"
-                                                                     @click="wordy_phrases = !wordy_phrases">
+                                                                     @click="hideLess(lesson.id)">
                                                                     <div class="row">
                                                                         <div class="col-10">
                                                                             {{ lesson.name }}
                                                                         </div>
                                                                         <div class="col-2 text-right">
-                                                                            <i v-bind:class="wordy_phrases ? 'fas fa-chevron-up': 'fas fa-chevron-down'"
-                                                                               class="text-white"></i>
+                                                                            <i :class="'less-icon-'+course.id"
+                                                                               class="fas fa-chevron-down text-white"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div v-for="less_videos in lesson.videos"
-                                                                     class="recommended-item">
-                                                                    <div class="row">
-                                                                        <div
-                                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                            <i class="fas fa-play-circle fa-2x"
-                                                                               style="color: #4C6ED7"></i>
-                                                                        </div>
-                                                                        <div class="col-8 d-flex align-items-center">
-                                                                            <h5>{{ less_videos.title }}<span
-                                                                                class="ml-2 badges gray-badge">Strategy</span><span
-                                                                                class="ml-2 badges gray-badge">All</span>
-                                                                            </h5>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                            <h5>03:23</h5>
+                                                                <div class="d-none" :class="'lesson-' +lesson.id">
+                                                                    <div v-for="less_videos in lesson.videos"
+                                                                         class="recommended-item">
+                                                                        <div class="row">
+                                                                            <div
+                                                                                class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                                                <i class="fas fa-play-circle fa-2x"
+                                                                                   style="color: #4C6ED7"></i>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-8 d-flex align-items-center">
+                                                                                <h5>{{ less_videos.title }}<span
+                                                                                    class="ml-2 badges gray-badge">Strategy</span><span
+                                                                                    class="ml-2 badges gray-badge">All</span>
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                                                <h5>03:23</h5>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -282,7 +284,28 @@ export default {
         AppLayout,
         CollapseTransition
     },
-    methods: {},
+    methods: {
+        hide(value) {
+            console.log(value)
+            $('.full-course-' + value).toggleClass('d-none', 'd-block')
+            $('.course-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
+        },
+        hideTop(value) {
+            console.log(value)
+            $('.toplayer-' + value).toggleClass('d-none', 'd-block')
+            $('.top-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
+        },
+        hideMid(value) {
+            console.log(value)
+            $('.midlayer-' + value).toggleClass('d-none', 'd-block')
+            $('.mid-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
+        },
+        hideLess(value) {
+            console.log(value)
+            $('.lesson-' + value).toggleClass('d-none', 'd-block')
+            $('.less-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
+        }
+    },
     props: ['courses'],
 
     data() {

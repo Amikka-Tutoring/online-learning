@@ -9,6 +9,7 @@ use App\Http\Controllers\LayerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\NotesController;
 
 
 /*
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('exams', [PageController::class, 'exams'])->name('exams');
     Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
     Route::get('my-courses/course', [PageController::class, 'course'])->name('course');
+    Route::get('lesson/{id}', [PageController::class, 'lesson'])->name('lesson');
     Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
     Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
     Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
@@ -52,6 +54,8 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('review', [PageController::class, 'review'])->name('review');
     Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
     Route::post('diagnostics/result', [DiagnosticController::class, 'result'])->name('diagnostic.result');
+    Route::get('results', [PageController::class, 'results'])->name('results');
+    Route::post('lesson/notes', [NotesController::class, 'store'])->name('notes.store');
 });
 
 
@@ -73,3 +77,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
 Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');
 Route::get('diagnostics', [LayerController::class, 'diagnostics'])->name('diagnostics');
+Route::get('subscription', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');

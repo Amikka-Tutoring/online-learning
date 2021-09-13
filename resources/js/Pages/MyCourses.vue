@@ -18,30 +18,30 @@
                         </p>
                     </transition>
                     <div class="row">
-                        <div v-for="course in coursesApi" class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="50"
+                        <div v-for="user_course in user_courses.enrollments" class="col-lg-3 col-12" data-aos="fade-up"
+                             data-aos-delay="50"
                              data-aos-once="true">
                             <a :href="route('course')">
                                 <div class="input-cards">
                                     <img class="w-100" :src="'images/course-img.png'">
-                                    <h4>{{ course.title }}</h4>
+                                    <h4>{{ user_course.course.name }}</h4>
                                     <div class="row justify-content-center align-items-center"
                                          style="margin-top: 60px; margin-bottom: 10px">
                                         <div class="col-9">
                                             <div class="progress" style="height: 5px; margin-left: 20px">
-                                                <div :style="{width: course.completion +'%'}"
-                                                     style="background: #4C6ED7;"
-                                                     class="progress-bar"
-                                                     role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                                     aria-valuemax="100"></div>
+                                                <div
+                                                    style="background: #4C6ED7; width: 50%"
+                                                    class="progress-bar"
+                                                    role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                    aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                         <div class="col-3">
-                                            <div class="blue-text">{{ course.modules }}/10</div>
+                                            <div class="blue-text">5/10</div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
-
                         </div>
                     </div>
                     <p>Why should I do this?</p>
@@ -59,33 +59,12 @@ export default {
     components: {
         AppLayout,
     },
+    props: ['user_courses'],
     methods: {},
 
     data() {
         return {
             courses: true,
-            coursesApi: [
-                {
-                    title: 'Mathematics',
-                    completion: '50',
-                    modules: '5'
-                },
-                {
-                    title: 'Reading',
-                    completion: '30',
-                    modules: '3'
-                },
-                {
-                    title: 'Grammar',
-                    completion: '70',
-                    modules: '7'
-                },
-                {
-                    title: 'Reading',
-                    completion: '90',
-                    modules: '9'
-                }
-            ]
         }
     },
 }

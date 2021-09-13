@@ -346,7 +346,7 @@ class CourseController extends Controller
                 dd('Invalid extension');
             }
         }
-        dd("File not selected");
+        return redirect()->back()->with('message', 'File not selected!');
     }
 
 }

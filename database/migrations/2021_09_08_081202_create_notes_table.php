@@ -15,7 +15,7 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->string('topic');
+            $table->string('topic')->nullable();
             $table->text('written_notes')->nullable();
             $table->text('audio_notes')->nullable();
             $table->foreignId('layer_id')->nullable()->constrained('layers')->cascadeOnDelete();

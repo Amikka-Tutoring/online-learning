@@ -6,7 +6,7 @@
                     <img class="rounded-circle" style="width: 120px" :src="avatar">
                 </div>
                 <h1>{{ user.name }}</h1>
-                <p>@{{ user.email }}</p>
+                <p>{{ user.email }}</p>
                 <!--                <button class="premium-btn">-->
                 <!--                    Become Premium-->
                 <!--                </button>-->

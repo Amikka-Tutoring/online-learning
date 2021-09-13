@@ -7,6 +7,7 @@ use App\Models\Diagnostic;
 use App\Models\Layer;
 use App\Models\Tag;
 use App\Models\User;
+use App\Scopes\LayerScope;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,11 +32,12 @@ class PageController extends Controller
 
     public function dashboard()
     {
+        $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes')->where('name', 'Academic')->first();
 
         //        dd($academic);
-        return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic]);
+        return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'user_courses' => $user_courses]);
     }
 
     public function profile()
@@ -66,7 +68,16 @@ class PageController extends Controller
 
     public function myCourses()
     {
-        return Inertia::render('MyCourses');
+        $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
+        return Inertia::render('MyCourses', ['user_courses' => $user_courses]);
+    }
+
+    public function lesson($id)
+    {
+        $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos')->find($id);
+//
+//        dd($lesson);
+        return Inertia::render('Course', ['lesson' => $lesson]);
     }
 
     public function recommended()
@@ -86,6 +97,11 @@ class PageController extends Controller
     public function course()
     {
         return Inertia::render('Course');
+    }
+
+    public function results()
+    {
+        return Inertia::render('DiagnosticResults');
     }
 
     public function calendar()

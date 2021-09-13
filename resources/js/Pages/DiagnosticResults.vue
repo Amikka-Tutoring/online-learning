@@ -1,100 +1,66 @@
 <template>
     <app-layout>
-        <div class="container">
-        <div class="results">
-            <h1 class="blue-text">Results</h1>
-            <div class="results-content pl-5" style="margin-top: 90px">
-                <div class="row">
-                    <div class="col-lg-4 col-12 d-flex align-items-center justify-content-center">
-                        <img :src="'/images/laptop.png'">
-                    </div>
-                    <div class="col-lg-8 col-12 d-flex align-items-center">
-                        <p>Based on your results from your <span class="blue-text">academic diagnostic</span> and <span class="blue-text">personality diagnostic</span> we will create a personalize course for you.  </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="strengths">
+        <div class="results-wrapper">
             <div class="container">
-            <h1 class="blue-text">Strengths</h1>
-            <div class="strengths-content pl-5" style="margin-top: 90px">
-                <div class="row" style="margin-left: 50px">
-                    <ol>
-                        <li>
-                           Plug-in problems
-                        </li>
-                        <li>
-                            World problems
-                        </li>
-                        <li>
-                            Time management
-                        </li>
-                        <li>
-                            Content
-                        </li>
-                        <li>
-                            Geometry
-                        </li>
-                    </ol>
+                <div class="row result">
+                    <div class="col-md-7 align-self-center">
+                        <div class="text">
+                            <h1 class="blue-text mb-4">Results</h1>
+                            <p>Based on your results from your <strong>academic diagnostic</strong>
+                                and
+                                <strong>personality diagnostic</strong> we will create a personalize
+                                course for you.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <img :src="'images/results-image.png'"
+                             style="position:absolute; height: 710px; top:43%; right: 0">
+                    </div>
                 </div>
             </div>
+            <div class="strengths-weakness result d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="text-center mb-4">Strengths</h4>
+                                    <ol>
+                                        <li>Plug-in problems</li>
+                                        <li>Word problems</li>
+                                        <li>Time management</li>
+                                        <li>Content</li>
+                                        <li>Geometry</li>
+                                    </ol>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="text-center mb-4">Weaknesses</h4>
+                                    <ol>
+                                        <li>Time management</li>
+                                        <li>Calculus</li>
+                                        <li>Time management</li>
+                                        <li>Algebra 2</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="container">
-        <div class="weaknesses">
-            <h1 class="blue-text">Weaknesses</h1>
-            <div class="strengths-content pl-5" style="margin-top: 90px">
-                <div class="row" style="margin-left: 50px">
+            <div class="plan">
+                <div class="container">
+                    <h1 class="blue-text mb-4">Our Plan For You</h1>
                     <ol>
-                        <li>
-                            Time management
-                        </li>
-                        <li>
-                            Calculus
-                        </li>
-                        <li>
-                            Time management
-                        </li>
-                        <li>
-                            Algebra 2
-                        </li>
-                        <li>
-                            Math
-                        </li>
+                        <li>Plug-in problems</li>
+                        <li>Word problems</li>
+                        <li>Time management</li>
                     </ol>
                 </div>
             </div>
         </div>
-        </div>
-
-        <div class="strengths">
-            <div class="container">
-                <h1 class="blue-text">Our Plan For You</h1>
-                <div class="strengths-content pl-5" style="margin-top: 90px">
-                    <div class="row" style="margin-left: 50px">
-                        <ol>
-                            <li>
-                                Lesson 1
-                            </li>
-                            <li>
-                                Lesson 2
-                            </li>
-                            <li>
-                                If you want us to build you a full course plan please complete the additional <span class="blue-text">academic diagnostics</span> and <span class="blue-text">personality diagnostics </span>on the home page right now.
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row d-flex justify-content-center" style="padding: 6rem">
-                <button class="blue-button">Next Diagnostic</button>
-            </div>
-
-        </div>
-
     </app-layout>
 </template>
 
@@ -105,14 +71,10 @@ export default {
     components: {
         AppLayout,
     },
-    methods: {
-
-    },
+    methods: {},
 
     data() {
-        return {
-
-        }
+        return {}
     },
 }
 </script>

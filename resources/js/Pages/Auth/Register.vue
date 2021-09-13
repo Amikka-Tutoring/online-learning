@@ -8,7 +8,6 @@
 
             <jet-validation-errors class="mb-3"/>
             <h1 class="blue-text my-4 text-center login-title">Amikka</h1>
-
             <form @submit.prevent="submit">
                 <div class="form-group">
                     <jet-label for="name" value="Name"/>

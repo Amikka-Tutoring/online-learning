@@ -1,11 +1,14 @@
 <template>
     <app-layout>
         <tools-menu/>
+
         <div class="container">
-            <div class="lesson">
+            <div class="lesson" v-for="video in lesson.videos">
                 <div class="row flex-column align-items-center p-4">
-                    <h1 class="blue-text">Lesson 1: Solving Word Problems: Steps & Examples</h1>
-                    <img style="max-width: 826px; width: 100%" :src="'/images/lesson.png'">
+                    <h1 style="margin-top: -18%">{{ video.title }}</h1>
+                    <iframe style="max-width: 826px; width: 100%; height: 500px; margin: 90px 0; border: none"
+                            :src="video.url">
+                    </iframe>
                     <button href="" class="blue-button">Quiz</button>
                 </div>
             </div>
@@ -36,8 +39,11 @@
                         </div>
                         <div class="col-lg-10 col-12 p-4">
                             <h1 class="blue-text">Written Notes</h1>
-                            <textarea name="" id="" cols="80" rows="15" placeholder="Notes.."></textarea>
-                            <button class="light-button">Submit</button>
+                            <form action="" @submit.prevent="submit">
+                                <textarea name="written_notes" id="" cols="80" rows="15" v-model="form.written_notes"
+                                          placeholder="Notes.."></textarea>
+                                <button class="light-button">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -121,17 +127,36 @@
 import AppLayout from '@/Layouts/AppLayout'
 import Button from "@/Jetstream/Button";
 import ToolsMenu from "../components/ToolsMenu";
+import {reactive} from 'vue'
+import {Inertia} from '@inertiajs/inertia'
 
 export default {
+    props: ['lesson'],
+    setup(props) {
+        const form = reactive({
+            written_notes: null,
+            lesson_id: props.lesson.id,
+        })
+
+        function submit() {
+            Inertia.post(route('notes.store'), form)
+        }
+
+        return {form, submit}
+    },
     components: {
         Button,
         AppLayout,
-        ToolsMenu
+        ToolsMenu,
     },
     methods: {},
+
 
     data() {
         return {}
     },
+    mounted() {
+        console.log(this.lesson)
+    }
 }
 </script>
