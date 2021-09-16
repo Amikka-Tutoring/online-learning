@@ -17,6 +17,10 @@ class ApiController extends Controller
     public function course($slug)
     {
         $course = Course::where('slug', $slug)->first();
-        return response()->json($course)->header('token', '123');
+        if ($course) {
+            return response()->json($course)->header('token', '123');
+        }
+        return response()->json('Course not found');
+
     }
 }
