@@ -108,4 +108,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Enrollment::class, 'user_id', 'id');
     }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }

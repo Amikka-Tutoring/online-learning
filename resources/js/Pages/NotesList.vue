@@ -33,20 +33,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(item,index) in (sortedItems,computedList)">
-                        <td>{{ item.dates }}</td>
-                        <td>{{ item.class }}</td>
-                        <td>{{ item.topics }}</td>
+                    <tr v-for="(note,index) in notes">
+                        <td>{{ moment(note.created_at).format("MM/DD") }}</td>
+                        <td>{{ note.lesson.name }}</td>
+                        <td>{{ note.topic }}</td>
                         <td>
-                            <!--                        <span v-for="tag in item.tags">-->
-                            <!--                            {{ tag.tag }}, -->
-                            <!--                        </span>-->
-                            <span class="lightblue-badge badges">Lesson</span>
-                            <span class="gray-badge badges">Strategy</span>
-                            <span class="lightrose-badge badges">Medium</span>
+                            <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{ tag.name }}</span>
                         </td>
                     </tr>
-                    <p v-if="!computedList.length">No row found</p>
+                    <p v-if="!notes.length">No row found</p>
                     </tbody>
                 </table>
             </div>
@@ -58,73 +53,20 @@
 
 <script>
 import AppLayout from '@/Layouts/AppLayout'
+import moment from 'moment'
 
 export default {
     components: {
         AppLayout,
     },
+    props: ['notes'],
     data() {
         return {
             currentSort: 'class',
             currentSortDir: 'asc',
             query: '',
             calendar: false,
-            items: [
-                {
-                    id: 1,
-                    dates: '7/11',
-                    class: 'ALG',
-                    topics: 'Linear',
-                    tags: [
-                        {
-                            tag: 'lesson'
-                        },
-                        {
-                            tag: 'linear'
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    dates: '8/11',
-                    class: 'ALG 2',
-                    topics: 'Quadratic',
-                    tags: [
-                        {
-                            tag: 'lesson'
-                        },
-                        {
-                            tag: 'linear'
-                        }
-                    ]
-                }, {
-                    id: 3,
-                    dates: '8/11',
-                    class: 'Math',
-                    topics: 'Math',
-                    tags: [
-                        {
-                            tag: 'lesson'
-                        },
-                        {
-                            tag: 'linear'
-                        }
-                    ]
-                }, {
-                    id: 4,
-                    dates: '8/11',
-                    class: 'Geography',
-                    topics: 'Geography',
-                    tags: [
-                        {
-                            tag: 'lesson'
-                        },
-                        {
-                            tag: 'linear'
-                        }
-                    ]
-                },
-            ]
+            moment: moment,
         }
     },
     methods: {
@@ -137,14 +79,14 @@ export default {
         }
     },
     computed: {
-        computedList: function () {
+        computedList: function (props) {
             var vm = this
-            return this.items.filter(function (item) {
-                return item.class.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
+            return props.notes.filter(function (item) {
+                // return item.class.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
             })
         },
         sortedItems: function () {
-            return this.items.sort((a, b) => {
+            return this.notes.sort((a, b) => {
                 let modifier = 1;
                 if (this.currentSortDir === 'desc') modifier = -1;
                 if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;

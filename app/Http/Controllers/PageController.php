@@ -117,7 +117,10 @@ class PageController extends Controller
 
     public function notesList()
     {
-        return Inertia::render('NotesList');
+        $user = Auth::user();
+        $notes = $user->notes()->with(['lesson', 'lesson.tags'])->get();
+
+        return Inertia::render('NotesList', ['notes' => $notes]);
     }
 
     public function notesBlock()

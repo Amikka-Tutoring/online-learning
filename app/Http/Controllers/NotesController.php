@@ -17,6 +17,6 @@ class NotesController extends Controller
             'user_id' => Auth::id(),
             'layer_id' => $request->lesson_id
         ]);
-        dd($notes);
+        dd('Saved successfully');
     }
 }

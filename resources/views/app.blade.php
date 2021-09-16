@@ -25,7 +25,7 @@
     @routes
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://js.stripe.com/v3/" defer></script>
+    {{--    <script src="https://js.stripe.com/v3/" defer></script>--}}
 </head>
 <body class="">
 @inertia

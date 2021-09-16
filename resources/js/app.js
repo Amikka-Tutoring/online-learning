@@ -6,6 +6,7 @@ import {App as InertiaApp, plugin as InertiaPlugin} from '@inertiajs/inertia-vue
 import {InertiaProgress} from '@inertiajs/progress';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import moment from 'moment'
 
 
 // import CollapseTransition from '@ivanv/vue-collapse-transition';
@@ -23,7 +24,7 @@ createApp({
         }),
 })
     .mixin({methods: {route}})
-    .use(InertiaPlugin)
+    .use(InertiaPlugin, moment)
     .mount(el);
 
 InertiaProgress.init({color: '#4B5563'});
