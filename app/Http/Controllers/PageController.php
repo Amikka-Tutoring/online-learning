@@ -11,6 +11,7 @@ use App\Scopes\LayerScope;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class PageController extends Controller
@@ -141,21 +142,7 @@ class PageController extends Controller
 
     public function test()
     {
-        $layer = Layer::find(2);
-        $tag = Tag::where('name', 'easy')->first();
-        // dd($layers);
-
-        // $user = Auth::user();
-        //    $layer->tags()->save($tag);
-        //        dd($user->tags->pluck('name'));
-        // $userTag = $user->tags->last();
-
-
-        $courses = Course::with(['layers' => function ($query) {
-            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
-        }])->get();
-
-        dd($courses);
+        return $response = Http::withHeaders(['token' => 123])->get('http://learning.ajroniwebs.com/api/courses');
     }
 
     public function changeTag(Request $request)

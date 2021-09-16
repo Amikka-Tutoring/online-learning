@@ -12,11 +12,6 @@ class ApiController extends Controller
     {
 
         $courses = Course::all();
-        return response()->json($courses->pluck('name'))->header('token', '123');
-    }
-
-    public function testCourses()
-    {
-        $response = Http::withHeaders(['token' => '123'])->get('localhost:8080/api/courses');
+        return response()->json($courses)->header('token', '123');
     }
 }
