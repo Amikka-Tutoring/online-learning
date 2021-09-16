@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::middleware('token')->group(function () {
     Route::get('courses', [ApiController::class, 'courses']);
-    Route::get('test', [ApiController::class, 'testCourses']);
+    Route::get('courses/{slug}', [ApiController::class, 'course']);
 });
