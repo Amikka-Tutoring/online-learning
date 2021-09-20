@@ -10,10 +10,15 @@ class NotesController extends Controller
 {
     public function store(Request $request)
     {
+        dd($request->all());
 
-        $notes = Note::create([
+        $notes = Note::updateOrCreate(
+            [
+                'layer_id' => $request->lesson_id,
+                'user_id' => Auth::id()
+            ], [
             'topic' => 'test',
-            'written_notes' => $request->written_notes,
+            'written_notes' => $request->note,
             'user_id' => Auth::id(),
             'layer_id' => $request->lesson_id
         ]);

@@ -76,9 +76,10 @@ class PageController extends Controller
     public function lesson($id)
     {
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos')->find($id);
-//
-//        dd($lesson);
-        return Inertia::render('Course', ['lesson' => $lesson]);
+        $user = Auth::user();
+        $notes = $user->notes->where('layer_id', $lesson->id)->first();
+//        dd($notes);
+        return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes]);
     }
 
     public function recommended()

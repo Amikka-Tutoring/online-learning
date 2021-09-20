@@ -5,7 +5,7 @@
         <div class="container">
             <div class="lesson" v-for="video in lesson.videos">
                 <div class="row flex-column align-items-center p-4">
-                    <h1 style="margin-top: -18%">{{ video.title }}</h1>
+                    <h1 style="margin-top: -18%" id="topic">{{ video.title }}</h1>
                     <iframe style="max-width: 826px; width: 100%; height: 500px; margin: 90px 0; border: none"
                             :src="video.url">
                     </iframe>
@@ -40,8 +40,8 @@
                         <div class="col-lg-10 col-12 p-4">
                             <h1 class="blue-text">Written Notes</h1>
                             <form action="" @submit.prevent="submit">
-                                <textarea name="written_notes" id="" cols="80" rows="15" v-model="form.written_notes"
-                                          placeholder="Notes.."></textarea>
+                                <textarea v-model="form.note" id="" cols="80" rows="15" name="written_notes"
+                                          placeholder="Notes..."></textarea>
                                 <button class="light-button">Submit</button>
                             </form>
                         </div>
@@ -131,11 +131,14 @@ import {reactive} from 'vue'
 import {Inertia} from '@inertiajs/inertia'
 
 export default {
-    props: ['lesson'],
+    props: ['lesson', 'notes'],
+
     setup(props) {
+
         const form = reactive({
-            written_notes: null,
+            note: props.notes?.written_notes,
             lesson_id: props.lesson.id,
+            topic: document.getElementById('topic')?.innerHTML,
         })
 
         function submit() {
@@ -156,7 +159,7 @@ export default {
         return {}
     },
     mounted() {
-        console.log(this.lesson)
+        console.log('video: ' + document.getElementById('topic').innerHTML)
     }
 }
 </script>

@@ -7,7 +7,7 @@
                     <div class="col-lg-4 col-12 mb-4">
                         <div class="dashboard-boxes">
                             <div class="box-content">
-                                <h1>19</h1>
+                                <h1>{{ user_count }}</h1>
                                 <h3>Active Users</h3>
                             </div>
                         </div>
@@ -35,6 +35,7 @@ export default {
         AdminLayout,
     },
     methods: {},
+    props: ['user_count'],
 
     data() {
         return {}

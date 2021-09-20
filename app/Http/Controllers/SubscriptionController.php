@@ -8,6 +8,7 @@ class SubscriptionController extends Controller
 {
     public function subscribe()
     {
-        return view('subscribe');
+//        return view('subscribe');
+        return view('subscribe1');
     }
 }

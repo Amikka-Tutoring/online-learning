@@ -69,4 +69,10 @@ class Layer extends Model
         $tag = Tag::where('name', 'hard')->first();
         $this->tags()->save($tag);
     }
+
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }
