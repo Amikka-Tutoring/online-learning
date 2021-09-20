@@ -21,13 +21,11 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-//        return back();
-
 
         $request->validate([
             'file' => 'required|mimes:csv,txt|max:1024'
         ]);
-
+        return redirect()->back()->with('message', 'Imported Successfully.');
 
         $file = $request->file('file');
         // File Details
@@ -49,13 +47,13 @@ class CourseController extends Controller
 
         while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
-//                        Skip first row(Remove below comment if you want to skip the first row)
+            //                        Skip first row(Remove below comment if you want to skip the first row)
             if ($i == 0) {
                 $i++;
                 continue;
             }
             for ($c = 0; $c < $num; $c++) {
-                $importData_arr[$i][] = $filedata [$c];
+                $importData_arr[$i][] = $filedata[$c];
             }
             $i++;
         }

@@ -8,80 +8,93 @@
                 <a href="" class="upload-csv">Upload CSV</a>
                 <a href="" class="delete-csv">Delete</a>
 
-                <form class="my-4" enctype="multipart/form-data" action=""
-                      @submit.prevent="submit">
-                    <input id="csv" class="form-control" type="file"
-                           accept=".csv"
-                           @input="form.file = $event.target.files[0]"/>
-                    <input class="my-4" type="submit" value="Submit">
+                <form
+                    class="my-4"
+                    enctype="multipart/form-data"
+                    action=""
+                    @submit.prevent="submit"
+                >
+                    <input
+                        id="csv"
+                        class="form-control"
+                        type="file"
+                        accept=".csv"
+                        @input="form.file = $event.target.files[0]"
+                    />
+                    <input class="my-4" type="submit" value="Submit" />
                 </form>
 
-                <progress style="width: 100%; height: 45px;" v-if="form.progress" :value="form.progress.percentage"
-                          max="100">
+                <progress
+                    style="width: 100%; height: 45px"
+                    v-if="form.progress"
+                    :value="form.progress.percentage"
+                    max="100"
+                >
                     {{ form.progress.percentage }}%
                 </progress>
-                <span style="position: absolute; top:27.5%; left:50%; font-size: 12px"
-                      v-if="form.progress">{{ form.progress.percentage }}%</span>
+                <span
+                    style="
+                        position: absolute;
+                        top: 27.5%;
+                        left: 50%;
+                        font-size: 12px;
+                    "
+                    v-if="form.progress"
+                    >{{ form.progress.percentage }}%</span
+                >
             </div>
             <div class="csv-table">
                 <table>
                     <thead>
-                    <tr>
-                        <th>toplayer_name</th>
-                        <th>toplayer_video</th>
-                        <th>toplayer_title</th>
-                        <th>toplayer_tags</th>
-                        <th>question_difficulty_level</th>
-                        <th>question_explanation</th>
-                        <th>option_a</th>
-                        <th>option_b</th>
-                        <th>option_c</th>
-                        <th>option_d</th>
-                    </tr>
+                        <tr>
+                            <th>toplayer_name</th>
+                            <th>toplayer_video</th>
+                            <th>toplayer_title</th>
+                            <th>toplayer_tags</th>
+                            <th>question_difficulty_level</th>
+                            <th>question_explanation</th>
+                            <th>option_a</th>
+                            <th>option_b</th>
+                            <th>option_c</th>
+                            <th>option_d</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="n in 10">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                        <tr v-for="n in 10">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </admin-layout>
 </template>
 
 <script>
-import AdminLayout from '@/Layouts/AdminLayout'
-import {useForm} from '@inertiajs/inertia-vue3'
-import {useToast} from "vue-toastification";
-import {computed} from 'vue'
-import {usePage} from '@inertiajs/inertia-vue3'
-
+import AdminLayout from "@/Layouts/AdminLayout";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { useToast } from "vue-toastification";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/inertia-vue3";
 export default {
     setup(props) {
-        // Get toast interface
         const toast = useToast();
-        const message = computed(() => usePage().props.value.flash.message)
-        // props.errors.forEach(element => console.log(element));
-        // // or with options
-        // These options will override the options defined in the "app.use" plugin registration for this specific toast
-
-        // Make it available inside methods
-        return {toast, message}
+        const message = computed(() => usePage().props.value.flash.message);
+        return { toast, message };
     },
     props: {
         user: Object,
         errors: Object,
+        flash: this,
     },
     components: {
         AdminLayout,
@@ -90,29 +103,39 @@ export default {
     data() {
         return {
             form: {
-                file: null
-            }
-        }
+                file: null,
+            },
+        };
     },
     methods: {
         submit() {
-            this.$inertia.post(route('admin.courses.store'), this.form)
-            const flash = computed(() => usePage().props.value.flash.message)
-            console.log('Message' + flash)
+            this.$inertia.post(route("admin.courses.store"), this.form);
         },
     },
+    mounted() {
+        // console.log(this.$inertia);
+    },
     watch: {
-        // errors(val, oldVal) {
-        //     if (val !== oldVal) {
-        //         this.toast.error(this.errors.file)
-        //     }
-        // },
-        flash(val, oldVal) {
-            if (val !== oldVal) {
-                this.toast.error(this.flash.message)
+        errors(val, oldVal) {
+            console.log("errors");
+            console.log(val);
+            console.log(oldVal);
+            if (!Object.is(val, oldVal)) {
+                console.log(this.$inertia.page);
+                this.toast.error(this.errors.file);
+                val = null;
             }
-        }
-
-    }
-}
+        },
+        flash(val, oldVal) {
+            console.log("flash");
+            console.log(val);
+            console.log(oldVal);
+            if (!Object.is(val, oldVal)) {
+                console.log(this.$inertia.page);
+                this.toast.success(this.flash.message);
+                val = null;
+            }
+        },
+    },
+};
 </script>

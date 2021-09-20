@@ -1,27 +1,30 @@
-require('./bootstrap');
+require("./bootstrap");
 
 // Import modules...
-import {createApp, h} from 'vue';
-import {App as InertiaApp, plugin as InertiaPlugin} from '@inertiajs/inertia-vue3';
-import {InertiaProgress} from '@inertiajs/progress';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import moment from 'moment';
+import { createApp, h } from "vue";
+import {
+    App as InertiaApp,
+    plugin as InertiaPlugin,
+} from "@inertiajs/inertia-vue3";
+import { InertiaProgress } from "@inertiajs/progress";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import moment from "moment";
 import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
-
+import VueSession from "vue-session";
 
 // import CollapseTransition from '@ivanv/vue-collapse-transition';
 
-const el = document.getElementById('app');
+const el = document.getElementById("app");
 const options = {
     // You can set your default options here
 };
 
 createApp({
     created() {
-        AOS.init()
+        AOS.init();
     },
     render: () =>
         h(InertiaApp, {
@@ -29,8 +32,9 @@ createApp({
             resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
 })
-    .mixin({methods: {route}})
-    .use(InertiaPlugin, moment).use(Toast, options)
+    .mixin({ methods: { route } })
+    .use(InertiaPlugin, moment)
+    .use(Toast, options)
     .mount(el);
 
-InertiaProgress.init({color: '#4B5563'});
+InertiaProgress.init({ color: "#4B5563" });
