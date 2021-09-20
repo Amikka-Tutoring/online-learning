@@ -6,12 +6,18 @@ import {App as InertiaApp, plugin as InertiaPlugin} from '@inertiajs/inertia-vue
 import {InertiaProgress} from '@inertiajs/progress';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import moment from 'moment'
+import moment from 'moment';
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
 
 
 // import CollapseTransition from '@ivanv/vue-collapse-transition';
 
 const el = document.getElementById('app');
+const options = {
+    // You can set your default options here
+};
 
 createApp({
     created() {
@@ -24,7 +30,7 @@ createApp({
         }),
 })
     .mixin({methods: {route}})
-    .use(InertiaPlugin, moment)
+    .use(InertiaPlugin, moment).use(Toast, options)
     .mount(el);
 
 InertiaProgress.init({color: '#4B5563'});

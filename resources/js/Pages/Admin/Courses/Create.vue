@@ -1,12 +1,17 @@
 <template>
     <admin-layout>
         <div class="container">
+            <div v-if="$page.props.flash.message" class="alert alert-success">
+                {{ $page.props.flash.message }}
+            </div>
             <div class="csv-buttons">
                 <a href="" class="upload-csv">Upload CSV</a>
                 <a href="" class="delete-csv">Delete</a>
+
                 <form class="my-4" enctype="multipart/form-data" action=""
-                      @submit.prevent="form.post(route('admin.courses.store'))">
+                      @submit.prevent="submit">
                     <input id="csv" class="form-control" type="file"
+                           accept=".csv"
                            @input="form.file = $event.target.files[0]"/>
                     <input class="my-4" type="submit" value="Submit">
                 </form>
@@ -15,7 +20,8 @@
                           max="100">
                     {{ form.progress.percentage }}%
                 </progress>
-                <span style="position: absolute; top:27.5%; left:50%; font-size: 12px" v-if="form.progress">{{ form.progress.percentage }}%</span>
+                <span style="position: absolute; top:27.5%; left:50%; font-size: 12px"
+                      v-if="form.progress">{{ form.progress.percentage }}%</span>
             </div>
             <div class="csv-table">
                 <table>
@@ -57,21 +63,56 @@
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
 import {useForm} from '@inertiajs/inertia-vue3'
+import {useToast} from "vue-toastification";
+import {computed} from 'vue'
+import {usePage} from '@inertiajs/inertia-vue3'
 
 export default {
-    setup() {
-        const form = useForm({
-            file: null,
-        })
-        return {form}
+    setup(props) {
+        // Get toast interface
+        const toast = useToast();
+        const message = computed(() => usePage().props.value.flash.message)
+        // props.errors.forEach(element => console.log(element));
+        // // or with options
+        // These options will override the options defined in the "app.use" plugin registration for this specific toast
+
+        // Make it available inside methods
+        return {toast, message}
+    },
+    props: {
+        user: Object,
+        errors: Object,
     },
     components: {
         AdminLayout,
     },
-    props: ['user'],
-    methods: {},
+
     data() {
-        return {}
+        return {
+            form: {
+                file: null
+            }
+        }
     },
+    methods: {
+        submit() {
+            this.$inertia.post(route('admin.courses.store'), this.form)
+            const flash = computed(() => usePage().props.value.flash.message)
+            console.log('Message' + flash)
+        },
+    },
+    watch: {
+        // errors(val, oldVal) {
+        //     if (val !== oldVal) {
+        //         this.toast.error(this.errors.file)
+        //     }
+        // },
+        flash(val, oldVal) {
+            if (val !== oldVal) {
+                this.toast.error(this.flash.message)
+            }
+        }
+
+    }
 }
 </script>

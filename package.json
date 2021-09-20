@@ -48,6 +48,7 @@
         "vue-filepond": "^7.0.0",
         "vue-fullpage.js": "^0.1.7",
         "vue-the-mask": "^0.11.1",
+        "vue-toastification": "^2.0.0-rc.1",
         "vue-toastr": "^2.1.2",
         "vuejs-datepicker": "^1.6.2",
         "vuelidate": "^0.7.6"
