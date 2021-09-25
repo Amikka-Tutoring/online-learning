@@ -19,10 +19,9 @@ class DiagnosticController extends Controller
     public function result(Request $request)
     {
 
-        $answers = $request->answer_list;
-
+//        dd($request->answer_list);
+        $answers = $request->answer_list[0];
         $sum = count($answers);
-
 
         $correct = 0;
         foreach ($answers as $answer) {
@@ -36,6 +35,6 @@ class DiagnosticController extends Controller
 
 //        dd($request->answer_list);
 
-        return Inertia::render('Diagnostic/Result', ['results' => $request->answer_list, 'score' => $score]);
+        return Inertia::render('DiagnosticResults', ['results' => $answers, 'score' => $score]);
     }
 }

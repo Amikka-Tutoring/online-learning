@@ -563,8 +563,19 @@ a {
     height: 450px;
 }
 
+.results-wrapper .result p {
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.results-wrapper .result .blue-text {
+    margin-bottom: 50px;
+}
+
 .results-wrapper h1 {
     font-weight: 600;
+    margin-top: 137px;
+    margin-bottom: 50px;
 }
 
 .results-wrapper .strengths-weakness {
@@ -573,18 +584,55 @@ a {
 
 .results-wrapper .strengths-weakness h4 {
     font-weight: 600;
+    margin-top: 45px;
+    padding-left: 55px;
+    font-size: 30px;
+    line-height: 42px;
 }
 
 .results-wrapper .plan {
     display: flex;
     align-items: center;
-    height: 400px;
+    height: 500px;
+}
+
+.lesson-container-margin {
+    margin-top: -215px;
 }
 
 @media (max-width: 767.98px), (max-width: 991.98px) {
+
+    .lesson-container-margin {
+        margin-top: 0;
+    }
+
+    .notes-section .notes-section-content .notes-box .row {
+        border-right: none !important;
+    }
+
     .results-wrapper .plan, .result {
         height: 100% !important;
         padding: 25px 0;
+    }
+
+    .results-wrapper h1 {
+        margin-top: 10px;
+    }
+
+    .results-wrapper .result p, .results-wrapper ol li {
+        font-size: 18px !important;
+    }
+
+    .results-wrapper ol li {
+        padding: 10px !important;
+    }
+
+    .results-wrapper .strengths-weakness h4 {
+        margin: 20px 0px !important;
+    }
+
+    .results-wrapper .result .blue-text {
+        margin: 0;
     }
 
     .results-wrapper img {
@@ -593,7 +641,14 @@ a {
 }
 
 .results-wrapper ol li {
-    padding: 15px;
+    padding: 15px 0px 50px 20px;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+.strengths-weakness .title-mb {
+    margin-bottom: 70px;
 }
 
 .exam-box {
@@ -718,9 +773,6 @@ a {
     background: rgba(255, 146, 0, 0.6);
 }
 
-.lesson {
-    padding-bottom: 100px;
-}
 
 .lesson h1 {
     font-weight: 500;
@@ -831,6 +883,7 @@ a {
     width: 380px;
     background: white;
     top: 86px;
+    z-index: 99;
 }
 
 .header-menu ul {
@@ -1170,6 +1223,16 @@ textarea {
     padding: 10px 0;
 }
 
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+{
+    opacity: 0;
+}
+
+
 .wrapper .option .dot {
     display: none;
 }
@@ -1182,25 +1245,16 @@ input[type="radio"] {
     display: none;
 }
 
-#option-1:checked:checked ~ .option-1,
-#option-2:checked:checked ~ .option-2,
-#option-3:checked:checked ~ .option-3,
-#option-4:checked:checked ~ .option-4 {
+[id^="option"]:checked:checked ~ [class^="option"] {
     border-color: rgba(76, 110, 215, 0.9);
     background: rgba(76, 110, 215, 0.9);
 }
 
-#option-1:checked:checked ~ .option-1 .dot,
-#option-2:checked:checked ~ .option-2 .dot,
-#option-3:checked:checked ~ .option-3 .dot,
-#option-4:checked:checked ~ .option-4 .dot {
+[id^="option"]:checked:checked ~ [class^="option"] .dot {
     background: #fff;
 }
 
-#option-1:checked:checked ~ .option-1 .dot::before,
-#option-2:checked:checked ~ .option-2 .dot::before,
-#option-3:checked:checked ~ .option-3 .dot::before,
-#option-4:checked:checked ~ .option-4 .dot::before {
+[id^="option"]:checked:checked ~ [class^="option"] .dot::before {
     opacity: 1;
     transform: scale(1);
 }
@@ -1210,10 +1264,7 @@ input[type="radio"] {
     color: #808080;
 }
 
-#option-1:checked:checked ~ .option-1 span,
-#option-2:checked:checked ~ .option-2 span,
-#option-3:checked:checked ~ .option-3 span,
-#option-4:checked:checked ~ .option-4 span {
+[id^="option"]:checked:checked ~ [class^="option"] span {
     color: #fff;
 }
 
@@ -1476,7 +1527,24 @@ input[type="radio"] {
     line-height: 152px;
 }
 
+.lesson-video {
+    max-width: 826px;
+    width: 100%;
+    height: 500px;
+    margin: 80px 0;
+    border: none
+}
+
 @media (max-width: 767.98px), (max-width: 991.98px) {
+    .recommended-box {
+        width: 100%;
+    }
+
+    .lesson-video {
+        height: auto !important;
+        margin: 20px 0 !important;
+    }
+
     .action-buttons {
         width: 100%;
         margin-bottom: 2px;

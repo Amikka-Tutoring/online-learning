@@ -75,4 +75,9 @@ class Layer extends Model
     {
         return $this->hasMany(Note::class);
     }
+
+    public function studentQuestions()
+    {
+        return $this->hasMany(StudentLayerQuestion::class);
+    }
 }

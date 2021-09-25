@@ -21,7 +21,7 @@
                         accept=".csv"
                         @input="form.file = $event.target.files[0]"
                     />
-                    <input class="my-4" type="submit" value="Submit" />
+                    <input class="my-4" type="submit" value="Submit"/>
                 </form>
 
                 <progress
@@ -40,38 +40,38 @@
                         font-size: 12px;
                     "
                     v-if="form.progress"
-                    >{{ form.progress.percentage }}%</span
+                >{{ form.progress.percentage }}%</span
                 >
             </div>
             <div class="csv-table">
                 <table>
                     <thead>
-                        <tr>
-                            <th>toplayer_name</th>
-                            <th>toplayer_video</th>
-                            <th>toplayer_title</th>
-                            <th>toplayer_tags</th>
-                            <th>question_difficulty_level</th>
-                            <th>question_explanation</th>
-                            <th>option_a</th>
-                            <th>option_b</th>
-                            <th>option_c</th>
-                            <th>option_d</th>
-                        </tr>
+                    <tr>
+                        <th>toplayer_name</th>
+                        <th>toplayer_video</th>
+                        <th>toplayer_title</th>
+                        <th>toplayer_tags</th>
+                        <th>question_difficulty_level</th>
+                        <th>question_explanation</th>
+                        <th>option_a</th>
+                        <th>option_b</th>
+                        <th>option_c</th>
+                        <th>option_d</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="n in 10">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tr v-for="n in 10">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -81,15 +81,16 @@
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout";
-import { useForm } from "@inertiajs/inertia-vue3";
-import { useToast } from "vue-toastification";
-import { computed } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
+import {useForm} from "@inertiajs/inertia-vue3";
+import {useToast} from "vue-toastification";
+import {computed} from "vue";
+import {usePage} from "@inertiajs/inertia-vue3";
+
 export default {
     setup(props) {
         const toast = useToast();
         const message = computed(() => usePage().props.value.flash.message);
-        return { toast, message };
+        return {toast, message};
     },
     props: {
         user: Object,
@@ -120,20 +121,18 @@ export default {
             console.log("errors");
             console.log(val);
             console.log(oldVal);
-            if (!Object.is(val, oldVal)) {
-                console.log(this.$inertia.page);
+            if (val.file !== oldVal.file) {
                 this.toast.error(this.errors.file);
-                val = null;
+                val.file = null
             }
         },
         flash(val, oldVal) {
             console.log("flash");
             console.log(val);
             console.log(oldVal);
-            if (!Object.is(val, oldVal)) {
-                console.log(this.$inertia.page);
+            if (val.message !== oldVal.message) {
                 this.toast.success(this.flash.message);
-                val = null;
+                val.message = null
             }
         },
     },

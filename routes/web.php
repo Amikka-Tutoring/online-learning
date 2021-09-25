@@ -56,6 +56,8 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::post('diagnostics/result', [DiagnosticController::class, 'result'])->name('diagnostic.result');
     Route::get('results', [PageController::class, 'results'])->name('results');
     Route::post('lesson/notes', [NotesController::class, 'store'])->name('notes.store');
+    Route::get('lesson/{id}/student/questions', [NotesController::class, 'lessonQuestions'])->name('notes.questions');
+    Route::post('lesson/notes/questions', [NotesController::class, 'storeQuestion'])->name('notes.store.question');
 });
 
 

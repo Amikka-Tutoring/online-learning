@@ -25,7 +25,7 @@ class CourseController extends Controller
         $request->validate([
             'file' => 'required|mimes:csv,txt|max:1024'
         ]);
-        return redirect()->back()->with('message', 'Imported Successfully.');
+
 
         $file = $request->file('file');
         // File Details
@@ -59,11 +59,13 @@ class CourseController extends Controller
         }
         fclose($file);
 
+
         // Insert to MySQL database
         foreach ($importData_arr as $row) {
             if (count($row) != 67) {
                 return back()->with('error', 'Wrong format');
             }
+
 
             //Course
             $course = Course::where('name', $row[0])->first();
