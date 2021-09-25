@@ -29,36 +29,41 @@
 
     <div class="row m-0">
         <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
-        <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" @mouseleave="isHidden = true">
-            <ul>
-                <h4>My Account</h4>
-                <li><a v-bind:class="route().current('dashboard') ? 'active' : ''" :href="route('dashboard')">Home</a>
-                </li>
-                <li><a v-bind:class="route().current('profile') ? 'active' : ''" :href="route('profile')">Profile</a>
-                </li>
-            </ul>
-            <ul>
-                <h4>Course Content</h4>
-                <li><a v-bind:class="route().current('my-courses') || route().current('course') ? 'active' : ''"
-                       :href="route('my-courses')">My
-                    Courses</a></li>
-                <li><a v-bind:class="route().current('recommended') ? 'active' : ''" :href="route('recommended')">Recommended</a>
-                </li>
-                <li><a v-bind:class="route().current('review') || route().current('review') ? 'active' : ''"
-                       :href="route('review')">Review</a></li>
-            </ul>
-            <ul>
-                <h4>Tools</h4>
-                <li><a v-bind:class="route().current('notes-list') ? 'active' : ''"
-                       :href="route('notes-list')">Notes</a></li>
-                <li><a v-bind:class="route().current('one-to-one') ? 'active' : ''" :href="route('one-to-one')">1-on-1
-                    Tutoring</a></li>
-                <li><a v-bind:class="route().current('set-calendar') ? 'active' : ''" :href="route('set-calendar')">Calendar</a>
-                </li>
-                <li><a v-bind:class="route().current('exams') ? 'active' : ''"
-                       :href="route('exams')">Exams</a>
-                </li>
-            </ul>
+        <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']"
+             @mouseleave="isHidden = true">
+            <div>
+                <ul>
+                    <h4>My Account</h4>
+                    <li><a v-bind:class="route().current('dashboard') ? 'active' : ''"
+                           :href="route('dashboard')">Home</a>
+                    </li>
+                    <li><a v-bind:class="route().current('profile') ? 'active' : ''"
+                           :href="route('profile')">Profile</a>
+                    </li>
+                </ul>
+                <ul>
+                    <h4>Course Content</h4>
+                    <li><a v-bind:class="route().current('my-courses') || route().current('course') ? 'active' : ''"
+                           :href="route('my-courses')">My
+                        Courses</a></li>
+                    <li><a v-bind:class="route().current('recommended') ? 'active' : ''" :href="route('recommended')">Recommended</a>
+                    </li>
+                    <li><a v-bind:class="route().current('review') || route().current('review') ? 'active' : ''"
+                           :href="route('review')">Review</a></li>
+                </ul>
+                <ul>
+                    <h4>Tools</h4>
+                    <li><a v-bind:class="route().current('notes-list') ? 'active' : ''"
+                           :href="route('notes-list')">Notes</a></li>
+                    <li><a v-bind:class="route().current('one-to-one') ? 'active' : ''" :href="route('one-to-one')">1-on-1
+                        Tutoring</a></li>
+                    <li><a v-bind:class="route().current('set-calendar') ? 'active' : ''" :href="route('set-calendar')">Calendar</a>
+                    </li>
+                    <li><a v-bind:class="route().current('exams') ? 'active' : ''"
+                           :href="route('exams')">Exams</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div v-bind:class="[isHidden ? 'main-content' : 'main-content-1']" class="bg-white p-0 transition">
@@ -84,7 +89,7 @@ import {usePage} from '@inertiajs/inertia-vue3'
 export default {
     components: {},
     setup() {
-        const user = computed(() => usePage().props.value.auth.user)
+        const user = computed(() => usePage().props.value.auth.user);
         console.log(user)
         return {user}
     },

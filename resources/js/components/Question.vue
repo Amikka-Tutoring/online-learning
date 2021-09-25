@@ -7,11 +7,11 @@
                 <div class="image-box text-center">
                     <img class="w-100" :src="question.image">
                 </div>
-                <p class="quiz-question-box text-left">
-                <ol style="list-style-type: upper-latin">
-                    <li v-for=" (answer, index) in question.answers">{{ answer.title }}</li>
-                </ol>
-                </p>
+                <div class="quiz-question-box text-left">
+                    <ol style="list-style-type: upper-latin">
+                        <li v-for=" (answer, index) in question.answers">{{ answer.title }}</li>
+                    </ol>
+                </div>
             </div>
             <div class="col-lg-6 col-12 d-flex align-items-center">
                 <div class="row w-100">

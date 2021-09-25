@@ -33,6 +33,9 @@ a {
     display: flex;
     flex-direction: column;
     position: fixed;
+    overflow-y: auto;
+    z-index: 1;
+    height: 100vh;
     /*transition: all 0.2s ease-in-out;*/
 }
 
