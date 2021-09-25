@@ -3,7 +3,7 @@
         <button @click="toggleClass()" style="z-index: 2" class="border-0 navbar-toggler" type="button"
                 data-toggle="collapse" data-target="#navbarToggleExternalContent"
                 aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <svg @mouseenter="isHidden = false;" v-bind:class="[isHidden ? 'rotate-effect':'']"
+            <svg v-bind:class="[isHidden ? 'rotate-effect':'']"
                  xmlns="http://www.w3.org/2000/svg" width="47"
                  height="47"
                  fill="#4C6ED7"
@@ -29,9 +29,8 @@
 
     <div class="row m-0">
         <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
-        <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']"
-             @mouseleave="isHidden = true">
-            <div>
+        <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']">
+            <div class="mb-5">
                 <ul>
                     <h4>My Account</h4>
                     <li><a v-bind:class="route().current('dashboard') ? 'active' : ''"
@@ -59,8 +58,8 @@
                         Tutoring</a></li>
                     <li><a v-bind:class="route().current('set-calendar') ? 'active' : ''" :href="route('set-calendar')">Calendar</a>
                     </li>
-                    <li><a v-bind:class="route().current('exams') ? 'active' : ''"
-                           :href="route('exams')">Exams</a>
+                    <li class="mb-5"><a v-bind:class="route().current('exams') ? 'active' : ''"
+                                        :href="route('exams')">Exams</a>
                     </li>
                 </ul>
             </div>

@@ -3,7 +3,7 @@
         <button @click="toggleClass()" style="z-index: 2" class="border-0 navbar-toggler" type="button"
                 data-toggle="collapse" data-target="#navbarToggleExternalContent"
                 aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <svg @mouseenter="isHidden = false;" v-bind:class="[isHidden ? 'rotate-effect':'']"
+            <svg v-bind:class="[isHidden ? 'rotate-effect':'']"
                  xmlns="http://www.w3.org/2000/svg" width="47"
                  height="47"
                  fill="#4C6ED7"
@@ -28,7 +28,7 @@
 
     <div class="row m-0">
         <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
-        <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;" @mouseleave="isHidden = true"
+        <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']" style="z-index: 1;"
              class="admin-sidebar">
             <ul>
                 <h1><a :href="route('admin.dashboard')" style="color: black">Ammika Admin</a></h1>

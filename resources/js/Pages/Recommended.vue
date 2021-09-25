@@ -142,7 +142,7 @@
                                 <div class="col-10">
                                     {{ course.name }}
                                 </div>
-                                <div class="col-2 text-right">
+                                <div class="col-2 text-right" v-if="course.layers.length">
                                     <i :class="'course-icon-'+course.id" class="fas fa-chevron-down text-white"></i>
                                 </div>
                             </div>
@@ -156,7 +156,8 @@
                                             <div class="col-10">
                                                 {{ topLayer.name }}
                                             </div>
-                                            <div class="col-2 text-right">
+                                            <div class="col-2 text-right"
+                                                 v-if="topLayer.children.length || topLayer.videos.length">
                                                 <i :class="'top-icon-'+course.id"
                                                    class="fas fa-chevron-down text-white"></i>
                                             </div>
@@ -192,7 +193,8 @@
                                                         <div class="col-10">
                                                             {{ midLayer.name }}
                                                         </div>
-                                                        <div class="col-2 text-right">
+                                                        <div class="col-2 text-right"
+                                                             v-if="midLayer.children.length || midLayer.videos.length">
                                                             <i :class="'mid-icon-'+course.id"
                                                                class="fas fa-chevron-down text-white"></i>
                                                         </div>
@@ -228,7 +230,8 @@
                                                                         <div class="col-10">
                                                                             {{ lesson.name }}
                                                                         </div>
-                                                                        <div class="col-2 text-right">
+                                                                        <div class="col-2 text-right"
+                                                                             v-if="lesson.videos.length">
                                                                             <i :class="'less-icon-'+course.id"
                                                                                class="fas fa-chevron-down text-white"></i>
                                                                         </div>

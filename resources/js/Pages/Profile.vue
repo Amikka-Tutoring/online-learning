@@ -99,13 +99,13 @@
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <!--                                        <p class="text-right"><i class="blue-text fas fa-angle-down"></i></p>-->
-                                        <p class="text-right"><select class="blue-text tag-select" v-model="key"
-                                                                      name="tag" id=""
-                                                                      @change="onChange($event)">
+                                        <div class="text-right"><select class="blue-text tag-select" v-model="key"
+                                                                        name="tag" id=""
+                                                                        @change="onChange($event)">
                                             <option :value="user_tag" selected="">{{ user_tag }}</option>
                                             <option :value="user_tag">--</option>
                                             <option v-for="tag in tags" v-bind:value="tag.name">{{ tag.name }}</option>
-                                        </select></p>
+                                        </select></div>
                                     </div>
                                 </div>
                             </li>
