@@ -78,6 +78,12 @@ class PageController extends Controller
         return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes]);
     }
 
+    public function lessonQuiz($id)
+    {
+        $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
+        return Inertia::render('Quiz', ['layer' => $layer]);
+    }
+
     public function recommended()
     {
         $courses = Course::with(['layers' => function ($query) {

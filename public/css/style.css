@@ -1184,7 +1184,7 @@ a {
 textarea {
     width: 100%;
     margin-bottom: 50px;
-    height: 70px;
+    max-height: 335px;
     border: 2px solid #4c6ed7;
     border-radius: 11px;
     padding-left: 60px;

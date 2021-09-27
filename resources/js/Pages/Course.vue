@@ -9,7 +9,9 @@
                          :class="{ 'active' : index === 0 }">
                         <div class=" row flex-column align-items-center p-4">
                             <h1 id="topic">{{ video.title }}</h1>
-                            getEmbeddedFram()
+                            <iframe id="youtube_id" :src="embed(video.url)"
+                                    style="max-width: 826px; width: 100%; height: 500px; margin: 90px 0; border: none">
+                            </iframe>
                         </div>
                     </div>
                 </div>
@@ -161,7 +163,6 @@ import {computed, reactive} from 'vue'
 import {Inertia} from '@inertiajs/inertia'
 import {useToast} from "vue-toastification";
 import {usePage} from "@inertiajs/inertia-vue3";
-import LazyYoutube from "vue-lazytube";
 
 
 export default {
@@ -196,9 +197,14 @@ export default {
         Button,
         AppLayout,
         ToolsMenu,
-        LazyYoutube,
     },
-    methods: {},
+    methods: {
+        embed: function (str) {
+            let res = str.split("=");
+            let embeddedUrl = "https://www.youtube.com/embed/" + res[1];
+            return embeddedUrl;
+        }
+    },
     data() {
         return {
             wrritten_notes: true,
