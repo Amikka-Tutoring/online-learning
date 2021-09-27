@@ -36,8 +36,6 @@ class PageController extends Controller
         $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes')->where('name', 'Academic')->first();
-
-        //        dd($academic);
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'user_courses' => $user_courses]);
     }
 
@@ -48,7 +46,6 @@ class PageController extends Controller
         $userTag = Auth::user()->getTag();
         $user = User::with(['enrollments', 'enrollments.course', 'profile'])->find(Auth::id());
         $user_days_available = unserialize($user->profile->days_available);
-//        dd($user->enrollments->last()->course->name);
         return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'user_days_available' => $user_days_available]);
     }
 
@@ -78,7 +75,6 @@ class PageController extends Controller
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos')->find($id);
         $user = Auth::user();
         $notes = $user->notes->where('layer_id', $lesson->id)->first();
-//        dd($notes);
         return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes]);
     }
 
@@ -87,12 +83,6 @@ class PageController extends Controller
         $courses = Course::with(['layers' => function ($query) {
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
         }])->get();
-
-        //        dd($courses->first());
-
-
-        //        $course = Course::first()->topLayers()->first();
-        //        dd($course->children);
         return Inertia::render('Recommended', ['courses' => $courses]);
     }
 

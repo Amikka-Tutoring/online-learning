@@ -44,12 +44,15 @@
         "moment": "^2.29.1",
         "toastr": "^2.1.4",
         "v-calendar": "^3.0.0-alpha.5",
+        "v-video-embed": "^1.0.8",
         "vee-validate": "^4.4.10",
         "vue-filepond": "^7.0.0",
         "vue-fullpage.js": "^0.1.7",
+        "vue-lazytube": "^1.0.2",
         "vue-the-mask": "^0.11.1",
         "vue-toastification": "^2.0.0-rc.1",
         "vue-toastr": "^2.1.2",
+        "vue-youtube-embed": "^2.2.2",
         "vuejs-datepicker": "^1.6.2",
         "vuelidate": "^0.7.6"
     }

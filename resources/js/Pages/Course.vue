@@ -9,9 +9,7 @@
                          :class="{ 'active' : index === 0 }">
                         <div class=" row flex-column align-items-center p-4">
                             <h1 id="topic">{{ video.title }}</h1>
-                            <iframe class="lesson-video"
-                                    :src="video.url">
-                            </iframe>
+                            getEmbeddedFram()
                         </div>
                     </div>
                 </div>
@@ -62,7 +60,7 @@
                             <div v-if="wrritten_notes" class="written_notes">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
-                                    <textarea v-model="form.note" id="" cols="80" rows="15" name="written_notes"
+                                    <textarea v-model="form.note" id="" cols="80" rows="40" name="written_notes"
                                               placeholder="Notes..." required></textarea>
                                     <button class="light-button">Submit</button>
                                 </form>
@@ -70,7 +68,7 @@
                             <div v-if="questions" class="questions">
                                 <form action="" @submit.prevent="submitQuestion">
                                     <h1 class="blue-text">Questions</h1>
-                                    <textarea required v-model="questionForm.question_text" cols="80" rows="15"
+                                    <textarea required v-model="questionForm.question_text" cols="80" rows="40"
                                               name="question_text"
                                               placeholder="Question..."></textarea>
                                     <button class="light-button">Submit</button>
@@ -163,6 +161,8 @@ import {computed, reactive} from 'vue'
 import {Inertia} from '@inertiajs/inertia'
 import {useToast} from "vue-toastification";
 import {usePage} from "@inertiajs/inertia-vue3";
+import LazyYoutube from "vue-lazytube";
+
 
 export default {
     props: ['lesson', 'notes', 'flash', 'errors'],
@@ -196,10 +196,9 @@ export default {
         Button,
         AppLayout,
         ToolsMenu,
+        LazyYoutube,
     },
     methods: {},
-
-
     data() {
         return {
             wrritten_notes: true,

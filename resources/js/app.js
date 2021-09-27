@@ -11,6 +11,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import moment from "moment";
 import Toast from "vue-toastification";
+import LazyYoutube from "vue-lazytube";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 
@@ -36,6 +37,8 @@ createApp({
     .mixin({methods: {route}})
     .use(InertiaPlugin, moment)
     .use(Toast, options)
+    .use(LazyYoutube)
+    .component("LazyYoutube", LazyYoutube)
     .mount(el);
 
 InertiaProgress.init({color: "#4B5563"});
