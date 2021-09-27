@@ -28,7 +28,7 @@
                 </a>
             </div>
             <div class="row justify-content-center" style="margin-bottom: 100px">
-                <button href="" class="blue-button">Quiz</button>
+                <button href="" class="blue-button" @click="quiz(lesson.id)">Quiz</button>
             </div>
         </div>
         <div class="notes-section">
@@ -203,6 +203,10 @@ export default {
             let res = str.split("=");
             let embeddedUrl = "https://www.youtube.com/embed/" + res[1];
             return embeddedUrl;
+        },
+        quiz: function (lesson_id) {
+            // console.log('test: ' + lesson_id)
+            Inertia.get(route('lesson.quiz', lesson_id))
         }
     },
     data() {

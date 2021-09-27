@@ -28,12 +28,12 @@
                     <div v-if="form.currentstep === 1" class="first-step">
                         <h1>
                             <span class="blue-text">{{ layer.name }}</span>
-                            Diagnostic
+                            Quiz
                         </h1>
                         <div class="step-one" style="margin-left: 100px">
                             <div class="row" style="">
                                 <ol>
-                                    <li>The <span class="blue-text">{{ layer.name }} Quiz</span>
+                                    <li>The <span class="blue-text">{{ layer.name }}</span> Quiz
 
                                     </li>
                                     <li>
@@ -108,7 +108,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -165,7 +164,6 @@ export default {
 
     components: {
         AppLayout,
-        Question
     },
     methods: {
         toLetter(value) {
