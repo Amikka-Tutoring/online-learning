@@ -33,7 +33,7 @@
             <div class="mb-5">
                 <ul>
                     <h4>My Account</h4>
-                    <li><a v-bind:class="route().current('dashboard') ? 'active' : ''"
+                    <li><a v-bind:class="route().current('dashboard') || route().current('main') ? 'active' : ''"
                            :href="route('dashboard')">Home</a>
                     </li>
                     <li><a v-bind:class="route().current('profile') ? 'active' : ''"
@@ -69,7 +69,7 @@
             <img class="banner-img" :src="'/images/banner.png'" alt=""
                  style="width: 100%; height:140px; margin-bottom: 100px">
             <div class="container-fluid p-0">
-                <main>
+                <main class="mb-4">
                     <slot></slot>
                 </main>
             </div>

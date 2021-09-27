@@ -230,7 +230,7 @@ export default {
             }
             form.answer_list.push(form.answers);
             toast.success('Submitted')
-            Inertia.post(route('diagnostic.result'), form);
+            Inertia.post(route('quiz.result'), form);
         }
 
         function validate() {

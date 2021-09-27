@@ -22,7 +22,13 @@
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <a :href="route('diagnostic.show',a_q.slug)"><h4>{{ a_q.name }}</h4></a>
+                                <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
+                                    {{
+                                        a_q.name
+                                    }}</h4></a>
+                                <h4 v-else> {{
+                                        a_q.name
+                                    }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">

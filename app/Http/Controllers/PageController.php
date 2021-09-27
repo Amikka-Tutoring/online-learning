@@ -35,7 +35,7 @@ class PageController extends Controller
     {
         $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
-        $academic = Diagnostic::with('quizzes')->where('name', 'Academic')->first();
+        $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'user_courses' => $user_courses]);
     }
 
@@ -72,7 +72,7 @@ class PageController extends Controller
 
     public function lesson($id)
     {
-        $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos')->find($id);
+        $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
         $user = Auth::user();
         $notes = $user->notes->where('layer_id', $lesson->id)->first();
         return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes]);
@@ -86,9 +86,10 @@ class PageController extends Controller
 
     public function recommended()
     {
-        $courses = Course::with(['layers' => function ($query) {
+        $user = Auth::user()->with('enrollments', 'enrollments.course')->first();
+        $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
-        }])->get();
+        }])->get()->pluck('course');
         return Inertia::render('Recommended', ['courses' => $courses]);
     }
 

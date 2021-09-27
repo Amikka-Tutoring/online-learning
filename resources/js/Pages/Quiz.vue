@@ -221,7 +221,7 @@ export default {
             }
             form.answer_list.push(form.answers);
             toast.success('Submitted')
-            Inertia.post(route('layer.result'), form);
+            Inertia.post(route('quiz.result'), form);
         }
 
         function validate() {
@@ -254,7 +254,7 @@ export default {
     },
 
     mounted(props) {
-        console.log(this.layer);
+
     }
 }
 </script>

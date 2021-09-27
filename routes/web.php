@@ -53,7 +53,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
     Route::get('review', [PageController::class, 'review'])->name('review');
     Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
-    Route::post('diagnostics/result', [DiagnosticController::class, 'result'])->name('diagnostic.result');
+    Route::post('quiz/result', [DiagnosticController::class, 'result'])->name('quiz.result');
     Route::get('results', [PageController::class, 'results'])->name('results');
     Route::post('lesson/notes', [NotesController::class, 'store'])->name('notes.store');
     Route::get('lesson/{id}/quiz', [PageController::class, 'lessonQuiz'])->name('lesson.quiz');
@@ -81,3 +81,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');
 Route::get('diagnostics', [LayerController::class, 'diagnostics'])->name('diagnostics');
 Route::get('subscription', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');
+Route::get('subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'retrievePlans'])->name('plans');
+Route::get('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUser'])->name('subscribe.user');

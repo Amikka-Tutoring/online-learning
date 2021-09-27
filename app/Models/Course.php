@@ -20,11 +20,6 @@ class Course extends Model
         return $this->hasMany(Layer::class);
     }
 
-    public function topLayers()
-    {
-        return Layer::where('parent_id', null)->where('course_id', $this->id)->get();
-    }
-
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class, 'course_id', 'id');

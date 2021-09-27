@@ -2,36 +2,45 @@
     <app-layout>
         <tools-menu/>
 
-        <div class="lesson-container-margin container">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="container"
+             v-bind:class="[lesson.videos.length ? 'lesson-container-margin' : '']">
+            <div v-if=" lesson.videos.length
+        " id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
+                 data-interval="false">
                 <div class="carousel-inner">
                     <div class="carousel-item lesson" v-for="(video,index) in lesson.videos"
                          :class="{ 'active' : index === 0 }">
                         <div class=" row flex-column align-items-center p-4">
-                            <h1 id="topic">{{ video.title }}</h1>
+                            <h1 id="topic" ref="title">{{ video.title }}</h1>
                             <iframe id="youtube_id" :src="embed(video.url)"
                                     style="max-width: 826px; width: 100%; height: 500px; margin: 90px 0; border: none">
                             </iframe>
                         </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                   data-slide="prev">
-                    <span class="bi bi-arrow-left-circle fa-3x" aria-hidden="true" style="color: black"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators"
-                   role="button"
-                   data-slide="next">
-                    <span class="bi bi-arrow-right-circle fa-3x" aria-hidden="true" style="color: black"></span>
-                    <span class="sr-only text-black">Next</span>
-                </a>
+                <div v-if="lesson.videos.length > 1">
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                       data-slide="prev">
+                        <span class="bi bi-arrow-left-circle fa-3x" aria-hidden="true"
+                              style="color: rgba(76, 110, 215, 0.9)"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators"
+                       role="button"
+                       data-slide="next">
+                        <span class="bi bi-arrow-right-circle fa-3x" aria-hidden="true"
+                              style="color: rgba(76, 110, 215, 0.9)"></span>
+                        <span class="sr-only text-black">Next</span>
+                    </a>
+                </div>
             </div>
-            <div class="row justify-content-center" style="margin-bottom: 100px">
-                <button href="" class="blue-button" @click="quiz(lesson.id)">Quiz</button>
+            <div v-if="lesson.questions.length" class="row justify-content-center" style="margin-bottom: 100px">
+                <button href="" class="blue-button" @click="quiz(lesson.id)">Quiz
+                </button>
             </div>
         </div>
-        <div class="notes-section">
+        <div class="notes-section"
+             v-bind:class="[(lesson.videos.length || lesson.questions.length )? '' : 'p-0 border-0']">
             <div class="container">
                 <h1 class="blue-text">Notes</h1>
                 <div class="notes-section-content d-flex justify-content-center align-items-center flex-column">
@@ -176,7 +185,7 @@ export default {
         const form = reactive({
             note: props.notes?.written_notes,
             lesson_id: props.lesson.id,
-            topic: document.getElementById('topic')?.innerHTML,
+            topic: null,
         })
         const questionForm = reactive({
             question_text: null,
@@ -184,7 +193,7 @@ export default {
         })
 
         function submit() {
-            Inertia.post(route('notes.store'), form)
+            Inertia.post(route('notes.store'), form,)
         }
 
         function submitQuestion() {
@@ -205,39 +214,31 @@ export default {
             return embeddedUrl;
         },
         quiz: function (lesson_id) {
-            // console.log('test: ' + lesson_id)
             Inertia.get(route('lesson.quiz', lesson_id))
         }
     },
     data() {
         return {
             wrritten_notes: true,
-            questions: false
+            questions: false,
         }
     },
     mounted() {
-        console.log('video: ' + document.getElementById('topic').innerHTML)
+
     },
     watch: {
         errors(val, oldVal) {
-            console.log("errors");
-            console.log(val);
-            console.log(oldVal);
             if (val.question_text !== oldVal.question_text) {
-                console.log("test" + this.errors.question_text)
                 this.toast.error(this.errors.question_text);
                 val.question_text = null
             }
         },
         flash(val, oldVal) {
-            console.log("flash");
-            console.log(val);
-            console.log(oldVal);
             if (val.message !== oldVal.message) {
                 this.toast.success(this.flash.message);
                 val.message = null
             }
         },
-    },
+    }
 }
 </script>

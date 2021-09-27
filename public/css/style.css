@@ -765,6 +765,11 @@ a {
     margin-bottom: 5px;
 }
 
+.grammar-course .grammar-course-content .grammar-list a {
+    color: white;
+    text-decoration: none;
+}
+
 .grammar-course .grammar-course-content .first-list {
     background: rgba(14, 111, 255, 0.5);
 }
@@ -795,7 +800,8 @@ a {
 
 .notes-section {
     padding: 100px 0;
-    border: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .notes-section .notes-section-content {
@@ -853,6 +859,7 @@ a {
     outline: none;
     padding: 10px;
     color: rgb(14, 111, 255);
+    height: 335px;
 }
 
 .light-button {
@@ -1189,6 +1196,7 @@ textarea {
     border-radius: 11px;
     padding-left: 60px;
     outline: none;
+    height: 70px;
 }
 
 .reach-out .reach-form form textarea {
@@ -1869,5 +1877,6 @@ input[type="radio"] {
         margin-bottom: 50px;
     }
 }
+
 
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");

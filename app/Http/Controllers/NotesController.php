@@ -13,7 +13,7 @@ class NotesController extends Controller
 {
     public function store(Request $request)
     {
-//        dd($request->all());
+        dd($request->all());
         $request->validate([
             'note' => 'required',
             'lesson_id' => 'required|exists:layers,id',

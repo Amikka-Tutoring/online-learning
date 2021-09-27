@@ -154,7 +154,7 @@
                                          @click="hideTop(topLayer.id)">
                                         <div class="row">
                                             <div class="col-10">
-                                                {{ topLayer.name }}
+                                                <a :href="route('lesson',topLayer.id)">{{ topLayer.name }}</a>
                                             </div>
                                             <div class="col-2 text-right"
                                                  v-if="topLayer.children.length || topLayer.videos.length">
@@ -171,8 +171,11 @@
                                                 <div class="row">
                                                     <div
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                        <i class="fas fa-play-circle fa-2x"
-                                                           style="color: #4C6ED7"></i>
+                                                        <a :href="top_videos.url"
+                                                           target="_blank">
+                                                            <i class="fas fa-play-circle fa-2x"
+                                                               style="color: #4C6ED7"></i>
+                                                        </a>
                                                     </div>
                                                     <div class="col-8 d-flex align-items-center">
                                                         <h5>{{ top_videos.title }}<span
@@ -191,7 +194,9 @@
                                                      @click="hideMid(midLayer.id)">
                                                     <div class="row">
                                                         <div class="col-10">
-                                                            {{ midLayer.name }}
+                                                            <a :href="route('lesson',midLayer.id)">{{
+                                                                    midLayer.name
+                                                                }}</a>
                                                         </div>
                                                         <div class="col-2 text-right"
                                                              v-if="midLayer.children.length || midLayer.videos.length">
@@ -228,7 +233,8 @@
                                                                      @click="hideLess(lesson.id)">
                                                                     <div class="row">
                                                                         <div class="col-10">
-                                                                            {{ lesson.name }}
+                                                                            <a :href="route('lesson',lesson.id)">
+                                                                                {{ lesson.name }}</a>
                                                                         </div>
                                                                         <div class="col-2 text-right"
                                                                              v-if="lesson.videos.length">
@@ -289,22 +295,18 @@ export default {
     },
     methods: {
         hide(value) {
-            console.log(value)
             $('.full-course-' + value).toggleClass('d-none', 'd-block')
             $('.course-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
         },
         hideTop(value) {
-            console.log(value)
             $('.toplayer-' + value).toggleClass('d-none', 'd-block')
             $('.top-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
         },
         hideMid(value) {
-            console.log(value)
             $('.midlayer-' + value).toggleClass('d-none', 'd-block')
             $('.mid-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
         },
         hideLess(value) {
-            console.log(value)
             $('.lesson-' + value).toggleClass('d-none', 'd-block')
             $('.less-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
         }
