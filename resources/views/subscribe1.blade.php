@@ -1,59 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Stripe Checkout Sample</title>
-    <meta name="description" content="A demo of Stripe Payment Intents"/>
+<input id="card-holder-name" type="text">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="css/normalize.css"/>
-    <link rel="stylesheet" href="css/global.css"/>
-    <!-- Load Stripe.js on your website. -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="./script.js" defer></script>
-</head>
+<!-- Stripe Elements Placeholder -->
+<div id="card-element"></div>
 
-<body>
-<div class="togethere-background"></div>
-<div class="sr-root">
-    <div class="sr-main">
-        <header class="sr-header">
-            <div class="sr-header__logo"></div>
-        </header>
-        <h1>Choose a collaboration plan</h1>
+<button id="card-button">
+    Process Payment
+</button>
 
-        <div class="price-table-container">
-            <section>
-                <form action="/create-checkout-session" method="POST">
-                    <input type="hidden" id="basicPrice" name="priceId">
-                    <img
-                        src="/img/starter.png"
-                        width="120"
-                        height="120"
-                    />
-                    <div class="name">Starter</div>
-                    <div class="price">$12</div>
-                    <div class="duration">per month</div>
-                    <button id="basic-plan-btn">Select</button>
-                </form>
-            </section>
-            <section>
-                <form action="/create-checkout-session" method="POST">
-                    <input type="hidden" id="proPrice" name="priceId">
-                    <img
-                        src="/img/professional.png"
-                        width="120"
-                        height="120"
-                    />
-                    <div class="name">Professional</div>
-                    <div class="price">$18</div>
-                    <div class="duration">per month</div>
-                    <button id="pro-plan-btn">Select</button>
-                </form>
-            </section>
-        </div>
-    </div>
-</div>
-<div id="error-message" class="error-message"></div>
-</body>
-</html>
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    const stripe = Stripe('stripe-public-key');
+
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+
+    cardElement.mount('#card-element');
+
+    const cardHolderName = document.getElementById('card-holder-name');
+    const cardButton = document.getElementById('card-button');
+
+    cardButton.addEventListener('click', async (e) => {
+        const {paymentMethod, error} = await stripe.createPaymentMethod(
+            'card', cardElement, {
+                billing_details: {name: cardHolderName.value}
+            }
+        );
+
+        if (error) {
+            // Display "error.message" to the user...
+        } else {
+            // The card has been verified successfully...
+        }
+    });
+</script>

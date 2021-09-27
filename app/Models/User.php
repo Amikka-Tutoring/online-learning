@@ -11,6 +11,7 @@ use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use function Illuminate\Events\queueable;
 
 class User extends Authenticatable
 {
@@ -61,6 +62,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected static function booted()
+    {
+        static::updated(queueable(function ($customer) {
+            $customer->syncStripeCustomerDetails();
+        }));
+    }
 
     public function profile()
     {
