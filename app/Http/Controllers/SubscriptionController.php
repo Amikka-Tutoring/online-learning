@@ -12,7 +12,6 @@ class SubscriptionController extends Controller
     public function subscribe()
     {
         $user = Auth::user();
-//        return view('subscribe');
         $key = env('STRIPE_SECRET');
         $stripe = new StripeClient($key);
         $plansraw = $stripe->plans->all();
@@ -46,17 +45,14 @@ class SubscriptionController extends Controller
     {
 //        dd($request->all());
         $user = Auth::user();
-        $paymentMethod = $request->input('payment_method');
-//        dd($paymentMethod);
-//        $paymentMethod = 'pm_1JeLKcF6TN9qHUPOW7AmEGe2';
+        $paymentMethod = $request->payment_method;
         $user->createOrGetStripeCustomer();
         $user->addPaymentMethod($paymentMethod);
-        $plan = $request->input('plan');
+        $plan = $request->plan;
         try {
             $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
         } catch (\Exception $e) {
-            dd($e);
-//            return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
+            return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
         }
         return redirect('dashboard');
     }

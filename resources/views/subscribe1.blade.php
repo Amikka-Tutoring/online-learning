@@ -1,12 +1,12 @@
-<form id="subscribe-form">
+<form id="subscribe-form" method="POST" action="{{route('subscribe.user')}}" onSubmit="return false">
     @csrf
     @foreach($plans as $plan)
         <div class="col-md-4">
             <div class="subscription-option">
-                <input type="radio" id="plan-silver" name="plan" value='{{$plan->id}}'>
-                <label for="plan-silver">
-                    <span
-                        class="plan-price">{{$plan->currency}}{{$plan->amount/100}}<small> /{{$plan->interval}}</small></span>
+                <input type="radio" id="plan" name="plan" value='{{$plan->id}}'>
+                <label for=" plan">
+<span
+    class="plan-price">{{$plan->currency}}{{$plan->amount/100}}<small> /{{$plan->interval}}</small></span>
                     <span class="plan-name">{{$plan->product->name}}</span>
                 </label>
             </div>
@@ -22,8 +22,7 @@
     </button>
 </form>
 <script src="https://js.stripe.com/v3/"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script>
     const stripe = Stripe('{{ env('STRIPE_KEY') }}');
@@ -63,21 +62,28 @@
         var hiddenInput = document.getElementById('payment_method');
         hiddenInput.setAttribute('value', payment_method);
 
-        $.ajax({
-            url: "{{route('subscribe.user')}}",
-            type: "POST",
-            data: {
-                plan: plan,
-                payment_method: payment_method,
-                _token: {{csrf_token()}}
-            },
-            success: function (response) {
-                console.log(response);
-                if (response) {
-                    console.log(response.success())
+        form.submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: "{{route('subscribe.user')}}",
+                type: "POST",
+                data: {
+                    plan: form.getAttribute('plan'),
+                    payment_method: payment_method,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    console.log('Ajax S');
+                    console.log(response);
+                    if (response) {
+                        console.log(response.success())
+                    }
+                },
+                error: function (response) {
+                    console.log('Ajax E');
+                    console.log(response);
                 }
-            },
+            });
         });
-        console.log('finished')
     }
 </script>
