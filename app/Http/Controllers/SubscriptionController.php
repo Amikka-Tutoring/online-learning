@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\Subscription;
 use Stripe\BaseStripeClient;
 use Stripe\StripeClient;
 
@@ -50,7 +51,10 @@ class SubscriptionController extends Controller
         $user->addPaymentMethod($paymentMethod);
         $plan = $request->plan;
         try {
-            $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
+            if ($user->subscriptions)
+                $user->newSubscription('default', $plan)->create($paymentMethod);
+            else
+                $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
         } catch (\Exception $e) {
             return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
         }
@@ -64,5 +68,12 @@ class SubscriptionController extends Controller
             dd('trial');
         }
         dd('not trial');
+    }
+
+    public function getSubscriptions()
+    {
+        $user = Auth::user();
+        dd($user->subscriptions);
+//        if ($user->)
     }
 }

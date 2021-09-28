@@ -17,8 +17,7 @@ class SubscribedMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
-        if (!$user->subscribed('default'))
+        if (!$request->user()->subscribed('default') || !$request->user()->subscription('default')->onTrial())
             return redirect()->route('subscribe');
         return $next($request);
     }
