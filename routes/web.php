@@ -32,7 +32,7 @@ Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
-Route::middleware(['auth', 'initial'])->group(function () {
+Route::middleware(['auth', 'subscribed'])->group(function () {
 
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
