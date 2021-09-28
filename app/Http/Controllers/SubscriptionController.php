@@ -44,18 +44,29 @@ class SubscriptionController extends Controller
 
     public function subscribeUser(Request $request)
     {
+//        dd($request->all());
         $user = Auth::user();
-//        $paymentMethod = $request->input('payment_method');
-        $paymentMethod = 'pm_1JeKmqJdnIRrLjNvsZp7WBVT';
+        $paymentMethod = $request->input('payment_method');
+//        dd($paymentMethod);
+//        $paymentMethod = 'pm_1JeLKcF6TN9qHUPOW7AmEGe2';
         $user->createOrGetStripeCustomer();
         $user->addPaymentMethod($paymentMethod);
         $plan = $request->input('plan');
         try {
-            $user->newSubscription('default', $plan)->create($paymentMethod, $user);
+            $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
         } catch (\Exception $e) {
             dd($e);
 //            return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
         }
         return redirect('dashboard');
+    }
+
+    public function checkStatus()
+    {
+        $user = Auth::user();
+        if ($user->subscription('default')->onTrial()) {
+            dd('trial');
+        }
+        dd('not trial');
     }
 }

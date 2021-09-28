@@ -82,4 +82,5 @@ Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');
 Route::get('diagnostics', [LayerController::class, 'diagnostics'])->name('diagnostics');
 Route::get('subscription', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'retrievePlans'])->name('plans');
+Route::get('subscription/check', [\App\Http\Controllers\SubscriptionController::class, 'checkStatus'])->name('plans.check');
 Route::post('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUser'])->name('subscribe.user');
