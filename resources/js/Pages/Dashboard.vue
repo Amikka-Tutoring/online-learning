@@ -5,17 +5,19 @@
                 <h1 class="blue-text">Academic Diagnostic</h1>
                 <div class="academic-content pl-5" style="margin-top: 90px">
                     <transition name="list">
-                        <p class="question-box text-left" v-if="academic">
-                        <div class="row">
-                            <div class="col-lg-11 col-10">
-                                Answer these short quizzes in order to help us build you a personalized program based on
-                                your current strengths and weaknesses.
-                            </div>
-                            <div class="col-lg-1 col-2 d-flex align-items-center">
-                                <i v-on:click="academic = !academic" class="fas fa-times red-text"></i>
+                        <div class="question-box text-left" v-if="academic">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    Answer these short quizzes in order to help us build you a personalized program
+                                    based on
+                                    your current strengths and weaknesses.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="academic = disableNotification('academic')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
                             </div>
                         </div>
-                        </p>
                     </transition>
                     <div class="row">
                         <div v-for="a_q in academic_data.quizzes" class="col-lg-3 col-12" data-aos="fade-up"
@@ -74,16 +76,17 @@
                 <h1 class="blue-text">Personality Diagnostic</h1>
                 <div class="personality-content pl-5" style="margin-top: 90px">
                     <transition name="list">
-                        <p v-if="personality" class="question-box text-left">
-                        <div class="row">
-                            <div class="col-lg-11 col-10">
-                                Answer these 10 questions in order to help us build you a personalized program.
-                            </div>
-                            <div class="col-lg-1 col-2 d-flex align-items-center">
-                                <i v-on:click="personality = !personality" class="fas fa-times red-text"></i>
+                        <div v-if="personality" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    Answer these 10 questions in order to help us build you a personalized program.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="personality = disableNotification('personality')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
                             </div>
                         </div>
-                        </p>
                     </transition>
                     <div class="row">
                         <div v-for="p_q in personality_data.quizzes" class="col-lg-3 col-12" data-aos="fade-up"
@@ -122,7 +125,8 @@
                                 diagnostic, goal score, time until exam, and progress.
                             </div>
                             <div class="col-lg-1 col-2 d-flex align-items-center">
-                                <i v-on:click="courses = !courses" class="fas fa-times red-text"></i>
+                                <i v-on:click="courses = disableNotification('courses')"
+                                   class="fas fa-times red-text"></i>
                             </div>
                         </div>
                         </p>
@@ -165,7 +169,8 @@
                             </div>
                             <div class="col-lg-1 col-2 d-flex align-items-center" data-aos="fade-up" data-aos-delay="50"
                                  data-aos-once="true">
-                                <i v-on:click="calendar = !calendar" class="fas fa-times red-text"></i>
+                                <i v-on:click="calendar = disableNotification('calendar')"
+                                   class="fas fa-times red-text"></i>
                             </div>
                         </div>
                         </p>
@@ -193,17 +198,19 @@
                 <h1 class="blue-text">Notes</h1>
                 <div class="notes-content pl-5" style="margin-top: 90px">
                     <transition name="list">
-                        <p v-if="notes" class="question-box text-left">
-                        <div class="row">
-                            <div class="col-lg-11 col-10">
-                                This is where all of your voice and written notes will be saved for all of the courses
-                                that you are taking.
-                            </div>
-                            <div class="col-lg-1 col-2 d-flex align-items-center">
-                                <i v-on:click="notes = !notes" class="fas fa-times red-text"></i>
+                        <div v-if="notes" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    This is where all of your voice and written notes will be saved for all of the
+                                    courses
+                                    that you are taking.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="notes = disableNotification('notes')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
                             </div>
                         </div>
-                        </p>
                     </transition>
                     <div class="row">
                         <div class="col-lg-4 col-12" data-aos="fade-up" data-aos-delay="50" data-aos-once="true">
@@ -318,8 +325,6 @@
                 </div>
             </div>
         </div>
-
-
     </app-layout>
 </template>
 
@@ -333,12 +338,17 @@ export default {
     props: ['academic_data', 'personality_data', 'user_courses'],
     data() {
         return {
-            academic: true,
-            personality: true,
-            courses: true,
-            calendar: true,
-            notes: true
+            academic: localStorage.getItem('academic') === 'true',
+            personality: localStorage.getItem('personality') === 'true',
+            courses: localStorage.getItem('courses') === 'true',
+            calendar: localStorage.getItem('calendar') === 'true',
+            notes: localStorage.getItem('notes') === 'true'
         }
     },
+    methods: {
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        }
+    }
 }
 </script>

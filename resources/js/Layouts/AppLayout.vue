@@ -20,8 +20,8 @@
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" @click="logout()" href="">Logout</a>
                 <a class="dropdown-item" :href="route('admin.dashboard')">Admin Panel</a>
+                <a class="dropdown-item" @click="logout()" href="">Logout</a>
             </div>
         </div>
 
@@ -84,13 +84,14 @@
 // import { Link, Head } from "@inertiajs/inertia-vue3";
 import {computed} from 'vue'
 import {usePage} from '@inertiajs/inertia-vue3'
+import {useToast} from "vue-toastification";
 
 export default {
     components: {},
     setup() {
         const user = computed(() => usePage().props.value.auth.user);
-        console.log(user)
-        return {user}
+        const toast = useToast();
+        return {user, toast}
     },
     props: ['user'],
     data() {
@@ -109,7 +110,6 @@ export default {
         },
         toggleClass: function (event) {
             this.isHidden = !this.isHidden;
-
         }
     },
 };

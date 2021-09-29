@@ -42,7 +42,6 @@ class PageController extends Controller
     public function profile()
     {
         $tags = Tag::all();
-
         $userTag = Auth::user()->getTag();
         $user = User::with(['enrollments', 'enrollments.course', 'profile'])->find(Auth::id());
         $user_days_available = unserialize($user->profile->days_available);
@@ -159,6 +158,7 @@ class PageController extends Controller
             default:
                 Auth::user()->setEasy();
         }
-        return redirect()->back()->with('message', 'Post Created Successfully.');
+        $message = 'Course level is set to: ' . $tag;
+        return ['tag' => $tag, 'message' => $message];
     }
 }

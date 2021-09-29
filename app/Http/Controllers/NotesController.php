@@ -8,12 +8,12 @@ use App\Models\StudentLayerQuestion;
 use App\Scopes\LayerScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\throwException;
 
 class NotesController extends Controller
 {
     public function store(Request $request)
     {
-//        dd($request->all());
         $request->validate([
             'note' => 'required',
             'lesson_id' => 'required|exists:layers,id',
@@ -28,7 +28,7 @@ class NotesController extends Controller
             'user_id' => Auth::id(),
             'layer_id' => $request->lesson_id
         ]);
-        return back()->with('message', 'Saved successfully');
+        return 'Saved Successfully!';
     }
 
     public function storeQuestion(Request $request)
@@ -43,7 +43,7 @@ class NotesController extends Controller
             'layer_id' => $request->lesson_id,
             'question_text' => $request->question_text,
         ]);
-        return back()->with('message', 'Saved successfully');
+        return 'Saved Successfully';
     }
 
     public function lessonQuestions($id)

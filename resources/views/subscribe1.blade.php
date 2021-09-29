@@ -1,26 +1,47 @@
-<form id="subscribe-form" method="POST" action="{{route('subscribe.user')}}" onSubmit="return false">
-    @csrf
-    @foreach($plans as $plan)
-        <div class="col-md-4">
-            <div class="subscription-option">
-                <input type="radio" id="plan" name="plan" value='{{$plan->id}}'>
-                <label for=" plan">
-<span
-    class="plan-price">{{$plan->currency}}{{$plan->amount/100}}<small> /{{$plan->interval}}</small></span>
-                    <span class="plan-name">{{$plan->product->name}}</span>
-                </label>
-            </div>
-        </div>
-    @endforeach
-    <input id="card-holder-name" type="text">
-    <input id="payment_method" type="hidden" name="payment_method">
-    <!-- Stripe Elements Placeholder -->
-    <div id="card-element"></div>
+<link rel="stylesheet" href="{{asset('css/app.css')}}">
+<div class="container">
+    <div class="row justify-content-center align-content-center h-100">
+        <div class="card col-md-4 h-auto p-0 m-0">
+            <form id="subscribe-form" method="POST" action="{{route('subscribe.user')}}" onSubmit="return false"
+                  class="form p-2 m-0">
+                <div class="card-header">
+                    <h1 class="text-center">Subscribe</h1>
+                </div>
+                <div class="card-body">
+                    @csrf
+                    {{--                @foreach($plans as $plan)--}}
+                    {{--                    <div class="col-md-4">--}}
+                    {{--                        <div class="form-check form-check-inline">--}}
+                    {{--                            --}}{{--                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"--}}
+                    {{--                            --}}{{--                                   value="option1">--}}
+                    {{--                            --}}{{--                            <label class="form-check-label" for="inlineRadio1">1</label>--}}
+                    {{--                            <input type="radio" class="form-check-input" id="plan" name="plan" value='{{$plan->id}}'>--}}
+                    {{--                            <label class="form-check-label">{{$plan->product->name}}--}}
+                    {{--                                - USD {{$plan->amount/100}}</label>--}}
+                    {{--                            --}}{{--                            <span--}}
+                    {{--                            --}}{{--                                class="plan-price">{{$plan->currency}}{{$plan->amount/100}}<small> /{{$plan->interval}}</small></span>--}}
+                    {{--                            --}}{{--                            <span class="plan-name">{{$plan->product->name}}</span>--}}
+                    {{--                            --}}{{--                            </label>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
+                    {{--                @endforeach--}}
+                    <input id="card-holder-name" type="text" class="form-control mb-4" placeholder="Card Holder Name">
+                    <input id="payment_method" type="hidden" name="payment_method">
+                    <!-- Stripe Elements Placeholder -->
+                    <div id="card-element" class="form-control"></div>
+                </div>
+                <div class="card-footer">
+                    <button id="card-button" class="btn btn-primary w-100" data-secret="{{ $intent->client_secret }}">
+                        Subscribe
+                    </button>
+                </div>
 
-    <button id="card-button" data-secret="{{ $intent->client_secret }}">
-        Update Payment Method
-    </button>
-</form>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script src="https://js.stripe.com/v3/"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 

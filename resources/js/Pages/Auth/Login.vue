@@ -43,12 +43,6 @@
                         <a :href="route('register')" class="text-muted mr-3">
                             Register
                         </a>
-
-
-                        <!--                        <jet-button class="ml-4" :class="{ 'text-white-50': form.processing }"-->
-                        <!--                                    :disabled="form.processing">-->
-                        <!--                            Log in-->
-                        <!--                        </jet-button>-->
                         <loading-button :loading="form.processing" class="ml-4"
                                         :class="{ 'text-white-50': form.processing }" type="submit">Log in
                         </loading-button>

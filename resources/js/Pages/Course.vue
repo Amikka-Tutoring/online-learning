@@ -71,8 +71,9 @@
                             <div v-if="wrritten_notes" class="written_notes">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
-                                    <textarea v-model="form.note" id="" cols="80" rows="40" name="written_notes"
-                                              placeholder="Notes..." required></textarea>
+                                    <textarea required v-model="form.note" id="" cols="80" rows="40"
+                                              name="written_notes"
+                                              placeholder="Notes..."></textarea>
                                     <button class="light-button">Submit</button>
                                 </form>
                             </div>
@@ -193,11 +194,23 @@ export default {
         })
 
         function submit() {
-            Inertia.post(route('notes.store'), form,)
+            axios.post(route('notes.store'), form)
+                .then(response => {
+                    toast.success(response.data)
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                });
         }
 
         function submitQuestion() {
-            Inertia.post(route('notes.store.question'), questionForm)
+            axios.post(route('notes.store.question'), questionForm)
+                .then(response => {
+                    toast.success(response.data)
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                });
         }
 
         return {form, questionForm, submit, submitQuestion, toast, message}
@@ -223,22 +236,5 @@ export default {
             questions: false,
         }
     },
-    mounted() {
-
-    },
-    watch: {
-        errors(val, oldVal) {
-            if (val.question_text !== oldVal.question_text) {
-                this.toast.error(this.errors.question_text);
-                val.question_text = null
-            }
-        },
-        flash(val, oldVal) {
-            if (val.message !== oldVal.message) {
-                this.toast.success(this.flash.message);
-                val.message = null
-            }
-        },
-    }
 }
 </script>

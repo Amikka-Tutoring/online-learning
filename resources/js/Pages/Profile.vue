@@ -11,14 +11,19 @@
                 <!--                    Become Premium-->
                 <!--                </button>-->
                 <div class="btn-group">
-                    <button @click="tab = 'specific'"
+                    <button @click="tab = changeTab('specific')"
                             v-bind:class="[tab==='specific' ? 'active-button' : 'passive-button']">Course Specific
                     </button>
-                    <button @click="tab = 'general'"
+                    <button @click="tab = changeTab('general')"
                             v-bind:class="[tab==='general' ? 'active-button' : 'passive-button']">General
                     </button>
                 </div>
-                <transition name="component-fade" mode="out-in">
+                <div class="row justify-content-center">
+                    <div v-if=loading class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <transition>
                     <div v-if="tab === 'specific'" class="profile-course-listing">
                         <ul>
                             <li>
@@ -28,9 +33,8 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Enrolled Courses</h5>
-                                        <span class="h6 mr-2" v-for="c in user_data.enrollments">{{
-                                                c.course.name
-                                            }}</span>
+                                        <span class="h6 mr-2"
+                                              v-for="c in user_data.enrollments">{{ c.course.name }}</span>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
@@ -70,7 +74,6 @@
                             </li>
                         </ul>
                     </div>
-
                     <div v-else class="profile-course-listing">
                         <ul>
                             <li>
@@ -103,8 +106,10 @@
                                                                         name="tag" id=""
                                                                         @change="onChange($event)">
                                             <option :value="user_tag" selected="">{{ user_tag }}</option>
-                                            <option :value="user_tag">--</option>
-                                            <option v-for="tag in tags" v-bind:value="tag.name">{{ tag.name }}</option>
+                                            <option v-for="tag in tags" v-bind:value="tag.name">{{
+                                                    tag.name
+                                                }}
+                                            </option>
                                         </select></div>
                                     </div>
                                 </div>
@@ -130,7 +135,6 @@
             </div>
         </div>
         <CheckList/>
-
     </app-layout>
 </template>
 
@@ -138,6 +142,7 @@
 import AppLayout from '@/Layouts/AppLayout'
 import CheckList from "../components/CheckList";
 import moment from "moment";
+import {useToast} from "vue-toastification";
 
 export default {
     components: {
@@ -148,9 +153,24 @@ export default {
         logout() {
             this.$inertia.post(route("logout"));
         },
-        onChange(event) {
-            console.log(event.target.value);
-            this.$inertia.post(route('change.tag'), event.target.value);
+        onChange(event, props) {
+            const toast = useToast();
+            axios.post(route('change.tag'), event.target.value)
+                .then(response => {
+                    toast.success(response.data.message);
+                    this.user_tag = response.data.tag;
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                });
+        },
+        changeTab(tab_name) {
+            this.loading = true;
+            setTimeout(() => {
+                this.tab = tab_name;
+                this.loading = false;
+            }, 500);
+
         }
     },
     props: ['user', 'tags', 'user_tag', 'user_data', 'user_days_available'],
@@ -159,12 +179,9 @@ export default {
             avatar: this.user.profile_photo_path,
             tab: 'specific',
             moment: moment,
+            user_tag: this.user_tag,
+            loading: false
         }
-    }
-    ,
-    mounted(props) {
-        console.log(this.tags)
-        // console.log(this.user_tag)
-    }
+    },
 }
 </script>

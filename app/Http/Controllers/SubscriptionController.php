@@ -49,7 +49,7 @@ class SubscriptionController extends Controller
         $paymentMethod = $request->payment_method;
         $user->createOrGetStripeCustomer();
         $user->addPaymentMethod($paymentMethod);
-        $plan = $request->plan;
+        $plan = env('PLAN_ID');
         try {
             if ($user->subscriptions)
                 $user->newSubscription('default', $plan)->create($paymentMethod);
@@ -64,7 +64,7 @@ class SubscriptionController extends Controller
     public function checkStatus()
     {
         $user = Auth::user();
-        if ($user->subscription('default')->onTrial()) {
+        if ($user->subscribed('default')) {
             dd('trial');
         }
         dd('not trial');
