@@ -59,7 +59,10 @@ class CourseController extends Controller
 
 
         // Insert to MySQL database
-        $inserted = array();
+        $coursesArray = array();
+        $topLayersArray = array();
+        $midLayersArray = array();
+        $lessLayersArray = array();
         foreach ($importData_arr as $row) {
             if (count($row) != 67) {
                 return back()->with('error', 'Wrong format');
@@ -73,7 +76,7 @@ class CourseController extends Controller
                     'name' => $row[0],
                     'slug' => Str::slug($row[0]),
                 ]);
-                array_push($inserted, $course);
+                array_push($coursesArray, $course->name);
             }
             if ($row[1] != '') {
                 $top_layer = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[1])->first();
@@ -83,7 +86,7 @@ class CourseController extends Controller
                         'name' => $row[1],
                         'course_id' => $course->id,
                     ]);
-                    array_push($inserted, $top_layer);
+                    array_push($topLayersArray, $top_layer->name);
                 }
                 switch ($row[2]) {
                     case 'Hard':
@@ -181,7 +184,7 @@ class CourseController extends Controller
                         'course_id' => $course->id,
                         'parent_id' => $top_layer->id,
                     ]);
-                    array_push($inserted, $mid_layer);
+                    array_push($midLayersArray, $mid_layer->name);
                 }
                 switch ($row[24]) {
                     case 'Hard':
@@ -269,8 +272,6 @@ class CourseController extends Controller
                         }
                     }
                 }
-
-
                 //Lesson
                 if ($row[45] != '') {
                     $lesson = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[45])->where('parent_id', $mid_layer->id)->first();
@@ -281,7 +282,7 @@ class CourseController extends Controller
                             'course_id' => $course->id,
                             'parent_id' => $mid_layer->id,
                         ]);
-                        array_push($inserted, $lesson);
+                        array_push($lessLayersArray, $lesson->name);
                     }
                     switch ($row[46]) {
                         case 'Hard':
@@ -368,6 +369,6 @@ class CourseController extends Controller
                 }
             }
         }
-        return ['inserted' => $inserted, 'message' => 'Uploaded Successfully'];
+        return ['courses' => $coursesArray, 'top_layers' => $topLayersArray, 'mid_layers' => $midLayersArray, 'less_layers' => $lessLayersArray, 'message' => 'Uploaded Successfully'];
     }
 }
