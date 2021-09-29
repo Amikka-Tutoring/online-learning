@@ -21,11 +21,9 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
-            'file' => 'required|mimes:csv,txt|max:1024'
+            'file' => 'required|mimes:csv,txt|max:1024',
         ]);
-
 
         $file = $request->file('file');
         // File Details
@@ -61,6 +59,7 @@ class CourseController extends Controller
 
 
         // Insert to MySQL database
+        $inserted = array();
         foreach ($importData_arr as $row) {
             if (count($row) != 67) {
                 return back()->with('error', 'Wrong format');
@@ -74,6 +73,7 @@ class CourseController extends Controller
                     'name' => $row[0],
                     'slug' => Str::slug($row[0]),
                 ]);
+                array_push($inserted, $course);
             }
             if ($row[1] != '') {
                 $top_layer = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[1])->first();
@@ -83,6 +83,7 @@ class CourseController extends Controller
                         'name' => $row[1],
                         'course_id' => $course->id,
                     ]);
+                    array_push($inserted, $top_layer);
                 }
                 switch ($row[2]) {
                     case 'Hard':
@@ -180,6 +181,7 @@ class CourseController extends Controller
                         'course_id' => $course->id,
                         'parent_id' => $top_layer->id,
                     ]);
+                    array_push($inserted, $mid_layer);
                 }
                 switch ($row[24]) {
                     case 'Hard':
@@ -279,6 +281,7 @@ class CourseController extends Controller
                             'course_id' => $course->id,
                             'parent_id' => $mid_layer->id,
                         ]);
+                        array_push($inserted, $lesson);
                     }
                     switch ($row[46]) {
                         case 'Hard':
@@ -365,6 +368,6 @@ class CourseController extends Controller
                 }
             }
         }
-        return redirect()->back()->with('message', 'Imported Successfully.');
+        return ['inserted' => $inserted, 'message' => 'Uploaded Successfully'];
     }
 }

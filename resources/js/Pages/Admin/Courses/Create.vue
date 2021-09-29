@@ -5,43 +5,24 @@
                 {{ $page.props.flash.message }}
             </div>
             <div class="csv-buttons">
-                <a href="" class="upload-csv">Upload CSV</a>
-                <a href="" class="delete-csv">Delete</a>
-
-                <form
-                    class="my-4"
-                    enctype="multipart/form-data"
-                    action=""
-                    @submit.prevent="submit"
-                >
-                    <input
-                        id="csv"
-                        class="form-control"
-                        type="file"
-                        accept=".csv"
-                        @input="form.file = $event.target.files[0]"
-                    />
-                    <input class="my-4" type="submit" value="Submit"/>
+                <form class="my-4" enctype="multipart/form-data" action=""
+                      @submit.prevent="submit">
+                    <button type="submit" class="upload-csv">Upload CSV <span v-if="loading"
+                                                                              class="spinner-border ml-2"
+                                                                              style="width: 1.5rem; height: 1.5rem"></span><i
+                        v-if="submitted" class="ml-2 bi bi-check-circle-fill" data-aos="zoom-in"
+                        data-aos-delay="300"></i>
+                    </button>
+                    <div class="custom-file mt-2 custom-inputs">
+                        <input accept=".csv" id="csv" type="file" class="form-control-lg form-control p-0 h-auto"
+                               required
+                               @input=" form.file=$event.target.files[0]">
+                        <!--                        <input class="my-4" type="submit" value="Submit">-->
+                    </div>
+                    <!--                    <div class="mb-3 custom-inputs">-->
+                    <!--                        <input class="form-control p-0 h-auto" id="formFileSm" type="file">-->
+                    <!--                    </div>-->
                 </form>
-
-                <progress
-                    style="width: 100%; height: 45px"
-                    v-if="form.progress"
-                    :value="form.progress.percentage"
-                    max="100"
-                >
-                    {{ form.progress.percentage }}%
-                </progress>
-                <span
-                    style="
-                        position: absolute;
-                        top: 27.5%;
-                        left: 50%;
-                        font-size: 12px;
-                    "
-                    v-if="form.progress"
-                >{{ form.progress.percentage }}%</span
-                >
             </div>
             <div class="csv-table">
                 <table>
@@ -76,65 +57,57 @@
                 </table>
             </div>
         </div>
+
     </admin-layout>
 </template>
 
 <script>
-import AdminLayout from "@/Layouts/AdminLayout";
-import {useForm} from "@inertiajs/inertia-vue3";
+import AdminLayout from '@/Layouts/AdminLayout'
+import {useForm} from '@inertiajs/inertia-vue3'
 import {useToast} from "vue-toastification";
-import {computed} from "vue";
-import {usePage} from "@inertiajs/inertia-vue3";
+import {computed} from 'vue'
+import {usePage} from '@inertiajs/inertia-vue3'
 
 export default {
-    setup(props) {
-        const toast = useToast();
-        const message = computed(() => usePage().props.value.flash.message);
-        return {toast, message};
-    },
     props: {
         user: Object,
         errors: Object,
-        flash: this,
     },
     components: {
         AdminLayout,
     },
-
     data() {
         return {
             form: {
-                file: null,
+                file: null
             },
-        };
+            loading: false,
+            submitted: false
+        }
     },
     methods: {
         submit() {
-            this.$inertia.post(route("admin.courses.store"), this.form);
+            const toast = useToast();
+            let formData = new FormData();
+            formData.append("file", this.form.file);
+            this.loading = true
+            axios.post(route('admin.courses.store'), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(response => {
+                    toast.success(response.data.message);
+                    console.log(response.data.inserted)
+                    this.submitted = true
+                })
+                .catch(error => {
+                    console.log(error.response.data)
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                }).finally(() => {
+                this.loading = false
+            });
         },
-    },
-    mounted() {
-        // console.log(this.$inertia);
-    },
-    watch: {
-        errors(val, oldVal) {
-            console.log("errors");
-            console.log(val);
-            console.log(oldVal);
-            if (val.file !== oldVal.file) {
-                this.toast.error(this.errors.file);
-                val.file = null
-            }
-        },
-        flash(val, oldVal) {
-            console.log("flash");
-            console.log(val);
-            console.log(oldVal);
-            if (val.message !== oldVal.message) {
-                this.toast.success(this.flash.message);
-                val.message = null
-            }
-        },
-    },
-};
+    }
+}
 </script>
