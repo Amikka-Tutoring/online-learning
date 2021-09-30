@@ -370,4 +370,27 @@ class CourseController extends Controller
         }
         return ['courses' => $coursesArray, 'top_layers' => $topLayersArray, 'mid_layers' => $midLayersArray, 'less_layers' => $lessLayersArray, 'message' => 'Uploaded Successfully'];
     }
+
+    public function updateCourse(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $course = Course::findOrFail($id);
+        $course->update([
+            'name' => $request->name
+        ]);
+        return ['message' => 'Updated Successfully'];
+    }
+
+    public function getCourses()
+    {
+        return Course::all();
+    }
+
+    public function deleteCourse($id)
+    {
+        Course::findOrFail($id)->delete();
+        return ['message' => 'Deleted successfully'];
+    }
 }

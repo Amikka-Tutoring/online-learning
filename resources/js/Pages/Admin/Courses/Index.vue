@@ -1,51 +1,69 @@
 <template>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            @click="closeModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" id="name" class="form-control"
+                               v-model="form.name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @click="deleteCourse(form)">Delete
+                        <span
+                            v-if="deleteLoader"
+                            class="spinner-border ml-2"
+                            style="width: 1rem; height: 1rem"></span></button>
+                    <button type="button" class="btn btn-primary" @click="update(form)">Update <span
+                        v-if="loading"
+                        class="spinner-border ml-2"
+                        style="width: 1rem; height: 1rem"></span></button>
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            @click="closeModal()">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <admin-layout>
         <div class="container">
             <div class="admin-courses">
                 <div class="courses" data-aos="fade-up">
-                    <div class="modal d-block" tabindex="-1" role="dialog" v-if="isOpen">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Course</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="name">Name:</label>
-                                        <input type="text" name="name" id="name" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Update</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <h1 class="blue-text">Courses</h1>
                     <div class="courses-content" style="margin-top: 90px">
                         <div class="row">
-                            <div v-for="course in courses" class="col-lg-3 col-12" data-aos="fade-up"
+                            <div v-for="course in courses" class="col-md-3" data-aos="fade-up"
                                  data-aos-delay="50"
                                  data-aos-once="true">
                                 <div class="input-cards mb-4">
                                     <img class="w-100" :src="'../images/course-img.png'">
-                                    <h4>{{ course.name }}</h4>
-                                    <div class="row justify-content-center align-items-center"
+                                    <h4 :id="course.id">{{ course.name }}</h4>
+                                    <div class="row justify-content-center align-items-center mx-0"
                                          style="margin-top: 60px; margin-bottom: 10px">
-                                        <div class="col-9">
+                                        <div class="col-lg-9 col-7">
 
                                         </div>
-                                        <div class="col-3">
-                                            <div class="blue-text course-edit" @click="edit(course)">Edit</div>
+                                        <div class="col-lg-3 col-5">
+                                            <div class="blue-text course-edit" @click="edit(course)" data-toggle="modal"
+                                                 data-target="#modal">Edit
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-once="true">
+                            <div class="col-md-3" data-aos="fade-up"
+                                 data-aos-delay="50"
+                                 data-aos-once="true">
                                 <div class="input-cards mb-4">
                                     <img class="w-100" :src="'../../images/course-img.png'">
                                     <a :href="route('admin.courses.create')"><h4>New Course</h4></a>
@@ -73,30 +91,93 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
+import {useToast} from "vue-toastification";
 
 export default {
     components: {
         AdminLayout,
     },
+    props: ['courses'],
     methods: {
         openModal: function () {
             this.isOpen = true;
         },
+        closeModal: function () {
+            $('#modal').modal('hide');
+            this.isOpen = false;
+            this.reset();
+        },
+        reset: function () {
+            this.form = {
+                name: null,
+                id: null
+            }
+            this.editMode = false;
+            this.loading = false;
+            this.deleteLoader = false;
+        },
         edit: function (data) {
-            this.form = Object.assign({}, data);
+            this.form.name = data.name
+            this.form.id = data.id
             this.editMode = true;
             this.openModal();
         },
+        update: function (data) {
+            const toast = useToast();
+            this.loading = true
+            axios.put(route('course.update', data.id), data)
+                .then(response => {
+                    this.getCourses();
+                    toast.success(response.data.message);
+                    this.loading = false
+                    this.closeModal();
+                    this.reset();
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                    this.loading = false
+                });
+        },
+        deleteCourse: function (data) {
+            const toast = useToast();
+            this.deleteLoader = true
+            axios.delete(route('course.delete', data.id))
+                .then(response => {
+                    this.getCourses();
+                    toast.success(response.data.message);
+                    this.deleteLoader = false
+                    this.closeModal();
+                    this.reset();
+                })
+                .catch(error => {
+                        Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                        this.deleteLoader = false
+                    }
+                );
+        },
+        getCourses: function () {
+            axios.get(route('courses.get')).then(response => {
+                this.courses = response.data
+                this.loadingCourses = false
+            })
+        }
     },
-    props: ['courses'],
-
     data() {
         return {
+            editMode: false,
             form: {
                 name: null,
             },
-            isOpen = false
+            isOpen: false,
+            loading: false,
+            courses: this.courses,
+            loadingCourses: true,
+            deleteLoader: false
         }
-    },
+    }
+    ,
+    mounted() {
+        // this.getCourses()
+    }
 }
 </script>

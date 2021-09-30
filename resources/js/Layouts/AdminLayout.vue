@@ -44,11 +44,11 @@
                 <li><a v-bind:class="route().current('admin.exams') ? 'active' : ''"
                        :href="route('admin.exams')">Practice Exams</a></li>
                 <li><a
-                    v-bind:class="route().current('academic.diagnostics') || route().current('academic.diagnostics.create') ? 'active' : ''"
-                    :href="route('academic.diagnostics')">Academic Diagnostics</a></li>
+                    v-bind:class="route().current('diagnostics') || route().current('academic.diagnostics.create') ? 'active' : ''"
+                    :href="route('diagnostics','academic')">Academic Diagnostics</a></li>
                 <li><a
-                    v-bind:class="route().current('personality.diagnostics') || route().current('personality.diagnostics.create') ? 'active' : ''"
-                    :href="route('personality.diagnostics')">Personality Diagnostics</a></li>
+                    v-bind:class="route().current('diagnostics') || route().current('personality.diagnostics.create') ? 'active' : ''"
+                    :href="route('diagnostics','personality')">Personality Diagnostics</a></li>
                 <li><a @click="logout" style="color: red; cursor: pointer; text-decoration: underline;">Logout</a></li>
             </ul>
         </div>

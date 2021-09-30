@@ -37,4 +37,34 @@ class DiagnosticController extends Controller
 
         return Inertia::render('DiagnosticResults', ['results' => $answers, 'score' => $score]);
     }
+
+    public function updateQuiz(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $quiz = DiagnosticQuiz::findOrFail($id);
+        $quiz->update([
+            'name' => $request->name
+        ]);
+
+        return ['message' => 'Updated Successfully'];
+
+    }
+
+    public function deleteQuiz($id)
+    {
+        DiagnosticQuiz::findOrFail($id)->delete();
+        return ['message' => 'Deleted Successfully'];
+    }
+
+    public function getAcademicQuizzes()
+    {
+        return Diagnostic::where('name', 'Academic')->first()->quizzes;
+    }
+
+    public function getPersonalityQuizzes()
+    {
+        return Diagnostic::where('name', 'Personality')->first()->quizzes;
+    }
 }

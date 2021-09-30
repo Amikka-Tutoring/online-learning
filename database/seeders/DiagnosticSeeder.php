@@ -23,6 +23,7 @@ class DiagnosticSeeder extends Seeder
         $question3 = new Question;
         $personality = Diagnostic::create([
             'name' => 'Personality',
+            'slug' => Str::slug('Personality')
         ]);
 
         $learning_style = DiagnosticQuiz::create([
@@ -112,6 +113,7 @@ class DiagnosticSeeder extends Seeder
 
         $academic = Diagnostic::create([
             'name' => 'Academic',
+            'slug' => Str::slug('Academic')
         ]);
 
         DiagnosticQuiz::create([

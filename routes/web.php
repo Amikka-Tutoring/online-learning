@@ -70,16 +70,24 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('courses', [AdminController::class, 'courses'])->name('admin.courses');
     Route::get('courses/create', [AdminController::class, 'createCourse'])->name('admin.courses.create');
     Route::post('courses/create', [CourseController::class, 'store'])->name('admin.courses.store');
-    Route::get('diagnostics/academic', [AdminController::class, 'academicDiagnostics'])->name('academic.diagnostics');
+    Route::get('diagnostics/{slug}', [AdminController::class, 'diagnostics'])->name('diagnostics');
     Route::get('diagnostics/academic/create', [AdminController::class, 'createAcademicDiagnostics'])->name('academic.diagnostics.create');
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
     Route::get('exams', [AdminController::class, 'createExam'])->name('admin.exams');
+
+    Route::put('courses/{id}', [CourseController::class, 'updateCourse'])->name('course.update');
+    Route::delete('courses/{id}', [CourseController::class, 'deleteCourse'])->name('course.delete');
+    Route::get('courses/get', [CourseController::class, 'getCourses'])->name('courses.get');
+
+    Route::put('diagnostics/{id}', [DiagnosticController::class, 'updateQuiz'])->name('diagnostics.update');
+    Route::delete('diagnostics/{id}', [DiagnosticController::class, 'deleteQuiz'])->name('diagnostics.delete');
+    Route::get('diagnostics/academic/get', [DiagnosticController::class, 'getAcademicQuizzes'])->name('academics.get');
+    Route::get('diagnostics/personality/get', [DiagnosticController::class, 'getPersonalityQuizzes'])->name('personalities.get');
 });
 
 
 Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');
-Route::get('diagnostics', [LayerController::class, 'diagnostics'])->name('diagnostics');
 Route::get('subscription', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('subscription/get', [\App\Http\Controllers\SubscriptionController::class, 'getSubscriptions'])->name('get.subscriptions');
 Route::get('subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'retrievePlans'])->name('plans');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Diagnostic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,9 +33,11 @@ class AdminController extends Controller
         return Inertia::render('Admin/Courses/Index', ['courses' => $courses]);
     }
 
-    public function academicDiagnostics()
+    public function diagnostics($slug)
     {
-        return Inertia::render('Admin/Diagnostics/Academic/Index');
+        $quizzes = Diagnostic::where('slug', $slug)->firstOrFail()->quizzes;
+        $diagnostic_name = $quizzes->first()->diagnostic->name;
+        return Inertia::render('Admin/Diagnostics/Index', ['quizzes' => $quizzes, 'diagnostic_name' => $diagnostic_name]);
     }
 
     public function createAcademicDiagnostics()
