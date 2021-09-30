@@ -68,7 +68,6 @@ class CourseController extends Controller
                 return back()->with('error', 'Wrong format');
             }
 
-
             //Course
             $course = Course::where('name', $row[0])->first();
             if ($course == null) {
@@ -86,7 +85,7 @@ class CourseController extends Controller
                         'name' => $row[1],
                         'course_id' => $course->id,
                     ]);
-                    array_push($topLayersArray, $top_layer->name);
+                    array_push($topLayersArray, $top_layer->course->name . '/' . $top_layer->name);
                 }
                 switch ($row[2]) {
                     case 'Hard':
