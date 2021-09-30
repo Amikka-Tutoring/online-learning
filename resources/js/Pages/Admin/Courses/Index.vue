@@ -3,6 +3,28 @@
         <div class="container">
             <div class="admin-courses">
                 <div class="courses" data-aos="fade-up">
+                    <div class="modal d-block" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Course</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="name">Name:</label>
+                                        <input type="text" name="name" id="name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary">Update</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h1 class="blue-text">Courses</h1>
                     <div class="courses-content" style="margin-top: 90px">
                         <div class="row">
@@ -44,6 +66,7 @@
                 </div>
             </div>
         </div>
+
     </admin-layout>
 </template>
 

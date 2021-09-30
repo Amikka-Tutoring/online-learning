@@ -26,7 +26,7 @@
             <div v-if="courses || top_layers || mid_layers || less_layers" class="card row flex-row p-4"
                  style="background: rgba(240, 244, 243, 1)"
                  data-aos="fade-up" data-aos-delay="300">
-                <div class="col-3">
+                <div class="col-md-3">
                     <h5 class="mb-2" v-if="courses">Courses created: <span
                         class="badge badge-primary">{{ courses.length }}</span>
                     </h5>
@@ -41,7 +41,7 @@
                         class="mr-2 bi bi bi-info-circle-fill" data-aos="zoom-in"
                         data-aos-delay="100"></i> No course inserted</p>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3">
                     <h5 class="mb-2" v-if="top_layers">Top Layers created: <span
                         class="badge badge-primary">{{ mid_layers.length }}</span></h5>
                     <div class="body" v-for="toplayer in top_layers">
@@ -55,7 +55,7 @@
                         class="mr-2 bi bi bi-info-circle-fill" data-aos="zoom-in"
                         data-aos-delay="100"></i> No top layer inserted</p>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3">
                     <h5 class="mb-2" v-if="mid_layers">Mid Layers created: <span
                         class="badge badge-primary">{{ mid_layers.length }}</span></h5>
                     <div class="body" v-for="midlayer in mid_layers">
@@ -69,7 +69,7 @@
                         class="mr-2 bi bi bi-info-circle-fill" data-aos="zoom-in"
                         data-aos-delay="100"></i> No mid layer inserted</p>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3">
                     <h5 class="mb-2" v-if="less_layers">Lessons created: <span
                         class="badge badge-primary">{{ less_layers.length }}</span></h5>
                     <div class="body" v-for="lesson in less_layers">
