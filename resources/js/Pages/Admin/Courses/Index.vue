@@ -3,7 +3,7 @@
         <div class="container">
             <div class="admin-courses">
                 <div class="courses" data-aos="fade-up">
-                    <div class="modal d-block" tabindex="-1" role="dialog">
+                    <div class="modal d-block" tabindex="-1" role="dialog" v-if="isOpen">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -40,7 +40,7 @@
 
                                         </div>
                                         <div class="col-3">
-                                            <div class="blue-text course-edit">Edit</div>
+                                            <div class="blue-text course-edit" @click="edit(course)">Edit</div>
                                         </div>
                                     </div>
                                 </div>
@@ -78,11 +78,25 @@ export default {
     components: {
         AdminLayout,
     },
-    methods: {},
+    methods: {
+        openModal: function () {
+            this.isOpen = true;
+        },
+        edit: function (data) {
+            this.form = Object.assign({}, data);
+            this.editMode = true;
+            this.openModal();
+        },
+    },
     props: ['courses'],
 
     data() {
-        return {}
+        return {
+            form: {
+                name: null,
+            },
+            isOpen = false
+        }
     },
 }
 </script>
