@@ -109,7 +109,7 @@ class LayerSeeder extends Seeder
             'title' => 'New video 2',
             'url' => 'https://www.youtube.com/watch?v=Ey_YfYZ1Ta8',
             'description' => 'Mr. Bean video of Wordy Phrases layer',
-            'layer_id' => $grand_children->id,
+            'layer_id' => $children_1->id,
         ]);
         $question_grand_children_1 = new Question;
         $question_grand_children_1->title = "First Question of middle layer - Concision";

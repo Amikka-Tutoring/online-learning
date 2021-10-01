@@ -20,14 +20,16 @@ class NotesController extends Controller
         ]);
         $notes = Note::updateOrCreate(
             [
-                'video_id' => $request->video_id,
+                'layer_id' => $request->lesson_id,
                 'user_id' => Auth::id()
-            ], [
-            'topic' => 'test',
-            'written_notes' => $request->note,
-            'user_id' => Auth::id(),
-            'layer_id' => $request->lesson_id
-        ]);
+            ],
+            [
+                'topic' => 'Test',
+                'written_notes' => $request->note,
+                'user_id' => Auth::id(),
+                'layer_id' => $request->lesson_id
+            ]
+        );
         return 'Saved Successfully!';
     }
 

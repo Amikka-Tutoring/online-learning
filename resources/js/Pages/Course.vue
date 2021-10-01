@@ -59,16 +59,16 @@
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"
-                                     @click="questions = false; written_notes = true"><i class="fas fa-pen"></i></div>
+                                     @click="questions = false; wrritten_notes = true"><i class="fas fa-pen"></i></div>
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"
-                                     @click="questions = true; written_notes = false">
+                                     @click="questions = true; wrritten_notes = false">
                                     <i class="fas fa-question"></i></div>
                             </div>
                         </div>
                         <div class="col-lg-10 col-12 p-4">
-                            <div v-if="written_notes" class="written_notes">
+                            <div v-if="wrritten_notes" class="written_notes">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
                                     <textarea required v-model="form.note" id="" cols="80" rows="40"
@@ -179,20 +179,22 @@ export default {
     props: ['lesson', 'notes', 'flash', 'errors'],
 
     setup(props) {
+
         const toast = useToast();
         const message = computed(() => usePage().props.value.flash.message);
 
         const form = reactive({
             note: props.notes?.written_notes,
-            video_id: props.lesson.video.id,
+            lesson_id: props.lesson.id,
             topic: null,
         })
         const questionForm = reactive({
             question_text: null,
-            video_id: props.lesson.video.id,
+            lesson_id: props.lesson.id,
         })
 
         function submit() {
+            console.log(form);
             axios.post(route('notes.store'), form)
                 .then(response => {
                     toast.success(response.data)
@@ -231,7 +233,7 @@ export default {
     },
     data() {
         return {
-            written_notes: true,
+            wrritten_notes: true,
             questions: false,
         }
     },
