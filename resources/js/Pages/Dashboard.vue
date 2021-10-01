@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="blue-text">5/10</div>
+                                        <div class="blue-text">5/{{ user_courses.count_quizzes }}</div>
                                     </div>
                                 </div>
                             </div>
