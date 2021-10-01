@@ -149,30 +149,6 @@ class PageController extends Controller
         return $response = Http::withHeaders(['token' => 123])->get('http://learning.ajroniwebs.com/api/courses');
     }
 
-    public function test2()
-    {
-
-        dd(Course::first()->count_quizzes());
-        $quizzes_count = 0;
-        $course = Course::first();
-        foreach ($course->topLayers() as $topLayer) {
-            if ($topLayer->questions) {
-                $quizzes_count++;
-                foreach ($topLayer->children as $mid) {
-                    if ($mid->questions) {
-                        $quizzes_count++;
-                        foreach ($mid->children as $less) {
-                            if ($less->questions) {
-                                $quizzes_count++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        dd($quizzes_count);
-    }
-
     public function changeTag(Request $request)
     {
         $user = Auth::user();
