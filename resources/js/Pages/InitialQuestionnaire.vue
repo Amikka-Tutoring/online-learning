@@ -10,13 +10,13 @@
                     <div style="background: #56C880;" :style="{width: form.progress_value +'%'}" class="progress-bar"
                          role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <div class="blue-text">Skip</div>
+                <!--                <div class="blue-text">Skip</div>-->
             </div>
 
             <!--            </div>-->
-            <p v-if="form.errors.length">
-            <div class="alert alert-danger" v-for="error in form.errors">{{ error }}</div>
-            </p>
+            <div v-if="form.errors.length">
+                <div class="alert alert-danger" v-for="error in form.errors">{{ error }}</div>
+            </div>
             <div>
                 <form class="form">
                     <div v-if="form.currentstep === 1" class="first-step">
@@ -75,7 +75,8 @@
                             </p>
                         </div>
                         <div class="row justify-content-center align-items-center">
-                            <input placeholder="ex. 87" type="number" name="desire_score" v-model="form.desire_score">
+                            <input placeholder="ex. 87" type="number" name="desire_score" min="1"
+                                   v-model="form.desire_score">
                         </div>
 
                     </div>
@@ -86,8 +87,6 @@
                             </p>
                         </div>
                         <div class="row justify-content-center align-items-center">
-                            <!--                        <img :src="'/images/calendar.png'">-->
-                            <!--                        <input type="checkbox" name="calendar" v-model="form.calendar">-->
                             <input type="date" id="date" class="datepicker" v-model="form.exam_date">
                         </div>
                     </div>
@@ -107,6 +106,8 @@
                                         </div>
                                         <div class="col-5">
                                             <input type="checkbox" id="monday" name="monday" value="Monday"
+                                                   :value="n"
+                                                   :disabled="form.days.length >= 2 "
                                                    v-model="form.days">
                                         </div>
                                     </div>
@@ -118,6 +119,7 @@
                                         </div>
                                         <div class="col-5">
                                             <input type="checkbox" id="tuesday" name="tuesday" value="Tuesday"
+                                                   :disabled="form.days.length >= 2 "
                                                    v-model="form.days">
                                         </div>
                                     </div>
@@ -129,6 +131,7 @@
                                         </div>
                                         <div class="col-5">
                                             <input type="checkbox" id="wednesday" name="wednesday" value="Wednesday"
+                                                   :disabled="form.days.length >= 2 "
                                                    v-model="form.days">
                                         </div>
                                     </div>
@@ -139,7 +142,8 @@
                                             <label for="thursday">Thursday</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="checkbox" id="thursday" value="thursday" name="Thursday"
+                                            <input type="checkbox" id="thursday" value="Thursday" name="thursday"
+                                                   :disabled="form.days.length >= 2 "
                                                    v-model="form.days">
                                         </div>
                                     </div>
@@ -151,6 +155,7 @@
                                         </div>
                                         <div class="col-5">
                                             <input type="checkbox" id="friday"
+                                                   :disabled="form.days.length >= 2 "
                                                    name="friday" v-model="form.days" value="Friday">
                                         </div>
                                     </div>
@@ -162,6 +167,7 @@
                                         </div>
                                         <div class="col-5">
                                             <input type="checkbox" id="saturday" name="saturday" value="Saturday"
+                                                   :disabled="form.days.length >= 2 "
                                                    v-model="form.days">
                                         </div>
                                     </div>
@@ -173,6 +179,7 @@
                                         </div>
                                         <div class="col-5">
                                             <input type="checkbox" id="sunday" value="Sunday"
+                                                   :disabled="form.days.length >= 2 "
                                                    name="sunday" v-model="form.days">
                                         </div>
                                     </div>
@@ -183,14 +190,15 @@
                     <div v-if="form.currentstep === 6">
                         <div class="row justify-content-center align-items-center">
                             <p class="question-box">
-                                What times work for you on Monday and Friday?
+                                What times work for you on <span>{{ form.days[0] }}</span> and
+                                <span>{{ form.days[1] }}</span>?
                             </p>
                         </div>
                         <div class="row justify-content-center align-items-center">
                             <div class="days-box work-times">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label for="monday-time">Monday</label>
+                                        <label for="monday-time">{{ form.days[0] }}</label>
                                     </div>
                                     <div class="col-6">
                                         <input type="time" id="monday-time" name="first_day_time"
@@ -199,7 +207,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label for="friday-time">Friday</label>
+                                        <label for="friday-time">{{ form.days[1] }}</label>
                                     </div>
                                     <div class="col-6">
                                         <input type="time" id="friday-time" name="second_day_time"
@@ -259,8 +267,7 @@ import AppLayout from '@/Layouts/AppLayout'
 import {ref} from 'vue'
 import {reactive} from 'vue'
 import {mask} from 'vue-the-mask'
-import VueToastr from "vue-toastr";
-import $ from 'jquery'
+import {useToast} from "vue-toastification";
 
 import {Inertia} from '@inertiajs/inertia'
 
@@ -296,34 +303,29 @@ export default {
             currentstep: 1,
         })
 
-
         function next() {
-            console.log(form.currentstep)
+            const toast = useToast();
             if (form.currentstep === 2 && !form.courses.length) {
-                form.errors = []
-                return form.errors.push('Course is required')
+                return toast.error('Course is required');
             }
             if (form.currentstep === 3 && (!form.desire_score || validateNumber(form.desire_score))) {
-                form.errors = []
-                return form.errors.push('Desire Score is required (Number only)')
+                return toast.error('Desired Score is required (Number only)');
             }
-            if (form.currentstep === 4 && !form.exam_date) {
-                form.errors = []
-                return form.errors.push('Exam date required')
+            if (form.currentstep === 4) {
+                if (!form.exam_date)
+                    return toast.error('Exam Date is required');
+                if (moment().diff(moment(form.exam_date)) >= 0)
+                    return toast.error('Date cannot be in the past');
             }
-            if (form.currentstep === 5 && !form.days.length) {
-                form.errors = []
-                return form.errors.push('Days required')
+            if (form.currentstep === 5 && (!form.days.length || form.days.length !== 2)) {
+                return toast.error('You must select 2 days');
             }
+            console.log(form.days.length)
             if (form.currentstep === 6 && (!form.first_day_time || !form.second_day_time)) {
-                form.errors = []
-                return form.errors.push('Start end End Time are required')
+                return toast.error(this.form.days + ' Times are required');
             } else {
                 form.currentstep++
-                form.errors = []
-                console.log(form.currentstep)
                 form.progress_value = form.progress_value + 15
-                console.log(form.progress_value)
             }
         }
 
@@ -333,16 +335,16 @@ export default {
         }
 
         function submit() {
+            const toast = useToast();
             if (form.currentstep === 7 && (!form.email || !form.tel)) {
                 form.errors = []
-                return form.errors.push('Email and Phone Number are required')
+                return toast.error('Email and Phone Number are required')
             } else if (!validEmail(form.email)) {
                 form.errors = []
-                return form.errors.push('Valid email required')
+                return toast.error('Valid email required')
             } else {
                 form.errors = []
                 form.progress_value = 100
-                console.log(form)
                 Inertia.post(route('user.initial'), form);
             }
         }
@@ -356,26 +358,7 @@ export default {
             return false
         }
 
-        function checkForm(e) {
-            // console.log('checkForm')
-            e.preventDefault();
-            this.errors = [];
-
-            if (!this.firstname) {
-                this.errors.push("Name required.");
-            }
-            if (!this.lastname) {
-                this.errors.push('Email required.');
-            }
-            if (!this.errors.length) {
-                return true;
-            }
-        }
-
-        return {form, submit, next, checkForm, validEmail}
-    },
-    mounted(props) {
-        console.log(this.courses_data)
+        return {form, submit, next, validEmail}
     }
 }
 </script>

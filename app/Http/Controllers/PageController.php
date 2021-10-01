@@ -17,11 +17,6 @@ use Inertia\Inertia;
 class PageController extends Controller
 {
 
-    public function test2()
-    {
-        return Inertia::render('Test2');
-    }
-
     public function initialQuestionnaire()
     {
         $courses = Course::all();
@@ -147,18 +142,11 @@ class PageController extends Controller
 
     public function changeTag(Request $request)
     {
-        $tag = $request->keys()[0];
-        switch ($tag) {
-            case 'Medium':
-                Auth::user()->setMedium();
-                break;
-            case 'Hard':
-                Auth::user()->setHard();
-                break;
-            default:
-                Auth::user()->setEasy();
-        }
-        $message = 'Course level is set to: ' . $tag;
-        return ['tag' => $tag, 'message' => $message];
+        $user = Auth::user();
+        $request_tag = $request->keys()[0];
+        $tag = Tag::where('name', $request_tag)->firstOrFail();
+        $user->tags()->sync($tag);
+        $message = 'Course level is set to: ' . $request_tag;
+        return ['tag' => $request_tag, 'message' => $message];
     }
 }

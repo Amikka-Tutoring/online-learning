@@ -30,9 +30,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
-Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth', 'subscribed');
+Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
-Route::middleware(['auth', 'subscribed', 'initial'])->group(function () {
+Route::middleware(['auth', 'initial'])->group(function () {
 
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');

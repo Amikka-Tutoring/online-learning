@@ -23,5 +23,8 @@ class TagSeeder extends Seeder
         Tag::create([
             'name' => 'Hard'
         ]);
+        Tag::create([
+            'name' => 'All'
+        ]);
     }
 }

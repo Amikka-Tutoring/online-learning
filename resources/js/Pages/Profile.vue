@@ -63,7 +63,6 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Dates</h5>
-                                        <!--                                        <h6>Tuesday and Thursday</h6>-->
                                         <h6><span class="mr-2" v-for="days in user_days_available">{{ days }}</span>
                                         </h6>
                                     </div>
@@ -101,16 +100,15 @@
                                         <h6>{{ user_tag }}</h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <!--                                        <p class="text-right"><i class="blue-text fas fa-angle-down"></i></p>-->
-                                        <div class="text-right"><select class="blue-text tag-select" v-model="key"
-                                                                        name="tag" id=""
-                                                                        @change="onChange($event)">
-                                            <option :value="user_tag" selected="">{{ user_tag }}</option>
-                                            <option v-for="tag in tags" v-bind:value="tag.name">{{
-                                                    tag.name
-                                                }}
-                                            </option>
-                                        </select></div>
+                                        <div class="text-right">
+                                            <select class="blue-text tag-select" v-model="key"
+                                                    name="tag" id=""
+                                                    @change="onChange($event)">
+                                                <option v-for="tag in tags" v-bind:value="tag.name">
+                                                    {{tag.name}}
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

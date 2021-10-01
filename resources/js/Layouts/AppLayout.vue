@@ -28,7 +28,6 @@
     </nav>
 
     <div class="row m-0">
-        <!--    <div class="side-bar" style="position:absolute; top: 0; z-index: 1" v-if="!isHidden">-->
         <div v-bind:class="[isHidden ? 'side-bar-0' : 'side-bar']">
             <div class="mb-5">
                 <ul>

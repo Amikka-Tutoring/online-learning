@@ -7,6 +7,7 @@ use App\Models\Diagnostic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use function PHPUnit\Framework\throwException;
 
 class AdminController extends Controller
 {
@@ -23,7 +24,6 @@ class AdminController extends Controller
 
     public function showUser(Request $request)
     {
-//        dd($request->all());
         return Inertia::render('Admin/Users/Show', ['user' => $request->all()]);
     }
 
