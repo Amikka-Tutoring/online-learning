@@ -35,8 +35,8 @@
                     <tbody>
                     <tr v-for="(note,index) in notes">
                         <td>{{ moment(note.created_at).format("MM/DD") }}</td>
+                        <td>{{ note.lesson }}</td>
                         <td>{{ note.lesson.name }}</td>
-                        <td>{{ note.topic }}</td>
                         <td>
                             <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{ tag.name }}</span>
                         </td>

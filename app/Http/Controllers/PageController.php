@@ -55,7 +55,6 @@ class PageController extends Controller
     {
 
         $user_courses = Auth::user()->with(['enrollments', 'enrollments.course', 'layer_quiz_results'])->first();
-//        dd($user_courses->layer_quiz_results->first()->layer->course->name);
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         $user_profile = Auth::user()->profile;

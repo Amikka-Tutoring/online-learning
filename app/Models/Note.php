@@ -11,10 +11,9 @@ class Note extends Model
     use HasFactory;
 
     protected $fillable = [
-        'topic',
         'written_notes',
         'audio_notes',
-        'video_id',
+        'layer_id',
         'user_id'
     ];
 

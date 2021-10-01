@@ -24,7 +24,6 @@ class NotesController extends Controller
                 'user_id' => Auth::id()
             ],
             [
-                'topic' => 'Test',
                 'written_notes' => $request->note,
                 'user_id' => Auth::id(),
                 'layer_id' => $request->lesson_id
