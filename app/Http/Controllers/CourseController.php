@@ -45,7 +45,7 @@ class CourseController extends Controller
 
         while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
-            //                        Skip first row(Remove below comment if you want to skip the first row)
+            //Skip first row(Remove below comment if you want to skip the first row)
             if ($i == 0) {
                 $i++;
                 continue;
@@ -56,7 +56,6 @@ class CourseController extends Controller
             $i++;
         }
         fclose($file);
-
 
         // Insert to MySQL database
         $coursesArray = array();

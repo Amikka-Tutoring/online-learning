@@ -14,7 +14,7 @@ class Note extends Model
         'topic',
         'written_notes',
         'audio_notes',
-        'layer_id',
+        'video_id',
         'user_id'
     ];
 
