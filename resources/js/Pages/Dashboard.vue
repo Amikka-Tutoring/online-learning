@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                    a_q.name
+                                        a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                    a_q.name
+                                        a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -180,12 +180,11 @@
                             <div class="calendar-box">
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Lesson:</span>
-                                    <p>{{ days_available[0] }}, {{ first_date }} at
-                                        {{ first_day_time }}</p>
+                                    <p>Tuesday, 8/3 at 3:00 pm</p>
                                 </div>
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
-                                    <p>{{ days_available[1] }}, {{ second_date }} at {{ second_day_time }}</p>
+                                    <p>Wednesday, 8/4 at 3:00 pm</p>
                                 </div>
                             </div>
                         </div>
@@ -336,16 +335,14 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date'],
+    props: ['academic_data', 'personality_data', 'user_courses'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
             personality: localStorage.getItem('personality') === 'true',
             courses: localStorage.getItem('courses') === 'true',
             calendar: localStorage.getItem('calendar') === 'true',
-            notes: localStorage.getItem('notes') === 'true',
-            first_day_time: moment(this.profile.first_day_time, ["h:mm A"]).format("h:mm A"),
-            second_day_time: moment(this.profile.second_day_time, ["h:mm A"]).format("h:mm A"),
+            notes: localStorage.getItem('notes') === 'true'
         }
     },
     methods: {

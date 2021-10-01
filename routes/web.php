@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\NotesController;
+use App\Http\Controllers\LayerQuizResultController;
 
 
 /*
@@ -55,8 +56,11 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
     Route::post('quiz/result', [DiagnosticController::class, 'result'])->name('quiz.result');
     Route::get('results', [PageController::class, 'results'])->name('results');
+
+
     Route::post('lesson/notes', [NotesController::class, 'store'])->name('notes.store');
     Route::get('lesson/{id}/quiz', [PageController::class, 'lessonQuiz'])->name('lesson.quiz');
+    Route::post('lesson/{id}/quiz', [LayerQuizResultController::class, 'store'])->name('lesson.quiz.store');
     Route::get('lesson/{id}/student/questions', [NotesController::class, 'lessonQuestions'])->name('notes.questions');
     Route::post('lesson/notes/questions', [NotesController::class, 'storeQuestion'])->name('notes.store.question');
 });
@@ -84,6 +88,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::delete('diagnostics/{id}', [DiagnosticController::class, 'deleteQuiz'])->name('diagnostics.delete');
     Route::get('diagnostics/academic/get', [DiagnosticController::class, 'getAcademicQuizzes'])->name('academics.get');
     Route::get('diagnostics/personality/get', [DiagnosticController::class, 'getPersonalityQuizzes'])->name('personalities.get');
+
 });
 
 

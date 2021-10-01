@@ -189,6 +189,7 @@ export default {
             answer_list: [],
             progress_value: 0,
             currentstep: 1,
+            layer_id: props.layer.id
         });
         const toast = useToast();
 
@@ -220,8 +221,17 @@ export default {
                 return
             }
             form.answer_list.push(form.answers);
-            toast.success('Submitted')
-            Inertia.post(route('quiz.result'), form);
+            axios.post(route('lesson.quiz.store', form.layer_id), form.answer_list[0])
+                .then(response => {
+                    toast.success(response.data.message);
+                    toast.success(response.data.score);
+                    setTimeout(function () {
+                        window.location.href = "/lesson/" + form.layer_id;
+                    }, 2000);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                });
         }
 
         function validate() {
