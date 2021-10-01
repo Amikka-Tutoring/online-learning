@@ -100,13 +100,17 @@ class PageController extends Controller
     public function lesson($id)
     {
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
-        $user = Auth::user();
+        $user = Auth::user()->with('layer_quiz_results')->first();
+        $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
         $notes = $user->notes->where('layer_id', $lesson->id)->first();
-        return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes]);
+        return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt]);
     }
 
     public function lessonQuiz($id)
     {
+        $user = Auth::user();
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
+            return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
     }

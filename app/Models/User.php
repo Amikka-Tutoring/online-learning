@@ -61,6 +61,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'attempted_quiz'
     ];
 
     protected static function booted()
@@ -125,6 +126,11 @@ class User extends Authenticatable
     public function layer_quiz_results()
     {
         return $this->hasMany(LayerQuizResult::class);
+    }
+
+    public function getAttemptedQuizAttribute($id)
+    {
+        return count($this->layer_quiz_results->where('layer_id', $id));
     }
 
 }
