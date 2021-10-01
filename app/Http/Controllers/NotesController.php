@@ -20,7 +20,7 @@ class NotesController extends Controller
         ]);
         $notes = Note::updateOrCreate(
             [
-                'layer_id' => $request->lesson_id,
+                'video_id' => $request->video_id,
                 'user_id' => Auth::id()
             ], [
             'topic' => 'test',

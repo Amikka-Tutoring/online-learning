@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Scopes\LayerScope;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -31,7 +32,14 @@ class PageController extends Controller
         $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
-        return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'user_courses' => $user_courses]);
+        $user_profile = Auth::user()->profile;
+        $days_available = unserialize($user_profile->days_available);
+        $first_date = Carbon::parse('next ' . $days_available[0])->format('d/m');
+        $second_date = Carbon::parse('next ' . $days_available[1])->format('d/m');
+        return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic,
+            'user_courses' => $user_courses, 'profile' => $user_profile, 'days_available' => $days_available,
+            'first_date' => $first_date, 'second_date' => $second_date
+        ]);
     }
 
     public function profile()
