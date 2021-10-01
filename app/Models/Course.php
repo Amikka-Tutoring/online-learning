@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Scopes\LayerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -15,6 +16,8 @@ class Course extends Model
         'name',
         'slug'
     ];
+    protected $appends = ['quizzes_count', 'quizzes_attempted'];
+
 
     public function layers()
     {
@@ -23,7 +26,7 @@ class Course extends Model
 
     public function topLayers()
     {
-        return Layer::withoutGlobalScope(LayerScope::class)->whereNull('parent_id')->get();
+        return Layer::withoutGlobalScope(LayerScope::class)->whereNull('parent_id')->where('course_id', $this->id)->get();
     }
 
     public function enrollments()
@@ -32,19 +35,47 @@ class Course extends Model
     }
 
 
-    public function count_quizzes()
+    public function getQuizzesCountAttribute()
     {
         $quizzes_count = 0;
         foreach ($this->topLayers() as $topLayer) {
-            if ($topLayer->questions) {
+            if (count($topLayer->questions)) {
                 $quizzes_count++;
-                foreach ($topLayer->children as $mid) {
-                    if ($mid->questions) {
+            }
+            foreach ($topLayer->children as $mid) {
+                if (count($mid->questions)) {
+                    $quizzes_count++;
+                }
+                foreach ($mid->children as $less) {
+                    if (count($less->questions)) {
                         $quizzes_count++;
-                        foreach ($mid->children as $less) {
-                            if ($less->questions) {
-                                $quizzes_count++;
-                            }
+                    }
+                }
+            }
+        }
+        return $quizzes_count;
+    }
+
+    public function getQuizzesAttemptedAttribute()
+    {
+        $user = Auth::user();
+        $quizzes_count = 0;
+        foreach ($this->topLayers() as $topLayer) {
+            foreach ($user->layer_quiz_results as $r) {
+                if ($r->layer == $topLayer) {
+                    $quizzes_count++;
+                }
+            }
+            foreach ($topLayer->children as $mid) {
+                foreach ($user->layer_quiz_results as $t) {
+                    if ($t->layer == $mid) {
+                        $quizzes_count++;
+                    }
+                }
+                foreach ($mid->children as $less) {
+                    foreach ($user->layer_quiz_results as $e) {
+                        if ($e->layer == $less) {
+                            $quizzes_count++;
                         }
                     }
                 }

@@ -20,4 +20,9 @@ class LayerQuizResult extends Model
     {
         return $this->belongsTo(Layer::class, 'layer_id')->withoutGlobalScope(LayerScope::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

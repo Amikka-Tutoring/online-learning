@@ -121,4 +121,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Note::class);
     }
+
+    public function layer_quiz_results()
+    {
+        return $this->hasMany(LayerQuizResult::class);
+    }
+
 }
