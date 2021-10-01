@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="blue-text">5/{{ user_courses.count_quizzes }}</div>
+                                        <div class="blue-text">5/10</div>
                                     </div>
                                 </div>
                             </div>
@@ -180,11 +180,12 @@
                             <div class="calendar-box">
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Lesson:</span>
-                                    <p>Tuesday, 8/3 at 3:00 pm</p>
+                                    <p>{{ days_available[0] }}, {{ first_date }} at
+                                        {{ first_day_time }}</p>
                                 </div>
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
-                                    <p>Wednesday, 8/4 at 3:00 pm</p>
+                                    <p>{{ days_available[1] }}, {{ second_date }} at {{ second_day_time }}</p>
                                 </div>
                             </div>
                         </div>
@@ -335,14 +336,16 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses'],
+    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
             personality: localStorage.getItem('personality') === 'true',
             courses: localStorage.getItem('courses') === 'true',
             calendar: localStorage.getItem('calendar') === 'true',
-            notes: localStorage.getItem('notes') === 'true'
+            notes: localStorage.getItem('notes') === 'true',
+            first_day_time: moment(this.profile.first_day_time, ["h:mm A"]).format("h:mm A"),
+            second_day_time: moment(this.profile.second_day_time, ["h:mm A"]).format("h:mm A"),
         }
     },
     methods: {
