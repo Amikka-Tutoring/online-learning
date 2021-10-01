@@ -19,6 +19,29 @@ use Inertia\Inertia;
 class PageController extends Controller
 {
 
+    public function test2()
+    {
+        $quizzes_count = 0;
+        $course = Course::where('name', 'Grammar')->first();
+        foreach ($course->topLayers() as $topLayer) {
+            if (count($topLayer->questions)) {
+                $quizzes_count++;
+            }
+            foreach ($topLayer->children as $mid) {
+                if (count($mid->questions)) {
+                    $quizzes_count++;
+                }
+                foreach ($mid->children as $less) {
+                    if (count($less->questions)) {
+                        $quizzes_count++;
+                    }
+                }
+            }
+        }
+        dd($quizzes_count);
+    }
+
+
     public function initialQuestionnaire()
     {
         $courses = Course::all();
@@ -30,7 +53,9 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
+
+        $user_courses = Auth::user()->with(['enrollments', 'enrollments.course', 'layer_quiz_results'])->first();
+//        dd($user_courses->layer_quiz_results->first()->layer->course->name);
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         $user_profile = Auth::user()->profile;
@@ -146,7 +171,30 @@ class PageController extends Controller
 
     public function test()
     {
-        return $response = Http::withHeaders(['token' => 123])->get('http://learning.ajroniwebs.com/api/courses');
+        $user = Auth::user();
+        $quizzes_count = 0;
+        foreach ($course->topLayers() as $topLayer) {
+            foreach ($user->layer_quiz_results as $r) {
+                if ($r->layer == $topLayer) {
+                    $quizzes_count++;
+                }
+            }
+            foreach ($topLayer->children as $mid) {
+                foreach ($user->layer_quiz_results as $t) {
+                    if ($t->layer == $mid) {
+                        $quizzes_count++;
+                    }
+                }
+                foreach ($mid->children as $less) {
+                    foreach ($user->layer_quiz_results as $e) {
+                        if ($e->layer == $less) {
+                            $quizzes_count++;
+                        }
+                    }
+                }
+            }
+        }
+        dd($quizzes_count);
     }
 
     public function changeTag(Request $request)
