@@ -36,16 +36,19 @@
                 </div>
 
                 <div class="mb-0">
-                    <div class="d-flex justify-content-end align-items-baseline">
-                        <inertia-link v-if="canResetPassword" :href="route('password.request')" class="text-muted mr-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <inertia-link v-if="canResetPassword" :href="route('password.request')"
+                                      class="text-muted mr-3">
                             Forgot your password?
                         </inertia-link>
-                        <a :href="route('register')" class="text-muted mr-3">
-                            Register
-                        </a>
-                        <loading-button :loading="form.processing" class="ml-4"
-                                        :class="{ 'text-white-50': form.processing }" type="submit">Log in
-                        </loading-button>
+                        <div class="d-flex align-items-center">
+                            <a :href="route('register')" class="text-muted mr-3">
+                                Register
+                            </a>
+                            <loading-button :loading="form.processing" class="ml-0 ml-lg-4" id="loginBtn"
+                                            :class="{ 'text-white-50': form.processing }" type="submit">Log in
+                            </loading-button>
+                        </div>
                     </div>
                 </div>
             </form>

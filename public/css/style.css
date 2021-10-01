@@ -1519,6 +1519,7 @@ input[type="radio"] {
     width: auto !important;
 }
 
+
 .csv-buttons .upload-csv {
     width: 125px;
     height: 40px;
@@ -1565,6 +1566,11 @@ input[type="radio"] {
 }
 
 @media (max-width: 767.98px), (max-width: 991.98px) {
+
+    #loginBtn {
+        width: 100px;
+    }
+
     .recommended-box {
         width: 100%;
     }
