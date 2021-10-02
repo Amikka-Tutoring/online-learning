@@ -11,7 +11,7 @@
                     <div class="col-lg-6 col-12">
                         <i class="fab fa-searchengin fa-2x blue-text pr-2 search-icon position-absolute"
                            style="padding-left: 20px; padding-top: 10px"></i>
-                        <input type="text" v-model="query">
+                        <input type="text" v-model="query" v-on:keyup="filterNotes(query)">
                     </div>
                 </div>
             </div>
@@ -22,9 +22,8 @@
                     <tr>
                         <th style="width: 25%" @click="sort('dates'); calendar = !calendar"><i
                             class="fas fa-calendar-day blue-text mr-2"></i>Dates
-                            <i
-                                class="fas blue-text ml-2"
-                                v-bind:class="calendar ? 'fa-chevron-up':'fa-chevron-down'"></i></th>
+                            <i class="fas blue-text ml-2"
+                               v-bind:class="calendar ? 'fa-chevron-up':'fa-chevron-down'"></i></th>
                         <th style=" width: 15%" @click="sort('class')"><i class="fas fa-book-open blue-text mr-2"></i>Class
                         </th>
                         <th style="width: 30%" @click="sort('topics')"><i class="fas fa-pen blue-text mr-2"></i>Topics
@@ -35,13 +34,13 @@
                     <tbody>
                     <tr v-for="(note,index) in notes">
                         <td>{{ moment(note.created_at).format("MM/DD") }}</td>
-                        <td>{{ note.lesson }}</td>
+                        <td>{{ note.lesson.course.name }}</td>
                         <td>{{ note.lesson.name }}</td>
                         <td>
                             <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{ tag.name }}</span>
                         </td>
                     </tr>
-                    <p v-if="!notes.length">No row found</p>
+                    <p v-if="!notes.length">No rows found</p>
                     </tbody>
                 </table>
             </div>
@@ -76,6 +75,16 @@ export default {
                 this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
             }
             this.currentSort = s;
+        },
+        filterNotes: function (query) {
+            axios.post(route('notes-search', query))
+                .then(response => {
+                    console.log(response);
+                    this.notes = response.notes
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     computed: {

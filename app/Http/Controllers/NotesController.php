@@ -12,6 +12,13 @@ use function PHPUnit\Framework\throwException;
 
 class NotesController extends Controller
 {
+    public function getNotes($query)
+    {
+        $user = Auth::user();
+        $notes = $user->notes()->where('written_notes', 'like', $query . '%')->with(['lesson', 'lesson.course', 'lesson.tags'])->get();
+        return ['notes' => $notes];
+    }
+
     public function store(Request $request)
     {
         $request->validate([

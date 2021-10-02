@@ -194,7 +194,6 @@ export default {
         })
 
         function submit() {
-            console.log(form);
             axios.post(route('notes.store'), form)
                 .then(response => {
                     toast.success(response.data)
