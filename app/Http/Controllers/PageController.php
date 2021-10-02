@@ -21,24 +21,29 @@ class PageController extends Controller
 
     public function test2()
     {
-        $quizzes_count = 0;
-        $course = Course::where('name', 'Grammar')->first();
-        foreach ($course->topLayers() as $topLayer) {
-            if (count($topLayer->questions)) {
-                $quizzes_count++;
-            }
-            foreach ($topLayer->children as $mid) {
-                if (count($mid->questions)) {
-                    $quizzes_count++;
-                }
-                foreach ($mid->children as $less) {
-                    if (count($less->questions)) {
-                        $quizzes_count++;
-                    }
-                }
-            }
-        }
-        dd($quizzes_count);
+//        $quizzes_count = 0;
+//        $course = Course::where('name', 'Grammar')->first();
+//        foreach ($course->topLayers() as $topLayer) {
+//            if (count($topLayer->questions)) {
+//                $quizzes_count++;
+//            }
+//            foreach ($topLayer->children as $mid) {
+//                if (count($mid->questions)) {
+//                    $quizzes_count++;
+//                }
+//                foreach ($mid->children as $less) {
+//                    if (count($less->questions)) {
+//                        $quizzes_count++;
+//                    }
+//                }
+//            }
+//        }
+//        dd($quizzes_count);
+        $user = Auth::user();
+        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m/d');
+        });
+        return ['notes' => $notes];
     }
 
 
@@ -170,32 +175,17 @@ class PageController extends Controller
         return Inertia::render('Review');
     }
 
-    public function test()
+    public function test($course = '')
     {
         $user = Auth::user();
-        $quizzes_count = 0;
-        foreach ($course->topLayers() as $topLayer) {
-            foreach ($user->layer_quiz_results as $r) {
-                if ($r->layer == $topLayer) {
-                    $quizzes_count++;
-                }
-            }
-            foreach ($topLayer->children as $mid) {
-                foreach ($user->layer_quiz_results as $t) {
-                    if ($t->layer == $mid) {
-                        $quizzes_count++;
-                    }
-                }
-                foreach ($mid->children as $less) {
-                    foreach ($user->layer_quiz_results as $e) {
-                        if ($e->layer == $less) {
-                            $quizzes_count++;
-                        }
-                    }
-                }
-            }
-        }
-        dd($quizzes_count);
+        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
+            $query->whereHas('course', function ($q) use ($course) {
+                $q->where('name', 'like', '%' . '' . '%');
+            });
+        })->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m/d');
+        });
+        return ['notes' => $notes];
     }
 
     public function changeTag(Request $request)

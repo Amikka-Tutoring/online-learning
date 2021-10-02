@@ -38,11 +38,8 @@
                                             </div>
                                         </div>
                                         <div class="col-3">
-                                            <div class="blue-text">{{
-                                                    user_course.course.quizzes_attempted
-                                                }}/{{
-                                                    user_course.course.quizzes_count
-                                                }}
+                                            <div class="blue-text">
+                                                {{user_course.course.quizzes_attempted}}/{{user_course.course.quizzes_count}}
                                             </div>
                                         </div>
                                     </div>

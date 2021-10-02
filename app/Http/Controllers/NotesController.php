@@ -6,6 +6,7 @@ use App\Models\Layer;
 use App\Models\Note;
 use App\Models\StudentLayerQuestion;
 use App\Scopes\LayerScope;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\throwException;
@@ -19,22 +20,38 @@ class NotesController extends Controller
         return ['notes' => $notes];
     }
 
+    public function dashboardNotesByDate()
+    {
+        $user = Auth::user();
+        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m/d');
+        });
+        return ['notes' => $notes];
+    }
+
+    public function dashboardNotesByCourse($course)
+    {
+        $user = Auth::user();
+        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
+            $query->whereHas('course', function ($q) use ($course) {
+                $q->where('name', 'like', '%' . $course . '%');
+            });
+        })->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m/d');
+        });
+        return ['notes' => $notes];
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'note' => 'required',
-            'lesson_id' => 'required|exists:layers,id',
-        ]);
+        $request->validate(['note' => 'required',
+            'lesson_id' => 'required|exists:layers,id',]);
         $notes = Note::updateOrCreate(
-            [
-                'layer_id' => $request->lesson_id,
-                'user_id' => Auth::id()
-            ],
-            [
-                'written_notes' => $request->note,
+            ['layer_id' => $request->lesson_id,
+                'user_id' => Auth::id()],
+            ['written_notes' => $request->note,
                 'user_id' => Auth::id(),
-                'layer_id' => $request->lesson_id
-            ]
+                'layer_id' => $request->lesson_id]
         );
         return 'Saved Successfully!';
     }

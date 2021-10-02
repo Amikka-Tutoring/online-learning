@@ -48,7 +48,10 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
     Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
     Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
+
     Route::get('notes', [PageController::class, 'notesList'])->name('notes-list');
+    Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');
+    Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
     Route::post('notes/search/{query}', [NotesController::class, 'getNotes'])->name('notes-search');
     Route::get('notes/block', [PageController::class, 'notesBlock'])->name('notes-block');
     Route::get('notes/create', [PageController::class, 'createNotes'])->name('notes-create');
