@@ -202,11 +202,12 @@
 
 
             <!--        Note-->
-            <div class="notes" data-aos="fade-up">
+            <div class="notes">
                 <h1 class="blue-text">Notes</h1>
-                <select name="course" id="" class="form-control w-lg-25 float-right"
+                <select name="course" id="" class="form-control w-lg-25 float-right my-4"
                         v-on:change="getNotesByCourse(this.selected_course)"
                         v-model="selected_course">
+                    <option value="All">All</option>
                     <option v-for="user_course in user_courses.enrollments">{{
                             user_course.course.name
                         }}
@@ -228,59 +229,37 @@
                             </div>
                         </div>
                     </transition>
-                    <div class="row">
-                        <div class="col-lg-4 col-12" data-aos="fade-up" data-aos-delay="50" data-aos-once="true">
-                            <span class="orange-badge badges">Date</span>
-                            <div class="notes-box" v-for="(key,value) in notesByDate" v-if="notesByDate?.length !=0">
-                                <!--                                <div v-for="date in note">-->
-                                <h1>{{ moment(value).format("MM/DD") }}</h1>
-                                <div class="row">
-                                    <span class="pink-badge badges">Easy</span>
-                                </div>
-                                <h5>Lessons</h5>
-                                <p><span v-for="date in key">{{ date.lesson?.name }}, </span></p>
+                    <div class="row" :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
+                        <div class="spinner-container" v-if="loading"
+                             style="position: absolute;width: 1200px;height: 253px;z-index: 1;">
+                            <div class="spinner-border" role="status"
+                                 style="top: 40%;position: absolute;left: 40%; width: 4rem !important; height: 4rem !important;">
+                                <span class="sr-only">Loading...</span>
                             </div>
-                            <p class="my-4" v-else>No notes found.</p>
                         </div>
-
-                        <div class="col-lg-4 col-12" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
-                            <span class="pink-badge badges">SAT</span>
-                            <div class="notes-box" v-for="(key,value) in notesByCourse"
+                    </div>
+                    <div class="row w-100">
+                        <div class="col-lg-4 col-12 my-4"
+                             v-for="(key,value) in notesByCourse">
+                            <p><span
+                                v-for="(date,index) in key"><span class="badges orange-badge">{{
+                                    date.lesson.course.name
+                                }} </span></span>
+                            </p>
+                            <div class="notes-box"
                                  v-if="notesByCourse?.length !=0">
-                                <!--                                <div v-for="date in note">-->
                                 <h1>{{ moment(value).format("MM/DD") }}</h1>
                                 <div class="row">
                                     <span class="pink-badge badges">Easy</span>
                                 </div>
                                 <h5>Lessons</h5>
-                                <p><span v-for="date in key">{{ date.lesson?.name }}, </span></p>
+                                <p><span
+                                    v-for="(date,index) in key"><span
+                                    v-if="index !== 0">, </span>{{ date.lesson?.name }} </span>
+                                </p>
+
                             </div>
                             <p class="my-4" v-else>No notes found.</p>
-                        </div>
-                        <div class="col-lg-4 col-12" data-aos="fade-up" data-aos-delay="150" data-aos-once="true">
-                            <span class="rose-badge badges">Algebra 1</span>
-                            <div class="notes-box">
-                                <h1>7/12</h1>
-                                <div class="row">
-                                    <span class="pink-badge badges">SAT</span>
-                                    <span class="lightrose-badge badges">Medium</span>
-                                    <span class="gray-badge badges">Strategy</span>
-                                    <span class="lightblue-badge badges">Lesson</span>
-                                </div>
-                                <h5>Lessons</h5>
-                                <p>Linear equations, Slope Intercept</p>
-                            </div>
-                            <div class="notes-box">
-                                <h1>7/13</h1>
-                                <div class="row">
-                                    <span class="pink-badge badges">SAT</span>
-                                    <span class="lightrose-badge badges">Medium</span>
-                                    <span class="gray-badge badges">Strategy</span>
-                                    <span class="lightblue-badge badges">Lesson</span>
-                                </div>
-                                <h5>Lessons</h5>
-                                <p>Linear equations, Slope Intercept</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -310,32 +289,25 @@ export default {
             notesByDate: null,
             notesByCourse: null,
             moment: moment,
-            selected_course: null
+            selected_course: 'All',
+            loading: false
         }
     },
     methods: {
         disableNotification(attribute) {
             localStorage.setItem(attribute, false);
         },
-        getNotesByDate: function () {
-            axios.get(route('dashboard.notes.date')).then(response => {
-                this.notesByDate = response.data.notes
-                // this.loadingCourses = false
-            })
-        },
+
         getNotesByCourse: function (course) {
+            this.loading = true
             axios.get(route('dashboard.notes.course', course)).then(response => {
                 this.notesByCourse = response.data.notes
-                console.log('By course')
-                console.log(response.data.notes)
-                // this.loadingCourses = false
+                this.loading = false
             })
         }
     },
     mounted() {
-        this.getNotesByDate()
-        this.getNotesByCourse()
-        // console.log(this.notesApi)
+        this.getNotesByCourse(this.selected_course)
     }
 }
 </script>

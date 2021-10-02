@@ -34,9 +34,12 @@ class NotesController extends Controller
         $user = Auth::user();
         $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                $q->where('name', 'like', '%' . $course . '%');
+                if ($course == 'All')
+                    $q->where('name', 'like', '%' . '' . '%');
+                else
+                    $q->where('name', 'like', '%' . $course . '%');
             });
-        })->get()->groupBy(function ($val) {
+        })->paginate(12)->groupBy(function ($val) {
             return Carbon::parse($val->created_at)->format('m/d');
         });
         return ['notes' => $notes];

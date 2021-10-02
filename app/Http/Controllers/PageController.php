@@ -175,12 +175,16 @@ class PageController extends Controller
         return Inertia::render('Review');
     }
 
-    public function test($course = '')
+    public function test($course)
     {
+        dd($course);
         $user = Auth::user();
         $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                $q->where('name', 'like', '%' . '' . '%');
+                if ($course == 'All')
+                    $q->where('name', 'like', '%' . $course . '%');
+                else
+                    $q->where('name', 'like', '%' . '' . '%');
             });
         })->get()->groupBy(function ($val) {
             return Carbon::parse($val->created_at)->format('m/d');
