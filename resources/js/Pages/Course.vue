@@ -35,7 +35,11 @@
                 </div>
             </div>
             <div v-if="lesson.questions.length" class="row justify-content-center" style="margin-bottom: 100px">
-                <button href="" class="blue-button" @click="quiz(lesson.id)">Quiz
+                <button class="blue-button" @click="quiz(lesson.id)" v-if="user_attempt === 0">Quiz
+                </button>
+                <button class="blue-button" v-if="user_attempt !== 0"
+                        disabled="">Quiz Completed <i class="ml-2 bi bi-check-circle-fill"
+                                                      style="color: rgb(131, 213, 131);"></i>
                 </button>
             </div>
         </div>
@@ -176,7 +180,7 @@ import {usePage} from "@inertiajs/inertia-vue3";
 
 
 export default {
-    props: ['lesson', 'notes', 'flash', 'errors'],
+    props: ['lesson', 'notes', 'flash', 'errors', 'user', 'user_attempt'],
 
     setup(props) {
 

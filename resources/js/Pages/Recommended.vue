@@ -129,7 +129,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="grammar-course" data-aos="fade-up" v-for="course in courses">
                 <h1 class="blue-text">Full {{ course.name }} Course</h1>
                 <div class="grammar-course-content">
