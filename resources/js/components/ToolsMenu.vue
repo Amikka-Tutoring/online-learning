@@ -1,7 +1,8 @@
 <template>
-    <div class="header-menu">
+    <div class="tools-menu">
         <ul>
-            <li @click="next = !next">Next <i class="pl-2 blue-text fas" v-bind:class="next ? 'fa-arrow-up' : 'fa-arrow-down'"></i></li>
+            <li @click="next = !next">Next <i class="pl-2 blue-text fas"
+                                              v-bind:class="next ? 'fa-arrow-up' : 'fa-arrow-down'"></i></li>
             <collapse-transition>
                 <li v-show="next">
                     <div class="next-lessons">
@@ -16,7 +17,8 @@
                                         <p>Concision</p>
                                     </div>
                                     <div class="row">
-                                        <span class="ml-2 badges gray-badge">Strategy</span><span class="ml-2 badges gray-badge">All</span>
+                                        <span class="ml-2 badges gray-badge">Strategy</span><span
+                                        class="ml-2 badges gray-badge">All</span>
                                     </div>
                                 </div>
                                 <div class="col-3 d-flex justify-content-center align-items-center text-center">
@@ -34,7 +36,8 @@
                                         <p>Concision</p>
                                     </div>
                                     <div class="row">
-                                        <span class="ml-2 badges gray-badge">Strategy</span><span class="ml-2 badges gray-badge">All</span>
+                                        <span class="ml-2 badges gray-badge">Strategy</span><span
+                                        class="ml-2 badges gray-badge">All</span>
                                     </div>
                                 </div>
                                 <div class="col-3 d-flex justify-content-center align-items-center text-center">
@@ -53,7 +56,8 @@
                                         <p>Concision</p>
                                     </div>
                                     <div class="row">
-                                        <span class="ml-2 badges gray-badge">Strategy</span><span class="ml-2 badges gray-badge">All</span>
+                                        <span class="ml-2 badges gray-badge">Strategy</span><span
+                                        class="ml-2 badges gray-badge">All</span>
                                     </div>
                                 </div>
                                 <div class="col-3 d-flex justify-content-center align-items-center text-center">
@@ -64,28 +68,29 @@
                     </div>
                 </li>
             </collapse-transition>
-            <li @click="tools = !tools">Tools <i class="pl-2 blue-text fas" v-bind:class="tools ? 'fa-arrow-up' : 'fa-arrow-down'"></i></li>
+            <li @click="tools = !tools">Tools <i class="pl-2 blue-text fas"
+                                                 v-bind:class="tools ? 'fa-arrow-up' : 'fa-arrow-down'"></i></li>
             <collapse-transition>
-            <li v-if="tools">
-                <div class="tools">
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="notes-circle rounded-circle"><i class="fas fa-question"></i></div>
+                <li v-if="tools">
+                    <div class="tools">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="notes-circle rounded-circle"><i class="fas fa-question"></i></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="notes-circle rounded-circle"><i class="fas fa-pen"></i></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="notes-circle rounded-circle"><i class="fas fa-flag"></i></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="notes-circle rounded-circle"><i class="fas fa-microphone-alt"></i></div>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <div class="notes-circle rounded-circle"><i class="fas fa-pen"></i></div>
-                        </div>
-                        <div class="col-3">
-                            <div class="notes-circle rounded-circle"><i class="fas fa-flag"></i></div>
-                        </div>
-                        <div class="col-3">
-                            <div class="notes-circle rounded-circle"><i class="fas fa-microphone-alt"></i></div>
-                        </div>
+                        <textarea placeholder="Notes..." name="" id="" cols="25" rows="10"></textarea>
+                        <button>Submit</button>
                     </div>
-                    <textarea placeholder="Notes..." name="" id="" cols="25" rows="10"></textarea>
-                    <button>Submit</button>
-                </div>
-            </li>
+                </li>
             </collapse-transition>
         </ul>
     </div>
@@ -94,13 +99,12 @@
 <script>
 
 import CollapseTransition from '@ivanv/vue-collapse-transition/src'
+
 export default {
     components: {
         CollapseTransition,
     },
-    methods: {
-
-    },
+    methods: {},
 
     data() {
         return {

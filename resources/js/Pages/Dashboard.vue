@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -150,9 +150,9 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">{{
-                                                user_course.course.quizzes_attempted
+                                            user_course.course.quizzes_attempted
                                             }}/{{
-                                                user_course.course.quizzes_count
+                                            user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -209,7 +209,7 @@
                         v-model="selected_course">
                     <option value="All">All</option>
                     <option v-for="user_course in user_courses.enrollments">{{
-                            user_course.course.name
+                        user_course.course.name
                         }}
                     </option>
                 </select>
@@ -306,7 +306,7 @@ export default {
             })
         }
     },
-    mounted() {
+    beforeMount() {
         this.getNotesByCourse(this.selected_course)
     }
 }

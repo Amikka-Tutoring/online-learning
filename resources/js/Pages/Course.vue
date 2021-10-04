@@ -211,6 +211,7 @@ export default {
             axios.post(route('notes.store.question'), questionForm)
                 .then(response => {
                     toast.success(response.data)
+                    questionForm.question_text = null
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
