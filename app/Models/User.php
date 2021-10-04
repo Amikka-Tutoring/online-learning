@@ -66,9 +66,9 @@ class User extends Authenticatable
 
     protected static function booted()
     {
-        static::updated(queueable(function ($customer) {
-            $customer->syncStripeCustomerDetails();
-        }));
+//        static::updated(queueable(function ($customer) {
+//            $customer->syncStripeCustomerDetails();
+//        }));
     }
 
     public function profile()

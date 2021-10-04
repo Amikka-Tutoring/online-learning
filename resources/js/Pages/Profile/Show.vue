@@ -1,37 +1,39 @@
 <template>
-  <app-layout>
-    <template #header>
-      <h2 class="h4 font-weight-bold">
-        Profile
-      </h2>
-    </template>
+    <app-layout>
+        <template #header>
+            <h2 class="h4 font-weight-bold">
+                Profile
+            </h2>
+        </template>
+        <div class="container">
 
-    <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-      <update-profile-information-form :user="$page.props.user" />
 
-      <jet-section-border />
-    </div>
+            <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                <update-profile-information-form :user="$page.props.user"/>
 
-    <div v-if="$page.props.jetstream.canUpdatePassword">
-      <update-password-form />
+                <jet-section-border/>
+            </div>
 
-      <jet-section-border />
-    </div>
+            <div v-if="$page.props.jetstream.canUpdatePassword">
+                <update-password-form/>
 
-    <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
-      <two-factor-authentication-form />
+                <jet-section-border/>
+            </div>
 
-      <jet-section-border />
-    </div>
+            <!--            <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">-->
+            <!--                <two-factor-authentication-form/>-->
 
-    <logout-other-browser-sessions-form :sessions="sessions" />
+            <!--                <jet-section-border/>-->
+            <!--            </div>-->
 
-    <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-      <jet-section-border />
+            <!--            <logout-other-browser-sessions-form :sessions="sessions"/>-->
 
-      <delete-user-form />
-    </template>
-  </app-layout>
+            <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
+
+                <delete-user-form/>
+            </template>
+        </div>
+    </app-layout>
 </template>
 
 <script>
@@ -44,16 +46,16 @@ import UpdatePasswordForm from './UpdatePasswordForm'
 import UpdateProfileInformationForm from './UpdateProfileInformationForm'
 
 export default {
-  props: ['sessions'],
+    props: ['sessions'],
 
-  components: {
-    AppLayout,
-    DeleteUserForm,
-    JetSectionBorder,
-    LogoutOtherBrowserSessionsForm,
-    TwoFactorAuthenticationForm,
-    UpdatePasswordForm,
-    UpdateProfileInformationForm,
-  },
+    components: {
+        AppLayout,
+        DeleteUserForm,
+        JetSectionBorder,
+        LogoutOtherBrowserSessionsForm,
+        TwoFactorAuthenticationForm,
+        UpdatePasswordForm,
+        UpdateProfileInformationForm,
+    },
 }
 </script>
