@@ -52,7 +52,7 @@
                                 class=""
                                 href=""><i class=" fa fa-arrow-left"></i></a></li>
                             <!--                            @for ($i = 1; $i <= $paginator->lastPage(); $i++)-->
-                            <li class="page-item" v-for="">
+                            <li class="page-item">
                                 <a class=""
                                    href="">1</a>
                             </li>
