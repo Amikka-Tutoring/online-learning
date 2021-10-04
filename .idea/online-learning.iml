@@ -143,6 +143,14 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/stripe/stripe-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-icu" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/cashier" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/maatwebsite/excel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/php-enum" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/storage" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

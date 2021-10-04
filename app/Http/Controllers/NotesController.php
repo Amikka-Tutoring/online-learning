@@ -9,15 +9,21 @@ use App\Scopes\LayerScope;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 use function PHPUnit\Framework\throwException;
 
 class NotesController extends Controller
 {
-    public function getNotes($query)
+    public function getNotes($query = '', $page = 0)
     {
         $user = Auth::user();
-        $notes = $user->notes()->where('written_notes', 'like', $query . '%')->with(['lesson', 'lesson.course', 'lesson.tags'])->get();
+        $notes = $user->notes()->where('written_notes', 'like', '%' . $query . '%')->with(['lesson', 'lesson.course', 'lesson.tags'])->paginate(2, '*', 'page', $page);
         return ['notes' => $notes];
+    }
+
+    public function notesList()
+    {
+        return Inertia::render('NotesList', $this->getNotes());
     }
 
     public function dashboardNotesByDate()

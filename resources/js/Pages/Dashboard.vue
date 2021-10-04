@@ -213,7 +213,7 @@
                         }}
                     </option>
                 </select>
-                <div class="notes-content pl-5" style="margin-top: 90px">
+                <div class="notes-content pl-5" style="margin-top: 90px;position: relative">
                     <transition name="list">
                         <div v-if="notes" class="question-box text-left">
                             <div class="row">
@@ -229,16 +229,16 @@
                             </div>
                         </div>
                     </transition>
-                    <div class="row" :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
-                        <div class="spinner-container" v-if="loading"
-                             style="position: absolute;width: 1200px;height: 253px;z-index: 1;">
-                            <div class="spinner-border" role="status"
-                                 style="top: 40%;position: absolute;left: 40%; width: 4rem !important; height: 4rem !important;">
+                    <div class="row">
+                        <div class="spinner-container"
+                             style="position: absolute;width:100%;height: 253px;z-index: 1;">
+                            <div class="spinner-border" role="status" v-if="loading"
+                                 style="top: 40%;position: absolute;left: 48%; width: 4rem !important; height: 4rem !important;">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
                     </div>
-                    <div class="row w-100">
+                    <div class="row w-100" :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
                         <div class="col-lg-4 col-12 my-4"
                              v-for="(key,value) in notesByCourse">
                             <p><span

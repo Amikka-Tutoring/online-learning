@@ -14,13 +14,10 @@ import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 
-// import CollapseTransition from '@ivanv/vue-collapse-transition';
-
 const el = document.getElementById("app");
 const options = {
     transition: "Vue-Toastification__fade",
     newestOnTop: true
-    // You can set your default options here
 };
 
 createApp({
@@ -32,8 +29,7 @@ createApp({
             initialPage: JSON.parse(el.dataset.page),
             resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
-})
-    .mixin({methods: {route}})
+}).mixin({methods: {route}})
     .use(InertiaPlugin, moment)
     .use(Toast, options)
     .mount(el);
