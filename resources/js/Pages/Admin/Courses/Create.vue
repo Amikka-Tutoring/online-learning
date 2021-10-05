@@ -122,10 +122,6 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import {useForm} from '@inertiajs/inertia-vue3'
-import {useToast} from "vue-toastification";
-import {computed} from 'vue'
-import {usePage} from '@inertiajs/inertia-vue3'
 
 export default {
     props: {
@@ -151,7 +147,6 @@ export default {
     },
     methods: {
         submit() {
-            const toast = useToast();
             let formData = new FormData();
             formData.append("file", this.form.file);
             this.loading = true
@@ -163,7 +158,7 @@ export default {
                 }
             })
                 .then(response => {
-                        toast.success(response.data.message);
+                        this.toast.success(response.data.message);
                         this.courses = response.data.courses
                         this.top_layers = response.data.top_layers
                         this.mid_layers = response.data.mid_layers
@@ -173,7 +168,7 @@ export default {
                 )
                 .catch(error => {
                     this.onerror = true
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 }).finally(() => {
                 this.loading = false
             });

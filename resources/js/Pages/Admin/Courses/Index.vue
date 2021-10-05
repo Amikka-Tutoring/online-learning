@@ -92,7 +92,6 @@ $query
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import {useToast} from "vue-toastification";
 
 export default {
     components: {
@@ -124,34 +123,32 @@ export default {
             this.openModal();
         },
         update: function (data) {
-            const toast = useToast();
             this.loading = true
             axios.put(route('course.update', data.id), data)
                 .then(response => {
                     this.getCourses();
-                    toast.success(response.data.message);
+                    this.toast.success(response.data.message);
                     this.loading = false
                     this.closeModal();
                     this.reset();
                 })
                 .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                     this.loading = false
                 });
         },
         deleteCourse: function (data) {
-            const toast = useToast();
             this.deleteLoader = true
             axios.delete(route('course.delete', data.id))
                 .then(response => {
                     this.getCourses();
-                    toast.success(response.data.message);
+                    this.toast.success(response.data.message);
                     this.deleteLoader = false
                     this.closeModal();
                     this.reset();
                 })
                 .catch(error => {
-                        Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                        Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                         this.deleteLoader = false
                     }
                 );
@@ -175,8 +172,7 @@ export default {
             loadingCourses: true,
             deleteLoader: false
         }
-    }
-    ,
+    },
     mounted() {
         // this.getCourses()
     }

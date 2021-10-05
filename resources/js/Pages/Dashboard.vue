@@ -246,8 +246,7 @@
                                     date.lesson.course.name
                                 }} </span></span>
                             </p>
-                            <div class="notes-box"
-                                 v-if="notesByCourse?.length !=0">
+                            <div class="notes-box">
                                 <h1>{{ moment(value).format("MM/DD") }}</h1>
                                 <div class="row">
                                     <span class="pink-badge badges">Easy</span>
@@ -257,9 +256,8 @@
                                     v-for="(date,index) in key"><span
                                     v-if="index !== 0">, </span>{{ date.lesson?.name }} </span>
                                 </p>
-
                             </div>
-                            <p class="my-4" v-else>No notes found.</p>
+                            <p class="my-4" v-if="this.notesByCourse == null">No notes found.</p>
                         </div>
                     </div>
                 </div>
@@ -290,7 +288,7 @@ export default {
             notesByCourse: null,
             moment: moment,
             selected_course: 'All',
-            loading: false
+            loading: false,
         }
     },
     methods: {

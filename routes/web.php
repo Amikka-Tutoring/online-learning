@@ -68,7 +68,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::post('lesson/notes/questions', [NotesController::class, 'storeQuestion'])->name('notes.store.question');
 });
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.main');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('admin.users');

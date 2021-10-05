@@ -42,7 +42,8 @@
                                     <label for="number">Number</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="number" name="number" v-model="user.number" disabled>
+                                    <input type="text" id="number" name="number" v-model="user.profile.reminder_phone"
+                                           disabled>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +84,8 @@
                                     <label for="exam_date">Exam Date</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="exam_date" name="exam_date" disabled>
+                                    <input type="text" id="exam_date" name="exam_date" disabled
+                                           v-model="user.profile.exam_date">
                                 </div>
                             </div>
                         </div>
@@ -143,7 +145,8 @@
                                     <label for="goal_score">Goal Score</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="goal_score" name="goal_score" disabled>
+                                    <input type="text" id="goal_score" name="goal_score" disabled
+                                           v-model="user.profile.desire_score">
                                 </div>
                             </div>
                         </div>
@@ -163,7 +166,8 @@
                                     <label for="course_level">Course Level</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="course_level" name="course_level" disabled>
+                                    <input type="text" id="course_level" name="course_level" disabled
+                                           v-model="user_tag">
                                 </div>
                             </div>
                         </div>
@@ -198,7 +202,7 @@ export default {
             moment: moment
         }
     },
-    props: ['user'],
+    props: ['user', 'user_tag'],
     methods: {
         back() {
             history.back();

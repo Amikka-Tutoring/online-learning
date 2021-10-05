@@ -63,16 +63,16 @@
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"
-                                     @click="questions = false; wrritten_notes = true"><i class="fas fa-pen"></i></div>
+                                     @click="questions = false; written = true"><i class="fas fa-pen"></i></div>
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"
-                                     @click="questions = true; wrritten_notes = false">
+                                     @click="questions = true; written = false">
                                     <i class="fas fa-question"></i></div>
                             </div>
                         </div>
                         <div class="col-lg-10 col-12 p-4">
-                            <div v-if="wrritten_notes" class="written_notes">
+                            <div v-if="written" class="written_notes">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
                                     <textarea required v-model="form.note" id="" cols="80" rows="40"
@@ -173,53 +173,12 @@
 import AppLayout from '@/Layouts/AppLayout'
 import Button from "@/Jetstream/Button";
 import ToolsMenu from "../components/ToolsMenu";
-import {computed, reactive} from 'vue'
 import {Inertia} from '@inertiajs/inertia'
-import {useToast} from "vue-toastification";
-import {usePage} from "@inertiajs/inertia-vue3";
 
 
 export default {
-    props: ['lesson', 'notes', 'flash', 'errors', 'user', 'user_attempt'],
+    props: ['lesson', 'notes', 'user', 'user_attempt'],
 
-    setup(props) {
-
-        const toast = useToast();
-        const message = computed(() => usePage().props.value.flash.message);
-
-        const form = reactive({
-            note: props.notes?.written_notes,
-            lesson_id: props.lesson.id,
-            topic: null,
-        })
-        const questionForm = reactive({
-            question_text: null,
-            lesson_id: props.lesson.id,
-        })
-
-        function submit() {
-            axios.post(route('notes.store'), form)
-                .then(response => {
-                    toast.success(response.data)
-                })
-                .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
-                });
-        }
-
-        function submitQuestion() {
-            axios.post(route('notes.store.question'), questionForm)
-                .then(response => {
-                    toast.success(response.data)
-                    questionForm.question_text = null
-                })
-                .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
-                });
-        }
-
-        return {form, questionForm, submit, submitQuestion, toast, message}
-    },
     components: {
         Button,
         AppLayout,
@@ -233,13 +192,41 @@ export default {
         },
         quiz: function (lesson_id) {
             Inertia.get(route('lesson.quiz', lesson_id))
+        },
+        submit: function () {
+            axios.post(route('notes.store'), this.form)
+                .then(response => {
+                    this.toast.success(response.data)
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        },
+        submitQuestion: function () {
+            axios.post(route('notes.store.question'), this.questionForm)
+                .then(response => {
+                    this.toast.success(response.data)
+                    this.questionForm.question_text = null
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
         }
     },
     data() {
         return {
-            wrritten_notes: true,
+            written: true,
             questions: false,
+            form: {
+                note: this.notes?.written_notes,
+                lesson_id: this.lesson.id,
+                topic: null,
+            },
+            questionForm: {
+                question_text: null,
+                lesson_id: this.lesson.id,
+            }
         }
-    },
+    }
 }
 </script>

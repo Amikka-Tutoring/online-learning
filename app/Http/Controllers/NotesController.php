@@ -38,7 +38,7 @@ class NotesController extends Controller
     public function dashboardNotesByCourse($course)
     {
         $user = Auth::user();
-        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
+        $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
                 if ($course == 'All')
                     $q->where('name', 'like', '%' . '' . '%');

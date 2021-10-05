@@ -88,7 +88,6 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import {useToast} from "vue-toastification";
 
 export default {
     components: {
@@ -113,19 +112,17 @@ export default {
             this.form.id = data.id
         },
         update: function (data) {
-            console.log(data)
-            const toast = useToast();
             this.loading = true
             axios.put(route('diagnostics.update', data.id), data)
                 .then(response => {
                     this.getQuizzes();
-                    toast.success(response.data.message);
+                    this.toast.success(response.data.message);
                     this.loading = false
                     this.closeModal();
                     this.reset();
                 })
                 .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                     this.loading = false
                 });
         },
@@ -135,13 +132,13 @@ export default {
             axios.delete(route('diagnostics.delete', data.id))
                 .then(response => {
                     this.getQuizzes();
-                    toast.success(response.data.message);
+                    this.toast.success(response.data.message);
                     this.deleteLoader = false
                     this.closeModal();
                     this.reset();
                 })
                 .catch(error => {
-                        Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                        Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                         this.deleteLoader = false
                     }
                 );
@@ -169,10 +166,8 @@ export default {
             loading: false,
             deleteLoader: false
         }
-    }
-    ,
+    },
     mounted() {
-        console.log(route().params.slug)
     }
 }
 </script>

@@ -154,10 +154,7 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-import {computed, reactive} from "vue";
-import {Inertia} from "@inertiajs/inertia";
-import {useToast} from "vue-toastification";
-import {usePage} from "@inertiajs/inertia-vue3";
+import {reactive} from "vue";
 
 
 export default {
@@ -178,92 +175,76 @@ export default {
                 return 'D'
             }
         },
+        next: function () {
+            if (!this.validate()) {
+                this.toast.error('You need to select the answer')
+                return
+            }
+            this.form.currentstep++;
+            this.form.errors = [];
+            this.form.progress_value = ((this.form.currentstep - 1) * 100) / this.layer.questions.length;
+            this.form.answer_list.push(this.form.answers);
+
+            if (this.form.currentstep === this.layer.questions.length + 2) {
+                this.form.errors = [];
+                this.form.progress_value = 100;
+
+            }
+        },
+        finish: function () {
+            if (!this.validate()) {
+                this.toast.error('You need to select the answer')
+                return
+            }
+            this.form.answer_list.push(this.form.answers);
+            axios.post(route('lesson.quiz.store', this.form.layer_id), this.form.answer_list[0])
+                .then(response => {
+                    this.toast.success(response.data.message);
+                    this.toast.success(response.data.score);
+                    // setTimeout(function () {
+                    window.location.href = "/lesson/" + this.form.layer_id;
+                    // }, 2000);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        },
+        validate: function () {
+            if (this.form.answers[this.form.currentstep]) {
+                return true
+            }
+            return false
+        },
+        start: function () {
+            this.form.currentstep++;
+            this.form.progress_value = ((this.form.currentstep - 1) * 100) / this.layer.questions.length;
+        },
+
+        back: function () {
+            this.form.currentstep--;
+            this.form.errors = [];
+            this.form.progress_value = ((this.form.currentstep - 1) * 100) / this.layer.questions.length;
+            this.form.answer_list.pop(this.form.answers);
+        }
     },
     props: {
         layer: Object,
     },
-    setup(props) {
-        const form = reactive({
-            errors: [],
-            answers: {},
-            answer_list: [],
-            progress_value: 0,
-            currentstep: 1,
-            layer_id: props.layer.id
-        });
-        const toast = useToast();
-
-        function next() {
-            if (!validate()) {
-                toast.error('You need to select the answer')
-                return
-            }
-
-
-            form.currentstep++;
-            console.log(form.currentstep)
-            form.errors = [];
-            form.progress_value = ((form.currentstep - 1) * 100) / props.layer.questions.length;
-            form.answer_list.push(form.answers);
-
-            if (form.currentstep === props.layer.questions.length + 2) {
-                console.log("submitted");
-                form.errors = [];
-                form.progress_value = 100;
-                console.log(form);
-
-            }
-        }
-
-        function finish() {
-            if (!validate()) {
-                toast.error('You need to select the answer')
-                return
-            }
-            form.answer_list.push(form.answers);
-            axios.post(route('lesson.quiz.store', form.layer_id), form.answer_list[0])
-                .then(response => {
-                    toast.success(response.data.message);
-                    toast.success(response.data.score);
-                    setTimeout(function () {
-                        window.location.href = "/lesson/" + form.layer_id;
-                    }, 2000);
-                })
-                .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
-                });
-        }
-
-        function validate() {
-            if (form.answers[form.currentstep]) {
-                return true
-            }
-            return false
-        }
-
-        function start() {
-            form.currentstep++;
-            form.progress_value = ((form.currentstep - 1) * 100) / props.layer.questions.length;
-        }
-
-        function back() {
-            form.currentstep--;
-            form.errors = [];
-            form.progress_value = ((form.currentstep - 1) * 100) / props.layer.questions.length;
-            form.answer_list.pop(form.answers);
-        }
-
-        return {form, start, next, back, finish, toast};
-    },
-
-
     data() {
         return {
             currenstep: 1,
-        };
+            form: {
+                errors: [],
+                answers: {},
+                answer_list: [],
+                progress_value: 0,
+                currentstep: 1,
+                layer_id: this.layer.id,
+                layer: this.layer
+            }
+        }
     },
-
-    mounted(props) {
+    mounted() {
 
     }
 }

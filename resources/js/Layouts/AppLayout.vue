@@ -20,11 +20,10 @@
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" :href="route('admin.dashboard')">Admin Panel</a>
+                <a class="dropdown-item" :href="route('admin.dashboard')" v-if="this.user.is_admin">Admin Panel</a>
                 <a class="dropdown-item" @click="logout()" href="">Logout</a>
             </div>
         </div>
-
     </nav>
 
     <div class="row m-0">
@@ -83,14 +82,12 @@
 // import { Link, Head } from "@inertiajs/inertia-vue3";
 import {computed} from 'vue'
 import {usePage} from '@inertiajs/inertia-vue3'
-import {useToast} from "vue-toastification";
 
 export default {
     components: {},
     setup() {
         const user = computed(() => usePage().props.value.auth.user);
-        const toast = useToast();
-        return {user, toast}
+        return {user}
     },
     props: ['user'],
     data() {
@@ -99,13 +96,19 @@ export default {
             isHidden: true,
             next: false,
             avatar: this.user.profile_photo_path,
+            user: this.user
         };
     },
 
 
     methods: {
         logout() {
-            this.$inertia.post(route("logout"));
+            axios.post(route('logout'))
+                .then(response => {
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
         },
         toggleClass: function (event) {
             this.isHidden = !this.isHidden;

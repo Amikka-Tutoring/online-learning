@@ -2,12 +2,6 @@
     <admin-layout>
         <div class="container users" data-aos="fade-up">
             <h1 class="blue-text">Users</h1>
-            <!--            <div class="p-4">-->
-            <!--                <div class="form-group">-->
-            <!--                    <label for="search">Name:</label>-->
-            <!--                    <input type="text" id="search" v-model="name" @keyup="search" class="form-control">-->
-            <!--                </div>-->
-            <!--            </div>-->
             <div class="users-table">
                 <table>
                     <thead>
@@ -31,17 +25,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="user in users.data">
+                    <tr v-for="user in users">
                         <td>{{ user.id }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ user.number }}</td>
+                        <td>{{ user.profile?.reminder_phone }}</td>
                         <td>{{ moment(user.created_at).format("DD-MM-YYYY") }}</td>
                         <td>
                             <a class="text-white" @click="show(user.id)">View</a>
                         </td>
                     </tr>
-                    <p v-if="!users.data.length">No row found</p>
+                    <p v-if="!users.length">No row found</p>
                     </tbody>
                 </table>
             </div>
@@ -78,36 +72,9 @@ export default {
         }
     },
     methods: {
-        sort: function (s) {
-            //if s == current sort, reverse
-            if (s === this.currentSort) {
-                this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
-            }
-            this.currentSort = s;
-        },
-        printUser(e) {
-            this.selectedUser = e;
-            // Inertia.get('users/user', this.selectedUser);
-            console.log(this.selectedUser)
-        },
         show: function (user) {
             this.$inertia.get('users/' + user)
         },
-        search: function () {
-            console.log('search');
-            this.$inertia.replace('users?name=' + this.name)
-        }
     },
-    computed: {
-        sortedUsers: function () {
-            return this.users.sort((a, b) => {
-                let modifier = 1;
-                if (this.currentSortDir === 'desc') modifier = -1;
-                if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-                if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-                return 0;
-            });
-        }
-    }
 }
 </script>

@@ -21,7 +21,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" @click="logout()" href="">Logout</a>
-                <a class="dropdown-item" :href="route('admin.dashboard')">Admin Panel</a>
+                <a class="dropdown-item" :href="route('dashboard')">Homepage</a>
             </div>
         </div>
     </nav>
@@ -64,13 +64,11 @@
             </div>
         </div>
     </div>
-    <!--    <h1>{{avatar}}</h1>-->
 </template>
 
 <script>
 
 
-// import { Link, Head } from "@inertiajs/inertia-vue3";
 import {computed} from 'vue'
 import {usePage} from '@inertiajs/inertia-vue3'
 
@@ -78,7 +76,6 @@ export default {
     components: {},
     setup() {
         const user = computed(() => usePage().props.value.auth.user)
-        console.log(user)
         return {user}
     },
     props: ['user'],
@@ -93,7 +90,12 @@ export default {
 
     methods: {
         logout() {
-            this.$inertia.post(route("logout"));
+            axios.post(route('logout'))
+                .then(response => {
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
         },
         toggleClass: function (event) {
             this.isHidden = !this.isHidden;

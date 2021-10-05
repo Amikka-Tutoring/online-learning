@@ -14,18 +14,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
 //      filter by name
-        return Inertia::render('Admin/Users/Index', [
-            'users' => User::when($request->name, function ($query, $name) {
-                $query->where('name', 'LIKE', '%' . $name . '%');
-            })->paginate()
-        ]);
+        $users = User::with('profile')->get();
+        return Inertia::render('Admin/Users/Index', ['users' => $users]);
     }
 
     public function show($id)
     {
-//        dd($id);
-        $user = User::find($id);
-        return Inertia::render('Admin/Users/Show', ['user' => $user]);
+        $user = User::with('profile')->find($id);
+        $userTag = $user->getTag();
+        return Inertia::render('Admin/Users/Show', ['user' => $user, 'user_tag' => $userTag]);
     }
 
 

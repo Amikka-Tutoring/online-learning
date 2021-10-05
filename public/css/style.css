@@ -609,6 +609,10 @@ a {
         width: 35px;
     }
 
+    .notes-content {
+        position: inherit !important;
+    }
+
     .lesson-container-margin {
         margin-top: 0;
     }

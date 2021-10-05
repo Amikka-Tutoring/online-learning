@@ -21,30 +21,30 @@
                         <div v-for="user_course in user_courses.enrollments" class="col-lg-3 col-12" data-aos="fade-up"
                              data-aos-delay="50"
                              data-aos-once="true">
-                            <a :href="route('course')">
-                                <div class="input-cards">
-                                    <img class="w-100" :src="'images/course-img.png'">
-                                    <h4>{{ user_course.course.name }}</h4>
-                                    <div class="row justify-content-center align-items-center"
-                                         style="margin-top: 60px; margin-bottom: 10px">
-                                        <div class="col-9">
-                                            <div class="progress" style="height: 5px; margin-left: 20px">
-                                                <div
-                                                    style="background: #4C6ED7;"
-                                                    v-bind:style="{'width':(user_course.course.quizzes_attempted / user_course.course.quizzes_count)*100 + '%'}"
-                                                    class="progress-bar"
-                                                    role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                                    aria-valuemax="100"></div>
-                                            </div>
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <h4>{{ user_course.course.name }}</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div
+                                                style="background: #4C6ED7;"
+                                                v-bind:style="{'width':(user_course.course.quizzes_attempted / user_course.course.quizzes_count)*100 + '%'}"
+                                                class="progress-bar"
+                                                role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
                                         </div>
-                                        <div class="col-3">
-                                            <div class="blue-text">
-                                                {{user_course.course.quizzes_attempted}}/{{user_course.course.quizzes_count}}
-                                            </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">
+                                            {{
+                                                user_course.course.quizzes_attempted
+                                            }}/{{ user_course.course.quizzes_count }}
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
                     <p>Why should I do this?</p>

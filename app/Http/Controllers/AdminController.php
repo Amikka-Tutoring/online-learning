@@ -17,15 +17,6 @@ class AdminController extends Controller
         return Inertia::render('Admin/Dashboard', ['user_count' => $users->count()]);
     }
 
-    public function users()
-    {
-        return Inertia::render('Admin/Users/Index');
-    }
-
-    public function showUser(Request $request)
-    {
-        return Inertia::render('Admin/Users/Show', ['user' => $request->all()]);
-    }
 
     public function courses()
     {
