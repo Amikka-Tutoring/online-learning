@@ -9,11 +9,9 @@ use App\Models\LayerQuizResult;
 use App\Models\Tag;
 use App\Models\User;
 use App\Scopes\LayerScope;
-use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class PageController extends Controller
@@ -21,29 +19,11 @@ class PageController extends Controller
 
     public function test2()
     {
-//        $quizzes_count = 0;
-//        $course = Course::where('name', 'Grammar')->first();
-//        foreach ($course->topLayers() as $topLayer) {
-//            if (count($topLayer->questions)) {
-//                $quizzes_count++;
-//            }
-//            foreach ($topLayer->children as $mid) {
-//                if (count($mid->questions)) {
-//                    $quizzes_count++;
-//                }
-//                foreach ($mid->children as $less) {
-//                    if (count($less->questions)) {
-//                        $quizzes_count++;
-//                    }
-//                }
-//            }
-//        }
-//        dd($quizzes_count);
-        $user = Auth::user();
-        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->get()->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('m/d');
-        });
-        return ['notes' => $notes];
+        $user = Auth::user()->load('enrollments', 'enrollments.course');
+        $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
+            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
+        }])->get()->pluck('course');
+        dd($courses->first()->layers->first()->children);
     }
 
 
@@ -58,7 +38,7 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        $user_courses = Auth::user()->with(['enrollments', 'enrollments.course', 'layer_quiz_results'])->first();
+        $user_courses = Auth::user()->load(['enrollments', 'enrollments.course', 'layer_quiz_results']);
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         $user_profile = Auth::user()->profile;
@@ -75,7 +55,7 @@ class PageController extends Controller
     {
         $tags = Tag::all();
         $userTag = Auth::user()->getTag();
-        $user = User::with(['enrollments', 'enrollments.course', 'profile'])->find(Auth::id());
+        $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile']);
         $user_days_available = unserialize($user->profile->days_available);
         return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'user_days_available' => $user_days_available]);
     }
@@ -97,14 +77,14 @@ class PageController extends Controller
 
     public function myCourses()
     {
-        $user_courses = Auth::user()->with(['enrollments', 'enrollments.course'])->first();
+        $user_courses = Auth::user()->load(['enrollments', 'enrollments.course']);
         return Inertia::render('MyCourses', ['user_courses' => $user_courses]);
     }
 
     public function lesson($id)
     {
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
-        $user = Auth::user()->with('layer_quiz_results')->first();
+        $user = Auth::user()->load('layer_quiz_results');
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
         $notes = $user->notes->where('layer_id', $lesson->id)->first();
         return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt]);
@@ -121,7 +101,7 @@ class PageController extends Controller
 
     public function recommended()
     {
-        $user = Auth::user()->with('enrollments', 'enrollments.course')->first();
+        $user = Auth::user()->load('enrollments', 'enrollments.course');
         $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
         }])->get()->pluck('course');
@@ -148,12 +128,6 @@ class PageController extends Controller
         return Inertia::render('SetCalendar');
     }
 
-    public function notesList()
-    {
-        $user = Auth::user();
-        $notes = $user->notes()->with(['lesson', 'lesson.course', 'lesson.tags'])->get();
-        return Inertia::render('NotesList', ['notes' => $notes]);
-    }
 
     public function notesBlock()
     {
