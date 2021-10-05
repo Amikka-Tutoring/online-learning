@@ -11,10 +11,12 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import moment from "moment";
 import Toast from "vue-toastification";
+import {useToast} from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 
 const el = document.getElementById("app");
+const toast = useToast();
 const options = {
     transition: "Vue-Toastification__fade",
     newestOnTop: true
@@ -29,9 +31,17 @@ createApp({
             initialPage: JSON.parse(el.dataset.page),
             resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
-}).mixin({methods: {route}})
-    .use(InertiaPlugin, moment)
+}).mixin({
+    methods: {route},
+    data() {
+        return {
+            toast: useToast(),
+        }
+    }
+
+}).use(InertiaPlugin, moment)
     .use(Toast, options)
+    .use(toast)
     .mount(el);
 
 InertiaProgress.init({color: "#4B5563"});

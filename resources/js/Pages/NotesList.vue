@@ -11,7 +11,7 @@
                     <div class="col-lg-6 col-12">
                         <i class="fab fa-searchengin fa-2x blue-text pr-2 search-icon position-absolute"
                            style="padding-left: 20px; padding-top: 10px"></i>
-                        <input type="text" v-model="query" @input="onInput">
+                        <input type="text" v-model="query" v-on:keyup="filterNotes(query)">
                     </div>
                 </div>
             </div>
@@ -29,11 +29,13 @@
                         </th>
                         <th style="width: 30%" @click="sort('topics')"><i class="fas fa-pen blue-text mr-2"></i>Topics
                         </th>
+                        <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Note
+                        </th>
                         <th style="width: 30%" @click="sort('tags')"><i class="fas fa-tags blue-text mr-2"></i>Tags</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(note,index) in notes" :key="note.id">
+                    <tr v-for="(note,index) in notes">
                         <td>{{ moment(note.created_at).format("MM/DD") }}</td>
                         <td>{{ note.lesson.course.name }}</td>
                         <td>{{ note.lesson.name }}</td>
@@ -42,30 +44,10 @@
                             <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{ tag.name }}</span>
                         </td>
                     </tr>
-                    <p v-if="!notes">No rows found</p>
+                    <p v-if="!notes.length">No rows found</p>
                     </tbody>
                 </table>
-                <div>
-                    <nav class="ls-pagination">
-                        <ul>
-                            <li class="prev page-item"><a
-                                class=""
-                                href=""><i class=" fa fa-arrow-left"></i></a></li>
-                            <!--                            @for ($i = 1; $i <= $paginator->lastPage(); $i++)-->
-                            <li class="page-item">
-                                <a class=""
-                                   href="">1</a>
-                            </li>
-                            <!--                            @endfor-->
-                            <li class="page-item ">
-                                <a class="" @click="next_page()"><i
-                                    class="fa fa-arrow-right"></i></a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
             </div>
-
         </div>
     </app-layout>
 </template>
@@ -80,70 +62,24 @@ export default {
         AppLayout,
     },
     props: ['notes'],
-    mounted() {
-        console.log(this.notes)
-        console.log(this.current_page)
-    },
     data() {
         return {
-            currentSort: 'class',
-            currentSortDir: 'asc',
             query: '',
             calendar: false,
             moment: moment,
-            notes: this.notes.data,
-            current_page: this.notes.current_page,
-            page: this.notes.current_page,
+            notes: this.notes,
         }
     },
     methods: {
-        sort: function (s) {
-            if (s === this.currentSort) {
-                this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
-            }
-            this.currentSort = s;
-        },
-        onInput(event) {
-            this.page = 0;
-            this.query = event.target.value;
-            this.filterNotes();
-        },
-        filterNotes: function () {
-            console.log('filter notes')
-            console.log(this.query)
-            console.log(this.page)
-            axios.get(route('notes-search', this.query, this.page))
+        filterNotes: function (query) {
+            axios.get(route('notes-search', query))
                 .then(response => {
-                    console.log('response')
-                    console.log(response);
-                    this.notes = response.data.notes.data
+                    this.notes = response.data.notes
                 })
                 .catch(error => {
+                    this.toast.error('Something went wrong!');
                 });
         },
-        next_page() {
-            console.log('next 1' + this.page)
-            this.page++;
-            console.log('next 2' + this.page)
-            this.filterNotes()
-        }
-    },
-    computed: {
-        computedList: function (props) {
-            var vm = this
-            return props.notes.filter(function (item) {
-                // return item.class.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
-            })
-        },
-        sortedItems: function () {
-            return this.notes.sort((a, b) => {
-                let modifier = 1;
-                if (this.currentSortDir === 'desc') modifier = -1;
-                if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-                if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-                return 0;
-            });
-        }
     },
 }
 </script>
