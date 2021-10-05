@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'name' => 'John Doe',
             'email' => 'email@company.com',
             'password' => bcrypt('password'),
-            'profile_photo_path' => 'https://ui-avatars.com/api/?name=John+Doe&color=7F9CF5&background=EBF4FF'
+            'profile_photo_path' => 'https://ui-avatars.com/api/?name=John+Doe&color=7F9CF5&background=EBF4FF',
+            'is_admin' => '1'
         ]);
 
 //        UserProfile::create([
