@@ -158,12 +158,20 @@ export default {
                 }
             })
                 .then(response => {
-                        this.toast.success(response.data.message);
+                        if (response.data.message) {
+                            this.toast.success(response.data.message);
+                            this.onsuccess = true
+                        }
+
+                        if (response.data.error) {
+                            this.toast.error(response.data.error)
+                            this.onerror = true
+                        }
                         this.courses = response.data.courses
                         this.top_layers = response.data.top_layers
                         this.mid_layers = response.data.mid_layers
                         this.less_layers = response.data.less_layers
-                        this.onsuccess = true
+
                     }
                 )
                 .catch(error => {

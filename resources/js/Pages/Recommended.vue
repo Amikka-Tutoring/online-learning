@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="col-2 text-right"
                                              v-if="topLayer.children.length || topLayer.videos.length">
-                                            <i :class="'top-icon-'+course.id"
+                                            <i :class="'top-icon-'+topLayer.id"
                                                class="fas fa-chevron-down text-white"></i>
                                         </div>
                                     </div>
@@ -193,12 +193,12 @@
                                                 <div class="row">
                                                     <div class="col-10">
                                                         <a :href="route('lesson',midLayer.id)">{{
-                                                            midLayer.name
+                                                                midLayer.name
                                                             }}</a>
                                                     </div>
                                                     <div class="col-2 text-right"
                                                          v-if="midLayer.children.length || midLayer.videos.length">
-                                                        <i :class="'mid-icon-'+course.id"
+                                                        <i :class="'mid-icon-'+midLayer.id"
                                                            class="fas fa-chevron-down text-white"></i>
                                                     </div>
                                                 </div>
@@ -236,7 +236,7 @@
                                                                     </div>
                                                                     <div class="col-2 text-right"
                                                                          v-if="lesson.videos.length">
-                                                                        <i :class="'less-icon-'+course.id"
+                                                                        <i :class="'less-icon-'+lesson.id"
                                                                            class="fas fa-chevron-down text-white"></i>
                                                                     </div>
                                                                 </div>

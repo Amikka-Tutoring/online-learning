@@ -64,7 +64,7 @@ class CourseController extends Controller
         $lessLayersArray = array();
         foreach ($importData_arr as $row) {
             if (count($row) != 67) {
-                return back()->with('error', 'Wrong format');
+                return ['error' => 'Wrong format'];
             }
 
             //Course

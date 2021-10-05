@@ -23,7 +23,7 @@ class PageController extends Controller
         $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
         }])->get()->pluck('course');
-        dd($courses->first()->layers->first()->children);
+        return $courses;
     }
 
 
