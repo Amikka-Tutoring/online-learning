@@ -33,8 +33,9 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Enrolled Courses</h5>
-                                        <span class="h6 mr-2"
-                                              v-for="c in user_data.enrollments">{{ c.course.name }}</span>
+                                        <span class="h6"
+                                              v-for="(c,index) in user_data.enrollments">
+                                            <span v-if="index>0">, </span>{{ c.course.name }}</span>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
@@ -63,7 +64,9 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Dates</h5>
-                                        <h6><span class="mr-2" v-for="days in user_days_available">{{ days }}</span>
+                                        <h6><span class="" v-for="(days,index) in user_days_available">{{
+                                                days
+                                            }}<span v-if="index==0"> and </span></span>
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">

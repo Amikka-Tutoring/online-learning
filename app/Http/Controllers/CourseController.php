@@ -84,7 +84,7 @@ class CourseController extends Controller
                         'name' => $row[1],
                         'course_id' => $course->id,
                     ]);
-                    array_push($topLayersArray, $top_layer->course->name . '/' . $top_layer->name);
+                    array_push($topLayersArray, $top_layer->course->name . ' / ' . $top_layer->name);
                 }
                 switch ($row[2]) {
                     case 'Hard':
@@ -182,7 +182,7 @@ class CourseController extends Controller
                         'course_id' => $course->id,
                         'parent_id' => $top_layer->id,
                     ]);
-                    array_push($midLayersArray, $mid_layer->name);
+                    array_push($midLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name);
                 }
                 switch ($row[24]) {
                     case 'Hard':
@@ -280,7 +280,7 @@ class CourseController extends Controller
                             'course_id' => $course->id,
                             'parent_id' => $mid_layer->id,
                         ]);
-                        array_push($lessLayersArray, $lesson->name);
+                        array_push($lessLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name . ' / ' . $lesson->name);
                     }
                     switch ($row[46]) {
                         case 'Hard':

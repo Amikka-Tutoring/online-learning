@@ -19,11 +19,13 @@ class PageController extends Controller
 
     public function test2()
     {
-        $user = Auth::user()->load('enrollments', 'enrollments.course');
+        $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
+        dd($user);
         $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
         }])->get()->pluck('course');
         return $courses;
+
     }
 
 

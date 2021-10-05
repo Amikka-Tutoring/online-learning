@@ -74,7 +74,8 @@ $query
 
                                         </div>
                                         <div class="col-3">
-                                            <div class="blue-text course-edit"><i class="blue-text fas fa-plus"></i>
+                                            <div class="blue-text course-edit"><a :href="route('admin.courses.create')"><i
+                                                class="blue-text fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
