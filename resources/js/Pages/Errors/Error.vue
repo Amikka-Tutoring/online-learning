@@ -1,12 +1,26 @@
 <template>
-    <app-layout>
-        <div class="container">
-            <div>
-                <H1>{{ title }}</H1>
-                <div>{{ description }}</div>
+    <div class="row m-0">
+        <div v-bind:class="['side-bar-0']">
+            <div class="mb-5">
             </div>
         </div>
-    </app-layout>
+
+        <div v-bind:class="['main-content']" class="bg-white p-0 transition">
+            <img class="banner-img" :src="'/images/banner.png'" alt=""
+                 style="width: 100%; height:140px; margin-bottom: 100px">
+            <div class="container-fluid p-0">
+                <main class="mb-4">
+                    <slot></slot>
+                </main>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <H1>{{ title }}</H1>
+            <div>{{ description }}</div>
+        </div>
+    </div>
 </template>
 
 <script>
