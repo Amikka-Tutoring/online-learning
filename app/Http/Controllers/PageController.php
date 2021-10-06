@@ -22,13 +22,15 @@ class PageController extends Controller
         $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
         $completed_layers = $user->layer_quiz_results()->get()->pluck('layer_id');
         $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
-            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children' => function ($query_children) use ($completed_layers) {
-                $query_children->whereNotIn('id', $completed_layers);
-            }, 'children.videos', 'children.children' => function ($query_children_children) use ($completed_layers) {
-                $query_children_children->whereNotIn('id', $completed_layers);
-            }, 'children.children.videos']);
-        }])->get()->pluck('course');
+            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
+                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children_children) use ($completed_layers) {
+                    $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
+                }]);
+            }]);
+        }
+        ])->get()->pluck('course');
         return $courses;
+
     }
 
     public function initialQuestionnaire()
@@ -47,8 +49,8 @@ class PageController extends Controller
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         $user_profile = Auth::user()->profile;
         $days_available = unserialize($user_profile->days_available);
-        $first_date = Carbon::parse('next ' . $days_available[0])->format('d/m');
-        $second_date = Carbon::parse('next ' . $days_available[1])->format('d/m');
+        $first_date = Carbon::parse('next ' . $days_available[0])->format('d / m');
+        $second_date = Carbon::parse('next ' . $days_available[1])->format('d / m');
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic,
             'user_courses' => $user_courses, 'profile' => $user_profile, 'days_available' => $days_available,
             'first_date' => $first_date, 'second_date' => $second_date
@@ -105,11 +107,23 @@ class PageController extends Controller
 
     public function recommended()
     {
-        $user = Auth::user()->load('enrollments', 'enrollments.course');
+        $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
+        $completed_layers = $user->layer_quiz_results()->get()->pluck('layer_id');
+
+
         $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
         }])->get()->pluck('course');
-        return Inertia::render('Recommended', ['courses' => $courses]);
+
+        $recommended_courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
+            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
+                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children_children) use ($completed_layers) {
+                    $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
+                }]);
+            }]);
+        }
+        ])->get()->pluck('course');
+        return Inertia::render('Recommended', ['courses' => $courses, 'recommended_courses' => $recommended_courses]);
     }
 
     public function course()
@@ -150,7 +164,17 @@ class PageController extends Controller
 
     public function review()
     {
-        return Inertia::render('Review');
+        $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
+        $completed_layers = $user->layer_quiz_results()->get()->pluck('layer_id');
+        $courses_to_review = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
+            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
+                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children_children) use ($completed_layers) {
+                    $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
+                }]);
+            }]);
+        }
+        ])->get()->pluck('course');
+        return Inertia::render('Review', ['courses_to_review' => $courses_to_review]);
     }
 
     public function test()
