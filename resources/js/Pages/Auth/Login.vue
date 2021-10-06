@@ -6,7 +6,7 @@
 
         <div class="card-body">
 
-            <jet-validation-errors class="mb-3"/>
+            <!--            <jet-validation-errors class="mb-3"/>-->
 
             <div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
                 {{ status }}
@@ -102,6 +102,7 @@ export default {
                 }))
                 .post(this.route('login'), {
                     onFinish: () => this.form.reset('password'),
+                    onError: () => Object.values(this.$page.props.errors).flat().forEach(element => this.toast.error(element))
                 })
         }
     }
