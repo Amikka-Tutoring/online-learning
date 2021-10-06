@@ -162,7 +162,6 @@ export default {
                             this.toast.success(response.data.message);
                             this.onsuccess = true
                         }
-
                         if (response.data.error) {
                             this.toast.error(response.data.error)
                             this.onerror = true
@@ -171,7 +170,6 @@ export default {
                         this.top_layers = response.data.top_layers
                         this.mid_layers = response.data.mid_layers
                         this.less_layers = response.data.less_layers
-
                     }
                 )
                 .catch(error => {

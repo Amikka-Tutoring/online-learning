@@ -70,7 +70,6 @@ class Layer extends Model
         $this->tags()->save($tag);
     }
 
-
     public function notes()
     {
         return $this->hasMany(Note::class);

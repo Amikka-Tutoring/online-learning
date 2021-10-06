@@ -20,14 +20,16 @@ class PageController extends Controller
     public function test2()
     {
         $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
-        dd($user);
-        $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
-            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
+        $completed_layers = $user->layer_quiz_results()->get()->pluck('layer_id');
+        $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
+            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children' => function ($query_children) use ($completed_layers) {
+                $query_children->whereNotIn('id', $completed_layers);
+            }, 'children.videos', 'children.children' => function ($query_children_children) use ($completed_layers) {
+                $query_children_children->whereNotIn('id', $completed_layers);
+            }, 'children.children.videos']);
         }])->get()->pluck('course');
         return $courses;
-
     }
-
 
     public function initialQuestionnaire()
     {

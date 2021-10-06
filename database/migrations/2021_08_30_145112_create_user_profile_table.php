@@ -23,6 +23,8 @@ class CreateUserProfileTable extends Migration
             $table->time('second_day_time');
             $table->string('reminder_phone');
             $table->string('reminder_email');
+            $table->string('learning_style')->nullable();
+            $table->string('tutor_match')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });

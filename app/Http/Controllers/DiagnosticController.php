@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Diagnostic;
 use App\Models\DiagnosticQuiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use function PHPUnit\Framework\throwException;
 
 class DiagnosticController extends Controller
 {
@@ -20,15 +20,14 @@ class DiagnosticController extends Controller
     {
         $answers = $request->answer_list[0];
         $sum = count($answers);
-
+        $points = 0;
         $correct = 0;
         foreach ($answers as $answer) {
-            if ($answer['is_correct'] == 1) {
-                $correct++;
-            }
+            $points += $answer['explanation'];
         }
-
-        $score = $correct / $sum * 100;
+        $score = $points / $sum;
+        $user = Auth::user();
+        $user->profile->learning_style = $score;
         return Inertia::render('DiagnosticResults', ['results' => $answers, 'score' => $score]);
     }
 
@@ -41,7 +40,6 @@ class DiagnosticController extends Controller
         $quiz->update([
             'name' => $request->name
         ]);
-
         return ['message' => 'Updated Successfully'];
 
     }

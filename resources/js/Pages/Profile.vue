@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Learning Style</h5>
-                                        <h6>Auditory</h6>
+                                        <h6>{{ user.profile.learning_style }}</h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right"><i class="blue-text fas fa-angle-right"></i>
