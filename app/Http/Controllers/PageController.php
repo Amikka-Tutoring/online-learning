@@ -20,16 +20,17 @@ class PageController extends Controller
     public function test2()
     {
         $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
-        $completed_layers = $user->layer_quiz_results()->where('score', '>', '50')->get()->pluck('layer_id');
-        $courses = $user->enrollments()->with(['course', 'course.layers'])->get()->pluck('course');
+        $completed_layers = $user->layer_quiz_results()->where('score', '<', '50')->get()->pluck('layer_id');
+        $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
+            $query->whereIn('id', $completed_layers);
+        }])->get()->pluck('course');
         return $courses;
-
     }
 
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if (Auth::user()->profile) {
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -92,7 +93,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -158,15 +159,10 @@ class PageController extends Controller
     public function review()
     {
         $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
-        $completed_layers = $user->layer_quiz_results()->get()->pluck('layer_id');
+        $completed_layers = $user->layer_quiz_results()->where('score', '<', '50')->get()->pluck('layer_id');
         $courses_to_review = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
-            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
-                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children_children) use ($completed_layers) {
-                    $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
-                }]);
-            }]);
-        }
-        ])->get()->pluck('course');
+            $query->whereIn('id', $completed_layers);
+        }])->get()->pluck('course');
         return Inertia::render('Review', ['courses_to_review' => $courses_to_review]);
     }
 

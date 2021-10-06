@@ -6,10 +6,7 @@
                     <div class="col-md-7 align-self-center">
                         <div class="text">
                             <h1 class="blue-text" style="margin-top: 0">Results</h1>
-                            <p>Based on your results from your <strong>academic diagnostic</strong>
-                                and
-                                <strong>personality diagnostic</strong> we will create a personalize
-                                course for you.</p>
+                            <p>{{ this.results.summary }}</p>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -54,35 +51,8 @@
                 <div class="container">
                     <h1 class="blue-text">Our Plan For You</h1>
                     <ol>
-                        <li>Plug-in problems</li>
-                        <li>Word problems</li>
-                        <li>Time management</li>
+                        <li v-for="p in this.plan">{{ p }}</li>
                     </ol>
-                </div>
-            </div>
-            <div class="strengths-weakness result d-flex align-items-center" style="height: auto">
-                <div class="container">
-                    <h1 class="blue-text">Results</h1>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="">Corrects</h4>
-                            <ol>
-                                <li v-for="result in results" v-bind:class=" result.is_correct ?
-                            'green-text' : 'red-text'">{{ result.title }}
-                                </li>
-                                <li>Total score: <strong class="blue-text">{{ score }}%</strong></li>
-                            </ol>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="">Wrongs</h4>
-                            <ol>
-                                <li v-for="result in results" v-bind:class=" result.is_correct ?
-                            'green-text' : 'red-text'">{{ result.title }}
-                                </li>
-                                <li>Total score: <strong class="blue-text">{{ score }}%</strong></li>
-                            </ol>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -97,13 +67,19 @@ export default {
         AppLayout,
     },
     methods: {},
-    props: {
-        results: {},
-        score: ''
-    },
+    props: ['results', 'plan', 'learned'],
 
     data() {
-        return {}
+        return {
+            results: this.results,
+            plan: this.plan,
+            learned: this.learned
+        }
     },
+    mounted() {
+        console.log(this.results)
+        console.log(this.plan)
+        console.log(this.learned)
+    }
 }
 </script>

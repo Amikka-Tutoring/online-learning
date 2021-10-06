@@ -17,8 +17,7 @@ class ApiMiddleware
     public function handle(Request $request, Closure $next)
     {
         $tokenValid = '123' == $request->header('token');
-        if (!$tokenValid) {
-//        if (false) {
+        if ( !$tokenValid ) {
             return response()->json('Unauthorized', 401);
         }
 

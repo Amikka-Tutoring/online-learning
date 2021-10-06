@@ -161,10 +161,9 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-import {computed, reactive} from "vue";
+import {reactive} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 import {useToast} from "vue-toastification";
-import {usePage} from "@inertiajs/inertia-vue3";
 import Question from "../../components/Question";
 
 
@@ -176,7 +175,6 @@ export default {
     },
     methods: {
         toLetter(value) {
-            //do something here
             if (value == 1) {
                 return 'A'
             } else if (value == 2) {
@@ -198,6 +196,7 @@ export default {
             answer_list: [],
             progress_value: 0,
             currentstep: 1,
+            diagnostic_name: props.diagnostic.slug
         });
         const toast = useToast();
 
@@ -206,8 +205,6 @@ export default {
                 toast.error('You need to select the answer')
                 return
             }
-
-
             form.currentstep++;
             console.log(form.currentstep)
             form.errors = [];
@@ -255,13 +252,11 @@ export default {
         return {form, start, next, back, finish, toast};
     },
 
-
     data() {
         return {
             currenstep: 1,
         };
     },
-
 
     mounted(props) {
         console.log(this.diagnostic);
