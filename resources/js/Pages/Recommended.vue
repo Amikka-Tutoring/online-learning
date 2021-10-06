@@ -66,7 +66,7 @@
                                                     <div class="row">
                                                         <div class="col-10">
                                                             <a :href="route('lesson',midLayer.id)">{{
-                                                                    midLayer.name
+                                                                midLayer.name
                                                                 }}</a>
                                                         </div>
                                                         <div class="col-2 text-right"
@@ -214,7 +214,7 @@
                                                 <div class="row">
                                                     <div class="col-10">
                                                         <a :href="route('lesson',midLayer.id)">{{
-                                                                midLayer.name
+                                                            midLayer.name
                                                             }}</a>
                                                     </div>
                                                     <div class="col-2 text-right"
@@ -360,8 +360,7 @@ export default {
             rec: true,
         }
     },
-    mounted(props) {
-        console.log(this.courses)
+    mounted() {
     }
 }
 </script>
