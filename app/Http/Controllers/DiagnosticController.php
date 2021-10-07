@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Diagnostic;
 use App\Models\DiagnosticQuiz;
 use App\Models\DiagnosticUserTag;
@@ -25,7 +26,7 @@ class DiagnosticController extends Controller
 
     public function createTutorMatch()
     {
-
+        return Inertia::render('Admin/Diagnostics/Personality/TutorMatch');
     }
 
     public function result(Request $request)
@@ -133,7 +134,7 @@ class DiagnosticController extends Controller
         return Diagnostic::where('name', 'Personality')->first()->quizzes;
     }
 
-    public function storeAcademic(Request $request)
+    public function storeLearningStyle(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:csv,txt|max:1024',
@@ -171,22 +172,102 @@ class DiagnosticController extends Controller
         }
         fclose($file);
 
+        $learning_style = DiagnosticQuiz::where('slug', 'learning-style')->first();
+        $questions = [];
+
         foreach ($importData_arr as $row) {
 
-
-            if (count($row) != 3) {
+            if (count($row) != 7) {
                 return ['error' => 'Wrong format'];
             }
-            if ($row[0] != '' && $row[1] != '' && $row[2] != '') {
-                PracticeExam::create([
-                    'title' => $row[0],
-                    'url' => $row[1],
-                    'subject' => $row[2],
-                ]);
-            } else {
-                return ['error' => 'Empty fields detected'];
-            }
+            $question = new Question();
+            $question->title = $row[0];
+            $learning_style->questions()->save($question);
+            array_push($questions, $question->title);
+            Answer::create([
+                'title' => $row[1],
+                'is_correct' => 0,
+                'explanation' => $row[2],
+                'question_id' => $question->id,
+            ]);
+            Answer::create([
+                'title' => $row[3],
+                'is_correct' => 0,
+                'explanation' => $row[4],
+                'question_id' => $question->id,
+            ]);
+            Answer::create([
+                'title' => $row[5],
+                'is_correct' => 0,
+                'explanation' => $row[6],
+                'question_id' => $question->id,
+            ]);
         }
-        return ['message' => 'Saved Successfully'];
+        return ['message' => 'Saved Successfully', 'questions' => $questions];
+    }
+
+    public function storeTutorMatch(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt|max:1024',
+        ]);
+
+        $file = $request->file('file');
+        // File Details
+        $filename = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $tempPath = $file->getRealPath();
+        $fileSize = $file->getSize();
+        $mimeType = $file->getMimeType();
+
+        $location = 'storage/uploads';
+        // Upload file
+        $file->move($location, $filename);
+        // Import CSV to Database
+        $filepath = public_path($location . "/" . $filename);
+        // Reading file
+        $file = fopen($filepath, "r");
+        $importData_arr = array();
+        $i = 0;
+
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
+            $num = count($filedata);
+            //Skip first row(Remove below comment if you want to skip the first row)
+            if ($i == 0) {
+                $i++;
+                continue;
+            }
+            for ($c = 0; $c < $num; $c++) {
+                $importData_arr[$i][] = $filedata[$c];
+            }
+            $i++;
+        }
+        fclose($file);
+
+        $tutor_match = DiagnosticQuiz::where('slug', 'perfect-tutor-match')->first();
+        $questions = [];
+
+        foreach ($importData_arr as $row) {
+
+            if (count($row) != 6) {
+                return ['error' => 'Wrong format'];
+            }
+            $question = new Question();
+            $question->title = $row[0];
+            $question->explanation = $row[1];
+            $tutor_match->questions()->save($question);
+            array_push($questions, '[ ' . $question->explanation . '] / ' . $question->title);
+            Answer::create([
+                'title' => $row[2],
+                'is_correct' => $row[3],
+                'question_id' => $question->id,
+            ]);
+            Answer::create([
+                'title' => $row[4],
+                'is_correct' => $row[5],
+                'question_id' => $question->id,
+            ]);
+        }
+        return ['message' => 'Saved Successfully', 'questions' => $questions];
     }
 }

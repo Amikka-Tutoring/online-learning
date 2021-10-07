@@ -20,8 +20,22 @@
                     </div>
                 </form>
             </div>
+            <div v-if="questions_added" class="card row flex-row p-4 mb-5"
+                 style="background: rgba(240, 244, 243, 1)"
+                 data-aos="fade-up" data-aos-delay="300">
+                <div class="col-md-12">
+                    <h5 class="mb-2" v-if="questions_added">Questions added: <span
+                        class="badge badge-primary">{{ questions_added.length }}</span>
+                    </h5>
+                    <div class="body" v-for="question in questions_added">
+                        <p><i
+                            style="color: #83d583"
+                            class="mr-2 bi bi-check-circle-fill" data-aos="zoom-in"
+                            data-aos-delay="100"></i> {{ question }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </admin-layout>
 </template>
 
@@ -40,7 +54,7 @@ export default {
             this.loading = true
             this.onsuccess = false
             this.onerror = false
-            axios.post(route('admin.courses.store'), formData, {
+            axios.post(route('learning-style-store'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -49,6 +63,7 @@ export default {
                         if (response.data.message) {
                             this.toast.success(response.data.message);
                             this.onsuccess = true
+                            this.questions_added = response.data.questions
                         }
                         if (response.data.error) {
                             this.toast.error(response.data.error)
@@ -73,6 +88,7 @@ export default {
             loading: false,
             onsuccess: false,
             onerror: false,
+            questions_added: null
         }
     },
 }

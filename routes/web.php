@@ -89,7 +89,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
     Route::get('diagnostics/personality/learning-style', [DiagnosticController::class, 'createLearningStyle'])->name('learning-style-create');
+    Route::post('diagnostics/personality/learning-style', [DiagnosticController::class, 'storeLearningStyle'])->name('learning-style-store');
     Route::get('diagnostics/personality/perfect-tutor-match', [DiagnosticController::class, 'createTutorMatch'])->name('perfect-tutor-match-create');
+    Route::post('diagnostics/personality/perfect-tutor-match', [DiagnosticController::class, 'storeTutorMatch'])->name('perfect-tutor-match-store');
     Route::post('diagnostics/personality/create', [DiagnosticController::class, 'storePersonality'])->name('personality.diagnostics.store');
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
