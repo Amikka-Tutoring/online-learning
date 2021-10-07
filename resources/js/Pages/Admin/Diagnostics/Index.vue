@@ -50,28 +50,17 @@
                                     <h4>{{ quiz.name }}</h4>
                                     <div class="row justify-content-center align-items-center mx-0"
                                          style="margin-top: 60px; margin-bottom: 10px">
-                                        <div class="col-lg-9 col-7">
+                                        <div class="col-lg-6 col-2">
                                         </div>
                                         <div class="col-lg-3 col-5">
                                             <div class="blue-text course-edit" @click="edit(quiz)" data-toggle="modal"
                                                  data-target="#modal">Edit
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3" data-aos="fade-up" data-aos-once="true">
-                                <div class="input-cards mb-4">
-                                    <img class="w-100" :src="'../../images/course-img.png'">
-                                    <a :href="route('academic.diagnostics.create')"><h4>New {{ diagnostic_name }}
-                                        Diagnostic</h4></a>
-                                    <div class="row justify-content-center align-items-center"
-                                         style="margin-top: 60px; margin-bottom: 10px">
-                                        <div class="col-9">
-
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="blue-text course-edit"><i class="blue-text fas fa-plus"></i>
+                                        <div class="col-lg-3 col-5">
+                                            <div class="blue-text course-edit">
+                                                <a :href="route(quiz.slug + '-create')"><i
+                                                    class="blue-text fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>

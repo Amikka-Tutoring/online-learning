@@ -85,8 +85,12 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('courses/create', [CourseController::class, 'store'])->name('admin.courses.store');
     Route::get('diagnostics/{slug}', [AdminController::class, 'diagnostics'])->name('diagnostics');
     Route::get('diagnostics/academic/create', [AdminController::class, 'createAcademicDiagnostics'])->name('academic.diagnostics.create');
+    Route::post('diagnostics/academic/create', [DiagnosticController::class, 'storeAcademic'])->name('academic.diagnostics.store');
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
+    Route::get('diagnostics/personality/learning-style', [DiagnosticController::class, 'createLearningStyle'])->name('learning-style-create');
+    Route::get('diagnostics/personality/perfect-tutor-match', [DiagnosticController::class, 'createTutorMatch'])->name('perfect-tutor-match-create');
+    Route::post('diagnostics/personality/create', [DiagnosticController::class, 'storePersonality'])->name('personality.diagnostics.store');
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
     Route::get('exams/get', [ApiController::class, 'getPracticeExams'])->name('exams.api');

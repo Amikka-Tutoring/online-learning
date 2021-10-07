@@ -18,6 +18,16 @@ class DiagnosticController extends Controller
         return Inertia::render('Diagnostic/Index', ['diagnostic' => $diagnostic]);
     }
 
+    public function createLearningStyle()
+    {
+        return Inertia::render('Admin/Diagnostics/Personality/LearningStyle');
+    }
+
+    public function createTutorMatch()
+    {
+
+    }
+
     public function result(Request $request)
     {
         $user = Auth::user();
@@ -121,5 +131,62 @@ class DiagnosticController extends Controller
     public function getPersonalityQuizzes()
     {
         return Diagnostic::where('name', 'Personality')->first()->quizzes;
+    }
+
+    public function storeAcademic(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt|max:1024',
+        ]);
+
+        $file = $request->file('file');
+        // File Details
+        $filename = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $tempPath = $file->getRealPath();
+        $fileSize = $file->getSize();
+        $mimeType = $file->getMimeType();
+
+        $location = 'storage/uploads';
+        // Upload file
+        $file->move($location, $filename);
+        // Import CSV to Database
+        $filepath = public_path($location . "/" . $filename);
+        // Reading file
+        $file = fopen($filepath, "r");
+        $importData_arr = array();
+        $i = 0;
+
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
+            $num = count($filedata);
+            //Skip first row(Remove below comment if you want to skip the first row)
+            if ($i == 0) {
+                $i++;
+                continue;
+            }
+            for ($c = 0; $c < $num; $c++) {
+                $importData_arr[$i][] = $filedata[$c];
+            }
+            $i++;
+        }
+        fclose($file);
+
+        foreach ($importData_arr as $row) {
+
+
+            if (count($row) != 3) {
+                return ['error' => 'Wrong format'];
+            }
+            if ($row[0] != '' && $row[1] != '' && $row[2] != '') {
+                PracticeExam::create([
+                    'title' => $row[0],
+                    'url' => $row[1],
+                    'subject' => $row[2],
+                ]);
+            } else {
+                return ['error' => 'Empty fields detected'];
+            }
+        }
+        return ['message' => 'Saved Successfully'];
     }
 }
