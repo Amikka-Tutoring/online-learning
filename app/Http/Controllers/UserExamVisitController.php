@@ -34,7 +34,7 @@ class UserExamVisitController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function visit(Request $request, $id)
+    public function store(Request $request, $id)
     {
         UserExamVisit::create([
             'user_id' => Auth::id(),

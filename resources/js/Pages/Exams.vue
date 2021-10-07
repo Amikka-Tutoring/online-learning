@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                            moment(user.profile.exam_date).format("MM/DD")
+                                                moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -109,7 +109,9 @@
                                         Real Exam Day
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5 class="blue-text">7/11</h5>
+                                        <h5 class="blue-text">{{
+                                                moment(user.profile.exam_date).format("MM/DD")
+                                            }}</h5>
                                     </div>
                                 </div>
                             </div>

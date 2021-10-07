@@ -195,7 +195,8 @@
                                     <p>{{ days_available[1] }}, {{ second_date }} at {{ second_day_time }}</p>
                                 </div>
                             </div>
-                            <a type="button" data-toggle="modal" data-target="#exampleModalCenter">
+                            <a type="button" class="blue-text font-weight-bold pt-4" data-toggle="modal"
+                               data-target="#exampleModalCenter">
                                 Edit Schedule
                             </a>
                         </div>
