@@ -31,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if ( Auth::user()->profile ) {
+        if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -43,12 +43,19 @@ class PageController extends Controller
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         $user_profile = Auth::user()->profile;
+        $tutor_match_done = false;
+        $learning_style_done = false;
+        if ($user_profile->tutor_match)
+            $tutor_match_done = true;
+        if ($user_profile->learning_style)
+            $learning_style_done = true;
+
         $days_available = unserialize($user_profile->days_available);
         $first_date = Carbon::parse('next ' . $days_available[0])->format('d / m');
         $second_date = Carbon::parse('next ' . $days_available[1])->format('d / m');
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic,
             'user_courses' => $user_courses, 'profile' => $user_profile, 'days_available' => $days_available,
-            'first_date' => $first_date, 'second_date' => $second_date
+            'first_date' => $first_date, 'second_date' => $second_date, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done
         ]);
     }
 
@@ -99,7 +106,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);

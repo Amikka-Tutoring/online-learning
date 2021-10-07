@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -98,13 +98,22 @@
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%" class="progress-bar"
-                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                            <div style="background: #4C6ED7; width: 100%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="blue-text">5/10</div>
+                                        <div class="blue-text"
+                                             v-if="p_q.slug === 'learning-style' && learning_style_done"><i
+                                            class="bi bi-check2-square blue-text fa-2x"></i>
+                                        </div>
+                                        <div class="blue-text"
+                                             v-else-if="p_q.slug === 'perfect-tutor-match' && tutor_match_done"><i
+                                            class="bi bi-check2-square blue-text fa-2x"></i>
+                                        </div>
+                                        <div class="blue-text" v-else><i class="bi bi-square blue-text fa-2x"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -114,14 +123,16 @@
             </div>
 
             <!--        Courses-->
-            <div class="courses" data-aos="fade-up">
+            <div class=" courses
+                                        " data-aos="fade-up">
                 <h1 class="blue-text">My Courses</h1>
                 <div class="courses-content pl-5" style="margin-top: 90px">
                     <transition name="list">
                         <p v-if="courses" class="question-box text-left">
                         <div class="row">
                             <div class="col-lg-11 col-10">
-                                These course recommendations are based on a variety of factors including your
+                                These course recommendations are based on a variety of factors
+                                including your
                                 diagnostic, goal score, time until exam, and progress.
                             </div>
                             <div class="col-lg-1 col-2 d-flex align-items-center">
@@ -132,7 +143,8 @@
                         </p>
                     </transition>
                     <div class="row">
-                        <div v-for="user_course in user_courses.enrollments" class="col-lg-3 col-12" data-aos="fade-up"
+                        <div v-for="user_course in user_courses.enrollments"
+                             class="col-lg-3 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
@@ -140,19 +152,21 @@
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                        <div class="progress"
+                                             style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;"
                                                  v-bind:style="{'width':(user_course.course.quizzes_attempted / user_course.course.quizzes_count)*100 + '%'}"
                                                  class="progress-bar"
-                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 role="progressbar" aria-valuenow="50"
+                                                 aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">{{
-                                                user_course.course.quizzes_attempted
+                                            user_course.course.quizzes_attempted
                                             }}/{{
-                                                user_course.course.quizzes_count
+                                            user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -172,9 +186,11 @@
                         <p v-if="calendar" class="question-box text-left">
                         <div class="row">
                             <div class="col-lg-11 col-10">
-                                Answer these 10 questions in order to help us build you a personalized program.
+                                Answer these 10 questions in order to help us build you a
+                                personalized program.
                             </div>
-                            <div class="col-lg-1 col-2 d-flex align-items-center" data-aos="fade-up" data-aos-delay="50"
+                            <div class="col-lg-1 col-2 d-flex align-items-center"
+                                 data-aos="fade-up" data-aos-delay="50"
                                  data-aos-once="true">
                                 <i v-on:click="calendar = disableNotification('calendar')"
                                    class="fas fa-times red-text"></i>
@@ -192,10 +208,13 @@
                                 </div>
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
-                                    <p>{{ days_available[1] }}, {{ second_date }} at {{ second_day_time }}</p>
+                                    <p>{{ days_available[1] }}, {{ second_date }} at {{
+                                        second_day_time
+                                        }}</p>
                                 </div>
                             </div>
-                            <a type="button" class="blue-text font-weight-bold pt-4" data-toggle="modal"
+                            <a type="button" class="blue-text font-weight-bold pt-4"
+                               data-toggle="modal"
                                data-target="#exampleModalCenter">
                                 Edit Schedule
                             </a>
@@ -214,7 +233,7 @@
                         v-model="selected_course">
                     <option value="All">All</option>
                     <option v-for="user_course in user_courses.enrollments">{{
-                            user_course.course.name
+                        user_course.course.name
                         }}
                     </option>
                 </select>
@@ -223,7 +242,8 @@
                         <div v-if="notes" class="question-box text-left">
                             <div class="row">
                                 <div class="col-lg-11 col-10">
-                                    This is where all of your voice and written notes will be saved for all of the
+                                    This is where all of your voice and written notes will be
+                                    saved for all of the
                                     courses
                                     that you are taking.
                                 </div>
@@ -243,7 +263,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row w-100" :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
+                    <div class="row w-100"
+                         :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
                         <div class="col-lg-4 col-12 my-4"
                              v-for="(key,value) in notesByCourse">
                             <p><span
@@ -262,7 +283,8 @@
                                     v-if="index !== 0">, </span>{{ date.lesson?.name }} </span>
                                 </p>
                             </div>
-                            <p class="my-4" v-if="this.notesByCourse == null">No notes found.</p>
+                            <p class="my-4" v-if="this.notesByCourse == null">No notes
+                                found.</p>
                         </div>
                     </div>
                 </div>
@@ -340,7 +362,7 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date'],
+    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date', 'tutor_match_done', 'learning_style_done'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
@@ -363,8 +385,8 @@ export default {
                 second_day: this.days_available[1],
                 first_day_time: this.profile.first_day_time,
                 second_day_time: this.profile.second_day_time
-            }
-
+            },
+            learning_style_done: this.learning_style_done
         }
     },
     methods: {
@@ -397,6 +419,8 @@ export default {
     },
     beforeMount() {
         this.getNotesByCourse(this.selected_course)
+        console.log('Learning style')
+        console.log(this.learning_style_done)
     }
 }
 </script>
