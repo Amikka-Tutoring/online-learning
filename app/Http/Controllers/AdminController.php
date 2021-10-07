@@ -26,7 +26,7 @@ class AdminController extends Controller
 
     public function diagnostics($slug)
     {
-        $quizzes = Diagnostic::where('slug', $slug)->firstOrFail()->quizzes;
+        $quizzes = Diagnostic::where('slug', $slug)->firstOrFail()->quizzes()->with('diagnostic')->get();
         $diagnostic_name = $quizzes->first()->diagnostic->name;
         return Inertia::render('Admin/Diagnostics/Index', ['quizzes' => $quizzes, 'diagnostic_name' => $diagnostic_name]);
     }

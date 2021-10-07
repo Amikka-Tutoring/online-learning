@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="col-lg-3 col-5">
                                             <div class="blue-text course-edit">
-                                                <a :href="route(quiz.slug + '-create')"><i
+                                                <a :href="quiz.diagnostic.slug+'/'+quiz.slug"><i
                                                     class="blue-text fas fa-plus"></i></a>
                                             </div>
                                         </div>

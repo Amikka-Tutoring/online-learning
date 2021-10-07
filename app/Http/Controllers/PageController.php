@@ -74,11 +74,11 @@ class PageController extends Controller
     public function exams()
     {
         $user = Auth::user();
-
-
+        $date = Carbon::parse($user->profile->exam_date);
+        $date_diff = $date->diffForHumans();
         $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
         $exams = PracticeExam::whereNotIn('id', $visited)->get();
-        return Inertia::render('Exams', ['practice_exams' => $exams]);
+        return Inertia::render('Exams', ['practice_exams' => $exams, 'date_diff' => $date_diff]);
     }
 
     public function myCourses()
@@ -144,12 +144,16 @@ class PageController extends Controller
     public function setCalendar()
     {
         $user = Auth::user();
+        $date = Carbon::parse($user->profile->exam_date);
+        $date_diff = $date->diffForHumans();
         $days = unserialize($user->profile->days_available);
         $first_day = $days[0];
         $second_day = $days[1];
         $first_day_time = $user->profile->first_day_time;
         $second_day_time = $user->profile->second_day_time;
-        return Inertia::render('SetCalendar', ['first_day' => $first_day, 'second_day' => $second_day, 'first_day_time' => $first_day_time, 'second_day_time' => $second_day_time]);
+        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
+        $exams = PracticeExam::whereNotIn('id', $visited)->get();
+        return Inertia::render('SetCalendar', ['first_day' => $first_day, 'second_day' => $second_day, 'first_day_time' => $first_day_time, 'second_day_time' => $second_day_time, 'date_diff' => $date_diff, 'practice_exams' => $exams]);
     }
 
 

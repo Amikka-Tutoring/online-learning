@@ -4,7 +4,7 @@
             <div class="practice-exams" data-aos="fade-up">
                 <h1 class="blue-text">Practice Exams</h1>
                 <div class="practice-exams-content">
-                    <p class="question-box">Because your exam is <span class="blue-text">two weeks away</span> we
+                    <p class="question-box">Because your exam is <span class="blue-text">{{ date_diff }}</span> we
                         recommend that you add at least <span class="blue-text">two full timed practice exams</span>
                         before then. Press the <span class="blue-text">+</span> button to add study times that may work
                         for you. </p>
@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                         full test it’s important to <span class="blue-text">master</span> all of the content. We
                         initially recommended that you schedule two <span
                             class="blue-text">1.5 hour lessons per week.</span><br><br>However because your exam is in
-                        <span class="blue-text">2 weeks</span> and you want to <span class="blue-text">improve 100 points</span>
+                        <span class="blue-text">{{ date_diff }}</span> and you want to <span class="blue-text">improve 100 points</span>
                         we recommend that you do <span class="blue-text">our fast track course.</span><br><br><span
                             class="blue-text">Practice makes perfect.</span></p>
                     <div class="row d-flex justify-content-center">
@@ -144,7 +144,7 @@ export default {
                 });
         }
     },
-    props: ['practice_exams', 'user'],
+    props: ['practice_exams', 'user', 'date_diff'],
 
     data() {
         return {
@@ -153,7 +153,7 @@ export default {
         }
     },
     mounted() {
-        console.log(this.practice_exams)
+
     }
 }
 </script>
