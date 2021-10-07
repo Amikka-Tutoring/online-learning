@@ -152,6 +152,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/storage" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/twilio/sdk" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

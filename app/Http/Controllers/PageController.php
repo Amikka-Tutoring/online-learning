@@ -31,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if (Auth::user()->profile) {
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -99,7 +99,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);

@@ -14,6 +14,7 @@ use App\Http\Controllers\LayerQuizResultController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\PracticeExamController;
 use App\Http\Controllers\UserExamVisitController;
+use App\Http\Controllers\SMSController;
 
 
 /*
@@ -117,3 +118,5 @@ Route::get('subscription/get', [\App\Http\Controllers\SubscriptionController::cl
 Route::get('subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'retrievePlans'])->name('plans');
 Route::get('subscription/check', [\App\Http\Controllers\SubscriptionController::class, 'checkStatus'])->name('plans.check');
 Route::post('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUser'])->name('subscribe.user');
+
+Route::get('/send-sms', [SMSController::class, 'sendSMS'])->name('send.sms');
