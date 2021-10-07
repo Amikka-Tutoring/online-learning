@@ -126,12 +126,12 @@ class DiagnosticController extends Controller
 
     public function getAcademicQuizzes()
     {
-        return Diagnostic::where('name', 'Academic')->first()->quizzes;
+        return Diagnostic::where('name', 'Academic')->first()->quizzes()->with('diagnostic')->get();
     }
 
     public function getPersonalityQuizzes()
     {
-        return Diagnostic::where('name', 'Personality')->first()->quizzes;
+        return Diagnostic::where('name', 'Personality')->first()->quizzes()->with('diagnostic')->get();
     }
 
     public function storeLearningStyle(Request $request)

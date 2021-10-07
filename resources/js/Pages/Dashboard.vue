@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                    a_q.name
+                                        a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                    a_q.name
+                                        a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -97,8 +97,20 @@
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
-                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                        <div v-if="p_q.slug === 'learning-style' && learning_style_done"
+                                             class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7; width: 100%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                        <div v-else-if="p_q.slug === 'perfect-tutor-match' && tutor_match_done"
+                                             class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 100%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                        <div v-else class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 0%" class="progress-bar"
                                                  role="progressbar" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
@@ -112,7 +124,7 @@
                                              v-else-if="p_q.slug === 'perfect-tutor-match' && tutor_match_done"><i
                                             class="bi bi-check2-square blue-text fa-2x"></i>
                                         </div>
-                                        <div class="blue-text" v-else><i class="bi bi-square blue-text fa-2x"></i>
+                                        <div class="blue-text" v-else><i class="bi bi-app blue-text fa-2x"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -164,9 +176,9 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">{{
-                                            user_course.course.quizzes_attempted
+                                                user_course.course.quizzes_attempted
                                             }}/{{
-                                            user_course.course.quizzes_count
+                                                user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -209,7 +221,7 @@
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
                                     <p>{{ days_available[1] }}, {{ second_date }} at {{
-                                        second_day_time
+                                            second_day_time
                                         }}</p>
                                 </div>
                             </div>
@@ -233,7 +245,7 @@
                         v-model="selected_course">
                     <option value="All">All</option>
                     <option v-for="user_course in user_courses.enrollments">{{
-                        user_course.course.name
+                            user_course.course.name
                         }}
                     </option>
                 </select>
@@ -268,14 +280,13 @@
                         <div class="col-lg-4 col-12 my-4"
                              v-for="(key,value) in notesByCourse">
                             <p><span
-                                v-for="(date,index) in key"><span class="badges orange-badge">{{
-                                    date.lesson.course.name
-                                }} </span></span>
+                                v-for="(date,index) in key"><span
+                                class="badges orange-badge">{{ date.lesson.course.name }} </span></span>
                             </p>
                             <div class="notes-box">
                                 <h1>{{ moment(value).format("MM/DD") }}</h1>
                                 <div class="row">
-                                    <span class="pink-badge badges">Easy</span>
+                                    <span class="pink-badge badges">{{ user_tag }}</span>
                                 </div>
                                 <h5>Lessons</h5>
                                 <p><span
@@ -362,7 +373,7 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date', 'tutor_match_done', 'learning_style_done'],
+    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',

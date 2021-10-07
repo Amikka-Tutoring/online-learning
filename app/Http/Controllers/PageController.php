@@ -49,13 +49,13 @@ class PageController extends Controller
             $tutor_match_done = true;
         if ($user_profile->learning_style)
             $learning_style_done = true;
-
+        $userTag = Auth::user()->getTag();
         $days_available = unserialize($user_profile->days_available);
         $first_date = Carbon::parse('next ' . $days_available[0])->format('d / m');
         $second_date = Carbon::parse('next ' . $days_available[1])->format('d / m');
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic,
             'user_courses' => $user_courses, 'profile' => $user_profile, 'days_available' => $days_available,
-            'first_date' => $first_date, 'second_date' => $second_date, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done
+            'first_date' => $first_date, 'second_date' => $second_date, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag
         ]);
     }
 

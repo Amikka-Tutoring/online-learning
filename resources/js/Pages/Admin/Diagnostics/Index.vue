@@ -42,7 +42,7 @@
                     <h1 class="blue-text">{{ diagnostic_name }} Diagnostics</h1>
                     <div class="courses-content" style="margin-top: 90px">
                         <div class="row">
-                            <div v-for="quiz in quizzes" class="col-md-3" data-aos="fade-up"
+                            <div v-if="quizzes.length" v-for="quiz in quizzes" class="col-md-3" data-aos="fade-up"
                                  data-aos-delay="50"
                                  data-aos-once="true">
                                 <div class="input-cards mb-4">
@@ -50,14 +50,14 @@
                                     <h4>{{ quiz.name }}</h4>
                                     <div class="row justify-content-center align-items-center mx-0"
                                          style="margin-top: 60px; margin-bottom: 10px">
-                                        <div class="col-lg-6 col-2">
+                                        <div class="col-lg-7 col-7">
                                         </div>
-                                        <div class="col-lg-3 col-5">
+                                        <div class="col-lg-3 col-3">
                                             <div class="blue-text course-edit" @click="edit(quiz)" data-toggle="modal"
                                                  data-target="#modal">Edit
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-5">
+                                        <div class="col-lg-2 col-2">
                                             <div class="blue-text course-edit">
                                                 <a :href="quiz.diagnostic.slug+'/'+quiz.slug"><i
                                                     class="blue-text fas fa-plus"></i></a>
@@ -134,6 +134,7 @@ export default {
                 );
         },
         getQuizzes: function () {
+            console.log(route().params)
             if (route().params.slug === 'academic') {
                 axios.get(route('academics.get')).then(response => {
                     this.quizzes = response.data
