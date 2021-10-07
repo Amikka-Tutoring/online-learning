@@ -127,6 +127,7 @@ export default {
                 });
         },
         deleteQuiz: function (data) {
+            if (!confirm('Are you sure want to remove?')) return;
             const toast = useToast();
             this.deleteLoader = true
             axios.delete(route('diagnostics.delete', data.id))

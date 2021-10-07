@@ -193,7 +193,7 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Tutor Match Personality</h5>
-                                        <h6>ENTJ</h6>
+                                        <h6>{{ user.profile.tutor_match }}</h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
                                         <p class="text-right"><i class="blue-text fas fa-lock"></i></p>

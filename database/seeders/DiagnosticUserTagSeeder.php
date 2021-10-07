@@ -170,5 +170,51 @@ class DiagnosticUserTagSeeder extends Seeder
             'tips' => ''
         ]);
 
+        DiagnosticUserTag::create([
+            'title' => 'Auditory',
+            'summary' => 'Based on your results we have found that you are an auditory learner. Below we will describe exactly what that means for your course.',
+            'learned' => serialize(['You are an auditory learner, you learn best by listening and hearing.',
+                'You have an easier time understanding spoken instructions than written instructions.',
+                'You learn better by reading out loud because hearing things and saying things helps you memorize better.']),
+            'plan' => serialize(['We will recommend that you use the audio feature to take notes during your lessons since you learn best by speaking and hearing.',
+                'If you choose to tutor 1-on-1 we will pair you with a tutor that is also an auditory learner so that their methodology resonates well with you.',
+                'We will recommend that you create flashcards for homework to maximize your learning.']),
+            'tips' => serialize(['Sit where you can hear.',
+                'Make flashcards and read them out loud.',
+                'Record yourself saying things out loud and then listen to your recording to maximize learning.',
+                'Study new material and answer exam questions by reading them outloud (if possible).'])
+        ]);
+
+        DiagnosticUserTag::create([
+            'title' => 'Visual',
+            'summary' => 'Based on your results we have found that you are a visual learner. Below we will describe exactly what that means for your course.',
+            'learned' => serialize(['You are a visual learner, you learn best by seeing or reading.',
+                'You probably have an easier time understanding things that you can physically see.',
+                'Closing your eyes can help you visualize things.']),
+            'plan' => serialize(['We will recommend that you use the written notes feature to take notes during your lesson since you learn best by seeing and reading.',
+                'If you choose to tutor 1-on-1 we will pair you with a tutor that is also a visual learner so that their methodology resonates well with you.',
+                'We will recommend that you create flashcards for homework to maximize your learning.']),
+            'tips' => serialize(['Sit where you can hear.',
+                'Make flashcards and read them out loud.',
+                'Try to visualize things that you hear or things that are read out loud to you.',
+                'Write down ideas and draw pictures to help you break down tough topics.'])
+        ]);
+
+        DiagnosticUserTag::create([
+            'title' => 'Tactile',
+            'summary' => 'Based on your results we have found that you are a tactile learner. Below we will describe exactly what that means for your course.',
+            'learned' => serialize(['You are a tactile learner, you learn best by doing things on your own.',
+                'You are a hands-on learner.',
+                'You probably enjoy taking things apart and putting them back together.']),
+            'plan' => serialize(['We will recommend that you use the written notes feature to take notes during your lesson since you learn best by doing.',
+                'If you choose to tutor 1-on-1 we will pair you with a tutor that is also a tactile learner so that their methodology resonates well with you.',
+                'We will recommend that you create flashcards for homework to maximize your learning.']),
+            'tips' => serialize(['Make sure to incorporate physical activity into your learning. For example, you may enjoy walking around while reading flash cards.',
+                'If you take frequent breaks that is okay. However make sure the breaks are SHORT. For example, complete two practice lessons and then take a 5 minute break.',
+                'Record yourself saying things out loud and then listen to your recording to maximize learning.',
+                'Study new material and answer exam questions by reading them outloud (if possible).'])
+        ]);
+
+
     }
 }

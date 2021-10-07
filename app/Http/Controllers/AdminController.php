@@ -46,10 +46,6 @@ class AdminController extends Controller
         return Inertia::render('Admin/Diagnostics/Personality/Create');
     }
 
-    public function createExam()
-    {
-        return Inertia::render('Admin/Exams/Create');
-    }
 
     public function createCourse()
     {

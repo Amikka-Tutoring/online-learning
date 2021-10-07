@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                    a_q.name
+                                        a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                    a_q.name
+                                        a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -150,9 +150,9 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">{{
-                                            user_course.course.quizzes_attempted
+                                                user_course.course.quizzes_attempted
                                             }}/{{
-                                            user_course.course.quizzes_count
+                                                user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -195,8 +195,12 @@
                                     <p>{{ days_available[1] }}, {{ second_date }} at {{ second_day_time }}</p>
                                 </div>
                             </div>
+                            <a type="button" data-toggle="modal" data-target="#exampleModalCenter">
+                                Edit Schedule
+                            </a>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -209,7 +213,7 @@
                         v-model="selected_course">
                     <option value="All">All</option>
                     <option v-for="user_course in user_courses.enrollments">{{
-                        user_course.course.name
+                            user_course.course.name
                         }}
                     </option>
                 </select>
@@ -264,7 +268,68 @@
             </div>
         </div>
     </app-layout>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Schedule</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="first_day">First Day:</label>
+                                <select class="form-control" v-model="form.first_day" id="first_day">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="second_day">Second Day:</label>
+                                <select name="" id="second_day" class="form-control" v-model="form.second_day">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="first_day_time">First Day Time:</label>
+                                <input type="time" id="first_day_time" class="form-control"
+                                       v-model="form.first_day_time">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="second_day_time">Second Day Time:</label>
+                                <input type="time" id="second_day_time" class="form-control"
+                                       v-model="form.second_day_time">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="updateSchedule()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
+
 
 <script>
 import AppLayout from '@/Layouts/AppLayout'
@@ -289,6 +354,16 @@ export default {
             moment: moment,
             selected_course: 'All',
             loading: false,
+            first_day: this.days_available[0],
+            second_day: this.days_available[1],
+            profile: this.profile,
+            form: {
+                first_day: this.days_available[0],
+                second_day: this.days_available[1],
+                first_day_time: this.profile.first_day_time,
+                second_day_time: this.profile.second_day_time
+            }
+
         }
     },
     methods: {
@@ -302,6 +377,21 @@ export default {
                 this.notesByCourse = response.data.notes
                 this.loading = false
             })
+        },
+        updateSchedule: function () {
+            axios.put(route('change.schedule', this.form))
+                .then(response => {
+                    this.toast.success(response.data.message);
+                    $('#exampleModalCenter').modal('hide');
+                    this.days_available[0] = this.form.first_day
+                    this.days_available[1] = this.form.second_day
+                    this.first_day_time = this.form.first_day_time
+                    this.second_day_time = this.form.second_day_time
+                })
+
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
         }
     },
     beforeMount() {

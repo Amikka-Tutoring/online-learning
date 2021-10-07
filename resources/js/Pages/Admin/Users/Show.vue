@@ -64,7 +64,8 @@
                                     <label for="learning_style">Learning Style</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="learning_style" name="learning_style" disabled>
+                                    <input type="text" id="learning_style" name="learning_style" disabled
+                                           v-model="user.profile.learning_style">
                                 </div>
                             </div>
                         </div>
@@ -74,7 +75,8 @@
                                     <label for="tutor">Tutor Match Personality</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="tutor" name="tutor" disabled>
+                                    <input type="text" id="tutor" name="tutor" disabled
+                                           v-model="user.profile.tutor_match">
                                 </div>
                             </div>
                         </div>

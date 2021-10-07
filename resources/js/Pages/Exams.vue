@@ -12,26 +12,26 @@
                         <div class="exam-box" data-aos="fade-up">
                             <div class="exam-box-tile"><h1>Practice Exams</h1></div>
                             <div class="exam-box-list">
-                                <div class="row p-2 mb-3 mt-3">
+                                <div class="row p-2 mb-3 mt-3" v-for="exam in practice_exams"
+                                     v-if="practice_exams.length">
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
                                     </div>
                                     <div class="col-8 d-flex align-items-center exam-name">
-                                        Practice Exam 1
+                                        {{ exam.title }}
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-plus fa-2x" style="color: #4C6ED7"></i>
+                                        <a class="fas fa-plus fa-2x" style="color: #4C6ED7" :href="exam.url"
+                                           v-on:click="visitExam(exam)"
+                                           target="_blank"></a>
                                     </div>
                                 </div>
-                                <div class="row p-2 mb-3">
+                                <div class="row p-2 mb-3 mt-3" v-else>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
                                     </div>
                                     <div class="col-8 d-flex align-items-center exam-name">
-                                        Practice Exam 2
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-plus fa-2x" style="color: #4C6ED7"></i>
+                                        N/A
                                     </div>
                                 </div>
                                 <div class="row p-2 mb-3">
@@ -42,7 +42,9 @@
                                         Real Exam Day
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5 class="blue-text">7/11</h5>
+                                        <h5 class="blue-text">{{
+                                                moment(user.profile.exam_date).format("MM/DD")
+                                            }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -124,16 +126,34 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import CheckList from "../components/CheckList";
+import moment from "moment";
 
 export default {
     components: {
         AppLayout,
         CheckList
     },
-    methods: {},
+    methods: {
+        visitExam: function (exam) {
+            axios.post(route('exams.visit', exam.id))
+                .then(response => {
+                    // this.toast.success(response.data.message);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        }
+    },
+    props: ['practice_exams', 'user'],
 
     data() {
-        return {}
+        return {
+            practice_exams: this.practice_exams,
+            moment: moment
+        }
     },
+    mounted() {
+        console.log(this.practice_exams)
+    }
 }
 </script>

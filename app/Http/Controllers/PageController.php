@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Diagnostic;
 use App\Models\Layer;
 use App\Models\LayerQuizResult;
+use App\Models\PracticeExam;
 use App\Models\Tag;
 use App\Models\User;
 use App\Scopes\LayerScope;
@@ -30,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if ( Auth::user()->profile ) {
+        if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -72,7 +73,12 @@ class PageController extends Controller
 
     public function exams()
     {
-        return Inertia::render('Exams');
+        $user = Auth::user();
+
+
+        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
+        $exams = PracticeExam::whereNotIn('id', $visited)->get();
+        return Inertia::render('Exams', ['practice_exams' => $exams]);
     }
 
     public function myCourses()
@@ -93,7 +99,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -137,7 +143,13 @@ class PageController extends Controller
 
     public function setCalendar()
     {
-        return Inertia::render('SetCalendar');
+        $user = Auth::user();
+        $days = unserialize($user->profile->days_available);
+        $first_day = $days[0];
+        $second_day = $days[1];
+        $first_day_time = $user->profile->first_day_time;
+        $second_day_time = $user->profile->second_day_time;
+        return Inertia::render('SetCalendar', ['first_day' => $first_day, 'second_day' => $second_day, 'first_day_time' => $first_day_time, 'second_day_time' => $second_day_time]);
     }
 
 

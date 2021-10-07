@@ -19,7 +19,7 @@
                     <div class="custom-file mt-2 custom-inputs">
                         <input accept=".csv" id="csv" type="file" class="form-control-lg form-control p-0 h-auto"
                                required
-                               @input=" form.file=$event.target.files[0]">
+                               @input="form.file=$event.target.files[0]">
                     </div>
                 </form>
             </div>

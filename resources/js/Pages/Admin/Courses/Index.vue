@@ -139,6 +139,7 @@ export default {
                 });
         },
         deleteCourse: function (data) {
+            if (!confirm('Are you sure want to remove?')) return;
             this.deleteLoader = true
             axios.delete(route('course.delete', data.id))
                 .then(response => {

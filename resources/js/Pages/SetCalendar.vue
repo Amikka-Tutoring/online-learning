@@ -24,18 +24,21 @@
                         <div class="days-box work-times">
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="monday-time">Monday</label>
+                                    <label for="monday-time">{{ first_day }}</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="time" id="monday-time" name="start_time">
+                                    <input type="time" id="monday-time" name="start_time" v-model="first_day_time"
+                                           @change="changeFirst($event)">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="friday-time">Friday</label>
+                                    <label for="friday-time">{{ second_day }}</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="time" id="friday-time" name="end_time">
+                                    <input type="time" id="friday-time" name="end_time" v-model="second_day_time"
+                                           @change="changeSecond($event)"
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -167,10 +170,32 @@ export default {
     components: {
         AppLayout,
     },
-    methods: {},
+    methods: {
+        changeFirst: function (event) {
+            axios.post(route('change.first_day_time', event.target.value))
+                .then(response => {
+                    this.toast.success(response.data.message);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        },
+        changeSecond: function (event) {
+            axios.post(route('change.second_day_time', event.target.value))
+                .then(response => {
+                    this.toast.success(response.data.message);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        }
+    },
+    props: ['first_day', 'second_day', 'first_day_time', 'second_day_time'],
 
     data() {
-        return {}
+        return {
+            first_day_time: this.first_day_time
+        }
     },
 }
 </script>

@@ -11,6 +11,9 @@ use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\LayerQuizResultController;
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\PracticeExamController;
+use App\Http\Controllers\UserExamVisitController;
 
 
 /*
@@ -66,6 +69,10 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::post('lesson/{id}/quiz', [LayerQuizResultController::class, 'store'])->name('lesson.quiz.store');
     Route::get('lesson/{id}/student/questions', [NotesController::class, 'lessonQuestions'])->name('notes.questions');
     Route::post('lesson/notes/questions', [NotesController::class, 'storeQuestion'])->name('notes.store.question');
+
+    Route::post('set-calendar/first_day_time/{first}', [ApiController::class, 'changeFirstDayTime'])->name('change.first_day_time');
+    Route::post('set-calendar/second_day_time/{second}', [ApiController::class, 'changeSecondDayTime'])->name('change.second_day_time');
+    Route::put('set-calendar/update-schedule', [ApiController::class, 'updateSchedule'])->name('change.schedule');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
@@ -80,7 +87,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('diagnostics/academic/create', [AdminController::class, 'createAcademicDiagnostics'])->name('academic.diagnostics.create');
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
-    Route::get('exams', [AdminController::class, 'createExam'])->name('admin.exams');
+
+    Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
+    Route::get('exams/get', [ApiController::class, 'getPracticeExams'])->name('exams.api');
+    Route::post('exams', [PracticeExamController::class, 'store'])->name('exams.store');
+    Route::post('visit/exam/{id}', [UserExamVisitController::class, 'store'])->name('exams.visit');
+    Route::put('exams/{id}', [PracticeExamController::class, 'update'])->name('exams.update');
+    Route::delete('exams/{id}', [PracticeExamController::class, 'destroy'])->name('exams.delete');
 
     Route::put('courses/{id}', [CourseController::class, 'updateCourse'])->name('course.update');
     Route::delete('courses/{id}', [CourseController::class, 'deleteCourse'])->name('course.delete');

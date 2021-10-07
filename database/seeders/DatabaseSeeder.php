@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             LayerSeeder::class,
             UserSeeder::class,
             DiagnosticSeeder::class,
-            DiagnosticUserTagSeeder::class
+            DiagnosticUserTagSeeder::class,
+            PracticeExamSeeder::class
         ]);
     }
 }
