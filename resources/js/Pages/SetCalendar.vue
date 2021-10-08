@@ -77,9 +77,7 @@
                                         Real Exam Day
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5 class="blue-text">{{
-                                            moment(user.profile.exam_date).format("MM/DD")
-                                            }}</h5>
+                                        <h5 class="blue-text">{{ moment(user.profile.exam_date).format("MM/DD") }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +141,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                            moment(user.profile.exam_date).format("MM/DD")
+                                                moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -182,11 +180,11 @@
     </div>
 </template>
 
-
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
 
+require('./../../../public/js/app');
 export default {
     components: {
         AppLayout,
@@ -211,6 +209,9 @@ export default {
                 });
         },
         openModal: function (exam) {
+            $("#datepicker").datepicker().on('changeDate', function (e) {
+                $("#datetimepicker").val(e.format());
+            });
             $('#exampleModalCenter').modal('show');
             $('#exampleModalLongTitle').text(exam.title);
             this.form.exam_id = exam.id;
