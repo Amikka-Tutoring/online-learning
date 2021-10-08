@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PracticeExam;
 use App\Models\UserPracticeExamDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,10 @@ class UserPracticeExamDateController extends Controller
             'user_id' => Auth::id(),
             'exam_id' => $id
         ]);
-        return ['message' => 'Saved Successfully'];
+        $user = Auth::user();
+        $scheduled = $user->practice_exam_dates->pluck('exam_id');
+        $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
+        return ['message' => 'Saved Successfully', 'exams' => $exams];
     }
 
     /**

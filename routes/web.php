@@ -78,6 +78,8 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::post('schedule/practice-exam/{id}', [UserPracticeExamDateController::class, 'store'])->name('schedule.practice.exam');
     Route::put('update/lesson-dates', [UserLessonDateController::class, 'update'])->name('update.lesson.dates');
     Route::post('store/lesson-dates', [UserLessonDateController::class, 'store'])->name('store.lesson.dates');
+
+    Route::get('lesson-dates/get', [ApiController::class, 'getLessonDates'])->name('get.lesson-dates');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {

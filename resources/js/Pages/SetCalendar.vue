@@ -167,7 +167,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                            moment(user.profile.exam_date).format("MM/DD")
+                                                moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -242,6 +242,7 @@ export default {
             axios.post(route('schedule.practice.exam', this.form.exam_id), this.form)
                 .then(response => {
                     this.toast.success(response.data.message);
+                    this.practice_exams = response.data.exams
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -249,15 +250,24 @@ export default {
             $('#exampleModalCenter').modal('hide');
         },
         newLessonDate: function () {
-            console.log(this.new_form)
             axios.post(route('store.lesson.dates'), this.new_form)
                 .then(response => {
                     this.toast.success(response.data.message);
+                    this.getLessonDates()
+                    this.new_form.day = null
+                    this.new_form.time = null
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 })
-        }
+        },
+        getLessonDates: function () {
+            axios.get(route('get.lesson-dates'))
+                .then(response => {
+                    this.lesson_dates = response.data.lesson_dates
+                    this.lesson_dates_busy = response.data.lesson_dates_busy
+                })
+        },
     },
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy'],
 
@@ -265,6 +275,8 @@ export default {
         return {
             moment: moment,
             practice_exams: this.practice_exams,
+            lesson_dates: this.lesson_dates,
+            lesson_dates_busy: this.lesson_dates_busy,
             form: {
                 date_time: null,
                 exam_id: null,
@@ -276,6 +288,9 @@ export default {
             date: '2021-02-22 12:00'
         }
     },
+    mounted() {
+        console.log(this.lesson_dates)
+    }
 }
 </script>
 

@@ -21,9 +21,9 @@
                                         {{ exam.title }}
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <a class="fas fa-plus fa-2x" style="color: #4C6ED7" :href="exam.url"
-                                           v-on:click="visitExam(exam)"
-                                           target="_blank"></a>
+                                        <a class="fas fa-plus fa-2x" style="color: #4C6ED7"
+
+                                           target="_blank" @click="openModal(exam)"></a>
                                     </div>
                                 </div>
                                 <div class="row p-2 mb-3 mt-3" v-else>
@@ -42,9 +42,7 @@
                                         Real Exam Day
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
-                                            }}</h5>
+                                        <h5 class="blue-text">{{ moment(user.profile.exam_date).format("MM/DD") }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -122,6 +120,32 @@
         </div>
         <CheckList/>
     </app-layout>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Schedule</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <input type="datetime-local" class="form-control" id="datetimepicker"
+                                   v-model="form.date_time">
+                            <div id="datepicker"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="save">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 
@@ -144,14 +168,34 @@ export default {
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 });
-        }
+        },
+        openModal: function (exam) {
+            $('#exampleModalCenter').modal('show');
+            $('#exampleModalLongTitle').text(exam.title);
+            this.form.exam_id = exam.id;
+        },
+        save: function () {
+            axios.post(route('schedule.practice.exam', this.form.exam_id), this.form)
+                .then(response => {
+                    this.toast.success(response.data.message);
+                    this.practice_exams = response.data.exams
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                })
+            $('#exampleModalCenter').modal('hide');
+        },
     },
     props: ['practice_exams', 'user', 'date_diff'],
 
     data() {
         return {
             practice_exams: this.practice_exams,
-            moment: moment
+            moment: moment,
+            form: {
+                date_time: null,
+                exam_id: null,
+            },
         }
     },
     mounted() {

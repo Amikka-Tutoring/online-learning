@@ -63,4 +63,12 @@ class ApiController extends Controller
     {
         return PracticeExam::all();
     }
+
+    public function getLessonDates()
+    {
+        $user = Auth::user();
+        $lesson_dates = $user->lesson_dates;
+        $lesson_dates_busy = $user->lesson_dates->pluck('day');
+        return ['lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy];
+    }
 }

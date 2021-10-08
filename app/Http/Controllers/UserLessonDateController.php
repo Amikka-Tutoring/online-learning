@@ -15,7 +15,7 @@ class UserLessonDateController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
