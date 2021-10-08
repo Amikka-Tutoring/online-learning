@@ -184,7 +184,6 @@
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
 
-require('./../../../public/js/app');
 export default {
     components: {
         AppLayout,
@@ -209,9 +208,6 @@ export default {
                 });
         },
         openModal: function (exam) {
-            $("#datepicker").datepicker().on('changeDate', function (e) {
-                $("#datetimepicker").val(e.format());
-            });
             $('#exampleModalCenter').modal('show');
             $('#exampleModalLongTitle').text(exam.title);
             this.form.exam_id = exam.id;
