@@ -18,9 +18,6 @@ class CreateUserProfileTable extends Migration
             $table->id();
             $table->integer('desire_score');
             $table->date('exam_date');
-            $table->text('days_available');
-            $table->time('first_day_time');
-            $table->time('second_day_time');
             $table->string('reminder_phone');
             $table->string('reminder_email');
             $table->string('learning_style')->nullable();
