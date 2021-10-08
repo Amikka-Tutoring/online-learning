@@ -31,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if ( Auth::user()->profile ) {
+        if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -46,9 +46,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ( $user_profile->tutor_match )
+        if ($user_profile->tutor_match)
             $tutor_match_done = true;
-        if ( $user_profile->learning_style )
+        if ($user_profile->learning_style)
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -61,7 +61,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ( $d['day'] > $date_now )
+            if ($d['day'] > $date_now)
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -88,9 +88,8 @@ class PageController extends Controller
     {
         $tags = Tag::all();
         $userTag = Auth::user()->getTag();
-        $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile']);
-        $user_days_available = unserialize($user->profile->days_available);
-        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'user_days_available' => $user_days_available]);
+        $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile', 'lesson_dates']);
+        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user]);
     }
 
     public function mathDiagnostic()
@@ -131,7 +130,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -178,16 +177,12 @@ class PageController extends Controller
         $user = Auth::user();
         $date = Carbon::parse($user->profile->exam_date);
         $date_diff = $date->diffForHumans();
-        $days = unserialize($user->profile->days_available);
-        $first_day = $days[0];
-        $second_day = $days[1];
-        $first_day_time = $user->profile->first_day_time;
-        $second_day_time = $user->profile->second_day_time;
+
         $lesson_dates = $user->lesson_dates;
 //        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
         $scheduled = $user->practice_exam_dates->pluck('exam_id');
         $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
-        return Inertia::render('SetCalendar', ['first_day' => $first_day, 'second_day' => $second_day, 'first_day_time' => $first_day_time, 'second_day_time' => $second_day_time, 'date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates]);
+        return Inertia::render('SetCalendar', ['date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates]);
     }
 
 

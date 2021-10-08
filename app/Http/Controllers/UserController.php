@@ -29,6 +29,14 @@ class UserController extends Controller
 
     public function initialQuestionnaire(Request $request)
     {
+//        $request->validate([
+//            'first_day_time' => 'required',
+//            'second_day_time' => 'required',
+//            'desire_score' => 'required',
+//            'exam_date' => 'required',
+//            'reminder_phone' => 'required',
+//            'reminder_email' => 'required',
+//        ]);
         foreach ($request->courses as $id) {
             Enrollment::create([
                 'user_id' => Auth::id(),
@@ -36,12 +44,16 @@ class UserController extends Controller
             ]);
         }
         $user = Auth::user();
-        UserLessonDate::create([
+        UserLessonDate::updateOrCreate([
+            'day' => $request->days[0]
+        ], [
             'day' => $request->days[0],
             'time' => $request->first_day_time,
             'user_id' => $user->id
         ]);
-        UserLessonDate::create([
+        UserLessonDate::updateOrCreate([
+            'day' => $request->days[1]
+        ], [
             'day' => $request->days[1],
             'time' => $request->second_day_time,
             'user_id' => $user->id
@@ -49,10 +61,7 @@ class UserController extends Controller
 
         UserProfile::create([
             'desire_score' => $request->desire_score,
-            'days_available' => serialize($request->days),
             'exam_date' => $request->exam_date,
-            'first_day_time' => $request->first_day_time,
-            'second_day_time' => $request->second_day_time,
             'reminder_phone' => $request->tel,
             'reminder_email' => $request->email,
             'user_id' => Auth::id(),

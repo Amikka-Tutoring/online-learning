@@ -220,14 +220,14 @@
                                 </div>
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
-                                    <p>{{ next_practice_exam_day }}, {{ next_practice_exam_date }} at {{
+                                    <p v-if="next_practice_exam">{{ next_practice_exam_day }},
+                                        {{ next_practice_exam_date }} at {{
                                             next_practice_exam_time
                                         }}</p>
+                                    <p v-else>N/A</p>
                                 </div>
                             </div>
-                            <a type="button" class="blue-text font-weight-bold pt-4"
-                               data-toggle="modal"
-                               data-target="#exampleModalCenter">
+                            <a type="button" class="blue-text font-weight-bold pt-4" :href="route('set-calendar')">
                                 Edit Schedule
                             </a>
                         </div>
@@ -302,66 +302,6 @@
             </div>
         </div>
     </app-layout>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Schedule</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="first_day">First Day:</label>
-                                <select class="form-control" id="first_day">
-                                    <option value="Monday">Monday</option>
-                                    <option value="Tuesday">Tuesday</option>
-                                    <option value="Wednesday">Wednesday</option>
-                                    <option value="Thursday">Thursday</option>
-                                    <option value="Friday">Friday</option>
-                                    <option value="Saturday">Saturday</option>
-                                    <option value="Sunday">Sunday</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="second_day">Second Day:</label>
-                                <select name="" id="second_day" class="form-control">
-                                    <option value="Monday">Monday</option>
-                                    <option value="Tuesday">Tuesday</option>
-                                    <option value="Wednesday">Wednesday</option>
-                                    <option value="Thursday">Thursday</option>
-                                    <option value="Friday">Friday</option>
-                                    <option value="Saturday">Saturday</option>
-                                    <option value="Sunday">Sunday</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="first_day_time">First Day Time:</label>
-                                <input type="time" id="first_day_time" class="form-control"
-                                       v-model="form.first_day_time">
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="second_day_time">Second Day Time:</label>
-                                <input type="time" id="second_day_time" class="form-control"
-                                       v-model="form.second_day_time">
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="updateSchedule()">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
 
 
@@ -410,24 +350,9 @@ export default {
                 this.loading = false
             })
         },
-        updateSchedule: function () {
-            axios.put(route('change.schedule', this.form))
-                .then(response => {
-                    this.toast.success(response.data.message);
-                    $('#exampleModalCenter').modal('hide');
-                    this.first_day_time = this.form.first_day_time
-                    this.second_day_time = this.form.second_day_time
-                })
-
-                .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
-                });
-        }
     },
     beforeMount() {
         this.getNotesByCourse(this.selected_course)
-        console.log('Learning style')
-        console.log(this.learning_style_done)
     }
 }
 </script>

@@ -64,9 +64,10 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Dates</h5>
-                                        <h6><span class="" v-for="(days,index) in user_days_available">{{
-                                                days
-                                            }}<span v-if="index==0"> and </span></span>
+                                        <h6><span class="" v-for="(days,index) in user.lesson_dates"><span
+                                            v-if="index!=0">, </span>{{
+                                                days.day
+                                            }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
@@ -81,7 +82,7 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Frequency</h5>
-                                        <h6><span class="mr-2">{{ user_days_available.length }}x a week</span>
+                                        <h6><span class="mr-2">{{ user.lesson_dates.length }}x a week</span>
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
@@ -321,7 +322,7 @@ export default {
 
         }
     },
-    props: ['user', 'tags', 'user_tag', 'user_data', 'user_days_available'],
+    props: ['user', 'tags', 'user_tag', 'user_data'],
     data() {
         return {
             avatar: this.user.profile_photo_path,
