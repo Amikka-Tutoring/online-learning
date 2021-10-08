@@ -139,4 +139,14 @@ class User extends Authenticatable
         return count($this->layer_quiz_results->where('layer_id', $id));
     }
 
+    public function lesson_dates()
+    {
+        return $this->hasMany(UserLessonDate::class);
+    }
+
+    public function practice_exam_dates()
+    {
+        return $this->hasMany(UserPracticeExamDate::class, 'user_id', 'id')->orderBy('date_time');
+    }
+
 }

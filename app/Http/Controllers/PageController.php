@@ -42,7 +42,8 @@ class PageController extends Controller
         $user_courses = Auth::user()->load(['enrollments', 'enrollments.course', 'layer_quiz_results']);
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
-        $user_profile = Auth::user()->profile;
+        $user = Auth::user();
+        $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
         if ($user_profile->tutor_match)
@@ -50,13 +51,42 @@ class PageController extends Controller
         if ($user_profile->learning_style)
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
+
+        $date_now = Carbon::now();
+
+
+        $next_practice_exam = $user->practice_exam_dates->where('date_time', '>', $date_now)->first()->date_time;
+
+        $lesson_days = [];
+        $date_now = Carbon::now()->dayOfWeek;
+        foreach ($user->lesson_dates as $day) {
+            array_push($lesson_days, ['day' => date('N', strtotime($day->day)), 'time' => $day->time]);
+        }
+        $next = 0;
+        foreach ($lesson_days as $d) {
+            if ($d['day'] > $date_now)
+                $next = $d;
+            else
+                $next = min($lesson_days);
+        }
+        $days = [
+            1 => 'Monday',
+            2 => 'Tuesday',
+            3 => 'Wednesday',
+            4 => 'Thursday',
+            5 => 'Friday',
+            6 => 'Saturday',
+            7 => 'Sunday'
+        ];
+        $next_lesson_day = $days[$next['day']];
+        $next_lesson_time = $next['time'];
+
         $days_available = unserialize($user_profile->days_available);
-        $first_date = Carbon::parse('next ' . $days_available[0])->format('d / m');
+        $next_lesson = Carbon::parse('next ' . $next_lesson_day)->format('d/m');
         $second_date = Carbon::parse('next ' . $days_available[1])->format('d / m');
-        return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic,
+        return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'next_practice_exam' => $next_practice_exam,
             'user_courses' => $user_courses, 'profile' => $user_profile, 'days_available' => $days_available,
-            'first_date' => $first_date, 'second_date' => $second_date, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag
-        ]);
+            'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'second_date' => $second_date, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag]);
     }
 
     public function profile()
@@ -158,9 +188,11 @@ class PageController extends Controller
         $second_day = $days[1];
         $first_day_time = $user->profile->first_day_time;
         $second_day_time = $user->profile->second_day_time;
-        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
-        $exams = PracticeExam::whereNotIn('id', $visited)->get();
-        return Inertia::render('SetCalendar', ['first_day' => $first_day, 'second_day' => $second_day, 'first_day_time' => $first_day_time, 'second_day_time' => $second_day_time, 'date_diff' => $date_diff, 'practice_exams' => $exams]);
+        $lesson_dates = $user->lesson_dates;
+//        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
+        $scheduled = $user->practice_exam_dates->pluck('exam_id');
+        $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
+        return Inertia::render('SetCalendar', ['first_day' => $first_day, 'second_day' => $second_day, 'first_day_time' => $first_day_time, 'second_day_time' => $second_day_time, 'date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates]);
     }
 
 

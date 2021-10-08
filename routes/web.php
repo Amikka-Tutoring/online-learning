@@ -15,6 +15,8 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\PracticeExamController;
 use App\Http\Controllers\UserExamVisitController;
 use App\Http\Controllers\SMSController;
+use App\Http\Controllers\UserPracticeExamDateController;
+use App\Http\Controllers\UserLessonDateController;
 
 
 /*
@@ -71,9 +73,10 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('lesson/{id}/student/questions', [NotesController::class, 'lessonQuestions'])->name('notes.questions');
     Route::post('lesson/notes/questions', [NotesController::class, 'storeQuestion'])->name('notes.store.question');
 
-    Route::post('set-calendar/first_day_time/{first}', [ApiController::class, 'changeFirstDayTime'])->name('change.first_day_time');
-    Route::post('set-calendar/second_day_time/{second}', [ApiController::class, 'changeSecondDayTime'])->name('change.second_day_time');
     Route::put('set-calendar/update-schedule', [ApiController::class, 'updateSchedule'])->name('change.schedule');
+
+    Route::post('schedule/practice-exam/{id}', [UserPracticeExamDateController::class, 'store'])->name('schedule.practice.exam');
+    Route::put('update/lesson-dates', [UserLessonDateController::class, 'update'])->name('update.lesson.dates');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {

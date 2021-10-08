@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Enrollment;
+use App\Models\UserLessonDate;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,18 @@ class UserController extends Controller
                 'course_id' => $id
             ]);
         }
+        $user = Auth::user();
+        UserLessonDate::create([
+            'day' => $request->days[0],
+            'time' => $request->first_day_time,
+            'user_id' => $user->id
+        ]);
+        UserLessonDate::create([
+            'day' => $request->days[1],
+            'time' => $request->second_day_time,
+            'user_id' => $user->id
+        ]);
+
         UserProfile::create([
             'desire_score' => $request->desire_score,
             'days_available' => serialize($request->days),

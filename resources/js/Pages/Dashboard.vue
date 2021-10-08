@@ -215,13 +215,13 @@
                             <div class="calendar-box">
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Lesson:</span>
-                                    <p>{{ days_available[0] }}, {{ first_date }} at
-                                        {{ first_day_time }}</p>
+                                    <p>{{ next_lesson_day }}, {{ next_lesson }} at
+                                        {{ next_lesson_time }}</p>
                                 </div>
                                 <div class="row">
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
-                                    <p>{{ days_available[1] }}, {{ second_date }} at {{
-                                            second_day_time
+                                    <p>{{ next_practice_exam_day }}, {{ next_practice_exam_date }} at {{
+                                            next_practice_exam_time
                                         }}</p>
                                 </div>
                             </div>
@@ -373,7 +373,7 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'first_date', 'second_date', 'tutor_match_done', 'learning_style_done', 'user_tag'],
+    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'second_date', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
@@ -383,6 +383,10 @@ export default {
             notes: localStorage.getItem('notes') === 'true',
             first_day_time: moment(this.profile.first_day_time, ["h:mm A"]).format("h:mm A"),
             second_day_time: moment(this.profile.second_day_time, ["h:mm A"]).format("h:mm A"),
+            next_lesson_time: moment(this.next_lesson_time, ["h:mm A"]).format("h:mm A"),
+            next_practice_exam_time: moment(this.next_practice_exam, ["h:mm A"]).format("h:mm A"),
+            next_practice_exam_day: moment(this.next_practice_exam, ["YYYY-MM-DD HH:mm:ss"]).format("dddd"),
+            next_practice_exam_date: moment(this.next_practice_exam, ["YYYY-MM-DD HH:mm:ss"]).format("D/M"),
             notesByDate: null,
             notesByCourse: null,
             moment: moment,
