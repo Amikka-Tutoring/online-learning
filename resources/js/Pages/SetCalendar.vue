@@ -187,7 +187,6 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
-import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 export default {

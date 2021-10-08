@@ -12,8 +12,6 @@ import "aos/dist/aos.css";
 import moment from "moment";
 import Toast from "vue-toastification";
 import {useToast} from "vue-toastification";
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
@@ -34,16 +32,15 @@ createApp({
             initialPage: JSON.parse(el.dataset.page),
             resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
-}).component('VueCtkDateTimePicker', VueCtkDateTimePicker)
-    .mixin({
-        methods: {route},
-        data() {
-            return {
-                toast: useToast(),
-            }
+}).mixin({
+    methods: {route},
+    data() {
+        return {
+            toast: useToast(),
         }
+    }
 
-    }).use(InertiaPlugin, moment)
+}).use(InertiaPlugin, moment)
     .use(Toast, options)
     .use(toast)
     .mount(el);
