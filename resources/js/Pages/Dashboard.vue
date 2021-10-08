@@ -317,7 +317,7 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="first_day">First Day:</label>
-                                <select class="form-control" v-model="form.first_day" id="first_day">
+                                <select class="form-control" id="first_day">
                                     <option value="Monday">Monday</option>
                                     <option value="Tuesday">Tuesday</option>
                                     <option value="Wednesday">Wednesday</option>
@@ -329,7 +329,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="second_day">Second Day:</label>
-                                <select name="" id="second_day" class="form-control" v-model="form.second_day">
+                                <select name="" id="second_day" class="form-control">
                                     <option value="Monday">Monday</option>
                                     <option value="Tuesday">Tuesday</option>
                                     <option value="Wednesday">Wednesday</option>
@@ -373,7 +373,7 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'days_available', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'second_date', 'tutor_match_done', 'learning_style_done', 'user_tag'],
+    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
@@ -381,8 +381,6 @@ export default {
             courses: localStorage.getItem('courses') === 'true',
             calendar: localStorage.getItem('calendar') === 'true',
             notes: localStorage.getItem('notes') === 'true',
-            first_day_time: moment(this.profile.first_day_time, ["h:mm A"]).format("h:mm A"),
-            second_day_time: moment(this.profile.second_day_time, ["h:mm A"]).format("h:mm A"),
             next_lesson_time: moment(this.next_lesson_time, ["h:mm A"]).format("h:mm A"),
             next_practice_exam_time: moment(this.next_practice_exam, ["h:mm A"]).format("h:mm A"),
             next_practice_exam_day: moment(this.next_practice_exam, ["YYYY-MM-DD HH:mm:ss"]).format("dddd"),
@@ -392,12 +390,8 @@ export default {
             moment: moment,
             selected_course: 'All',
             loading: false,
-            first_day: this.days_available[0],
-            second_day: this.days_available[1],
             profile: this.profile,
             form: {
-                first_day: this.days_available[0],
-                second_day: this.days_available[1],
                 first_day_time: this.profile.first_day_time,
                 second_day_time: this.profile.second_day_time
             },
@@ -421,8 +415,6 @@ export default {
                 .then(response => {
                     this.toast.success(response.data.message);
                     $('#exampleModalCenter').modal('hide');
-                    this.days_available[0] = this.form.first_day
-                    this.days_available[1] = this.form.second_day
                     this.first_day_time = this.form.first_day_time
                     this.second_day_time = this.form.second_day_time
                 })

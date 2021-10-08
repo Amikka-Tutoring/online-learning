@@ -40,7 +40,9 @@ class UserPracticeExamDateController extends Controller
             'date_time' => 'required',
             'exam_id' => 'required|exists:practice_exams,id',
         ]);
-        UserPracticeExamDate::create([
+        UserPracticeExamDate::updateOrCreate([
+            'exam_id' => $id
+        ], [
             'date_time' => $request->date_time,
             'user_id' => Auth::id(),
             'exam_id' => $id

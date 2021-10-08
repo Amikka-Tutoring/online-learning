@@ -31,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if (Auth::user()->profile) {
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -46,17 +46,14 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ($user_profile->tutor_match)
+        if ( $user_profile->tutor_match )
             $tutor_match_done = true;
-        if ($user_profile->learning_style)
+        if ( $user_profile->learning_style )
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
         $date_now = Carbon::now();
-
-
-        $next_practice_exam = $user->practice_exam_dates->where('date_time', '>', $date_now)->first()->date_time;
-
+        $next_practice_exam = $user->practice_exam_dates->where('date_time', '>', $date_now)->first()->date_time ?? null;
         $lesson_days = [];
         $date_now = Carbon::now()->dayOfWeek;
         foreach ($user->lesson_dates as $day) {
@@ -64,7 +61,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ($d['day'] > $date_now)
+            if ( $d['day'] > $date_now )
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -81,12 +78,10 @@ class PageController extends Controller
         $next_lesson_day = $days[$next['day']];
         $next_lesson_time = $next['time'];
 
-        $days_available = unserialize($user_profile->days_available);
         $next_lesson = Carbon::parse('next ' . $next_lesson_day)->format('d/m');
-        $second_date = Carbon::parse('next ' . $days_available[1])->format('d / m');
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'next_practice_exam' => $next_practice_exam,
-            'user_courses' => $user_courses, 'profile' => $user_profile, 'days_available' => $days_available,
-            'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'second_date' => $second_date, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag]);
+            'user_courses' => $user_courses, 'profile' => $user_profile,
+            'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag]);
     }
 
     public function profile()
@@ -136,7 +131,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);

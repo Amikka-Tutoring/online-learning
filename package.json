@@ -47,6 +47,7 @@
         "v-calendar": "^3.0.0-alpha.5",
         "v-video-embed": "^1.0.8",
         "vee-validate": "^4.4.10",
+        "vue-ctk-date-time-picker": "^2.5.0",
         "vue-filepond": "^7.0.0",
         "vue-fullpage.js": "^0.1.7",
         "vue-lazy-youtube-video": "^2.3.0",
