@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserLessonDate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserLessonDateController extends Controller
 {
@@ -35,7 +36,19 @@ class UserLessonDateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'day' => 'required',
+            'time' => 'required',
+        ]);
+        UserLessonDate::updateOrCreate([
+            'day' => $request->day
+        ], [
+            'day' => $request->day,
+            'time' => $request->time,
+            'user_id' => Auth::id()
+        ]);
+
+        return ['message' => 'Saved Successfully'];
     }
 
     /**

@@ -33,7 +33,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <select name="" id="" class="form-control" v-model="new_day">
+                                    <select name="" id="" class="form-control" v-model="new_form.day">
                                         <option value="Monday" v-if="!lesson_dates_busy.includes('Monday')">Monday
                                         </option>
                                         <option value="Tuesday" v-if="!lesson_dates_busy.includes('Tuesday')">Tuesday
@@ -52,7 +52,9 @@
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <input type="time">
+                                    <input type="time" v-model="new_form.time">
+                                    <input type="submit" @click="newLessonDate()" value=" + "
+                                           class="ml-3">
                                 </div>
                             </div>
                         </div>
@@ -165,7 +167,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -245,6 +247,16 @@ export default {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 })
             $('#exampleModalCenter').modal('hide');
+        },
+        newLessonDate: function () {
+            console.log(this.new_form)
+            axios.post(route('store.lesson.dates'), this.new_form)
+                .then(response => {
+                    this.toast.success(response.data.message);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                })
         }
     },
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy'],
@@ -256,6 +268,10 @@ export default {
             form: {
                 date_time: null,
                 exam_id: null,
+            },
+            new_form: {
+                day: null,
+                time: null
             },
             date: '2021-02-22 12:00'
         }
