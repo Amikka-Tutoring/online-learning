@@ -38,7 +38,6 @@
 
             <div class="practice-exams" data-aos="fade-up">
                 <h1 class="blue-text">Practice Exams</h1>
-                <VueCtkDateTimePicker v-model="date" inline="true"/>
                 <div class="practice-exams-content">
                     <p class="question-box">Because your exam is <span class="blue-text">{{ date_diff }}</span> we
                         recommend that you add at least <span class="blue-text">two full timed practice exams</span>
@@ -79,7 +78,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -144,7 +143,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -187,12 +186,10 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 export default {
     components: {
         AppLayout,
-        VueCtkDateTimePicker
     },
     methods: {
         updateLessonDates: function (lesson_date) {
