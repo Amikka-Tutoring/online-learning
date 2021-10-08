@@ -179,10 +179,11 @@ class PageController extends Controller
         $date_diff = $date->diffForHumans();
 
         $lesson_dates = $user->lesson_dates;
+        $lesson_dates_busy = $user->lesson_dates->pluck('day');
 //        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
         $scheduled = $user->practice_exam_dates->pluck('exam_id');
         $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
-        return Inertia::render('SetCalendar', ['date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates]);
+        return Inertia::render('SetCalendar', ['date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy]);
     }
 
 

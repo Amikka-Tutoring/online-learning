@@ -31,6 +31,30 @@
                                            @change="updateLessonDates(l_dates)">
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <select name="" id="" class="form-control" v-model="new_day">
+                                        <option value="Monday" v-if="!lesson_dates_busy.includes('Monday')">Monday
+                                        </option>
+                                        <option value="Tuesday" v-if="!lesson_dates_busy.includes('Tuesday')">Tuesday
+                                        </option>
+                                        <option value="Wednesday" v-if="!lesson_dates_busy.includes('Wednesday')">
+                                            Wednesday
+                                        </option>
+                                        <option value="Thursday" v-if="!lesson_dates_busy.includes('Thursday')">Thursday
+                                        </option>
+                                        <option value="Friday" v-if="!lesson_dates_busy.includes('Friday')">Friday
+                                        </option>
+                                        <option value="Saturday" v-if="!lesson_dates_busy.includes('Saturday')">Saturday
+                                        </option>
+                                        <option value="Sunday" v-if="!lesson_dates_busy.includes('Sunday')">Sunday
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <input type="time">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -223,7 +247,7 @@ export default {
             $('#exampleModalCenter').modal('hide');
         }
     },
-    props: ['date_diff', 'practice_exams', 'user', 'lesson_dates'],
+    props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy'],
 
     data() {
         return {

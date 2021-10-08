@@ -142,7 +142,7 @@ class User extends Authenticatable
 
     public function lesson_dates()
     {
-        return $this->hasMany(UserLessonDate::class)->orderBy(date('N', strtotime($this->day)));
+        return $this->hasMany(UserLessonDate::class);
     }
 
     public function practice_exam_dates()
