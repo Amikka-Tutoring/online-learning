@@ -11,31 +11,47 @@ export default {
     data() {
         return {
             calendarOptions: {
+                header: {
+                    today: false,
+                    left: 'title',
+                    center: '',
+                    right: 'prev,next'
+                },
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleMonthChange,
-                events: null,
                 dayHeaderContent: (args) => {
                     return moment(args.date).format('dd')
                 },
+
             },
         }
-    },
+    }
+    ,
     mounted() {
-        this.getEvents()
+        this.getLessons();
+        this.getExams();
         $('.fc-button-group').on('click', function () {
-            $('.fc-daygrid-day:has(.fc-event-main)').addClass('rocket-bg');
+            $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('time-bg');
+            $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
         });
-    },
+    }
+    ,
     methods: {
-        getEvents: function () {
+        getExams: function () {
             axios.get(route('user.exams.api'))
                 .then(response => {
-                    console.log('Events ni kat ma posht:')
-                    console.log(response.data)
                     this.calendarOptions.events = response.data
                 }).finally(() => {
-                $('.fc-daygrid-day:has(.fc-event-main)').addClass('rocket-bg');
+                $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
+            })
+        },
+        getLessons: function () {
+            axios.get(route('user.lessons.api'))
+                .then(response => {
+                    this.calendarOptions.events = response.data
+                }).finally(() => {
+                $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('time-bg');
             })
         }
     }

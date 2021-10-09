@@ -60,11 +60,17 @@ class ApiController extends Controller
     public function getUserPracticeExams()
     {
         $user = Auth::user();
-//        return $user->practice_exam_dates->map(function ($item, $index) {
-//            return [
-//                'start' => Carbon::parse($item['date_time'])->toDateString()
-//            ];
-//        });
+        return $user->practice_exam_dates->map(function ($item, $index) {
+            return [
+                'start' => Carbon::parse($item['date_time'])->toDateString()
+            ];
+        });
+
+    }
+
+    public function getUserLessonDates()
+    {
+        $user = Auth::user();
         return $user->lesson_dates->map(function ($item, $index) {
             return [
                 'startTime' => $item['time'],

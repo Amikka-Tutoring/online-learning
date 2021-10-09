@@ -1945,6 +1945,18 @@ input[type="radio"] {
     background-position : center;
 }
 
+.time-bg {
+    background-repeat   : no-repeat;
+    background-color    : transparent !important;
+    background-image    : url(/images/clock.png);
+    background-size     : 30px;
+    background-position : center;
+}
+
+.time-bg .fc-daygrid-day-events, .time-bg .fc-daygrid-day-number {
+    display : none;
+}
+
 .rocket-bg .fc-daygrid-day-number {
     display : none;
 }

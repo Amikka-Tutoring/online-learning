@@ -26,10 +26,10 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
                                     {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4></a>
                                 <h4 v-else> {{
-                                        a_q.name
+                                    a_q.name
                                     }}</h4>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -176,9 +176,9 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">{{
-                                                user_course.course.quizzes_attempted
+                                            user_course.course.quizzes_attempted
                                             }}/{{
-                                                user_course.course.quizzes_count
+                                            user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                            next_practice_exam_time
+                                        next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>
@@ -245,7 +245,7 @@
                         v-model="selected_course">
                     <option value="All">All</option>
                     <option v-for="user_course in user_courses.enrollments">{{
-                            user_course.course.name
+                        user_course.course.name
                         }}
                     </option>
                 </select>
@@ -313,7 +313,7 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
+    props: ['flash', 'academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
@@ -350,6 +350,10 @@ export default {
                 this.loading = false
             })
         },
+    },
+    mounted() {
+        if (this.flash.message != null)
+            this.toast(this.flash.message)
     },
     beforeMount() {
         this.getNotesByCourse(this.selected_course)

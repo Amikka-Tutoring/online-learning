@@ -31,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if (Auth::user()->profile) {
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -46,9 +46,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ($user_profile->tutor_match)
+        if ( $user_profile->tutor_match )
             $tutor_match_done = true;
-        if ($user_profile->learning_style)
+        if ( $user_profile->learning_style )
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -61,7 +61,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ($d['day'] > $date_now)
+            if ( $d['day'] > $date_now )
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -131,7 +131,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -191,11 +191,6 @@ class PageController extends Controller
     public function notesBlock()
     {
         return Inertia::render('NotesBlock');
-    }
-
-    public function createNotes()
-    {
-        return Inertia::render('CreateNotes');
     }
 
     public function oneToOne()

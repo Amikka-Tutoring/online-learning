@@ -20,18 +20,16 @@
                 <table>
                     <thead>
                     <tr>
-                        <th style="width: 25%" @click="sort('dates'); calendar = !calendar"><i
+                        <th style="width: 25%"><i
                             class="fas fa-calendar-day blue-text mr-2"></i>Dates
                             <!--                            <i class="fas blue-text ml-2"-->
                             <!--                               v-bind:class="calendar ? 'fa-chevron-up':'fa-chevron-down'"></i>-->
                         </th>
-                        <th style=" width: 15%" @click="sort('class')"><i class="fas fa-book-open blue-text mr-2"></i>Class
+                        <th style=" width: 15%"><i class="fas fa-book-open blue-text mr-2"></i>Class
                         </th>
-                        <th style="width: 30%" @click="sort('topics')"><i class="fas fa-pen blue-text mr-2"></i>Topics
+                        <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Topics
                         </th>
-                        <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Note
-                        </th>
-                        <th style="width: 30%" @click="sort('tags')"><i class="fas fa-tags blue-text mr-2"></i>Tags</th>
+                        <th style="width: 30%"><i class="fas fa-tags blue-text mr-2"></i>Tags</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,7 +37,6 @@
                         <td>{{ moment(note.created_at).format("MM/DD") }}</td>
                         <td>{{ note.lesson.course.name }}</td>
                         <td>{{ note.lesson.name }}</td>
-                        <td>{{ note.written_notes }}</td>
                         <td>
                             <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{ tag.name }}</span>
                         </td>

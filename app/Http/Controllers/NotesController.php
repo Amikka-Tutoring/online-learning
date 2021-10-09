@@ -14,6 +14,11 @@ use function PHPUnit\Framework\throwException;
 
 class NotesController extends Controller
 {
+    public function show(Note $note)
+    {
+        return Inertia::render('SingleNote', ['note' => $note->load('lesson')]);
+    }
+
     public function getNotes($query = '')
     {
         $user = Auth::user();
@@ -40,7 +45,7 @@ class NotesController extends Controller
         $user = Auth::user();
         $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                if ($course == 'All')
+                if ( $course == 'All' )
                     $q->where('name', 'like', '%' . '' . '%');
                 else
                     $q->where('name', 'like', '%' . $course . '%');
