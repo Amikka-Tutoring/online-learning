@@ -45,7 +45,7 @@ class NotesController extends Controller
         $user = Auth::user();
         $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                if ( $course == 'All' )
+                if ($course == 'All')
                     $q->where('name', 'like', '%' . '' . '%');
                 else
                     $q->where('name', 'like', '%' . $course . '%');
@@ -63,9 +63,12 @@ class NotesController extends Controller
         $notes = Note::updateOrCreate(
             ['layer_id' => $request->lesson_id,
                 'user_id' => Auth::id()],
-            ['written_notes' => $request->note,
+            [
+                'written_notes' => $request->note,
                 'user_id' => Auth::id(),
-                'layer_id' => $request->lesson_id]
+//                'audio_notes' => $request->audio_notes,
+                'layer_id' => $request->lesson_id
+            ]
         );
         return 'Saved Successfully!';
     }

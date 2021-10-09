@@ -41,7 +41,8 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-8 col-12 text-center">
-                            <audio :src="note.audio_notes"></audio>
+
+                            <!--                            <audio :src="note.audio_notes"></audio>-->
                             <h5 class="written-notes-title">Written Notes</h5>
                             <div class="written-notes-box">
                                 <a href="" class="blue-text position-absolute"
@@ -52,9 +53,9 @@
                         </div>
                         <div class="col-lg-4 col-12 text-center d-flex flex-column align-items-center">
                             <h5 class="written-notes-title">Audio Notes</h5>
-                            <div class="audio-notes-box w-50 d-flex flex-column align-items-center">
-                                <i class="fas fa-microphone-alt blue-text fa-2x"></i>
-                                <p class="blue-text">Play</p>
+                            <div class="d-flex flex-column align-items-center">
+                                <audio controls
+                                       :src="note.audio_notes"></audio>
                             </div>
                         </div>
                     </div>
@@ -83,7 +84,12 @@ export default {
     },
 
     data() {
-        return {}
+        return {
+            form: {
+                written_notes: 'test',
+                audio_notes: null
+            }
+        }
     },
     mounted() {
         console.log(this.note);
@@ -158,6 +164,8 @@ export default {
                 // Convert the audio data in to blob
                 // after stopping the recording
                 mediaRecorder.onstop = function (ev) {
+                    console.log('data array')
+                    console.log(dataArray)
 
                     // blob of type mp3
                     let audioData = new Blob(dataArray,
@@ -174,6 +182,7 @@ export default {
 
                     console.log('audio file:')
                     console.log(audioSrc, dataArray, audioData)
+                    axios.post(route('')).then()
 
                     // Pass the audio url to the 2nd video tag
                     playAudio.src = audioSrc;
