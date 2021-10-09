@@ -80,6 +80,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
     Route::post('store/lesson-dates', [UserLessonDateController::class, 'store'])->name('store.lesson.dates');
 
     Route::get('lesson-dates/get', [ApiController::class, 'getLessonDates'])->name('get.lesson-dates');
+    Route::get('user/exams/get', [ApiController::class, 'getUserPracticeExams'])->name('user.exams.api');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
@@ -103,6 +104,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
     Route::get('exams/get', [ApiController::class, 'getPracticeExams'])->name('exams.api');
+
     Route::post('exams', [PracticeExamController::class, 'store'])->name('exams.store');
     Route::post('visit/exam/{id}', [UserExamVisitController::class, 'store'])->name('exams.visit');
     Route::put('exams/{id}', [PracticeExamController::class, 'update'])->name('exams.update');

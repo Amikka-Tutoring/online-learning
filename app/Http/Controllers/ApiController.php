@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\PracticeExam;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -20,26 +21,10 @@ class ApiController extends Controller
     public function course($slug)
     {
         $course = Course::where('slug', $slug)->first();
-        if ($course) {
+        if ( $course ) {
             return response()->json($course)->header('token', '123');
         }
         return response()->json('Course not found');
-    }
-
-    public function changeFirstDayTime($first)
-    {
-        $user = Auth::user();
-        $user->profile->first_day_time = $first;
-        $user->profile->save();
-        return ['message' => 'Updated Successfully'];
-    }
-
-    public function changeSecondDayTime($second)
-    {
-        $user = Auth::user();
-        $user->profile->second_day_time = $second;
-        $user->profile->save();
-        return ['message' => 'Updated Successfully'];
     }
 
     public function updateSchedule(Request $request)
@@ -71,4 +56,21 @@ class ApiController extends Controller
         $lesson_dates_busy = $user->lesson_dates->pluck('day');
         return ['lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy];
     }
+
+    public function getUserPracticeExams()
+    {
+        $user = Auth::user();
+//        return $user->practice_exam_dates->map(function ($item, $index) {
+//            return [
+//                'start' => Carbon::parse($item['date_time'])->toDateString()
+//            ];
+//        });
+        return $user->lesson_dates->map(function ($item, $index) {
+            return [
+                'startTime' => $item['time'],
+                'daysOfWeek' => date('N', strtotime($item['day'])),
+            ];
+        });
+    }
+
 }

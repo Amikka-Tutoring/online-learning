@@ -34,6 +34,10 @@
         "webpack-cli": "^4.7.2"
     },
     "dependencies": {
+        "@fullcalendar/core": "^5.9.0",
+        "@fullcalendar/daygrid": "^5.9.0",
+        "@fullcalendar/interaction": "^5.9.0",
+        "@fullcalendar/vue3": "^5.9.0",
         "@ivanv/vue-collapse-transition": "^1.0.2",
         "@popperjs/core": "^2.10.1",
         "aos": "^2.3.4",

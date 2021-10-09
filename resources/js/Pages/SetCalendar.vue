@@ -1,7 +1,7 @@
 <template>
     <app-layout>
         <div class="container">
-
+            <full-calendar/>
             <div class="practice-exams">
                 <h1 class="blue-text">Quick Calendar Changes</h1>
                 <div class="practice-exams-content">
@@ -51,7 +51,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6 d-flex">
                                     <input type="time" v-model="new_form.time">
                                     <input type="submit" @click="newLessonDate()" value=" + "
                                            class="ml-3">
@@ -167,7 +167,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -209,10 +209,12 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
+import FullCalendar from "@/components/FullCalendar";
 
 export default {
     components: {
         AppLayout,
+        FullCalendar
     },
     methods: {
         updateLessonDates: function (lesson_date) {
