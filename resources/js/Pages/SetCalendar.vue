@@ -1,15 +1,14 @@
 <template>
     <app-layout>
         <div class="container">
-            <full-calendar/>
             <div class="practice-exams">
                 <h1 class="blue-text">Quick Calendar Changes</h1>
                 <div class="practice-exams-content">
                     <p class="question-box mb-0">If your schedule changes last minute, edit specific lessons or exams by
                         clicking on the date. This will allow yoiu to change the time, duration, or type of lesson right
                         below it. </p>
-                    <div class="row justify-content-center align-items-center">
-                        <img :src="'/images/calendar.png'" style="width: 100%; max-width: 580px">
+                    <div class="my-4">
+                        <full-calendar/>
                     </div>
                 </div>
             </div>

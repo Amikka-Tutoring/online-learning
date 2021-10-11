@@ -43,6 +43,9 @@ Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('u
 Route::middleware(['auth', 'initial'])->group(function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
+    Route::post('quiz/result', [DiagnosticController::class, 'result'])->name('quiz.result');
+    Route::get('results', [PageController::class, 'results'])->name('results');
     Route::middleware(['personality'])->group(function () {
         Route::get('profile', [PageController::class, 'profile'])->name('profile');
         Route::post('change/tag', [PageController::class, 'changeTag'])->name('change.tag');
@@ -64,9 +67,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
         Route::get('notes/search/{query?}', [NotesController::class, 'getNotes'])->name('notes-search');
         Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
         Route::get('review', [PageController::class, 'review'])->name('review');
-        Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
-        Route::post('quiz/result', [DiagnosticController::class, 'result'])->name('quiz.result');
-        Route::get('results', [PageController::class, 'results'])->name('results');
+
 
         Route::post('lesson/notes', [NotesController::class, 'store'])->name('notes.store');
         Route::get('lesson/{id}/quiz', [PageController::class, 'lessonQuiz'])->name('lesson.quiz');

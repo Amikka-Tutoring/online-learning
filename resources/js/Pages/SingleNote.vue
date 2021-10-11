@@ -1,19 +1,19 @@
 <template>
     <app-layout>
         <div class="container">
-            <h1 class="blue-text mb-5">7/11</h1>
-            <p>
-                <button id="btnStart">START RECORDING</button>
+            <h1 class="blue-text mb-5">10/09</h1>
+            <!--            <p>-->
+            <!--                <button id="btnStart">START RECORDING</button>-->
 
-                <button id="btnStop">STOP RECORDING</button>
-                <!--button for 'stop recording'-->
-            </p>
+            <!--                <button id="btnStop">STOP RECORDING</button>-->
+            <!--                &lt;!&ndash;button for 'stop recording'&ndash;&gt;-->
+            <!--            </p>-->
 
-            <!--for record-->
-            <!--            <audio controls></audio>-->
+            <!--            &lt;!&ndash;for record&ndash;&gt;-->
+            <!--            &lt;!&ndash;            <audio controls></audio>&ndash;&gt;-->
 
-            <!--for play the audio-->
-            <audio id="adioPlay" controls></audio>
+            <!--            &lt;!&ndash;for play the audio&ndash;&gt;-->
+            <!--            <audio id="adioPlay" controls></audio>-->
             <div class="row create-notes-content">
                 <div class="col-12">
                     <div class="row">
@@ -80,6 +80,9 @@ export default {
     methods: {
         callback(data) {
             console.debug(data)
+        },
+        saveAudio(data) {
+            console.log(data)
         }
     },
 
@@ -87,7 +90,9 @@ export default {
         return {
             form: {
                 written_notes: 'test',
-                audio_notes: null
+                audio_notes: null,
+                layer_id: 1,
+                user_id: 1
             }
         }
     },
@@ -102,29 +107,6 @@ export default {
 
             // 'then()' method returns a Promise
             .then(function (mediaStreamObj) {
-
-                // Connect the media stream to the
-                // // first audio element
-                // let audio = document.querySelector('audio');
-                // //returns the recorded audio via 'audio' tag
-                //
-                // // 'srcObject' is a property which
-                // // takes the media object
-                // // This is supported in the newer browsers
-                // if ("srcObject" in audio) {
-                //     audio.srcObject = mediaStreamObj;
-                // } else {   // Old version
-                //     audio.src = window.URL
-                //         .createObjectURL(mediaStreamObj);
-                // }
-                //
-                // // It will play the audio
-                // audio.onloadedmetadata = function (ev) {
-                //
-                //     // Play the audio in the 2nd audio
-                //     // element what is being recorded
-                //     audio.play();
-                // };
 
                 // Start record
                 let start = document.getElementById('btnStart');
@@ -182,14 +164,14 @@ export default {
 
                     console.log('audio file:')
                     console.log(audioSrc, dataArray, audioData)
-                    axios.post(route('')).then()
+                    console.log(this, this.this)
+                    this.this.saveAudio('123');
+                    // axios.post(route('notes.store'), this.form).then()
 
                     // Pass the audio url to the 2nd video tag
                     playAudio.src = audioSrc;
                 }
             })
-
-            // If any error occurs then handles the error
             .catch(function (err) {
                 console.log(err.name, err.message);
             });
