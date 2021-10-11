@@ -64,12 +64,14 @@ Route::middleware(['auth', 'initial'])->group(function () {
         Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
 //        Route::get('notes/block', [PageController::class, 'notesBlock'])->name('notes-block');
         Route::get('notes/{note}', [NotesController::class, 'show'])->name('notes-show');
+        Route::get('notes/{note}/get', [NotesController::class, 'getNote'])->name('get.note');
         Route::get('notes/search/{query?}', [NotesController::class, 'getNotes'])->name('notes-search');
         Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
         Route::get('review', [PageController::class, 'review'])->name('review');
 
 
         Route::post('lesson/notes', [NotesController::class, 'store'])->name('notes.store');
+        Route::post('lesson/written_notes', [NotesController::class, 'storeWrittenNotes'])->name('written-notes.store');
         Route::get('lesson/{id}/quiz', [PageController::class, 'lessonQuiz'])->name('lesson.quiz');
         Route::post('lesson/{id}/quiz', [LayerQuizResultController::class, 'store'])->name('lesson.quiz.store');
         Route::get('lesson/{id}/student/questions', [NotesController::class, 'lessonQuestions'])->name('notes.questions');

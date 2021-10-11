@@ -16,7 +16,12 @@ class NotesController extends Controller
 {
     public function show(Note $note)
     {
-        return Inertia::render('SingleNote', ['note' => $note->load('lesson')]);
+        return Inertia::render('SingleNote', ['note' => $note->load('lesson', 'lesson.tags')]);
+    }
+
+    public function getNote(Note $note)
+    {
+        return $note->load(['lesson', 'lesson.tags']);
     }
 
     public function getNotes($query = '')
@@ -58,19 +63,27 @@ class NotesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['note' => 'required',
-            'lesson_id' => 'required|exists:layers,id',]);
-        $notes = Note::updateOrCreate(
-            ['layer_id' => $request->lesson_id,
+        if ($request->hasFile('audio_notes')) {
+            $fileName = time() . '_' . $request->audio_notes->getClientOriginalName() . '.mp3';
+            $filePath = $request->file('audio_notes')->storeAs('uploads', $fileName, 'public');
+            $fullPath = 'storage/' . $filePath;
+        }
+        Note::updateOrCreate(
+            ['layer_id' => $request->layer_id,
                 'user_id' => Auth::id()],
             [
-                'written_notes' => $request->note,
+                'written_notes' => $request->written_notes,
                 'user_id' => Auth::id(),
-//                'audio_notes' => $request->audio_notes,
-                'layer_id' => $request->lesson_id
+                'audio_notes' => $fullPath ?? $request->audio_notes,
+                'layer_id' => $request->layer_id
             ]
         );
-        return 'Saved Successfully!';
+        return ['message' => 'Saved Successfully!'];
+    }
+
+    public function storeWrittenNotes(Request $request)
+    {
+        return ['message' => $request->all()];
     }
 
     public function storeQuestion(Request $request)

@@ -35,8 +35,8 @@
                     <tbody>
                     <tr v-for="(note,index) in notes">
                         <td>{{ moment(note.created_at).format("MM/DD") }}</td>
-                        <td><a href="http://127.0.0.1:8000/notes/1">{{ note.lesson.course.name }}</a></td>
-                        <td>{{ note.lesson.name }}</td>
+                        <td>{{ note.lesson.course.name }}</td>
+                        <td><a :href="route('notes-show',note)">{{ note.lesson.name }}</a></td>
                         <td>
                             <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{ tag.name }}</span>
                         </td>
