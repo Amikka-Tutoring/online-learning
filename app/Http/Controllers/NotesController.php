@@ -24,11 +24,14 @@ class NotesController extends Controller
         return $note->load(['lesson', 'lesson.tags']);
     }
 
-    public function getNotes($query = '')
+    public function getNotes($course = '', $input = '')
     {
         $user = Auth::user();
-        $notes = $user->notes()->where('written_notes', 'like', '%' . $query . '%')->with(['lesson', 'lesson.course', 'lesson.tags'])->get();
-        return ['notes' => $notes];
+        $user->load('enrollments', 'enrollments.course');
+        $notes = $user->notes()->whereHas('lesson.course', function ($query) use ($course) {
+            $query->where('name', 'like', '%' . $course . '%');
+        })->where('written_notes', 'like', '%' . $input . '%')->with('lesson', 'lesson.course', 'lesson.tags')->get();
+        return ['notes' => $notes, 'user' => $user];
     }
 
     public function notesList()

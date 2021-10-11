@@ -62,10 +62,11 @@ Route::middleware(['auth', 'initial'])->group(function () {
         Route::get('notes', [NotesController::class, 'notesList'])->name('notes-list');
         Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');
         Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
+        Route::get('notes/search/{course?}/{input?}', [NotesController::class, 'getNotes'])->name('notes-search');
 //        Route::get('notes/block', [PageController::class, 'notesBlock'])->name('notes-block');
         Route::get('notes/{note}', [NotesController::class, 'show'])->name('notes-show');
         Route::get('notes/{note}/get', [NotesController::class, 'getNote'])->name('get.note');
-        Route::get('notes/search/{query?}', [NotesController::class, 'getNotes'])->name('notes-search');
+
         Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
         Route::get('review', [PageController::class, 'review'])->name('review');
 
@@ -82,6 +83,7 @@ Route::middleware(['auth', 'initial'])->group(function () {
         Route::post('schedule/practice-exam/{id}', [UserPracticeExamDateController::class, 'store'])->name('schedule.practice.exam');
         Route::put('update/lesson-dates', [UserLessonDateController::class, 'update'])->name('update.lesson.dates');
         Route::post('store/lesson-dates', [UserLessonDateController::class, 'store'])->name('store.lesson.dates');
+        Route::delete('delete/lesson-dates/{userLessonDate}', [UserLessonDateController::class, 'destroy'])->name('delete.lesson.dates');
 
         Route::get('lesson-dates/get', [ApiController::class, 'getLessonDates'])->name('get.lesson-dates');
         Route::get('user/exams/get', [ApiController::class, 'getUserPracticeExams'])->name('user.exams.api');
@@ -100,13 +102,20 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('diagnostics/{slug}', [AdminController::class, 'diagnostics'])->name('diagnostics');
     Route::get('diagnostics/academic/create', [AdminController::class, 'createAcademicDiagnostics'])->name('academic.diagnostics.create');
     Route::post('diagnostics/academic/create', [DiagnosticController::class, 'storeAcademic'])->name('academic.diagnostics.store');
+
+    Route::get('diagnostics/academic/mathematics', [DiagnosticController::class, 'createMathematics'])->name('mathematics-create');
+    Route::post('diagnostics/academic/mathematics', [DiagnosticController::class, 'storeMathematics'])->name('mathematics-store');
+
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');
+    Route::post('diagnostics/personality/create', [DiagnosticController::class, 'storePersonality'])->name('personality.diagnostics.store');
+
     Route::get('diagnostics/personality/learning-style', [DiagnosticController::class, 'createLearningStyle'])->name('learning-style-create');
     Route::post('diagnostics/personality/learning-style', [DiagnosticController::class, 'storeLearningStyle'])->name('learning-style-store');
+
     Route::get('diagnostics/personality/perfect-tutor-match', [DiagnosticController::class, 'createTutorMatch'])->name('perfect-tutor-match-create');
     Route::post('diagnostics/personality/perfect-tutor-match', [DiagnosticController::class, 'storeTutorMatch'])->name('perfect-tutor-match-store');
-    Route::post('diagnostics/personality/create', [DiagnosticController::class, 'storePersonality'])->name('personality.diagnostics.store');
+
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
     Route::get('exams/get', [ApiController::class, 'getPracticeExams'])->name('exams.api');

@@ -101,6 +101,7 @@ class UserLessonDateController extends Controller
      */
     public function destroy(UserLessonDate $userLessonDate)
     {
-        //
+        $userLessonDate->delete();
+        return ['message' => 'Deleted Successfully'];
     }
 }

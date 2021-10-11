@@ -1,7 +1,7 @@
 <template>
     <app-layout>
         <div class="container">
-            <calculator/>
+
             <h1 class="blue-text mb-5">{{ moment(note.created_at).format("MM/DD") }}</h1>
             <div class="row create-notes-content">
                 <div class="col-12">
@@ -72,14 +72,11 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
-import Calculator from "@/components/Calculator";
-
 
 export default {
     props: ['note'],
     components: {
         AppLayout,
-        Calculator
     },
     methods: {
         writtenNotesStore: function () {

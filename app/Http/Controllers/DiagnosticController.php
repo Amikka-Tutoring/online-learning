@@ -88,7 +88,13 @@ class DiagnosticController extends Controller
                 $user->profile->tutor_match = 'ENFP';
             $user->profile->save();
             $results = DiagnosticUserTag::where('title', $user->profile->tutor_match)->first();
-        } else {
+
+            $learned = unserialize($results->learned);
+            $tips = unserialize($results->tips);
+            $plan = unserialize($results->plan);
+
+            return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
+        } else if ($request->daiagnostic_name == 'learning_stlye') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -98,11 +104,24 @@ class DiagnosticController extends Controller
             $score = $points / $sum;
             $user->profile->learning_style = $score;
             $results = DiagnosticUserTag::where('title', $user->profile->learning_style)->first();
+
+            $learned = unserialize($results->learned);
+            $tips = unserialize($results->tips);
+            $plan = unserialize($results->plan);
+
+            return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
+        } else if ($request->diagnostic_name == 'mathematics') {
+            $sum = count($answers);
+            $points = 0;
+            $correct = 0;
+            foreach ($answers as $answer) {
+                $points += $answer['is_correct'];
+            }
+            $score = $points / $sum;
+            return redirect()->route('main');
         }
-        $learned = unserialize($results->learned);
-        $tips = unserialize($results->tips);
-        $plan = unserialize($results->plan);
-        return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
+
+
     }
 
     public function updateQuiz(Request $request, $id)
@@ -265,6 +284,92 @@ class DiagnosticController extends Controller
             Answer::create([
                 'title' => $row[4],
                 'is_correct' => $row[5],
+                'question_id' => $question->id,
+            ]);
+        }
+        return ['message' => 'Saved Successfully', 'questions' => $questions];
+    }
+
+    public function createMathematics()
+    {
+        return Inertia::render('Admin/Diagnostics/Academic/Mathematics');
+    }
+
+    public function storeMathematics(Request $request)
+    {
+
+        $request->validate([
+            'file' => 'required|mimes:csv,txt|max:1024',
+        ]);
+
+        $file = $request->file('file');
+
+        // File Details
+        $filename = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $tempPath = $file->getRealPath();
+        $fileSize = $file->getSize();
+        $mimeType = $file->getMimeType();
+
+        $location = 'storage/uploads';
+        // Upload file
+        $file->move($location, $filename);
+        // Import CSV to Database
+        $filepath = public_path($location . "/" . $filename);
+        // Reading file
+        $file = fopen($filepath, "r");
+        $importData_arr = array();
+        $i = 0;
+
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
+            $num = count($filedata);
+            //Skip first row(Remove below comment if you want to skip the first row)
+            if ($i == 0) {
+                $i++;
+                continue;
+            }
+            for ($c = 0; $c < $num; $c++) {
+                $importData_arr[$i][] = $filedata[$c];
+            }
+            $i++;
+        }
+        fclose($file);
+
+        $mathematics = DiagnosticQuiz::where('slug', 'mathematics')->first();
+        $questions = [];
+
+        foreach ($importData_arr as $row) {
+
+
+            if (count($row) != 10) {
+                return ['error' => 'Wrong format'];
+            }
+            $question = new Question();
+            $question->title = $row[0];
+            $question->image = $row[1];
+            $mathematics->questions()->save($question);
+            array_push($questions, $question->title);
+            Answer::create([
+                'title' => $row[2],
+                'is_correct' => $row[3],
+                'question_id' => $question->id,
+            ]);
+
+            Answer::create([
+                'title' => $row[4],
+                'is_correct' => $row[5],
+                'question_id' => $question->id,
+            ]);
+
+            Answer::create([
+                'title' => $row[6],
+                'is_correct' => $row[7],
+                'question_id' => $question->id,
+            ]);
+
+            Answer::create([
+                'title' => $row[8],
+                'is_correct' => $row[9],
                 'question_id' => $question->id,
             ]);
         }

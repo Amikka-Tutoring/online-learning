@@ -56,18 +56,22 @@
                     <div class="notes-box row w-75">
                         <div class="col-lg-2 col-12">
                             <div class="row">
-                                <div class="notes-circle rounded-circle"><i class="fas fa-microphone-alt"></i></div>
+                                <div class="notes-circle rounded-circle"
+                                     @click="audio = true; questions = false; written= false"><i
+                                    class="fas fa-microphone-alt"></i>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"><i class="fas fa-flag"></i></div>
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"
-                                     @click="questions = false; written = true"><i class="fas fa-pen"></i></div>
+                                     @click="questions = false; written = true; audio= false"><i class="fas fa-pen"></i>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="notes-circle rounded-circle"
-                                     @click="questions = true; written = false">
+                                     @click="questions = true; written = false; audio = false">
                                     <i class="fas fa-question"></i></div>
                             </div>
                         </div>
@@ -75,7 +79,7 @@
                             <div v-if="written" class="written_notes">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
-                                    <textarea required v-model="form.note" id="" cols="80" rows="40"
+                                    <textarea required v-model="form.written_notes" id="" cols="80" rows="40"
                                               name="written_notes"
                                               placeholder="Notes..."></textarea>
                                     <button class="light-button">Submit</button>
@@ -89,6 +93,25 @@
                                               placeholder="Question..."></textarea>
                                     <button class="light-button">Submit</button>
                                 </form>
+                            </div>
+                            <div v-show="audio" @click="recorder"
+                                 class="audio h-100" style="margin-top: 30%">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="w-50 d-flex flex-column align-items-center mb-4">
+                                        <button v-show="started" id="btnStop" class="border-0 bg-transparent"
+                                                @click="stopped = true; started = false"><i
+                                            class="fas fa-microphone-alt blue-text fa-2x"></i>
+                                        </button>
+                                        <button v-show="stopped" id="btnStart" class="bg-transparent  border-0"
+                                                @click="started = true; stopped=false"><i
+                                            class="fas fa-microphone-alt blue-text fa-2x"></i>
+                                        </button>
+                                        <div v-if="started" class="spinner-grow text-danger" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <audio id="adioPlay" controls></audio>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -196,7 +219,7 @@ export default {
         submit: function () {
             axios.post(route('notes.store'), this.form)
                 .then(response => {
-                    this.toast.success(response.data)
+                    this.toast.success(response.data.message)
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -211,15 +234,19 @@ export default {
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 });
-        }
+        },
     },
     data() {
         return {
             written: true,
             questions: false,
+            audio: false,
+            stopped: true,
+            started: false,
             form: {
-                note: this.notes?.written_notes,
-                lesson_id: this.lesson.id,
+                written_notes: this.notes?.written_notes,
+                layer_id: this.lesson.id,
+                audio_notes: '',
                 topic: null,
             },
             questionForm: {
@@ -227,6 +254,90 @@ export default {
                 lesson_id: this.lesson.id,
             }
         }
+    },
+    mounted() {
+        let audioIN = {audio: true};
+
+        let parentForm = this.form
+        let parentThis = this
+
+        navigator.mediaDevices.getUserMedia(audioIN)
+            // 'then()' method returns a Promise
+            .then(function (mediaStreamObj) {
+
+
+                    // Start record
+                    let start = document.getElementById('btnStart');
+
+                    // Stop record
+                    let stop = document.getElementById('btnStop');
+
+                    // 2nd audio tag for play the audio
+                    let playAudio = document.getElementById('adioPlay');
+
+                    // This is the main thing to recorde
+                    // the audio 'MediaRecorder' API
+                    let mediaRecorder = new MediaRecorder(mediaStreamObj);
+                    // Pass the audio stream
+
+                    // Start event
+                    start.addEventListener('click', function (ev) {
+                        mediaRecorder.start();
+                        // console.log(mediaRecorder.state);
+                    })
+
+                    // Stop event
+                    stop.addEventListener('click', function (ev) {
+                        mediaRecorder.stop();
+                        // console.log(mediaRecorder.state);
+                    });
+
+                    // If audio data available then push
+                    // it to the chunk array
+                    mediaRecorder.ondataavailable = function (ev) {
+                        dataArray.push(ev.data);
+                    }
+
+                    // Chunk array to store the audio data
+                    let dataArray = [];
+
+
+                    // Convert the audio data in to blob
+                    // after stopping the recording
+                    mediaRecorder.onstop = function (ev) {
+
+                        // blob of type mp3
+                        let audioData = new Blob(dataArray,
+                            {'type': 'audio/mp3;'});
+
+                        // After fill up the chunk
+                        // array make it empty
+                        dataArray = [];
+
+                        // Creating audio url with reference
+                        // of created blob named 'audioData'
+                        let audioSrc = window.URL
+                            .createObjectURL(audioData);
+                        let formData = new FormData();
+                        formData.append("audio_notes", audioData);
+                        formData.append('user_id', parentForm.user_id)
+                        formData.append('layer_id', parentForm.layer_id)
+                        formData.append('written_notes', parentForm.written_notes)
+                        axios.post(route('notes.store'), formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }).then(response => {
+                            parentThis.toast.success(response.data.message);
+                            parentThis.getNote()
+                        });
+                        playAudio.src = audioSrc;
+                    }
+                }
+            )
+            .catch(function (err) {
+                console.log(err.name, err.message);
+            });
     }
 }
 </script>

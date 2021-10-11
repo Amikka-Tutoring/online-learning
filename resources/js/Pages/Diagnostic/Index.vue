@@ -1,6 +1,7 @@
 <template>
     <app-layout>
         <div class="container">
+            <calculator/>
             <!--            <div  class="d-flex justify-content-center">-->
             <div
                 v-if="form.currentstep != 1 && form.currentstep != diagnostic.length"
@@ -164,13 +165,15 @@ import {reactive} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 import {useToast} from "vue-toastification";
 import Question from "../../components/Question";
+import Calculator from "@/components/Calculator";
 
 
 export default {
 
     components: {
         AppLayout,
-        Question
+        Question,
+        Calculator
     },
     methods: {
         toLetter(value) {

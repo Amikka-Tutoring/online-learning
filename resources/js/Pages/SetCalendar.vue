@@ -5,7 +5,7 @@
                 <h1 class="blue-text">Quick Calendar Changes</h1>
                 <div class="practice-exams-content">
                     <p class="question-box mb-0">If your schedule changes last minute, edit specific lessons or exams by
-                        clicking on the date. This will allow yoiu to change the time, duration, or type of lesson right
+                        clicking on the date. This will allow you to change the time, duration, or type of lesson right
                         below it. </p>
                     <div class="my-4">
                         <full-calendar/>
@@ -25,9 +25,11 @@
                                 <div class="col-6">
                                     <label>{{ l_dates.day }}</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6 d-flex">
                                     <input type="time" name="start_time" v-model="l_dates.time"
                                            @change="updateLessonDates(l_dates)">
+                                    <input type="submit" @click="deleteLesson(l_dates)" value=" - "
+                                           class="ml-3">
                                 </div>
                             </div>
                             <div class="row">
@@ -166,7 +168,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                            moment(user.profile.exam_date).format("MM/DD")
+                                                moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -262,12 +264,23 @@ export default {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 })
         },
+        deleteLesson: function (lesson) {
+            if (!confirm('Are you sure want to remove?')) return;
+            axios.delete(route('delete.lesson.dates', lesson))
+                .then(response => {
+                    this.getLessonDates()
+                    this.toast.success(response.data.message);
+                });
+        },
         getLessonDates: function () {
             axios.get(route('get.lesson-dates'))
                 .then(response => {
                     this.lesson_dates = response.data.lesson_dates
                     this.lesson_dates_busy = response.data.lesson_dates_busy
-                })
+                }).catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                }
+            );
         },
     },
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy'],
@@ -286,11 +299,9 @@ export default {
                 day: null,
                 time: null
             },
-            date: '2021-02-22 12:00'
         }
     },
     mounted() {
-        console.log(this.lesson_dates)
     }
 }
 </script>

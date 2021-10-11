@@ -26,6 +26,8 @@
                 <div v-on:click="clear()" class="clear">c</div>
                 <div v-on:click="equal()">=</div>
                 <div v-on:click="key('/')">/</div>
+                <div v-on:click="pow(total)">^2</div>
+                <div v-on:click="key('^')">^</div>
             </div>
         </div>
     </div>
@@ -39,12 +41,17 @@ export default {
             total: 0,
             calculator: false
         }
-
     },
 
     methods: {
         key: function (num) {
+            console.log('num: ' + num)
+            console.log('total: ' + this.total)
             return this.total += num;
+
+        },
+        pow: function (num) {
+            return this.total = Math.pow(num, 2)
         },
         clear: function () {
             return this.total = 0;

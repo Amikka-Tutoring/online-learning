@@ -5,13 +5,17 @@
             <div class="notes-buttons">
                 <div class="row">
                     <div class="col-lg-6 col-12 text-right buttons">
-                        <button><i class="fas fa-chevron-down blue-text mr-2"></i>Course</button>
-                        <button><i class="fas fa-plus blue-text mr-2"></i>New</button>
+                        <select name="" id="" class="text-right buttons"
+                                style="background: rgba(196, 196, 196, 0.25);border-radius: 10px;color: #4c6ed7;border: none;padding: 10px 20px; margin-right: 25px;"
+                                v-on:change="filterNotes(this.input,this.selected_course)" v-model="selected_course">
+                            <option v-for="en in user.enrollments">{{ en.course.name }}</option>
+                        </select>
+                        <!--                        <button><i class="fas fa-plus blue-text mr-2"></i>New</button>-->
                     </div>
                     <div class="col-lg-6 col-12">
                         <i class="fab fa-searchengin fa-2x blue-text pr-2 search-icon position-absolute"
                            style="padding-left: 20px; padding-top: 10px"></i>
-                        <input type="text" v-model="query" v-on:keyup="filterNotes(query)">
+                        <input type="text" v-model="input" v-on:keyup="filterNotes(this.input,this.selected_course)">
                     </div>
                 </div>
             </div>
@@ -22,8 +26,6 @@
                     <tr>
                         <th style="width: 25%"><i
                             class="fas fa-calendar-day blue-text mr-2"></i>Dates
-                            <!--                            <i class="fas blue-text ml-2"-->
-                            <!--                               v-bind:class="calendar ? 'fa-chevron-up':'fa-chevron-down'"></i>-->
                         </th>
                         <th style=" width: 15%"><i class="fas fa-book-open blue-text mr-2"></i>Class
                         </th>
@@ -58,25 +60,29 @@ export default {
     components: {
         AppLayout,
     },
-    props: ['notes'],
+    props: ['notes', 'user'],
     data() {
         return {
             query: '',
             calendar: false,
             moment: moment,
             notes: this.notes,
+            selected_course: 'Grammar'
         }
     },
     methods: {
-        filterNotes: function (query) {
-            axios.get(route('notes-search', query))
+        filterNotes: function (input = '', course = '') {
+            console.log('input: ' + input, 'course :' + course)
+            axios.get('notes/search/' + course + '/' + input)
                 .then(response => {
                     this.notes = response.data.notes
+                    console.log(response.data)
                 })
                 .catch(error => {
                     this.toast.error('Something went wrong!');
                 });
         },
-    },
+    }
+    ,
 }
 </script>

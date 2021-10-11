@@ -23,11 +23,9 @@ export default {
                 dayHeaderContent: (args) => {
                     return moment(args.date).format('dd')
                 },
-
             },
         }
-    }
-    ,
+    },
     mounted() {
         this.getLessons();
         this.getExams();
@@ -35,8 +33,7 @@ export default {
             $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('time-bg');
             $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
         });
-    }
-    ,
+    },
     methods: {
         getExams: function () {
             axios.get(route('user.exams.api'))
