@@ -55,6 +55,7 @@
         "vue-ctk-date-time-picker": "^2.5.0",
         "vue-filepond": "^7.0.0",
         "vue-fullpage.js": "^0.1.7",
+        "vue-input-calculator": "^0.4.1",
         "vue-lazy-youtube-video": "^2.3.0",
         "vue-lazytube": "^1.0.2",
         "vue-the-mask": "^0.11.1",
