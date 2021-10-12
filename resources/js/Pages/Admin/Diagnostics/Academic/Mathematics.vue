@@ -55,7 +55,6 @@ export default {
             this.loading = true
             this.onsuccess = false
             this.onerror = false
-            Inertia.post(route('mathematics-store'), formData);
             axios.post(route('mathematics-store'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

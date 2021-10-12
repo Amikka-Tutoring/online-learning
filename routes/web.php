@@ -40,7 +40,7 @@ Route::get('test2', [PageController::class, 'test2'])->name('test2');
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
 
-Route::middleware(['auth', 'initial'])->group(function () {
+Route::middleware(['auth', 'subscribed', 'initial'])->group(function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('main');
     Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
@@ -109,6 +109,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('diagnostics/academic/reading', [DiagnosticController::class, 'createReading'])->name('reading-create');
     Route::post('diagnostics/academic/reading', [DiagnosticController::class, 'storeReading'])->name('reading-store');
+
+
+    Route::get('diagnostics/academic/grammar', [DiagnosticController::class, 'createGrammar'])->name('grammar-create');
+    Route::post('diagnostics/academic/grammar', [DiagnosticController::class, 'storeGrammar'])->name('grammar-store');
 
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');

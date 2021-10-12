@@ -49,5 +49,12 @@ class UserSeeder extends Seeder
             'time' => '15:48',
             'user_id' => $user->id
         ]);
+
+        $user->enrollments()->create([
+            'course_id' => 1
+        ]);
+        $user->enrollments()->create([
+            'course_id' => 2
+        ]);
     }
 }

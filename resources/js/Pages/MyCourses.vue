@@ -5,17 +5,18 @@
                 <h1 class="blue-text">My Courses</h1>
                 <div class="courses-content pl-5" style="margin-top: 90px">
                     <transition name="list">
-                        <p v-if="courses" class="question-box text-left">
-                        <div class="row">
-                            <div class="col-lg-11 col-10">
-                                These course recommendations are based on a variety of factors including your
-                                diagnostic, goal score, time until exam, and progress.
-                            </div>
-                            <div class="col-lg-1 col-2 d-flex align-items-center">
-                                <i v-on:click="courses = !courses" class="fas fa-times red-text"></i>
+                        <div v-if="courses" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    These course recommendations are based on a variety of factors including your
+                                    diagnostic, goal score, time until exam, and progress.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="courses = disableNotification('courses')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
                             </div>
                         </div>
-                        </p>
                     </transition>
                     <div class="row">
                         <div v-for="user_course in user_courses.enrollments" class="col-lg-3 col-12" data-aos="fade-up"
@@ -63,11 +64,21 @@ export default {
         AppLayout,
     },
     props: ['user_courses'],
-    methods: {},
-
+    methods: {
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        },
+    },
+    setup() {
+        let saved = localStorage.getItem('my-courses') === null;
+        if (saved) {
+            localStorage.setItem('courses', true)
+            localStorage.setItem('my-courses', true)
+        }
+    },
     data() {
         return {
-            courses: true,
+            courses: localStorage.getItem('courses') === 'true',
         }
     },
 }

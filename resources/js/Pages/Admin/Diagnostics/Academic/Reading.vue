@@ -66,6 +66,7 @@ export default {
                             this.questions_added = response.data.questions
                         }
                         if (response.data.error_msg) {
+                            console.log(response.data.error_msg)
                             this.toast.error(response.data.error_msg)
                             this.onerror = true
                         }

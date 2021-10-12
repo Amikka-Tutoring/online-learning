@@ -329,6 +329,17 @@ export default {
             learning_style_done: this.learning_style_done
         }
     },
+    setup() {
+        let saved = localStorage.getItem('dashboard') === null;
+        if (saved) {
+            localStorage.setItem('academic', true)
+            localStorage.setItem('personality', true)
+            localStorage.setItem('courses', true)
+            localStorage.setItem('calendar', true)
+            localStorage.setItem('notes', true)
+            localStorage.setItem('dashboard', true)
+        }
+    },
     methods: {
         disableNotification(attribute) {
             localStorage.setItem(attribute, false);

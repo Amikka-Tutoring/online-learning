@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 use Laravel\Cashier\Subscription;
 use Stripe\BaseStripeClient;
 use Stripe\StripeClient;
@@ -23,8 +24,7 @@ class SubscriptionController extends Controller
             );
             $plan->product = $prod;
         }
-        return view('subscribe1', ['intent' => $user->createSetupIntent()
-            , 'plans' => $plans]);
+        return Inertia::render('Stripe/Subscribe', ['intent' => $user->createSetupIntent(), 'plans' => $plans, 'STRIPE_KEY' => env('STRIPE_KEY')]);
     }
 
     public function retrievePlans()
@@ -51,10 +51,10 @@ class SubscriptionController extends Controller
         $user->addPaymentMethod($paymentMethod);
         $plan = env('PLAN_ID');
         try {
-            if ($user->subscriptions)
-                $user->newSubscription('default', $plan)->create($paymentMethod);
+            if ( $user->subscriptions->count() )
+                $user->newSubscription('Normal - LARAVEL', $plan)->create($paymentMethod);
             else
-                $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
+                $user->newSubscription('Test - LARAVEL', $plan)->trialDays(7)->create($paymentMethod);
         } catch (\Exception $e) {
             return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
         }
@@ -64,7 +64,7 @@ class SubscriptionController extends Controller
     public function checkStatus()
     {
         $user = Auth::user();
-        if ($user->subscribed('default')) {
+        if ( $user->subscribed('default') ) {
             dd('trial');
         }
         dd('not trial');
