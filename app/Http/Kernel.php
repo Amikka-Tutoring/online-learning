@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ApiMiddleware;
 use App\Http\Middleware\InitialQuestionnaire;
+use App\Http\Middleware\UserAcademicDiagnosticMiddleware;
 use App\Http\Middleware\UserPersonalityDiagnosticMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -71,6 +72,7 @@ class Kernel extends HttpKernel
         'initial' => \App\Http\Middleware\InitialQuestionnaire::class,
         'token' => ApiMiddleware::class,
         'admin' => AdminMiddleware::class,
-        'personality' => UserPersonalityDiagnosticMiddleware::class
+        'personality' => UserPersonalityDiagnosticMiddleware::class,
+        'academic' => UserAcademicDiagnosticMiddleware::class
     ];
 }

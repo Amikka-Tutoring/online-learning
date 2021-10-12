@@ -117,7 +117,9 @@ class DiagnosticController extends Controller
             foreach ($answers as $answer) {
                 $points += $answer['is_correct'];
             }
-            $score = $points / $sum;
+            $score = $points / $sum * 100;
+            $user->profile->math_score = number_format($score, 2);
+            $user->profile->save();
             return redirect()->route('main');
         }
 
@@ -339,9 +341,8 @@ class DiagnosticController extends Controller
 
         foreach ($importData_arr as $row) {
 
-
             if (count($row) != 10) {
-                return ['error' => 'Wrong format'];
+                return ['error_msg' => 'Wrong format'];
             }
             $question = new Question();
             $question->title = $row[0];
@@ -372,6 +373,6 @@ class DiagnosticController extends Controller
                 'question_id' => $question->id,
             ]);
         }
-        return ['message' => 'Saved Successfully', 'questions' => $questions];
+        return ['message' => 'Saved Successfully'];
     }
 }
