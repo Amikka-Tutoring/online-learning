@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Enrollment;
 use App\Models\UserLessonDate;
 use App\Models\UserProfile;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -58,7 +59,6 @@ class UserController extends Controller
             'time' => $request->second_day_time,
             'user_id' => $user->id
         ]);
-
         UserProfile::create([
             'desire_score' => $request->desire_score,
             'exam_date' => $request->exam_date,
@@ -68,6 +68,6 @@ class UserController extends Controller
 //            'reminder_email' => $request->email,
         ]);
         return redirect()->route('dashboard');
-//        dd($request->courses);
     }
+
 }

@@ -79,4 +79,14 @@ class ApiController extends Controller
         });
     }
 
+    public function set_lesson_length($length)
+    {
+        if ( is_numeric($length) ) {
+            $profile = Auth::user()->profile;
+            $profile->lesson_length = $length;
+            $profile->save();
+            return ['message' => 'Lesson Length has been updated'];
+        }
+    }
+
 }
