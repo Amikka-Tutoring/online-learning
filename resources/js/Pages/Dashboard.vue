@@ -89,14 +89,7 @@
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <a v-if="p_q.slug === 'learning-style' && !learning_style_done"
-                                   :href="route('diagnostic.show',p_q.slug)"><h4>{{ p_q.name }}</h4></a>
-                                <h4 v-else-if="p_q.slug === 'learning-style' && learning_style_done">
-                                    {{ p_q.name }}</h4>
-                                <a v-if="p_q.slug === 'perfect-tutor-match' && !tutor_match_done"
-                                   :href="route('diagnostic.show',p_q.slug)"><h4>{{ p_q.name }}</h4></a>
-                                <h4 v-else-if="p_q.slug === 'perfect-tutor-match' && !tutor_match_done">
-                                    {{ p_q.name }}</h4>
+                                <a :href="route('diagnostic.show',p_q.slug)"><h4>{{ p_q.name }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">

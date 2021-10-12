@@ -64,10 +64,8 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Dates</h5>
-                                        <h6><span class="" v-for="(days,index) in user.lesson_dates"><span
-                                            v-if="index!=0">, </span>{{
-                                                days.day
-                                            }}</span>
+                                        <h6><span class="" v-for="(days,index) in user.lesson_dates">
+                                            <span v-if="index!=0">, </span>{{ days.day }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
@@ -97,11 +95,25 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Lesson Length</h5>
-                                        <h6><span class="mr-2">90 minutes</span>
+                                        <h6><span class="mr-2">{{ user.profile.lesson_length }} minutes</span>
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right">Edit</p>
+                                        <div class="text-right">
+                                            <select class="blue-text tag-select" v-model="lesson_length"
+                                                    name="tag"
+                                                    @change="set_lesson_length($event)">
+                                                <option v-bind:value="60">
+                                                    60
+                                                </option>
+                                                <option v-bind:value="90">
+                                                    90
+                                                </option>
+                                                <option v-bind:value="120">
+                                                    120
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -294,7 +306,6 @@
 import AppLayout from '@/Layouts/AppLayout'
 import CheckList from "../components/CheckList";
 import moment from "moment";
-import {useToast} from "vue-toastification";
 
 export default {
     components: {
@@ -306,14 +317,13 @@ export default {
             this.$inertia.post(route("logout"));
         },
         onChange(event, props) {
-            const toast = useToast();
             axios.post(route('change.tag'), event.target.value)
                 .then(response => {
-                    toast.success(response.data.message);
+                    this.toast.success(response.data.message);
                     this.user_tag = response.data.tag;
                 })
                 .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 });
         },
         changeTab(tab_name) {
@@ -323,6 +333,16 @@ export default {
                 this.loading = false;
             }, 500);
 
+        },
+        set_lesson_length(event) {
+            axios.post(route('change.lesson.length', event.target.value))
+                .then(response => {
+                    this.toast.success(response.data.message);
+                    this.user.profile.lesson_length = event.target.value
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
         }
     },
     props: ['user', 'tags', 'user_tag', 'user_data'],

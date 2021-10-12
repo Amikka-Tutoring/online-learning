@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserLessonDate;
 use App\Models\UserProfile;
 use Illuminate\Database\Seeder;
 
@@ -23,13 +24,30 @@ class UserSeeder extends Seeder
             'is_admin' => '1'
         ]);
 
-//        UserProfile::create([
-//            'desire_score' => '60',
-//            'exam_date' => '2021-09-01',
-//            'first_day_time' => '15:10:34',
-//            'second_time' => '17:10:34',
-//            'phone' => '045254619',
-//            'user_id' => $user->id
-//        ]);
+        $profile = UserProfile::create([
+            'desire_score' => '60',
+            'exam_date' => '2021-12-12',
+            'reminder_phone' => '(130) 123-4567',
+            'reminder_email' => 'zohopuli@mailinator.com',
+            'tutor_match' => 'ESTJ',
+            'math_score' => '70',
+            'grammar_score' => '80',
+            'reading_score' => '60',
+            'user_id' => $user->id
+        ]);
+
+        $profile->learning_style = 2;
+        $profile->save();
+
+        UserLessonDate::create([
+            'day' => 'Monday',
+            'time' => '15:48',
+            'user_id' => $user->id
+        ]);
+        UserLessonDate::create([
+            'day' => 'Tuesday',
+            'time' => '15:48',
+            'user_id' => $user->id
+        ]);
     }
 }
