@@ -127,7 +127,9 @@
                                     </div>
                                     <div class="col-lg-9 col-7 align-items-center">
                                         <h5>Practice Exam Dates</h5>
-                                        <h6><span class="mr-2">8/4 and 8/27</span>
+                                        <h6><span class="mr-2"
+                                                  v-for="p_e in user_data.practice_exam_dates">
+                                            {{ moment(p_e.date_time).format("MM/DD") }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">

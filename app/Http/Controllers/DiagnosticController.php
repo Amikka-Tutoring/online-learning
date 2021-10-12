@@ -94,7 +94,7 @@ class DiagnosticController extends Controller
             $plan = unserialize($results->plan);
 
             return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
-        } else if ($request->daiagnostic_name == 'learning_stlye') {
+        } else if ($request->all()['diagnostic_name'] === 'learning-style') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -110,7 +110,7 @@ class DiagnosticController extends Controller
             $plan = unserialize($results->plan);
 
             return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
-        } else if ($request->diagnostic_name == 'mathematics') {
+        } else if ($request->all()['diagnostic_name'] == 'mathematics') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -120,7 +120,6 @@ class DiagnosticController extends Controller
             $score = $points / $sum;
             return redirect()->route('main');
         }
-
 
     }
 

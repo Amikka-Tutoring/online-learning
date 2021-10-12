@@ -214,10 +214,8 @@ export default {
             form.answer_list.push(form.answers);
 
             if (form.currentstep === props.diagnostic.questions.length + 2) {
-                console.log("submitted");
                 form.errors = [];
                 form.progress_value = 100;
-                console.log(form);
 
             }
         }
@@ -229,6 +227,7 @@ export default {
             }
             form.answer_list.push(form.answers);
             toast.success('Submitted')
+            console.log(form)
             Inertia.post(route('quiz.result'), form);
         }
 
