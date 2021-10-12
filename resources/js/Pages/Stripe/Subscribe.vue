@@ -3,22 +3,21 @@
         <div class="container">
             <div class="row justify-content-center align-content-center h-100">
                 <div class="card col-md-4 h-auto p-0 m-0">
-                    <form id="subscribe-form" method="POST" action="{{route('subscribe.user')}}" onSubmit="return false"
+                    <form id="subscribe-form"
                           class="form p-2 m-0">
                         <div class="card-header">
                             <h1 class="text-center">Subscribe</h1>
                         </div>
                         <div class="card-body">
-                            @csrf
                             <input id="card-holder-name" type="text" class="form-control mb-4"
                                    placeholder="Card Holder Name">
-                            <input id="payment_method" type="hidden" name="payment_method">
+                            <input id="payment_method" type="hidden" name="payment_method" v-model="payment_method">
                             <!-- Stripe Elements Placeholder -->
                             <div id="card-element" class="form-control"></div>
                         </div>
                         <div class="card-footer">
                             <button id="card-button" class="btn btn-primary w-100"
-                                    data-secret="{{ intent.client_secret }}">
+                                    :data-secret="intent.client_secret" v-on:click="submit">
                                 Subscribe
                             </button>
                         </div>
@@ -37,10 +36,23 @@ export default {
         AppLayout,
     },
     props: ['intent', 'plans', 'STRIPE_KEY'],
-    methods: {},
+    methods: {
+
+        submit: function () {
+            console.log(this.payment_method)
+            axios.post(route('subscribe.user'))
+                .then(response => {
+                    console.log(response.data)
+                }).catch(error => {
+                console.log(error.response.data.errors)
+            });
+        }
+    },
 
     data() {
-        return {}
+        return {
+            payment_method: null
+        }
     },
     mounted() {
 

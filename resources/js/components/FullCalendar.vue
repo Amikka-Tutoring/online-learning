@@ -30,7 +30,7 @@ export default {
         this.getLessons();
         this.getExams();
         $('.fc-button-group').on('click', function () {
-            
+
         });
     },
     methods: {
