@@ -30,8 +30,7 @@ export default {
         this.getLessons();
         this.getExams();
         $('.fc-button-group').on('click', function () {
-            $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('time-bg');
-            $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
+            
         });
     },
     methods: {
