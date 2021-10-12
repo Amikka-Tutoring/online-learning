@@ -20,8 +20,12 @@ class CreateUserProfileTable extends Migration
             $table->date('exam_date');
             $table->string('reminder_phone');
             $table->string('reminder_email');
+            $table->integer('lesson_length')->default(90);
             $table->string('learning_style')->nullable();
             $table->string('tutor_match')->nullable();
+            $table->string('math_score')->nullable();
+            $table->string('grammar_score')->nullable();
+            $table->string('reading_score')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });

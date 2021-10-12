@@ -11,14 +11,19 @@ class UserProfile extends Model
     protected $table = 'user_profile';
     use HasFactory;
 
+
     protected $fillable = [
         'desire_score',
         'exam_date',
         'reminder_phone',
         'reminder_email',
         'user_id',
+        'lesson_length',
         'tutor_match',
         'learning_style',
+        'math_score',
+        'grammar_score',
+        'reading_score'
     ];
 
     public function user()
