@@ -50,7 +50,6 @@ Route::middleware(['auth', 'initial'])->group(function () {
         Route::get('profile', [PageController::class, 'profile'])->name('profile');
         Route::post('change/tag', [PageController::class, 'changeTag'])->name('change.tag');
         Route::post('change/lesson-length/{length}', [ApiController::class, 'set_lesson_length'])->name('change.lesson.length');
-
         Route::get('math-diagnostic', [PageController::class, 'mathDiagnostic'])->name('math-diagnostic');
         Route::post('math-diagnostic', [PageController::class, 'postMathDiagnostic'])->name('math-diagnostic-post');
         Route::get('exams', [PageController::class, 'exams'])->name('exams');
@@ -107,6 +106,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('diagnostics/academic/mathematics', [DiagnosticController::class, 'createMathematics'])->name('mathematics-create');
     Route::post('diagnostics/academic/mathematics', [DiagnosticController::class, 'storeMathematics'])->name('mathematics-store');
+
+    Route::get('diagnostics/academic/reading', [DiagnosticController::class, 'createReading'])->name('reading-create');
+    Route::post('diagnostics/academic/reading', [DiagnosticController::class, 'storeReading'])->name('reading-store');
 
     Route::get('diagnostics/personality', [AdminController::class, 'personalityDiagnostics'])->name('personality.diagnostics');
     Route::get('diagnostics/personality/create', [AdminController::class, 'createPersonalityDiagnostics'])->name('personality.diagnostics.create');

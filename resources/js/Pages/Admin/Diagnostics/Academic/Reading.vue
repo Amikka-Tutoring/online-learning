@@ -54,7 +54,7 @@ export default {
             this.loading = true
             this.onsuccess = false
             this.onerror = false
-            axios.post(route('mathematics-store'), formData, {
+            axios.post(route('reading-store'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
