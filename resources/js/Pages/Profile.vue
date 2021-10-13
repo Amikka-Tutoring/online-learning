@@ -272,7 +272,7 @@
                                     </div>
                                     <div class="col-lg-11 col-9 align-items-center">
                                         <h5>Payment</h5>
-                                        <h6>Tap to Change Payment</h6>
+                                        <a :href="route('add.payment.method')"><h6>Tap to Change Payment</h6></a>
                                     </div>
                                 </div>
                             </li>
@@ -309,11 +309,11 @@
                         <input type="checkbox" class="form-control col-3 enroll_course_checkboxes" v-model="plans"
                                :value="course.plan_id"/>
                     </div>
+                    <p v-if="available_courses.length ===0">You are enrolled to all of the courses.</p>
                     <p><u><strong>Each additional course is $30/monthly</strong></u></p>
                 </div>
                 <div class="modal-footer justify-content-start px-5">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" v-on:click="enroll">Done <span
+                    <button type="button" class="btn btn-primary" v-on:click="enroll">Enroll <span
                         v-if="loadingButton"
                         class="spinner-border ml-2"
                         style="width: 1rem; height: 1rem"></span></button>
@@ -386,11 +386,12 @@ export default {
             }))
                 .then(response => {
                     this.toast.success('Enrolled Successfully')
-                    this.loadingButton = false
+                    this.available_courses = response.data.available_courses
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 }).finally(() => {
+                this.loadingButton = false
                 this.hideModal()
             });
         }
@@ -403,7 +404,8 @@ export default {
             moment: moment,
             user_tag: this.user_tag,
             loadingButton: false,
-            plans: []
+            plans: [],
+            available_courses: this.available_courses,
         }
     },
 }

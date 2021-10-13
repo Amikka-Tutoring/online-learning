@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\User;
 use App\Models\Enrollment;
 use App\Models\UserLessonDate;
@@ -88,8 +89,13 @@ class UserController extends Controller
     public function subscribeForCourse(Request $request)
     {
         $user = Auth::user();
+
         foreach ($request->courses as $id) {
             $user->newSubscription('default', $id)->trialDays(7)->add();
         }
+        $enrollments = $user->enrollments->pluck('stripe_price');
+        $available_courses = Course::whereNotIn('plan_id', $enrollments)->get();
+        $user_enrollments = $user->enrollments;
+        return ['available_courses' => $available_courses, 'enrollments' => $user_enrollments];
     }
 }
