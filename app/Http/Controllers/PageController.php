@@ -89,8 +89,10 @@ class PageController extends Controller
         $tags = Tag::all();
         $userTag = Auth::user()->getTag();
         $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile', 'lesson_dates', 'practice_exam_dates']);
+        $enrollments = $user->enrollments->pluck('stripe_price');
+        $available_courses = Course::whereNotIn('plan_id', $enrollments)->get();
 //        $practice_exams = $user->practice_exam_dates->pluck('date_time'));
-        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user]);
+        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses]);
     }
 
     public function mathDiagnostic()

@@ -84,4 +84,12 @@ class UserController extends Controller
     {
         return Inertia::render('Stripe/PaymentMethod', ['intent' => Auth::user()->createSetupIntent(), 'STRIPE_KEY' => env('STRIPE_KEY')]);
     }
+
+    public function subscribeForCourse(Request $request)
+    {
+        $user = Auth::user();
+        foreach ($request->courses as $id) {
+            $user->newSubscription('default', $id)->trialDays(7)->add();
+        }
+    }
 }

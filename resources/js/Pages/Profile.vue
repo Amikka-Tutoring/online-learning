@@ -37,7 +37,7 @@
                                               v-for="(c,index) in user_data.enrollments">
                                             <span v-if="index>0">, </span>{{ c.course.name }}</span>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 col-2 align-items-center" v-on:click="openModal()">
                                         <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
                                         </p>
                                     </div>
@@ -291,7 +291,6 @@
                                     </div>
                                 </div>
                             </li>
-
                         </ul>
                     </div>
                 </transition>
@@ -300,7 +299,37 @@
         </div>
         <CheckList/>
     </app-layout>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body px-5 pt-5">
+                    <div class="form-group row align-items-center" v-for="course in available_courses">
+                        <label for="" class="col-9 h4 m-0">{{ course.name }}</label>
+                        <input type="checkbox" class="form-control col-3 enroll_course_checkboxes" v-model="plans"
+                               :value="course.plan_id"/>
+                    </div>
+                    <p><u><strong>Each additional course is $30/monthly</strong></u></p>
+                </div>
+                <div class="modal-footer justify-content-start px-5">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="enroll">Done <span
+                        v-if="loadingButton"
+                        class="spinner-border ml-2"
+                        style="width: 1rem; height: 1rem"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
+
+<style>
+.enroll_course_checkboxes:focus {
+    border: none !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+</style>
 
 <script>
 import AppLayout from '@/Layouts/AppLayout'
@@ -343,16 +372,35 @@ export default {
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 });
+        },
+        openModal: function () {
+            $('#modal').modal('show');
+        },
+        enroll: function () {
+            this.loadingButton = true
+            axios.post(route('subscribe.course', {
+                courses: this.plans
+            }))
+                .then(response => {
+                    this.toast.success('success')
+                    this.loadingButton = false
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                }).finally(() => {
+                $('#modal').modal('hide');
+            });
         }
     },
-    props: ['user', 'tags', 'user_tag', 'user_data'],
+    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses'],
     data() {
         return {
             avatar: this.user.profile_photo_path,
             tab: 'specific',
             moment: moment,
             user_tag: this.user_tag,
-            loading: false
+            loadingButton: false,
+            plans: []
         }
     },
 }
