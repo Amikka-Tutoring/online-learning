@@ -8,7 +8,7 @@
                         clicking on the date. This will allow you to change the time, duration, or type of lesson right
                         below it. </p>
                     <div class="my-4">
-                        <full-calendar/>
+                        <full-calendar :exams="calendar_exams" :lessons="calendar_lessons"/>
                     </div>
                 </div>
             </div>
@@ -283,7 +283,7 @@ export default {
             );
         },
     },
-    props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy'],
+    props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy', 'calendar_lessons', 'calendar_exams'],
 
     data() {
         return {

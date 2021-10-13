@@ -8,29 +8,25 @@ export default {
     components: {
         FullCalendar
     },
+    props: ['exams', 'lessons'],
     data() {
         return {
             calendarOptions: {
-                header: {
-                    today: false,
-                    left: 'title',
-                    center: '',
-                    right: 'prev,next'
-                },
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
-                dateClick: this.handleMonthChange,
                 dayHeaderContent: (args) => {
                     return moment(args.date).format('dd')
                 },
+                events: this.lessons.concat(this.exams),
             },
         }
     },
     mounted() {
-        this.getLessons();
-        this.getExams();
+        $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
+        $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
         $('.fc-button-group').on('click', function () {
-
+            $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
+            $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
         });
     },
     methods: {
@@ -47,7 +43,7 @@ export default {
                 .then(response => {
                     this.calendarOptions.events = response.data
                 }).finally(() => {
-                $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('time-bg');
+                $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
             })
         }
     }

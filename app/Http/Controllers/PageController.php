@@ -31,7 +31,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if (Auth::user()->profile) {
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -46,9 +46,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ($user_profile->tutor_match)
+        if ( $user_profile->tutor_match )
             $tutor_match_done = true;
-        if ($user_profile->learning_style)
+        if ( $user_profile->learning_style )
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -61,7 +61,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ($d['day'] > $date_now)
+            if ( $d['day'] > $date_now )
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -128,7 +128,7 @@ class PageController extends Controller
         $user = Auth::user()->load('layer_quiz_results');
 
 //        dd($user->subscriptions);
-        if (!$user->subscribedToPrice($lesson->course->plan_id, 'default'))
+        if ( !$user->subscribedToPrice($lesson->course->plan_id, 'default') )
             return redirect()->route('dashboard');
 
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
@@ -139,7 +139,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -192,7 +192,19 @@ class PageController extends Controller
 //        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
         $scheduled = $user->practice_exam_dates->pluck('exam_id');
         $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
-        return Inertia::render('SetCalendar', ['date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy]);
+
+        $calendar_exams = $user->practice_exam_dates->map(function ($item, $index) {
+            return [
+                'start' => Carbon::parse($item['date_time'])->toDateString()
+            ];
+        });
+        $calendar_lessons = $user->lesson_dates->map(function ($item, $index) {
+            return [
+                'startTime' => $item['time'],
+                'daysOfWeek' => date('N', strtotime($item['day'])),
+            ];
+        });
+        return Inertia::render('SetCalendar', ['date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy, 'calendar_lessons' => $calendar_lessons, 'calendar_exams' => $calendar_exams]);
     }
 
 
