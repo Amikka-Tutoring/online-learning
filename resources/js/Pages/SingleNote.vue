@@ -58,7 +58,7 @@
                                 <audio id="adioPlay" controls class="d-none"></audio>
                                 <hr>
                                 <audio controls
-                                       :src="'http://localhost:8000/'+note.audio_notes"></audio>
+                                       :src="appUrl+note.audio_notes"></audio>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
 
 export default {
-    props: ['note'],
+    props: ['note', 'appUrl'],
     components: {
         AppLayout,
     },
