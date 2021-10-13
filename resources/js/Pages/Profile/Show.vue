@@ -16,7 +16,6 @@
 
             <div v-if="$page.props.jetstream.canUpdatePassword">
                 <update-password-form/>
-
                 <jet-section-border/>
             </div>
 
@@ -29,7 +28,6 @@
             <!--            <logout-other-browser-sessions-form :sessions="sessions"/>-->
 
             <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-
                 <delete-user-form/>
             </template>
         </div>

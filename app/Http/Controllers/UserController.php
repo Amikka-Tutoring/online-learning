@@ -10,6 +10,8 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Stripe\BaseStripeClient;
+use function PHPUnit\Framework\throwException;
 
 class UserController extends Controller
 {
@@ -70,4 +72,18 @@ class UserController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function setPaymentMethod(Request $request)
+    {
+        $user = Auth::user();
+        $paymentMethod = $request->payment_method;
+        $user->createOrGetStripeCustomer();
+        $user->addPaymentMethod($paymentMethod);
+        $user->updateDefaultPaymentMethod($paymentMethod);
+        return redirect()->route('main');
+    }
+
+    public function addPaymentMethod()
+    {
+        return Inertia::render('Stripe/PaymentMethod', ['intent' => Auth::user()->createSetupIntent(), 'STRIPE_KEY' => env('STRIPE_KEY')]);
+    }
 }

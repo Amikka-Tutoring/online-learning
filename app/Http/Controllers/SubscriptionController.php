@@ -14,6 +14,8 @@ class SubscriptionController extends Controller
     public function subscribe()
     {
         $user = Auth::user();
+        if ( $user->subscriptions->count() )
+            return redirect()->route('dashboard');
         $key = env('STRIPE_SECRET');
         $stripe = new StripeClient($key);
         $plansraw = $stripe->plans->all();
@@ -42,23 +44,40 @@ class SubscriptionController extends Controller
         return $plans;
     }
 
+    public function cancelSubscribtions()
+    {
+        Auth::user()->subscription('default')->cancel();
+    }
+
     public function subscribeUser(Request $request)
     {
-//        dd($request->all());
         $user = Auth::user();
-        $paymentMethod = $request->payment_method;
-        $user->createOrGetStripeCustomer();
-        $user->addPaymentMethod($paymentMethod);
         $plan = env('PLAN_ID');
+        $paymentMethod = $user->defaultPaymentMethod();
         try {
             if ( $user->subscriptions->count() )
-                $user->newSubscription('Normal - LARAVEL', $plan)->create($paymentMethod);
+                $user->newSubscription('default', $plan)->create($paymentMethod);
             else
-                $user->newSubscription('Test - LARAVEL', $plan)->trialDays(7)->create($paymentMethod);
+                $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
         } catch (\Exception $e) {
             return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
         }
-        return redirect('dashboard');
+        return redirect()->route('main');
+    }
+
+    public function subscribeUserGet()
+    {
+        $user = Auth::user();
+        $plan = env('PLAN_ID');
+//        $user->newSubscription('default', $plan)->add();
+        dd($user->subscriptions);
+    }
+
+    function cancelAllSubscriptions()
+    {
+        foreach (Auth::user()->subscriptions as $subscription) {
+            $subscription->cancel();
+        }
     }
 
     public function checkStatus()
