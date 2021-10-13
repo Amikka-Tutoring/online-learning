@@ -40,13 +40,11 @@ class UserController extends Controller
 //            'reminder_phone' => 'required',
 //            'reminder_email' => 'required',
 //        ]);
-        foreach ($request->courses as $id) {
-            Enrollment::create([
-                'user_id' => Auth::id(),
-                'course_id' => $id
-            ]);
-        }
         $user = Auth::user();
+        foreach ($request->courses as $id) {
+            $user->newSubscription('default', $id)->trialDays(7)->add();
+        }
+
         UserLessonDate::updateOrCreate([
             'day' => $request->days[0]
         ], [

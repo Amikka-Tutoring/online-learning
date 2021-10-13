@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Laravel\Cashier\Subscription;
 use Stripe\BaseStripeClient;
+use Stripe\Plan;
+use Stripe\Stripe;
 use Stripe\StripeClient;
 
 class SubscriptionController extends Controller
@@ -14,7 +19,7 @@ class SubscriptionController extends Controller
     public function subscribe()
     {
         $user = Auth::user();
-        if ( $user->subscriptions->count() )
+        if ($user->subscriptions->count())
             return redirect()->route('dashboard');
         $key = env('STRIPE_SECRET');
         $stripe = new StripeClient($key);
@@ -44,9 +49,11 @@ class SubscriptionController extends Controller
         return $plans;
     }
 
-    public function cancelSubscribtions()
+    public function cancelSubscription($plan_id)
     {
-        Auth::user()->subscription('default')->cancel();
+        $subscription = Auth::user()->enrollments->where('stripe_price', $plan_id)->first();
+        $subscription->cancel();
+        return ['message' => 'Canceled! Your subscription will ends at: ' . $subscription->ends_at->format('Y-m-d')];
     }
 
     public function subscribeUser(Request $request)
@@ -55,12 +62,12 @@ class SubscriptionController extends Controller
         $plan = env('PLAN_ID');
         $paymentMethod = $user->defaultPaymentMethod();
         try {
-            if ( $user->subscriptions->count() )
+            if ($user->subscriptions->count())
                 $user->newSubscription('default', $plan)->create($paymentMethod);
             else
                 $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
         } catch (\Exception $e) {
-            return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
+            return back()->withErrors(['message' => 'Error creating subscription . ' . $e->getMessage()]);
         }
         return redirect()->route('main');
     }
@@ -68,9 +75,13 @@ class SubscriptionController extends Controller
     public function subscribeUserGet()
     {
         $user = Auth::user();
-        $plan = env('PLAN_ID');
-//        $user->newSubscription('default', $plan)->add();
-        dd($user->subscriptions);
+
+//        $plan = env('PLAN_ID');
+
+
+//        $user->newSubscription('default', 'plan_KOqNkHieifQD6F')->add();
+        $subscriptions = $user->subscriptions->pluck('stripe_price');
+        dd(Course::whereIn('plan_id', $subscriptions)->get());
     }
 
     function cancelAllSubscriptions()
@@ -83,7 +94,7 @@ class SubscriptionController extends Controller
     public function checkStatus()
     {
         $user = Auth::user();
-        if ( $user->subscribed('default') ) {
+        if ($user->subscribed('default')) {
             dd('trial');
         }
         dd('not trial');

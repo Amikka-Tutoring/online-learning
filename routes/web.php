@@ -153,6 +153,7 @@ Route::get('subscription/get', [\App\Http\Controllers\SubscriptionController::cl
 Route::get('subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'retrievePlans'])->name('plans');
 Route::get('subscription/check', [\App\Http\Controllers\SubscriptionController::class, 'checkStatus'])->name('plans.check');
 Route::post('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUser'])->name('subscribe.user');
+Route::post('subscription/cancel/{plan_id}', [\App\Http\Controllers\SubscriptionController::class, 'cancelSubscription'])->name('cancel.subscription');
 Route::get('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUserGet']);
 
 Route::get('/send-sms', [SMSController::class, 'sendSMS'])->name('send.sms');

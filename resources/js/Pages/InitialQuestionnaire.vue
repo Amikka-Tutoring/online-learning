@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="col-3">
                                             <label for="check-box"></label>
-                                            <input id="check-box" type="checkbox" :value="c.id"
+                                            <input id="check-box" type="checkbox" :value="c.plan_id"
                                                    v-model="form.courses">
                                         </div>
                                     </div>
@@ -320,7 +320,6 @@ export default {
             if (form.currentstep === 5 && (!form.days.length || form.days.length !== 2)) {
                 return toast.error('You must select 2 days');
             }
-            console.log(form.days.length)
             if (form.currentstep === 6 && (!form.first_day_time || !form.second_day_time)) {
                 return toast.error(this.form.days + ' Times are required');
             } else {

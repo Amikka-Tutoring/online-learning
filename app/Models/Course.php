@@ -7,6 +7,7 @@ use App\Scopes\LayerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\Subscription;
 
 class Course extends Model
 {
@@ -14,7 +15,8 @@ class Course extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'plan_id'
     ];
     protected $appends = ['quizzes_count', 'quizzes_attempted'];
 
@@ -31,7 +33,7 @@ class Course extends Model
 
     public function enrollments()
     {
-        return $this->hasMany(Enrollment::class, 'course_id', 'id');
+        return $this->hasMany(Subscription::class, 'stripe_price', 'plan_id');
     }
 
 

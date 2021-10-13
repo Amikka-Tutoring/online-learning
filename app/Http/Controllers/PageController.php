@@ -124,6 +124,11 @@ class PageController extends Controller
     {
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
         $user = Auth::user()->load('layer_quiz_results');
+
+//        dd($user->subscriptions);
+        if (!$user->subscribedToPrice($lesson->course->plan_id, 'default'))
+            return redirect()->route('dashboard');
+
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
         $notes = $user->notes->where('layer_id', $lesson->id)->first();
         return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt]);

@@ -12,6 +12,7 @@ use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Stripe\Subscription;
 use function Illuminate\Events\queueable;
 
 class User extends Authenticatable
@@ -109,6 +110,9 @@ class User extends Authenticatable
 
     public static function boot()
     {
+        static::updated(queueable(function ($customer) {
+            $customer->syncStripeCustomerDetails();
+        }));
         parent::boot();
         self::created(function ($model) {
             $model->setEasy();
@@ -117,7 +121,7 @@ class User extends Authenticatable
 
     public function enrollments()
     {
-        return $this->hasMany(Enrollment::class, 'user_id', 'id');
+        return $this->hasMany(\Laravel\Cashier\Subscription::class, 'user_id', 'id')->whereIn('stripe_status', ['active', 'trialing']);
     }
 
     public function exams_visited()

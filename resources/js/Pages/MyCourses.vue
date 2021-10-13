@@ -24,7 +24,16 @@
                              data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <h4>{{ user_course.course.name }}</h4>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h4>{{ user_course.course.name }}</h4>
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-primary btn-sm" :disabled="user_course.ends_at"
+                                                v-on:click="cancelSubscription(user_course.stripe_price)">Cancel
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
@@ -68,6 +77,16 @@ export default {
         disableNotification(attribute) {
             localStorage.setItem(attribute, false);
         },
+        cancelSubscription(plan_id) {
+            if (!confirm('Are you sure want to cancel subscription?')) return;
+            axios.post(route('cancel.subscription', plan_id))
+                .then(response => {
+                    this.toast.success(response.data.message);
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                })
+        }
     },
     setup() {
         let saved = localStorage.getItem('my-courses') === null;
