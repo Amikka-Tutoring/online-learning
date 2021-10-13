@@ -54,7 +54,7 @@ class ApiController extends Controller
         $user = Auth::user();
         $lesson_dates = $user->lesson_dates;
         $lesson_dates_busy = $user->lesson_dates->pluck('day');
-        return ['lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy];
+        return ['lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy, 'calendar_lessons' => $this->getUserLessonDates(), 'calendar_exams' => $this->getUserPracticeExams()];
     }
 
     public function getUserPracticeExams()
@@ -65,7 +65,6 @@ class ApiController extends Controller
                 'start' => Carbon::parse($item['date_time'])->toDateString()
             ];
         });
-
     }
 
     public function getUserLessonDates()

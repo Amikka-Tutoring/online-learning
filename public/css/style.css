@@ -2030,6 +2030,10 @@ input[type="radio"] {
     display    : flex;
 }
 
+.fc-daygrid-dot-event {
+    display : none !important;
+}
+
 @media (min-width : 900px) {
     .fc-toolbar-chunk {
         margin-right : 30px;
