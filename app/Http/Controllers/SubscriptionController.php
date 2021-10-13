@@ -19,7 +19,7 @@ class SubscriptionController extends Controller
     public function subscribe()
     {
         $user = Auth::user();
-        if ($user->subscriptions->count())
+        if ( $user->subscriptions->count() )
             return redirect()->route('dashboard');
         $key = env('STRIPE_SECRET');
         $stripe = new StripeClient($key);
@@ -53,7 +53,7 @@ class SubscriptionController extends Controller
     {
         $subscription = Auth::user()->enrollments->where('stripe_price', $plan_id)->first();
         $subscription->cancel();
-        return ['message' => 'Canceled! Your subscription will ends at: ' . $subscription->ends_at->format('Y-m-d')];
+        return ['message' => 'Canceled! Your subscription will end at: ' . $subscription->ends_at->format('Y-m-d')];
     }
 
     public function subscribeUser(Request $request)
@@ -62,7 +62,7 @@ class SubscriptionController extends Controller
         $plan = env('PLAN_ID');
         $paymentMethod = $user->defaultPaymentMethod();
         try {
-            if ($user->subscriptions->count())
+            if ( $user->subscriptions->count() )
                 $user->newSubscription('default', $plan)->create($paymentMethod);
             else
                 $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
@@ -94,7 +94,7 @@ class SubscriptionController extends Controller
     public function checkStatus()
     {
         $user = Auth::user();
-        if ($user->subscribed('default')) {
+        if ( $user->subscribed('default') ) {
             dd('trial');
         }
         dd('not trial');
