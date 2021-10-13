@@ -20,24 +20,68 @@
                         </div>
                     </transition>
                     <div class="row">
-                        <div v-for="a_q in academic_data.quizzes" class="col-lg-3 col-12" data-aos="fade-up"
+                        <div class="col-lg-3 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <a v-if="a_q.questions.length" :href="route('diagnostic.show',a_q.slug)"><h4>
-                                    {{ a_q.name }}</h4></a>
-                                <h4 v-else> {{ a_q.name }}</h4>
+                                <a :href="route('diagnostic.show','mathematics')"><h4>
+                                    Mathematics</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%" class="progress-bar"
+                                            <div style="background: #4C6ED7;" class="progress-bar"
+                                                 :style="{width:profile.math_score +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="blue-text">5/10</div>
+                                        <div class="blue-text">{{ profile.math_score / 10 }}/10</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a :href="route('diagnostic.show','reading')"><h4>
+                                    Reading</h4></a>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7;" class="progress-bar"
+                                                 :style="{width:profile.reading_score +'%'}"
+                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">{{ profile.reading_score / 10 }}/10</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a :href="route('diagnostic.show','grammar')"><h4>
+                                    Grammar</h4></a>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7;" class="progress-bar"
+                                                 :style="{width:profile.grammar_score +'%'}"
+                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">{{ profile.grammar_score / 10 }}/10</div>
                                     </div>
                                 </div>
                             </div>
@@ -51,13 +95,13 @@
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
-                                            <div style="background: #4C6ED7; width: 50%" class="progress-bar"
+                                            <div style="background: #4C6ED7; width: 100%" class="progress-bar"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="blue-text">5/10</div>
+                                        <div class="blue-text">10/10</div>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +216,7 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{ user_course.course.quizzes_attempted }}/{{
-                                                user_course.course.quizzes_count
+                                            user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -216,7 +260,7 @@
                                     <span class="blue-text font-weight-bold">Next Practice Exam:</span>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                            next_practice_exam_time
+                                        next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>
