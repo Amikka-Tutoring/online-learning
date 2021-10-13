@@ -21,7 +21,7 @@
                         style="background: #56c880"
                     ></div>
                 </div>
-                <div class="blue-text">Skip</div>
+                <!--                <div class="blue-text">Skip</div>-->
             </div>
             <div>
                 <form class="form" method="POST">

@@ -43,7 +43,8 @@ class UserController extends Controller
 //        ]);
         $user = Auth::user();
         foreach ($request->courses as $id) {
-            $user->newSubscription('default', $id)->trialDays(7)->add();
+            $course = Course::where('plan_id', $id)->first();
+            $user->newSubscription($course->slug, $id)->trialDays(7)->add();
         }
 
         UserLessonDate::updateOrCreate([
@@ -91,7 +92,8 @@ class UserController extends Controller
         $user = Auth::user();
 
         foreach ($request->courses as $id) {
-            $user->newSubscription('default', $id)->trialDays(7)->add();
+            $course = Course::where('plan_id', $id)->first();
+            $user->newSubscription($course->slug, $id)->trialDays(7)->add();
         }
         $enrollments = $user->enrollments->pluck('stripe_price');
         $available_courses = Course::whereNotIn('plan_id', $enrollments)->get();

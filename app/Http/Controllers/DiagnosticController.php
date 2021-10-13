@@ -16,6 +16,10 @@ class DiagnosticController extends Controller
 {
     public function show($slug)
     {
+        if ($slug == 'learning-style' && Auth::user()->profile->learning_style != null)
+            return redirect()->route('dashboard')->with('message', 'You already did the test');
+        else if ($slug == 'perfect-tutor-match' && Auth::user()->profile->tutor_match != null)
+            return redirect()->route('dashboard')->with('message', 'You already did the test');
         $diagnostic = DiagnosticQuiz::where('slug', $slug)->with('questions', 'diagnostic', 'questions.answers')->first();
         return Inertia::render('Diagnostic/Index', ['diagnostic' => $diagnostic]);
     }
@@ -34,58 +38,58 @@ class DiagnosticController extends Controller
     {
         $user = Auth::user();
         $answers = $request->answer_list[0];
-        if ( $request->diagnostic_name == 'perfect-tutor-match' ) {
+        if ($request->diagnostic_name == 'perfect-tutor-match') {
             $introvert = 0;
             $intuition = 0;
             $feeling = 0;
             $judging = 0;
             foreach ($answers as $answer) {
                 $question = Question::findOrFail($answer['question_id']);
-                if ( $question['explanation'] == 'Extrovert/Introvert' && $answer['is_correct'] == 1 ) {
+                if ($question['explanation'] == 'Extrovert/Introvert' && $answer['is_correct'] == 1) {
                     $introvert++;
                 }
-                if ( $question['explanation'] == 'Sensing/Intuition' && $answer['is_correct'] == 1 ) {
+                if ($question['explanation'] == 'Sensing/Intuition' && $answer['is_correct'] == 1) {
                     $intuition++;
                 }
-                if ( $question['explanation'] == 'Thinking/Feeling' && $answer['is_correct'] == 1 ) {
+                if ($question['explanation'] == 'Thinking/Feeling' && $answer['is_correct'] == 1) {
                     $feeling++;
                 }
-                if ( $question['explanation'] == 'Judging/Percieving' && $answer['is_correct'] == 1 ) {
+                if ($question['explanation'] == 'Judging/Percieving' && $answer['is_correct'] == 1) {
                     $judging++;
                 }
             }
             $total_result = [$introvert, $intuition, $feeling, $judging];
-            if ( in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]) )
+            if (in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ISTJ';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ISFJ';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'INFJ';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'INTJ';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ISTP';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ISFP';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'INFP';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'INTP';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ESTP';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ESFP';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ENTP';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ESTJ';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ESFJ';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ENFJ';
-            else if ( in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]) )
+            else if (in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ENTJ';
-            else if ( in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]) )
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ENFP';
             $user->profile->save();
             $results = DiagnosticUserTag::where('title', $user->profile->tutor_match)->first();
@@ -95,7 +99,7 @@ class DiagnosticController extends Controller
             $plan = unserialize($results->plan);
 
             return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
-        } else if ( $request->all()['diagnostic_name'] === 'learning-style' ) {
+        } else if ($request->all()['diagnostic_name'] === 'learning-style') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -111,7 +115,7 @@ class DiagnosticController extends Controller
             $plan = unserialize($results->plan);
 
             return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
-        } else if ( $request->all()['diagnostic_name'] == 'mathematics' ) {
+        } else if ($request->all()['diagnostic_name'] == 'mathematics') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -122,7 +126,7 @@ class DiagnosticController extends Controller
             $user->profile->math_score = number_format($score, 2);
             $user->profile->save();
             return redirect()->route('main');
-        } else if ( $request->all()['diagnostic_name'] == 'grammar' ) {
+        } else if ($request->all()['diagnostic_name'] == 'grammar') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -133,7 +137,7 @@ class DiagnosticController extends Controller
             $user->profile->grammar_score = number_format($score, 2);
             $user->profile->save();
             return redirect()->route('main');
-        } else if ( $request->all()['diagnostic_name'] == 'reading' ) {
+        } else if ($request->all()['diagnostic_name'] == 'reading') {
             $sum = count($answers);
             $points = 0;
             $correct = 0;
@@ -200,10 +204,10 @@ class DiagnosticController extends Controller
         $importData_arr = [];
         $i = 0;
 
-        while ( ($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE ) {
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
             //Skip first row(Remove below comment if you want to skip the first row)
-            if ( $i == 0 ) {
+            if ($i == 0) {
                 $i++;
                 continue;
             }
@@ -219,7 +223,7 @@ class DiagnosticController extends Controller
 
         foreach ($importData_arr as $row) {
 
-            if ( count($row) != 7 ) {
+            if (count($row) != 7) {
                 return ['error' => 'Wrong format'];
             }
             $question = new Question();
@@ -272,10 +276,10 @@ class DiagnosticController extends Controller
         $importData_arr = [];
         $i = 0;
 
-        while ( ($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE ) {
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
             //Skip first row(Remove below comment if you want to skip the first row)
-            if ( $i == 0 ) {
+            if ($i == 0) {
                 $i++;
                 continue;
             }
@@ -291,7 +295,7 @@ class DiagnosticController extends Controller
 
         foreach ($importData_arr as $row) {
 
-            if ( count($row) != 6 ) {
+            if (count($row) != 6) {
                 return ['error' => 'Wrong format'];
             }
             $question = new Question();
@@ -343,10 +347,10 @@ class DiagnosticController extends Controller
         $importData_arr = [];
         $i = 0;
 
-        while ( ($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE ) {
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
             //Skip first row(Remove below comment if you want to skip the first row)
-            if ( $i == 0 ) {
+            if ($i == 0) {
                 $i++;
                 continue;
             }
@@ -362,7 +366,7 @@ class DiagnosticController extends Controller
         $questions = [];
 
         foreach ($importData_arr as $row) {
-            if ( count($row) != 10 ) {
+            if (count($row) != 10) {
                 return ['error_msg' => 'Wrong format'];
             }
             $question = new Question();
@@ -422,10 +426,10 @@ class DiagnosticController extends Controller
         $importData_arr = [];
         $i = 0;
 
-        while ( ($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE ) {
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
             //Skip first row(Remove below comment if you want to skip the first row)
-            if ( $i == 0 ) {
+            if ($i == 0) {
                 $i++;
                 continue;
             }
@@ -440,7 +444,7 @@ class DiagnosticController extends Controller
         $questions = [];
 
         foreach ($importData_arr as $row) {
-            if ( count($row) != 10 ) {
+            if (count($row) != 10) {
                 return ['error_msg' => $row];
             }
 
@@ -502,10 +506,10 @@ class DiagnosticController extends Controller
         $importData_arr = [];
         $i = 0;
 
-        while ( ($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE ) {
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
             //Skip first row(Remove below comment if you want to skip the first row)
-            if ( $i == 0 ) {
+            if ($i == 0) {
                 $i++;
                 continue;
             }
@@ -520,7 +524,7 @@ class DiagnosticController extends Controller
         $questions = [];
 
         foreach ($importData_arr as $row) {
-            if ( count($row) != 10 ) {
+            if (count($row) != 10) {
                 return ['error_msg' => $row];
             }
 

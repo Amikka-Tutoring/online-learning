@@ -44,8 +44,9 @@
                 <li><a v-bind:class="route().current('admin.exams') ? 'active' : ''"
                        :href="route('admin.exams')">Practice Exams</a></li>
                 <li><a
-                    v-bind:class="route().current('diagnostics') || route().current('academic.diagnostics.create') ? 'active' : ''"
+                    v-bind:class="route().current('diagnostics') ? 'active' : ''"
                     :href="route('diagnostics','academic')">Academic Diagnostics</a></li>
+                <li><p>{{ this.$route }}</p></li>
                 <li><a
                     v-bind:class="route().current('diagnostics') || route().current('personality.diagnostics.create') ? 'active' : ''"
                     :href="route('diagnostics','personality')">Personality Diagnostics</a></li>

@@ -25,12 +25,19 @@
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-7">
                                         <h4>{{ user_course.course.name }}</h4>
                                     </div>
-                                    <div class="col-4">
-                                        <button class="btn btn-primary btn-sm" :disabled="user_course.ends_at"
-                                                v-on:click="cancelSubscription(user_course.stripe_price)">Cancel
+                                    <div class="col-5 text-center">
+                                        <button v-if="user_course.ends_at?.length>0" type="button"
+                                                class="blue-text font-weight-bold bg-transparent border-0"
+                                                disabled>
+                                            Canceled
+                                        </button>
+                                        <button v-else type="button"
+                                                class="blue-text font-weight-bold bg-transparent border-0"
+                                                v-on:click="cancelSubscription(user_course.stripe_price)">
+                                            Cancel
                                         </button>
                                     </div>
                                 </div>
@@ -49,7 +56,7 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                                user_course.course.quizzes_attempted
+                                            user_course.course.quizzes_attempted
                                             }}/{{ user_course.course.quizzes_count }}
                                         </div>
                                     </div>
