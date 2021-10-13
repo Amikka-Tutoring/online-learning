@@ -376,19 +376,22 @@ export default {
         openModal: function () {
             $('#modal').modal('show');
         },
+        hideModal: function () {
+            $('#modal').modal('hide');
+        },
         enroll: function () {
             this.loadingButton = true
             axios.post(route('subscribe.course', {
                 courses: this.plans
             }))
                 .then(response => {
-                    this.toast.success('success')
+                    this.toast.success('Enrolled Successfully')
                     this.loadingButton = false
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 }).finally(() => {
-                $('#modal').modal('hide');
+                this.hideModal()
             });
         }
     },
