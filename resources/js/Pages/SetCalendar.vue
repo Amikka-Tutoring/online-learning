@@ -246,6 +246,7 @@ export default {
                 .then(response => {
                     this.toast.success(response.data.message);
                     this.practice_exams = response.data.exams
+                    this.calendar_exams = response.data.calendar_exams
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -277,12 +278,15 @@ export default {
                 .then(response => {
                     this.lesson_dates = response.data.lesson_dates
                     this.lesson_dates_busy = response.data.lesson_dates_busy
+                    this.calendar_lessons = response.data.calendar_lessons
+                    this.calendar_exams = response.data.calendar_exams
                 }).catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 }
             );
         },
     },
+
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy', 'calendar_lessons', 'calendar_exams'],
 
     data() {
@@ -299,9 +303,9 @@ export default {
                 day: null,
                 time: null
             },
+            calendar_lessons: this.calendar_lessons,
+            calendar_exams: this.calendar_exams,
         }
-    },
-    mounted() {
     }
 }
 </script>

@@ -21,12 +21,15 @@ export default {
             },
         }
     },
+    created() {
+        setInterval(() => this.updateCss(), 1000)
+    },
     mounted() {
-        $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
-        $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
+        this.updateCss();
+
         $('.fc-button-group').on('click', function () {
+            $('.fc-daygrid-day:has(.fc-daygrid-block-event)').addClass('rocket-bg');
             $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
-            $('.fc-daygrid-day:has(.fc-daygrid-event-harness)').addClass('rocket-bg');
         });
     },
     methods: {
@@ -45,8 +48,23 @@ export default {
                 }).finally(() => {
                 $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
             })
+        },
+        updateCss: function () {
+            FullCalendar.render();
+            $('.fc-daygrid-day:has(.fc-daygrid-block-event)').addClass('rocket-bg');
+            $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
+            $('.fc-daygrid-day:not(:has(.fc-daygrid-block-event))').removeClass('rocket-bg');
+            $('.fc-daygrid-day:not(:has(.fc-daygrid-dot-event))').removeClass('time-bg');
         }
-    }
+    },
+    watch: {
+        exams: function (val) {
+            this.calendarOptions.events = this.lessons.concat(this.exams)
+        },
+        lessons: function (val) {
+            this.calendarOptions.events = this.lessons.concat(this.exams)
+        }
+    },
 }
 </script>
 <template>

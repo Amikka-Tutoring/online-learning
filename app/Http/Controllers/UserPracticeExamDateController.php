@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PracticeExam;
 use App\Models\UserPracticeExamDate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,7 +52,13 @@ class UserPracticeExamDateController extends Controller
         $user = Auth::user();
         $scheduled = $user->practice_exam_dates->pluck('exam_id');
         $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
-        return ['message' => 'Saved Successfully', 'exams' => $exams];
+
+        $calendar_exams = $user->practice_exam_dates->map(function ($item, $index) {
+            return [
+                'start' => Carbon::parse($item['date_time'])->toDateString()
+            ];
+        });
+        return ['message' => 'Saved Successfully', 'exams' => $exams, 'calendar_exams' => $calendar_exams];
     }
 
     /**
