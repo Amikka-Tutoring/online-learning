@@ -19,7 +19,8 @@
                         </div>
                     </transition>
                     <div class="row">
-                        <div v-for="user_course in user_courses.enrollments" class="col-lg-3 col-12" data-aos="fade-up"
+                        <div v-for="user_course in user_courses.enrollments" class="col-lg-3 col-md-6 col-12"
+                             data-aos="fade-up"
                              data-aos-delay="50"
                              data-aos-once="true">
                             <div class="input-cards">

@@ -20,7 +20,7 @@
                         </div>
                     </transition>
                     <div class="row">
-                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
@@ -95,7 +95,8 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-12" data-aos="fade-up" data-aos-delay="200" data-aos-once="true">
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200"
+                             data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <h4>Initial Questionnaire</h4>
@@ -137,7 +138,7 @@
                         </div>
                     </transition>
                     <div class="row">
-                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
@@ -171,7 +172,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-12" data-aos="fade-up"
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
@@ -230,7 +231,7 @@
                     </transition>
                     <div class="row">
                         <div v-for="user_course in user_courses.enrollments"
-                             class="col-lg-3 col-12" data-aos="fade-up"
+                             class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">

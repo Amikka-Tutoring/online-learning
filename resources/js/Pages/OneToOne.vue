@@ -5,7 +5,7 @@
                 <h1><span class="blue-text">Our </span>Tutors</h1>
                 <div class="tutors-content">
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="col-lg-5 text-center">
                             <img :src="'/images/laptop1.png'">
                         </div>
                         <div class="col-lg-7">
@@ -36,7 +36,7 @@
                 <h1><span class="blue-text">Our </span>Pricing</h1>
                 <div class="pricing-content">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="price-box">
                                 <div class="hours">
                                     20 Hours
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="price-box">
                                 <div class="hours">
                                     30 Hours
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="price-box">
                                 <div class="hours">
                                     40 Hours
