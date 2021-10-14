@@ -1,1362 +1,1363 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
 * {
-    font-family : Inter;
-    font-weight : 500;
+    font-family: Inter;
+    font-weight: 500;
 }
 
 body {
-    background : white !important;
+    background: white !important;
 }
 
 a {
-    cursor : pointer;
-    color  : black;
+    cursor: pointer;
+    color: black;
 }
 
 .active {
-    color           : #0e6fff !important;
-    text-decoration : underline !important;
+    color: #0e6fff !important;
+    text-decoration: underline !important;
 }
 
 .tag-select {
-    border  : none;
-    outline : none;
+    border: none;
+    outline: none;
 
 }
 
 .side-bar {
-    background     : rgba(240, 244, 243, 1);
-    padding-top    : 50px;
-    min-height     : 100vh;
-    width          : 293px;
-    display        : flex;
-    flex-direction : column;
-    position       : fixed;
-    overflow-y     : auto;
-    z-index        : 100;
-    height         : 100vh;
+    background: rgba(240, 244, 243, 1);
+    padding-top: 50px;
+    min-height: 100vh;
+    width: 293px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    overflow-y: auto;
+    z-index: 100;
+    height: 100vh;
     /*transition: all 0.2s ease-in-out;*/
 }
 
 .side-bar-0 {
-    width  : 300px;
-    height : 0;
+    width: 300px;
+    height: 0;
 }
 
 .side-bar-0 ul {
-    display : none;
+    display: none;
 }
 
 .main-content {
-    width          : 100%;
-    display        : flex;
-    flex-direction : column;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .main-content-1 {
-    width          : 100%;
-    display        : flex;
-    flex-direction : column;
-    margin-left    : 293px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 293px;
 }
 
 .transition {
-    transition : all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .side-bar ul {
-    list-style-type : none;
+    list-style-type: none;
 }
 
 .side-bar ul h4 {
-    margin-bottom : 27px;
-    font-weight   : 600;
-    color         : #263238;
-    line-height   : 23px;
+    margin-bottom: 27px;
+    font-weight: 600;
+    color: #263238;
+    line-height: 23px;
 }
 
 .side-bar ul li {
-    font-size     : 22px;
-    margin-bottom : 35px;
-    font-weight   : 500;
-    color         : #888888;
+    font-size: 22px;
+    margin-bottom: 35px;
+    font-weight: 500;
+    color: #888888;
 }
 
 .side-bar ul li a {
-    color           : #888888;
-    text-decoration : none;
+    color: #888888;
+    text-decoration: none;
 }
 
 .side-bar ul li a:hover {
-    color : #263238;
+    color: #263238;
 }
 
 .blue-text {
-    color : #4c6ed7;
+    color: #4c6ed7;
 }
 
 .blue-button {
-    background    : rgba(76, 110, 215, 0.9);
-    color         : white;
-    border-radius : 5px;
-    width         : 400px;
-    height        : 50px;
-    border        : none;
-    font-weight   : 500;
+    background: rgba(76, 110, 215, 0.9);
+    color: white;
+    border-radius: 5px;
+    width: 400px;
+    height: 50px;
+    border: none;
+    font-weight: 500;
 }
 
 .red-text {
-    color : red;
+    color: red;
 }
 
 .green-text {
-    color : green;
+    color: green;
 }
 
 .first-step h1 {
-    margin-bottom : 75px;
+    margin-bottom: 75px;
 }
 
 .first-step ol {
-    padding-left : 0;
+    padding-left: 0;
     /*padding-left: 0;*/
 }
 
 .first-step ol li {
-    font-size     : 24px;
-    line-height   : 30px;
-    margin-bottom : 57px;
-    padding-left  : 80px;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 57px;
+    padding-left: 80px;
 }
 
 .first-step ol li::marker {
-    color : #4c6ed7;
+    color: #4c6ed7;
 }
 
 .first-step ol li:last-child::marker {
-    color : transparent;
+    color: transparent;
 }
 
 .question-box {
-    font-weight      : 400;
-    font-size        : 24px;
-    line-height      : 35px;
-    color            : #263238;
-    background-color : rgba(151, 151, 151, 0.05);
-    border-radius    : 10px;
-    border           : none;
-    padding          : 15px 80px;
-    margin-bottom    : 80px;
-    text-align       : center;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 35px;
+    color: #263238;
+    background-color: rgba(151, 151, 151, 0.05);
+    border-radius: 10px;
+    border: none;
+    padding: 15px 80px;
+    margin-bottom: 80px;
+    text-align: center;
 }
 
 .checkmark {
-    position      : absolute;
-    top           : 0;
-    left          : 0;
-    height        : 30px;
-    width         : 30px;
-    background    : rgba(196, 196, 196, 0.5);
-    border-radius : 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 5px;
 }
 
 .checkmark:after {
-    content  : "";
-    position : absolute;
-    display  : none;
+    content: "";
+    position: absolute;
+    display: none;
 }
 
 .checkmark:after {
-    left              : 9px;
-    top               : 5px;
-    width             : 5px;
-    height            : 10px;
-    border            : solid white;
-    border-width      : 0 3px 3px 0;
-    -webkit-transform : rotate(45deg);
-    -ms-transform     : rotate(45deg);
-    transform         : rotate(45deg);
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .week-days input {
-    width  : 25px;
-    height : 25px;
+    width: 25px;
+    height: 25px;
 }
 
 .input-cards {
-    background    : #fdfdfd;
-    border        : 1px solid #e0e0e0;
-    box-sizing    : border-box;
-    border-radius : 10px;
-    margin-bottom : 95px;
+    background: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 95px;
 }
 
 .input-cards img {
-    height        : 90px;
-    margin-bottom : 15px;
+    height: 90px;
+    margin-bottom: 15px;
 }
 
 .input-cards h4 {
-    padding-left : 20px;
-    font-weight  : 700;
-    font-size    : 17px;
+    padding-left: 20px;
+    font-weight: 700;
+    font-size: 17px;
 }
 
 .input-cards input {
-    width         : 30px;
-    height        : 30px;
-    padding-right : 20px;
-    margin-bottom : 55px;
+    width: 30px;
+    height: 30px;
+    padding-right: 20px;
+    margin-bottom: 55px;
 }
 
 .third-step input {
-    width         : 400px;
-    height        : 40px;
-    border        : 1px solid #4c6ed7;
-    border-radius : 6px;
-    margin-bottom : 200px;
-    padding       : 7px;
+    width: 400px;
+    height: 40px;
+    border: 1px solid #4c6ed7;
+    border-radius: 6px;
+    margin-bottom: 200px;
+    padding: 7px;
 }
 
 .days-box {
-    background    : #ffffff;
-    border        : 1px solid #4c6ed7;
-    padding       : 20px;
-    width         : 370px;
-    border-radius : 8px;
-    padding-left  : 40px;
-    margin-bottom : 90px;
+    background: #ffffff;
+    border: 1px solid #4c6ed7;
+    padding: 20px;
+    width: 370px;
+    border-radius: 8px;
+    padding-left: 40px;
+    margin-bottom: 90px;
 }
 
 .days-box label {
-    font-size   : 16px;
-    line-height : 27px;
+    font-size: 16px;
+    line-height: 27px;
 }
 
 .page-wrapper {
-    padding-left : 25%;
-    padding-top  : 5%;
+    padding-left: 25%;
+    padding-top: 5%;
 }
 
 .email-box {
-    width : 600px;
+    width: 600px;
 }
 
 .email-box input {
-    width         : 250px;
-    height        : 40px;
-    margin-bottom : 15px;
-    background    : rgba(196, 196, 196, 0.5);
-    border-radius : 6px;
-    border        : none;
-    padding       : 5px;
+    width: 250px;
+    height: 40px;
+    margin-bottom: 15px;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
 }
 
 .work-times input {
-    background    : rgba(196, 196, 196, 0.5);
-    border-radius : 6px;
-    border        : none;
-    padding       : 5px;
-    margin-bottom : 15px;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    margin-bottom: 15px;
 }
 
 .datepicker {
-    margin-bottom : 50px;
+    margin-bottom: 50px;
 }
 
 .badges {
-    padding       : 2px 15px;
-    border-radius : 8px;
-    margin-right  : 5px;
-    font-weight   : bold;
+    padding: 2px 15px;
+    border-radius: 8px;
+    margin-right: 5px;
+    font-weight: bold;
 }
 
 .orange-badge {
-    background : rgba(252, 203, 159, 0.6);
+    background: rgba(252, 203, 159, 0.6);
 }
 
 .pink-badge {
-    background : rgba(255, 152, 185, 0.8);
+    background: rgba(255, 152, 185, 0.8);
 }
 
 .rose-badge {
-    background : blueviolet;
-    color      : white;
+    background: blueviolet;
+    color: white;
 }
 
 .lightrose-badge {
-    background : rgb(223, 212, 247);
+    background: rgb(223, 212, 247);
 }
 
 .gray-badge {
-    background : lightgray;
+    background: lightgray;
 }
 
 .lightblue-badge {
-    background : lightblue;
+    background: lightblue;
 }
 
 .notes-box {
-    margin-top : 25px;
-    border     : 1px solid #a6a6a6;
-    padding    : 15px;
+    margin-top: 25px;
+    border: 1px solid #a6a6a6;
+    padding: 15px;
 }
 
 .notes-box .row {
-    padding-left : 15px;
+    padding-left: 15px;
 }
 
 .notes-box h1 {
-    font-size     : 18px;
-    line-height   : 20px;
-    margin-bottom : 10px;
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 10px;
 }
 
 .notes-box h5 {
-    margin-top  : 25px;
-    font-weight : bold;
+    margin-top: 25px;
+    font-weight: bold;
 }
 
 .list-enter,
 .list-leave-to {
-    visibility : hidden;
-    height     : 0;
-    margin     : 0;
-    padding    : 0;
-    opacity    : 0;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
 }
 
 .list-enter-active,
 .list-leave-active {
-    transition : all 0.5s;
+    transition: all 0.5s;
 }
 
 .calendar-box {
-    padding       : 35px 50px;
-    border        : 1px solid #4c6ed7;
-    box-shadow    : 0 3px 65px rgba(0, 0, 0, 0.08);
-    border-radius : 67px 67px 67px 0;
+    margin-top: 60px;
+    padding: 35px 50px;
+    border: 1px solid #4c6ed7;
+    box-shadow: 0 3px 65px rgba(0, 0, 0, 0.08);
+    border-radius: 67px 67px 67px 0;
 }
 
 .profile-wrapper {
-    display         : flex;
-    flex-direction  : column;
-    justify-content : center;
-    align-items     : center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-wrapper h1 {
-    font-size   : 21px;
-    font-weight : 500;
-    margin-top  : 24px;
+    font-size: 21px;
+    font-weight: 500;
+    margin-top: 24px;
 }
 
 .profile-wrapper .premium-btn {
-    background    : #fdfdfd;
-    border        : 1px solid #4c6ed7;
-    border-radius : 5px;
-    width         : 310px;
-    height        : 70px;
-    margin-top    : 70px;
+    background: #fdfdfd;
+    border: 1px solid #4c6ed7;
+    border-radius: 5px;
+    width: 310px;
+    height: 70px;
+    margin-top: 70px;
 }
 
 .profile-wrapper .premium-btn:hover {
-    background : #4c6ed7;
-    color      : white;
-    border     : white;
+    background: #4c6ed7;
+    color: white;
+    border: white;
 }
 
 .profile-wrapper .active-button {
-    background    : #4c6ed7;
-    color         : white;
-    padding       : 5px;
-    border-radius : 5px;
-    border        : none;
-    width         : 260px;
-    height        : 50px;
-    margin-top    : 120px;
+    background: #4c6ed7;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 260px;
+    height: 50px;
+    margin-top: 120px;
 }
 
 .profile-wrapper .passive-button {
-    background    : #e6e6e6;
-    padding       : 5px;
-    border-radius : 5px;
-    border        : none;
-    width         : 260px;
-    height        : 50px;
-    margin-top    : 120px;
+    background: #e6e6e6;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 260px;
+    height: 50px;
+    margin-top: 120px;
 }
 
 .profile-wrapper .profile-course-listing {
-    width      : 760px;
-    margin-top : 85px;
+    width: 760px;
+    margin-top: 85px;
 }
 
 .profile-wrapper .profile-course-listing ul {
-    list-style-type : none;
-    padding         : 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 .profile-wrapper .profile-course-listing ul li {
-    margin-bottom : 25px;
+    margin-bottom: 25px;
 }
 
 .profile-wrapper .profile-course-listing .courses-list-box {
-    background    : #fdfdfd;
-    box-shadow    : 0 4px 30px rgba(0, 0, 0, 0.15);
-    border-radius : 6px;
-    width         : 50px;
-    height        : 30px;
+    background: #fdfdfd;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    width: 50px;
+    height: 30px;
 }
 
 .profile-wrapper .profile-course-listing h1 {
-    font-weight : 500;
-    font-size   : 16px;
-    line-height : 22px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
 }
 
 .profile-wrapper .profile-course-listing h6 {
-    font-weight : 500;
-    font-size   : 14px;
-    line-height : 20px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .profile-wrapper .profile-course-listing p {
-    font-weight : 500;
-    font-size   : 16px;
-    line-height : 22px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
 }
 
 .profile-wrapper a {
-    font-weight : 600;
-    font-size   : 18px;
-    line-height : 28px;
-    margin-top  : 90px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 90px;
 }
 
 .profile-wrapper a:hover {
-    text-decoration : none;
+    text-decoration: none;
 }
 
 .component-fade-enter-active,
 .component-fade-leave-active {
-    transition : all 0.5s;
+    transition: all 0.5s;
 }
 
 .component-fade-enter, .component-fade-leave-to
     /* .component-fade-leave-active below version 2.1.8 */
 {
-    opacity    : 0;
-    visibility : hidden;
-    height     : 0;
-    margin     : 0;
-    padding    : 0;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /*Math Questions*/
 .math-questions {
-    margin-top    : 120px;
-    margin-bottom : 120px;
+    margin-top: 120px;
+    margin-bottom: 120px;
 }
 
 .math-questions img {
-    max-height : 260px;
+    max-height: 260px;
 }
 
 .results {
-    padding-bottom : 70px;
+    padding-bottom: 70px;
 }
 
 .results h1 {
-    font-weight : bold;
+    font-weight: bold;
 }
 
 .results .results-content p {
-    font-weight : 500;
-    font-size   : 24px;
-    line-height : 29px;
-    color       : #888888;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #888888;
 }
 
 .strengths {
-    background  : rgba(14, 111, 255, 0.1);
-    padding-top : 75px;
+    background: rgba(14, 111, 255, 0.1);
+    padding-top: 75px;
 }
 
 .strengths h1 {
-    font-weight : bold;
+    font-weight: bold;
 }
 
 .weaknesses {
-    padding-top : 75px;
+    padding-top: 75px;
 }
 
 .weaknesses h1 {
-    font-weight : bold;
+    font-weight: bold;
 }
 
 .strengths-content ol {
-    counter-reset : my-awesome-counter;
-    list-style    : none;
-    padding-left  : 0;
+    counter-reset: my-awesome-counter;
+    list-style: none;
+    padding-left: 0;
     /*padding-left: 0;*/
 }
 
 .strengths-content ol li {
-    counter-increment : my-awesome-counter;
-    padding-left      : 80px;
-    position          : relative;
-    font-size         : 24px;
-    line-height       : 30px;
-    margin-bottom     : 57px;
+    counter-increment: my-awesome-counter;
+    padding-left: 80px;
+    position: relative;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 57px;
 }
 
 .strengths-content ol li::before {
-    content       : counter(my-awesome-counter);
-    background    : rgba(76, 110, 215, 0.9);
-    color         : white;
-    position      : absolute;
-    --size        : 40px;
-    left          : calc(-1 * var(--size) - 10px);
-    line-height   : var(--size);
-    width         : var(--size);
-    height        : var(--size);
-    top           : 0;
-    border-radius : 50%;
-    text-align    : center;
-    font-size     : 18px;
+    content: counter(my-awesome-counter);
+    background: rgba(76, 110, 215, 0.9);
+    color: white;
+    position: absolute;
+    --size: 40px;
+    left: calc(-1 * var(--size) - 10px);
+    line-height: var(--size);
+    width: var(--size);
+    height: var(--size);
+    top: 0;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 18px;
 }
 
 /*Exams*/
 
 .practice-exams-content {
-    padding-left : 200px;
+    padding-left: 200px;
 }
 
 .practice-exams-content .question-box {
-    margin-top     : 45px;
-    margin-bottom  : 100px;
-    color          : #888888;
-    text-align     : left;
-    padding-top    : 40px;
-    padding-bottom : 40px;
+    margin-top: 45px;
+    margin-bottom: 100px;
+    color: #888888;
+    text-align: left;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 .video-exams-content {
-    padding-left : 200px;
+    padding-left: 200px;
 }
 
 .video-exams-content .question-box {
-    margin-top     : 45px;
-    margin-bottom  : 100px;
-    color          : #888888;
-    text-align     : left;
-    padding-top    : 40px;
-    padding-bottom : 40px;
+    margin-top: 45px;
+    margin-bottom: 100px;
+    color: #888888;
+    text-align: left;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 .results-wrapper {
-    background : rgba(210, 225, 245, 0.3);
-    margin     : 35px;
-    margin-top : -4%;
+    background: rgba(210, 225, 245, 0.3);
+    margin: 35px;
+    margin-top: -4%;
 }
 
 .results-wrapper .result {
-    height : 450px;
+    height: 450px;
 }
 
 .results-wrapper .result p {
-    font-size   : 24px;
-    line-height : 29px;
+    font-size: 24px;
+    line-height: 29px;
 }
 
 .results-wrapper .result .blue-text {
-    margin-bottom : 50px;
+    margin-bottom: 50px;
 }
 
 .results-wrapper h1 {
-    font-weight   : 600;
-    margin-top    : 137px;
-    margin-bottom : 50px;
+    font-weight: 600;
+    margin-top: 137px;
+    margin-bottom: 50px;
 }
 
 .results-wrapper .strengths-weakness {
-    background : rgba(122, 171, 220, 0.2);
+    background: rgba(122, 171, 220, 0.2);
 }
 
 .results-wrapper .strengths-weakness h4 {
-    font-weight  : 600;
-    margin-top   : 45px;
-    padding-left : 55px;
-    font-size    : 30px;
-    line-height  : 42px;
+    font-weight: 600;
+    margin-top: 45px;
+    padding-left: 55px;
+    font-size: 30px;
+    line-height: 42px;
 }
 
 .results-wrapper .plan {
-    display     : flex;
-    align-items : center;
-    min-height  : 500px;
+    display: flex;
+    align-items: center;
+    min-height: 500px;
 }
 
 .lesson-container-margin {
-    margin-top : -215px;
+    margin-top: -215px;
 }
 
-@media (max-width : 767.98px), (max-width : 991.98px) {
+@media (max-width: 767.98px), (max-width: 991.98px) {
     .tag-select {
-        width : 35px;
+        width: 35px;
     }
 
     .notes-content {
-        position : inherit !important;
+        position: inherit !important;
     }
 
     .lesson-container-margin {
-        margin-top : 0;
+        margin-top: 0;
     }
 
     .notes-section .notes-section-content .notes-box .row {
-        border-right : none !important;
+        border-right: none !important;
     }
 
     .results-wrapper .plan, .result {
-        height  : 100% !important;
-        padding : 25px 0;
+        height: 100% !important;
+        padding: 25px 0;
     }
 
     .results-wrapper h1 {
-        margin-top : 10px;
+        margin-top: 10px;
     }
 
     .results-wrapper .result p, .results-wrapper ol li {
-        font-size : 18px !important;
+        font-size: 18px !important;
     }
 
     .results-wrapper ol li {
-        padding : 10px !important;
+        padding: 10px !important;
     }
 
     .results-wrapper .strengths-weakness h4 {
-        margin : 20px 0px !important;
+        margin: 20px 0px !important;
     }
 
     .results-wrapper .result .blue-text {
-        margin : 0;
+        margin: 0;
     }
 
     .results-wrapper img {
-        display : none;
+        display: none;
     }
 }
 
 .results-wrapper ol li {
-    padding     : 15px 0px 50px 20px;
-    font-weight : normal;
-    font-size   : 22px;
-    line-height : 27px;
+    padding: 15px 0px 50px 20px;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 27px;
 }
 
 .strengths-weakness .title-mb {
-    margin-bottom : 70px;
+    margin-bottom: 70px;
 }
 
 .exam-box {
-    width         : 500px;
-    max-width     : 500px;
-    margin-bottom : 150px;
+    width: 500px;
+    max-width: 500px;
+    margin-bottom: 150px;
 }
 
 .exam-box .exam-box-tile {
-    background    : rgba(76, 110, 215, 0.44);
-    border        : 1px solid #4c6ed7;
-    border-radius : 5px 5px 0 0;
-    height        : 70px;
-    display       : flex;
+    background: rgba(76, 110, 215, 0.44);
+    border: 1px solid #4c6ed7;
+    border-radius: 5px 5px 0 0;
+    height: 70px;
+    display: flex;
 }
 
 .exam-box .exam-box-tile h1 {
-    font-weight : 500;
-    font-size   : 19px;
-    line-height : 27px;
-    padding     : 20px;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 27px;
+    padding: 20px;
 }
 
 .exam-box .exam-box-list {
-    border : 1px solid #4c6ed7;
+    border: 1px solid #4c6ed7;
 }
 
 .exam-box .exam-name {
-    font-weight    : normal;
-    font-size      : 19px;
-    line-height    : 27px;
-    letter-spacing : 0.002em;
-    color          : #888888;
+    font-weight: normal;
+    font-size: 19px;
+    line-height: 27px;
+    letter-spacing: 0.002em;
+    color: #888888;
 }
 
 .recommended h1 {
-    margin-bottom : 70px;
+    margin-bottom: 70px;
 }
 
 .recommended .recommended-content {
-    padding-left : 100px;
+    padding-left: 100px;
 }
 
 .recommended .recommended-content p {
-    font-weight : 500;
-    font-size   : 24px;
-    line-height : 110%;
-    color       : #888888;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
 }
 
 .recommended .recommended-content .recommended-box {
-    margin-top : 70px;
+    margin-top: 70px;
 }
 
 .recommended-title {
-    background    : rgba(14, 111, 255, 0.4);
-    border-radius : 9px;
-    color         : white;
-    padding       : 20px 50px;
+    background: rgba(14, 111, 255, 0.4);
+    border-radius: 9px;
+    color: white;
+    padding: 20px 50px;
 }
 
 .recommended-item {
-    border        : 1px solid rgba(14, 111, 255, 0.75);
-    border-radius : 9px;
-    padding       : 15px;
+    border: 1px solid rgba(14, 111, 255, 0.75);
+    border-radius: 9px;
+    padding: 15px;
 }
 
 .recommended-list {
-    padding-left  : 50px;
-    padding-right : 50px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .recommended-item {
-    margin : 20px 0;
+    margin: 20px 0;
 }
 
 .w-60 {
-    width : 60% !important;
+    width: 60% !important;
 }
 
 .grammar-course {
-    margin-top    : 200px;
-    margin-bottom : 100px;
+    margin-top: 200px;
+    margin-bottom: 100px;
 }
 
 .grammar-course h1 {
-    margin-bottom : 70px;
+    margin-bottom: 70px;
 }
 
 .grammar-course .grammar-course-content {
-    padding-left : 100px;
+    padding-left: 100px;
 }
 
 .grammar-course .grammar-course-content p {
-    font-weight   : 500;
-    font-size     : 24px;
-    line-height   : 110%;
-    color         : #888888;
-    margin-bottom : 100px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
+    margin-bottom: 100px;
 }
 
 .grammar-course .grammar-course-content .grammar-list {
-    border-radius : 7px;
-    color         : white;
-    padding       : 20px 50px;
-    margin-bottom : 5px;
+    border-radius: 7px;
+    color: white;
+    padding: 20px 50px;
+    margin-bottom: 5px;
 }
 
 .grammar-course .grammar-course-content .grammar-list a {
-    color           : white;
-    text-decoration : none;
+    color: white;
+    text-decoration: none;
 }
 
 .grammar-course .grammar-course-content .first-list {
-    background : rgba(14, 111, 255, 0.5);
+    background: rgba(14, 111, 255, 0.5);
 }
 
 .grammar-course .grammar-course-content .second-list {
-    background : rgba(103, 162, 69, 0.75);
+    background: rgba(103, 162, 69, 0.75);
 }
 
 .grammar-course .grammar-course-content .third-list {
-    background : rgba(255, 0, 0, 0.44);
+    background: rgba(255, 0, 0, 0.44);
 }
 
 .grammar-course .grammar-course-content .fourth-list {
-    background : rgba(255, 146, 0, 0.6);
+    background: rgba(255, 146, 0, 0.6);
 }
 
 .lesson h1 {
-    font-weight : 500;
-    font-size   : 32px;
-    line-height : 35px;
-    text-align  : center;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 35px;
+    text-align: center;
 }
 
 .lesson img {
-    margin : 90px 0;
+    margin: 90px 0;
 }
 
 .notes-section {
-    padding       : 100px 0;
-    border-top    : 1px solid black;
-    border-bottom : 1px solid black;
+    padding: 100px 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .notes-section .notes-section-content {
-    padding-left : 100px;
+    padding-left: 100px;
 }
 
 .notes-section .notes-section-content p {
-    font-weight : 500;
-    font-size   : 24px;
-    line-height : 110%;
-    color       : #888888;
-    margin      : 100px 0;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
+    margin: 100px 0;
 }
 
 .notes-section .notes-section-content .notes-box .rounded-circle {
-    width           : 50px;
-    height          : 50px;
-    background      : rgba(14, 111, 255, 0.2);
-    color           : rgba(14, 111, 255, 0.5);
-    text-align      : center;
-    display         : flex;
-    justify-content : center;
-    border          : 1px solid rgba(14, 111, 255, 0.2);
-    align-items     : center;
+    width: 50px;
+    height: 50px;
+    background: rgba(14, 111, 255, 0.2);
+    color: rgba(14, 111, 255, 0.5);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(14, 111, 255, 0.2);
+    align-items: center;
 }
 
 .notes-section .notes-section-content .notes-box {
-    margin        : 0;
-    padding       : 0;
-    border        : 3px solid rgb(14, 111, 255);
-    border-radius : 8px;
+    margin: 0;
+    padding: 0;
+    border: 3px solid rgb(14, 111, 255);
+    border-radius: 8px;
 }
 
 .notes-section .notes-section-content .notes-box .row {
-    border-right    : 3px solid rgb(14, 111, 255);
-    border-bottom   : 3px solid rgb(14, 111, 255);
-    padding         : 35px;
-    justify-content : center;
+    border-right: 3px solid rgb(14, 111, 255);
+    border-bottom: 3px solid rgb(14, 111, 255);
+    padding: 35px;
+    justify-content: center;
 }
 
 .notes-section .notes-section-content .notes-box .row:last-child {
-    border-bottom : none;
+    border-bottom: none;
 }
 
 .notes-section .notes-section-content .notes-box h1 {
-    font-weight          : 600;
-    font-size            : 21px;
-    line-height          : 36px;
-    text-decoration-line : underline;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 36px;
+    text-decoration-line: underline;
 }
 
 .notes-section .notes-section-content .notes-box textarea {
-    border     : none;
-    background : none;
-    outline    : none;
-    padding    : 10px;
-    color      : rgb(14, 111, 255);
-    height     : 335px;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 10px;
+    color: rgb(14, 111, 255);
+    height: 335px;
 }
 
 .light-button {
-    position      : absolute;
-    right         : 10px;
-    bottom        : 10px;
-    background    : rgba(14, 111, 255, 0.2);
-    border-radius : 8px;
-    color         : #4c6ed7;
-    padding       : 0 10px;
-    border        : none;
-    max-width     : 136px;
-    width         : 100%;
-    height        : 40px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(14, 111, 255, 0.2);
+    border-radius: 8px;
+    color: #4c6ed7;
+    padding: 0 10px;
+    border: none;
+    max-width: 136px;
+    width: 100%;
+    height: 40px;
 }
 
 .faq {
-    padding : 100px 0;
+    padding: 100px 0;
 }
 
 .faq .faq-section-content {
-    padding-left : 100px;
+    padding-left: 100px;
 }
 
 .faq .faq-section-content p {
-    font-weight : 500;
-    font-size   : 24px;
-    line-height : 110%;
-    color       : #888888;
-    margin      : 100px 0;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 110%;
+    color: #888888;
+    margin: 100px 0;
 }
 
 .header-menu {
-    position   : absolute;
-    right      : 0;
-    width      : 380px;
-    height     : 48px;
-    background : white;
-    top        : 86px;
-    z-index    : 99;
+    position: absolute;
+    right: 0;
+    width: 380px;
+    height: 48px;
+    background: white;
+    top: 86px;
+    z-index: 99;
 }
 
 .tools-menu {
-    position   : absolute;
-    right      : 0;
-    width      : 380px;
-    background : white;
-    top        : 86px;
-    z-index    : 99;
+    position: absolute;
+    right: 0;
+    width: 380px;
+    background: white;
+    top: 86px;
+    z-index: 99;
 }
 
 .tools-menu ul {
-    list-style-type : none;
+    list-style-type: none;
 }
 
 .header-menu ul {
-    list-style-type : none;
+    list-style-type: none;
 }
 
 .header-menu ul, .tools-menu ul {
-    display        : flex;
-    flex-direction : column;
-    padding        : 0;
-    margin-bottom  : 0 !important;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin-bottom: 0 !important;
 }
 
 .header-menu ul:last-child {
-    position      : absolute;
-    right         : 0;
-    width         : 700px;
-    background    : white;
-    border-radius : 10px;
-    border        : 1px solid rgba(14, 111, 255, 0.5);
-    padding       : 20px;
+    position: absolute;
+    right: 0;
+    width: 700px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid rgba(14, 111, 255, 0.5);
+    padding: 20px;
 }
 
 .header-menu ul li, .tools-menu ul li {
-    font-weight    : 500;
-    font-size      : 20px;
-    line-height    : 19px;
-    text-align     : center;
-    letter-spacing : 0.002em;
-    color          : rgba(14, 111, 255, 0.75);
-    padding        : 15px 0;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 0.002em;
+    color: rgba(14, 111, 255, 0.75);
+    padding: 15px 0;
 }
 
 .header-menu ul li .step-one {
-    margin-left : 50px !important;
+    margin-left: 50px !important;
 }
 
 .header-menu ul li ol {
-    list-style-type : decimal !important;
+    list-style-type: decimal !important;
 }
 
 .header-menu ul li ol li::marker {
-    color   : #4c6ed7;
-    display : block;
+    color: #4c6ed7;
+    display: block;
 }
 
 .header-menu ul li i {
-    cursor : pointer;
+    cursor: pointer;
 }
 
 .next-lessons,
 .tools {
-    background  : #f0f4f3;
-    padding     : 40px;
-    padding-top : 50px;
-    color       : black;
+    background: #f0f4f3;
+    padding: 40px;
+    padding-top: 50px;
+    color: black;
 }
 
 .next-lessons .next-item .badges {
-    font-weight : normal !important;
-    font-size   : 16px !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
 }
 
 .next-lessons .next-up {
-    background    : rgba(14, 111, 255, 0.5);
-    border-radius : 6px;
-    padding       : 10px 15px;
-    color         : white;
-    margin-bottom : 20px;
+    background: rgba(14, 111, 255, 0.5);
+    border-radius: 6px;
+    padding: 10px 15px;
+    color: white;
+    margin-bottom: 20px;
 }
 
 .next-lessons .next-item {
-    background    : #f0f4f3;
-    border        : 3px solid rgba(14, 111, 255, 0.5);
-    border-radius : 6px;
-    padding       : 5px;
-    margin-bottom : 20px;
+    background: #f0f4f3;
+    border: 3px solid rgba(14, 111, 255, 0.5);
+    border-radius: 6px;
+    padding: 5px;
+    margin-bottom: 20px;
 }
 
 .tools .notes-circle {
-    width           : 40px;
-    height          : 40px;
-    background      : rgba(14, 111, 255, 0.2);
-    color           : rgba(14, 111, 255, 0.5);
-    text-align      : center;
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
+    width: 40px;
+    height: 40px;
+    background: rgba(14, 111, 255, 0.2);
+    color: rgba(14, 111, 255, 0.5);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tools textarea {
-    background    : rgba(196, 196, 196, 0.75);
-    border-radius : 10px;
-    border        : none;
-    margin-top    : 20px;
-    padding       : 10px;
-    outline       : none;
+    background: rgba(196, 196, 196, 0.75);
+    border-radius: 10px;
+    border: none;
+    margin-top: 20px;
+    padding: 10px;
+    outline: none;
 }
 
 .tools button {
-    background    : rgba(14, 111, 255, 0.25);
-    border-radius : 6.38073px;
-    text-align    : center;
-    border        : none;
-    padding       : 15px 60px;
-    margin-top    : 20px;
-    font-weight   : bold;
+    background: rgba(14, 111, 255, 0.25);
+    border-radius: 6.38073px;
+    text-align: center;
+    border: none;
+    padding: 15px 60px;
+    margin-top: 20px;
+    font-weight: bold;
 }
 
 .notes-table {
-    margin : 100px 0;
+    margin: 100px 0;
 }
 
 .notes-table table {
-    width : 100%;
+    width: 100%;
 }
 
 .notes-table table thead th {
-    text-align : center;
-    padding    : 20px;
-    cursor     : pointer;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
 }
 
 .notes-table table td {
-    border     : 1px solid #4c6ed7;
-    padding    : 10px;
-    text-align : center;
+    border: 1px solid #4c6ed7;
+    padding: 10px;
+    text-align: center;
 }
 
 .notes-buttons {
-    margin : 70px 0;
+    margin: 70px 0;
 }
 
 .notes-buttons button {
-    background    : rgba(196, 196, 196, 0.25);
-    border-radius : 10px;
-    color         : #4c6ed7;
-    border        : none;
-    padding       : 10px 20px;
-    margin-right  : 25px;
+    background: rgba(196, 196, 196, 0.25);
+    border-radius: 10px;
+    color: #4c6ed7;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 25px;
 }
 
 .notes-buttons input {
-    background    : rgba(196, 196, 196, 0.25);
-    border-radius : 10px;
-    color         : #4c6ed7;
-    border        : none;
-    padding       : 10px 20px;
-    padding-left  : 50px;
-    width         : 100%;
-    outline       : none;
+    background: rgba(196, 196, 196, 0.25);
+    border-radius: 10px;
+    color: #4c6ed7;
+    border: none;
+    padding: 10px 20px;
+    padding-left: 50px;
+    width: 100%;
+    outline: none;
 }
 
 .blue-divider {
-    border-top : 2px solid #4c6ed7;
+    border-top: 2px solid #4c6ed7;
 }
 
 .written-notes-boxes {
-    border        : 0.2px solid #a6a6a6;
-    border-radius : 6px;
-    padding       : 8px;
-    margin-bottom : 40px;
+    border: 0.2px solid #a6a6a6;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 40px;
 }
 
 .written-notes-title {
-    font-weight   : bold;
-    font-size     : 18px;
-    line-height   : 21px;
-    color         : rgba(0, 0, 0, 0.75);
-    margin-bottom : 10px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    color: rgba(0, 0, 0, 0.75);
+    margin-bottom: 10px;
 }
 
 .written-notes-box textarea {
-    width   : 100%;
-    padding : 30px 40px;
-    border  : none;
-    outline : none;
+    width: 100%;
+    padding: 30px 40px;
+    border: none;
+    outline: none;
 }
 
 .written-notes-box textarea::-webkit-scrollbar {
-    display : none;
+    display: none;
 }
 
 .written-notes-box {
-    border        : 0.2px solid #a6a6a6;
-    border-radius : 8px;
+    border: 0.2px solid #a6a6a6;
+    border-radius: 8px;
 }
 
 .audio-notes-box {
-    padding       : 30px 60px;
-    border        : 0.2px solid #a6a6a6;
-    border-radius : 8px;
-    font-size     : 18px;
-    line-height   : 21px;
-    color         : #000000;
+    padding: 30px 60px;
+    border: 0.2px solid #a6a6a6;
+    border-radius: 8px;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
 }
 
 .audio-notes-box i {
-    width : 25px;
+    width: 25px;
 }
 
 .topics-title {
-    font-weight : bold;
-    font-size   : 18px;
-    line-height : 21px;
-    text-align  : center;
-    color       : rgba(0, 0, 0, 0.75);
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .create-notes-content {
-    padding-left : 100px;
-    margin       : 80px 0;
+    padding-left: 100px;
+    margin: 80px 0;
 }
 
 .tutors-content ol {
-    counter-reset : my-awesome-counter;
-    list-style    : none;
-    padding-left  : 0;
+    counter-reset: my-awesome-counter;
+    list-style: none;
+    padding-left: 0;
     /*padding-left: 0;*/
 }
 
 .tutors-content ol li {
-    counter-increment : my-awesome-counter;
-    padding-left      : 80px;
-    position          : relative;
-    font-size         : 24px;
-    line-height       : 30px;
-    margin-bottom     : 57px;
+    counter-increment: my-awesome-counter;
+    padding-left: 80px;
+    position: relative;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 57px;
 }
 
 .tutors-content ol li::before {
-    content       : counter(my-awesome-counter);
-    background    : rgba(76, 110, 215, 0.9);
-    color         : white;
-    position      : absolute;
-    --size        : 40px;
-    left          : calc(-1 * var(--size) - 10px);
-    line-height   : var(--size);
-    width         : var(--size);
-    height        : var(--size);
-    top           : 0;
-    border-radius : 50%;
-    text-align    : center;
-    font-size     : 18px;
+    content: counter(my-awesome-counter);
+    background: rgba(76, 110, 215, 0.9);
+    color: white;
+    position: absolute;
+    --size: 40px;
+    left: calc(-1 * var(--size) - 10px);
+    line-height: var(--size);
+    width: var(--size);
+    height: var(--size);
+    top: 0;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 18px;
 }
 
 .tutors-content {
-    margin : 100px 0;
+    margin: 100px 0;
 }
 
 .tutors-content img {
-    margin-bottom : 50px;
+    margin-bottom: 50px;
 }
 
 .pricing-content {
-    padding-left : 100px;
-    margin       : 100px 0;
+    padding-left: 100px;
+    margin: 100px 0;
 }
 
 .pricing-content .price-box {
-    border        : 2px solid rgba(14, 111, 255, 0.5);
-    border-radius : 11px;
+    border: 2px solid rgba(14, 111, 255, 0.5);
+    border-radius: 11px;
 }
 
 .pricing-content .price-box .hours {
-    height          : 100px;
-    display         : flex;
-    align-items     : center;
-    background      : rgba(14, 111, 255, 0.3);
-    border-radius   : 11px;
-    color           : white;
-    justify-content : center;
-    font-size       : 30px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background: rgba(14, 111, 255, 0.3);
+    border-radius: 11px;
+    color: white;
+    justify-content: center;
+    font-size: 30px;
 }
 
 .pricing-content .price-box .content {
-    font-size : 14px;
-    color     : #646464;
-    padding   : 20px;
+    font-size: 14px;
+    color: #646464;
+    padding: 20px;
 }
 
 .pricing-content .price-box .content span {
-    color : rgba(14, 111, 255, 0.5);
+    color: rgba(14, 111, 255, 0.5);
 }
 
 .pricing-content .price-box .features {
-    margin          : 10px 0;
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
-    border-top      : 2px solid #f2f2f2;
-    border-bottom   : 2px solid #f2f2f2;
-    padding         : 10px 0;
-    font-size       : 14px;
-    line-height     : 24px;
-    color           : #646464;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #f2f2f2;
+    border-bottom: 2px solid #f2f2f2;
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 24px;
+    color: #646464;
 }
 
 .pricing-content .price-box .price-box-button {
 }
 
 .pricing-content .price-box .price-box-button button {
-    background    : rgba(14, 111, 255, 0.5);
-    border-radius : 11px;
-    color         : white;
-    text-align    : center;
-    width         : 150px;
-    height        : 50px;
-    border        : none;
-    margin        : 20px 0;
+    background: rgba(14, 111, 255, 0.5);
+    border-radius: 11px;
+    color: white;
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    border: none;
+    margin: 20px 0;
 }
 
 .reach-out .reach-form form input,
 textarea {
-    width         : 100%;
-    margin-bottom : 50px;
-    max-height    : 335px;
-    border        : 2px solid #4c6ed7;
-    border-radius : 11px;
-    padding-left  : 60px;
-    outline       : none;
-    height        : 70px;
+    width: 100%;
+    margin-bottom: 50px;
+    max-height: 335px;
+    border: 2px solid #4c6ed7;
+    border-radius: 11px;
+    padding-left: 60px;
+    outline: none;
+    height: 70px;
 }
 
 .reach-out .reach-form form textarea {
-    padding-top : 10px;
-    min-height  : 100px;
-    max-height  : 200px;
+    padding-top: 10px;
+    min-height: 100px;
+    max-height: 200px;
 }
 
 .reach-out .reach-form i {
-    position : absolute;
+    position: absolute;
     /*top: 20px;*/
     /*left: 35px;*/
-    color    : #abb3bb;
+    color: #abb3bb;
 }
 
 .reach-out .reach-form .icon {
-    padding : 20px;
+    padding: 20px;
 }
 
 .wrapper {
-    background      : #fff;
-    width           : 100%;
-    align-items     : center;
-    justify-content : space-evenly;
-    border-radius   : 5px;
+    background: #fff;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5px;
 }
 
 .wrapper .option {
-    background      : #fff;
-    height          : 100%;
-    width           : 100%;
-    display         : flex;
-    align-items     : center;
-    justify-content : space-evenly;
-    border-radius   : 5px;
-    cursor          : pointer;
-    border          : 2px solid lightgrey;
-    transition      : all 0.3s ease;
-    margin          : 10px;
-    padding         : 10px 0;
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid lightgrey;
+    transition: all 0.3s ease;
+    margin: 10px;
+    padding: 10px 0;
 }
 
 .fade-enter-active, .fade-leave-active {
-    transition : opacity .3s;
+    transition: opacity .3s;
 }
 
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
 {
-    opacity : 0;
+    opacity: 0;
 }
 
 .wrapper .option .dot {
-    display : none;
+    display: none;
 }
 
 .wrapper .option .dot::before {
-    display : none !important;
+    display: none !important;
 }
 
 input[type="radio"] {
-    display : none;
+    display: none;
 }
 
 [id^="option"]:checked:checked ~ [class^="option"] {
-    border-color : rgba(76, 110, 215, 0.9);
-    background   : rgba(76, 110, 215, 0.9);
+    border-color: rgba(76, 110, 215, 0.9);
+    background: rgba(76, 110, 215, 0.9);
 }
 
 [id^="option"]:checked:checked ~ [class^="option"] .dot {
-    background : #fff;
+    background: #fff;
 }
 
 [id^="option"]:checked:checked ~ [class^="option"] .dot::before {
-    opacity   : 1;
-    transform : scale(1);
+    opacity: 1;
+    transform: scale(1);
 }
 
 .wrapper .option span {
-    font-size : 20px;
-    color     : #808080;
+    font-size: 20px;
+    color: #808080;
 }
 
 [id^="option"]:checked:checked ~ [class^="option"] span {
-    color : #fff;
+    color: #fff;
 }
 
 .header-menu {
-    position : fixed;
+    position: fixed;
 }
 
 .header-menu ol {
-    counter-reset : my-awesome-counter;
-    list-style    : none;
-    padding-left  : 0;
+    counter-reset: my-awesome-counter;
+    list-style: none;
+    padding-left: 0;
     /*padding-left: 0;*/
 }
 
 .header-menu ol li {
-    position      : relative;
-    line-height   : 30px;
-    margin-bottom : 57px;
-    text-align    : left;
-    color         : black;
-    padding-top   : 0;
-    padding-left  : 20px;
+    position: relative;
+    line-height: 30px;
+    margin-bottom: 57px;
+    text-align: left;
+    color: black;
+    padding-top: 0;
+    padding-left: 20px;
 }
 
 .header-menu ol li:last-child::before {
-    background : rgba(14, 111, 255, 0.25);
+    background: rgba(14, 111, 255, 0.25);
 }
 
 .quiz-question-box {
-    padding          : 10px;
-    font-weight      : 400;
-    font-size        : 18px;
-    line-height      : 35px;
-    color            : #263238;
-    background-color : rgba(151, 151, 151, 0.05);
-    border-radius    : 10px;
-    border           : none;
-    text-align       : center;
+    padding: 10px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 35px;
+    color: #263238;
+    background-color: rgba(151, 151, 151, 0.05);
+    border-radius: 10px;
+    border: none;
+    text-align: center;
 }
 
 /*ADMIN PANEL*/
@@ -1366,465 +1367,465 @@ input[type="radio"] {
 }
 
 .admin-sidebar ul h1 {
-    margin-top     : 50px;
-    font-weight    : 600;
-    font-size      : 22px;
-    line-height    : 23px;
-    letter-spacing : 0.002em;
-    color          : #263238;
+    margin-top: 50px;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 23px;
+    letter-spacing: 0.002em;
+    color: #263238;
 }
 
 .admin-sidebar li {
-    width      : 205px;
-    margin-top : 40px;
+    width: 205px;
+    margin-top: 40px;
 }
 
 .admin-dashboard .dashboard-content {
-    padding-left : 50px;
-    margin-top   : 60px;
+    padding-left: 50px;
+    margin-top: 60px;
 }
 
 .admin-dashboard .dashboard-content .dashboard-boxes {
-    height          : 210px;
-    background      : rgba(196, 196, 196, 0.25);
-    color           : #4c6ed7;
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
-    text-align      : center;
+    height: 210px;
+    background: rgba(196, 196, 196, 0.25);
+    color: #4c6ed7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .admin-dashboard .dashboard-content .dashboard-boxes h1 {
-    font-weight : 500;
-    font-size   : 40px;
-    line-height : 48px;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 48px;
 }
 
 .admin-dashboard .dashboard-content .dashboard-boxes h3 {
-    font-weight : normal;
-    font-size   : 22px;
-    line-height : 26px;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 26px;
 }
 
 .users-table {
-    margin : 60px 0;
+    margin: 60px 0;
 }
 
 .users-table table {
-    width : 100%;
+    width: 100%;
 }
 
 .users-table table thead th {
-    text-align : center;
-    padding    : 20px;
-    cursor     : pointer;
-    width      : 18%;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    width: 18%;
 }
 
 .users-table table td {
-    border     : 1px solid #4c6ed7;
-    padding    : 5px 10px;
-    text-align : center;
+    border: 1px solid #4c6ed7;
+    padding: 5px 10px;
+    text-align: center;
 }
 
 .users-table table td a {
-    background    : #4c6ed7;
-    border-radius : 5px;
-    width         : 100%;
-    color         : white;
-    padding       : 3px 15px;
+    background: #4c6ed7;
+    border-radius: 5px;
+    width: 100%;
+    color: white;
+    padding: 3px 15px;
 }
 
 .user-show form {
-    display        : flex;
-    flex-direction : column;
-    margin-bottom  : 60px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
 }
 
 .user-show .form-item {
-    height : 40px;
+    height: 40px;
 }
 
 .user-show .form-item .row {
-    height : 100%;
+    height: 100%;
 }
 
 .user-show .form-item .row label {
-    text-align  : center;
-    width       : 100%;
-    font-size   : 18px;
-    line-height : 21px;
-    margin      : 0;
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    line-height: 21px;
+    margin: 0;
 }
 
 .user-show .form-item input {
-    border        : 1px solid #4c6ed7;
-    width         : 100%;
-    height        : 100%;
-    border-bottom : none;
-    padding-left  : 5px;
-    outline       : none;
+    border: 1px solid #4c6ed7;
+    width: 100%;
+    height: 100%;
+    border-bottom: none;
+    padding-left: 5px;
+    outline: none;
 }
 
 .user-show .form-item:nth-last-child(2) input {
-    border-bottom : 1px solid #4c6ed7;
+    border-bottom: 1px solid #4c6ed7;
 }
 
 .user-show .form-item:last-child {
-    text-align : center;
-    margin     : 35px 0;
+    text-align: center;
+    margin: 35px 0;
 }
 
 .user-show .form-item:last-child a {
-    font-weight          : 500;
-    font-size            : 25px;
-    line-height          : 29px;
-    text-align           : center;
-    text-decoration-line : underline;
-    color                : #4c6ed7;
-    cursor               : pointer;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 29px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #4c6ed7;
+    cursor: pointer;
 }
 
 .course-edit {
-    font-weight          : 500;
-    font-size            : 20px;
-    line-height          : 23px;
-    text-decoration-line : underline;
-    margin-right         : 10px;
-    text-align           : center;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    text-decoration-line: underline;
+    margin-right: 10px;
+    text-align: center;
 }
 
 .csv-table {
-    margin : 60px 0;
+    margin: 60px 0;
 }
 
 .csv-table table {
-    width      : 100%;
-    overflow-x : auto;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .csv-table table tr {
-    height : 30px;
+    height: 30px;
 }
 
 .csv-table table thead th {
-    text-align : center;
-    padding    : 20px;
-    cursor     : pointer;
-    width      : 20%;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    width: 20%;
 }
 
 .rotate {
-    transition : transform 0.7s ease-in-out;
+    transition: transform 0.7s ease-in-out;
 }
 
 .rotate-effect {
-    transform : rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .csv-table table td {
-    border  : 1px solid #4c6ed7;
-    padding : 5px 10px;
+    border: 1px solid #4c6ed7;
+    padding: 5px 10px;
 }
 
 .csv-buttons {
-    line-height : 24px;
-    font-weight : 500;
+    line-height: 24px;
+    font-weight: 500;
 }
 
 .csv-buttons button {
-    padding : 0;
-    margin  : 0;
-    border  : none;
-    width   : auto !important;
+    padding: 0;
+    margin: 0;
+    border: none;
+    width: auto !important;
 }
 
 .csv-buttons .upload-csv {
-    width         : 125px;
-    height        : 40px;
-    background    : #4c6ed7;
-    border-radius : 7px;
-    color         : white;
-    padding       : 8px 12px;
-    margin-right  : 30px;
-    font-size     : 20px;
+    width: 125px;
+    height: 40px;
+    background: #4c6ed7;
+    border-radius: 7px;
+    color: white;
+    padding: 8px 12px;
+    margin-right: 30px;
+    font-size: 20px;
 }
 
 .custom-inputs ::-webkit-file-upload-button {
-    background : rgba(240, 244, 243, 1);
-    color      : #4c6ed7;
-    border     : none;
+    background: rgba(240, 244, 243, 1);
+    color: #4c6ed7;
+    border: none;
 }
 
 .csv-buttons .delete-csv {
-    font-size            : 20px;
-    text-decoration-line : underline;
-    color                : #e61339;
+    font-size: 20px;
+    text-decoration-line: underline;
+    color: #e61339;
 }
 
 .log-in-btn {
-    background    : rgb(14, 111, 255);
-    border-radius : 7px;
-    color         : white;
-    border        : none;
-    padding       : 5px 20px;
+    background: rgb(14, 111, 255);
+    border-radius: 7px;
+    color: white;
+    border: none;
+    padding: 5px 20px;
 }
 
 .login-title {
-    font-weight : bold;
-    font-size   : 4rem;
-    line-height : 152px;
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 152px;
 }
 
 .lesson-video {
-    max-width : 826px;
-    width     : 100%;
-    height    : 500px;
-    margin    : 80px 0;
-    border    : none
+    max-width: 826px;
+    width: 100%;
+    height: 500px;
+    margin: 80px 0;
+    border: none
 }
 
-@media (max-width : 767.98px), (max-width : 991.98px) {
+@media (max-width: 767.98px), (max-width: 991.98px) {
 
     .header-menu ul:last-child {
-        width      : 100% !important;
-        overflow-y : scroll;
-        height     : 100vh;
+        width: 100% !important;
+        overflow-y: scroll;
+        height: 100vh;
     }
 
     #loginBtn {
-        width : 100px;
+        width: 100px;
     }
 
     .recommended-box {
-        width : 100%;
+        width: 100%;
     }
 
     p.question-box {
-        font-size : 16px !important;
+        font-size: 16px !important;
     }
 
     h1 {
-        font-size : 24px !important;
+        font-size: 24px !important;
     }
 
     h2 {
-        font-size : 20px !important;
+        font-size: 20px !important;
     }
 
     h3 {
-        font-size : 18px !important;
+        font-size: 18px !important;
     }
 
     h4 {
-        font-size : 16px !important;
+        font-size: 16px !important;
     }
 
     h5 {
-        font-size : 14px !important;
+        font-size: 14px !important;
     }
 
     .grammar-course-content p {
-        font-size : 16px !important;
+        font-size: 16px !important;
     }
 
     .notes-box h1 {
-        font-size : 20px !important;
+        font-size: 20px !important;
     }
 
     .notes-box h5 {
-        font-size : 16px !important;
+        font-size: 16px !important;
     }
 
     .lesson-video {
-        height : auto !important;
-        margin : 20px 0 !important;
+        height: auto !important;
+        margin: 20px 0 !important;
     }
 
     .action-buttons {
-        width         : 100%;
-        margin-bottom : 2px;
+        width: 100%;
+        margin-bottom: 2px;
     }
 
     .button-row {
-        margin-left : 0 !important;
+        margin-left: 0 !important;
     }
 
     .first-step .row {
-        margin-left : 30px !important;
+        margin-left: 30px !important;
     }
 
     .notes-table,
     .users-table,
     .csv-table {
-        overflow-x : scroll;
+        overflow-x: scroll;
     }
 
     .header-menu {
-        width   : 100% !important;
-        padding : 0 80px;
+        width: 100% !important;
+        padding: 0 80px;
     }
 
     .tools-menu {
-        width    : 100% !important;
-        position : absolute;
+        width: 100% !important;
+        position: absolute;
     }
 
     .tools-menu ul {
-        width : 100% !important;
+        width: 100% !important;
     }
 
     .header-menu .step-one {
-        margin : 0 !important;
+        margin: 0 !important;
     }
 
     .header-menu ol li {
-        padding : 0 5px;
+        padding: 0 5px;
     }
 
     .header-menu button {
-        width : 100%;
+        width: 100%;
     }
 
     .first-step .step-one {
-        margin-left : 5px !important;
+        margin-left: 5px !important;
     }
 
     .first-step .step-one ol li button {
-        width : 90%;
+        width: 90%;
     }
 
     .grammar-course {
-        margin-top : 50px;
+        margin-top: 50px;
     }
 
     .profile-wrapper a {
-        margin-top : 5px;
+        margin-top: 5px;
     }
 
     .profile-wrapper .active-button,
     .passive-button {
-        margin-top : 10px !important;
+        margin-top: 10px !important;
     }
 
     .profile-wrapper .premium-btn {
-        margin-top : 20px;
+        margin-top: 20px;
     }
 
     .faq .faq-section-content p {
-        margin        : 0 !important;
-        margin-bottom : 20px !important;
+        margin: 0 !important;
+        margin-bottom: 20px !important;
     }
 
     .lesson img {
-        margin : 30px 0 !important;
+        margin: 30px 0 !important;
     }
 
     .lesson {
-        padding-bottom : 0 !important;
+        padding-bottom: 0 !important;
     }
 
     .notes-section {
-        padding : 50px 0;
+        padding: 50px 0;
     }
 
     .notes-section .notes-section-content p {
-        margin : 30px 0;
+        margin: 30px 0;
     }
 
     .recommended,
     .grammar-course h1 {
-        margin-bottom : 30px;
+        margin-bottom: 30px;
     }
 
     .recommended .recommended-content .recommended-box {
-        margin-top : 30px;
+        margin-top: 30px;
     }
 
     .recommended .recommended-content p {
-        margin-bottom : 30px;
+        margin-bottom: 30px;
     }
 
     .grammar-course .grammar-course-content p {
-        margin-bottom : 30px;
+        margin-bottom: 30px;
     }
 
     .progress {
-        margin-bottom : 5px;
+        margin-bottom: 5px;
     }
 
     .math-questions img {
-        margin-bottom : 50px;
+        margin-bottom: 50px;
     }
 
     .math-questions {
-        margin : 0;
+        margin: 0;
     }
 
     .banner-img {
-        margin-bottom : 35px !important;
+        margin-bottom: 35px !important;
     }
 
     .reach-out .reach-form button {
-        margin : 0;
+        margin: 0;
     }
 
     .price-box {
-        margin-bottom : 20px;
+        margin-bottom: 20px;
     }
 
     .blue-button {
-        margin : 10px;
+        margin: 10px;
     }
 
     .tutors-content {
-        margin : 50px 0;
+        margin: 50px 0;
     }
 
     .tutors-content ol li {
-        padding-left : 10px;
+        padding-left: 10px;
     }
 
     .page-wrapper {
-        padding-left : 5% !important;
+        padding-left: 5% !important;
     }
 
     .question-box {
-        padding : 10px !important;
+        padding: 10px !important;
     }
 
     .third-step input {
-        margin-bottom : 20px;
+        margin-bottom: 20px;
     }
 
     .main-content-1 {
         /*display: none;*/
-        overflow-x : hidden;
+        overflow-x: hidden;
     }
 
     .side-bar {
-        width      : 80%;
-        overflow-x : hidden;
+        width: 80%;
+        overflow-x: hidden;
     }
 
     .blue-button {
-        width : 100%;
+        width: 100%;
     }
 
     .input-cards {
-        margin-bottom : 30px;
+        margin-bottom: 30px;
     }
 
     .days-box {
-        margin-bottom : 30px;
+        margin-bottom: 30px;
     }
 
     .email-box input {
-        width : 100%;
+        width: 100%;
     }
 
     .first-step ol li {
-        padding-left : 0;
+        padding-left: 0;
     }
 
     .academic-content,
@@ -1833,8 +1834,8 @@ input[type="radio"] {
     .calendar-content,
     .notes-content,
     .dashboard-content {
-        padding-left : 0 !important;
-        margin-top   : 40px !important;
+        padding-left: 0 !important;
+        margin-top: 40px !important;
     }
 
     .academic h1,
@@ -1842,45 +1843,45 @@ input[type="radio"] {
     .courses h1,
     .calendar h1,
     .notes h1 {
-        margin-top : 40px !important;
+        margin-top: 40px !important;
     }
 
     .badges {
-        margin-bottom  : 5px;
-        display        : flex;
-        flex-direction : column;
-        margin-top     : 8px;
-        font-size      : 14px;
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 8px;
+        font-size: 14px;
     }
 
     .notes-box {
-        margin-bottom : 50px;
+        margin-bottom: 50px;
     }
 
     .profile-wrapper .active-button,
     .passive-button {
-        width : 100%;
+        width: 100%;
     }
 
     .profile-wrapper .profile-course-listing {
-        width : 100%;
+        width: 100%;
     }
 
     .profile-wrapper .profile-course-listing h5,
     h6 {
-        padding-left : 5px;
+        padding-left: 5px;
     }
 
     .results .results-content {
-        padding-left : 0 !important;
+        padding-left: 0 !important;
     }
 
     .strengths-content {
-        padding-left : 0 !important;
+        padding-left: 0 !important;
     }
 
     .exam-box {
-        padding : 10px;
+        padding: 10px;
     }
 
     .pricing-content,
@@ -1891,152 +1892,152 @@ input[type="radio"] {
     .notes-section-content,
     .faq-section-content,
     .create-notes-content {
-        padding : 10px !important;
+        padding: 10px !important;
     }
 
     .recommended-list {
-        padding : 0;
+        padding: 0;
     }
 
     p {
-        padding : 5px;
+        padding: 5px;
     }
 
     .w-60,
     .w-75,
     .w-50 {
-        width : 100% !important;
+        width: 100% !important;
     }
 
     .mobile-margin {
-        margin-bottom : 20px;
+        margin-bottom: 20px;
     }
 
     .notes-section .notes-section-content .notes-box .row:last-child {
-        border-bottom : 3px solid rgb(14, 111, 255);
+        border-bottom: 3px solid rgb(14, 111, 255);
     }
 
     .notes-buttons .buttons {
-        display       : flex;
-        margin-bottom : 10px;
+        display: flex;
+        margin-bottom: 10px;
     }
 
     .written-notes-title {
-        margin-top : 50px;
+        margin-top: 50px;
     }
 
     .audio-notes-box {
-        margin-bottom : 50px;
+        margin-bottom: 50px;
     }
 }
 
 /*Full Calendar*/
 .fc-theme-standard table, .fc-header-toolbar {
-    max-width  : 450px;
-    max-height : 480px;
-    overflow   : hidden;
+    max-width: 450px;
+    max-height: 480px;
+    overflow: hidden;
 }
 
 .rocket-bg {
-    background-repeat   : no-repeat;
-    background-color    : transparent !important;
-    background-image    : url(/images/rocket.png) !important;
-    background-size     : 30px;
-    background-position : center;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+    background-image: url(/images/rocket.png) !important;
+    background-size: 30px;
+    background-position: center;
 }
 
 .time-bg {
-    background-repeat   : no-repeat;
-    background-color    : transparent !important;
-    background-image    : url(/images/clock.png);
-    background-size     : 30px;
-    background-position : center;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+    background-image: url(/images/clock.png);
+    background-size: 30px;
+    background-position: center;
 }
 
 .time-bg .fc-daygrid-day-events, .time-bg .fc-daygrid-day-number {
-    display : none;
+    display: none;
 }
 
 .rocket-bg .fc-daygrid-day-number {
-    display : none;
+    display: none;
 }
 
 .fc-h-event {
-    border     : 0 !important;
-    background : transparent !important;
+    border: 0 !important;
+    background: transparent !important;
 }
 
 .fc .fc-scrollgrid-liquid {
-    padding       : 40px 20px;
-    border        : 1px solid #4c6ed7 !important;
-    box-shadow    : 0 3px 65px rgb(0 0 0 / 8%);
-    border-radius : 67px 67px 67px 0;
+    padding: 40px 20px;
+    border: 1px solid #4c6ed7 !important;
+    box-shadow: 0 3px 65px rgb(0 0 0 / 8%);
+    border-radius: 67px 67px 67px 0;
 }
 
 .fc-scroller {
-    overflow : hidden !important;
+    overflow: hidden !important;
 }
 
 .fc-view-harness.fc-view-harness-active {
-    max-height : 500px;
+    max-height: 500px;
 }
 
 .fc tbody .fc-day {
-    border-style : none !important;
+    border-style: none !important;
 }
 
 .fc th {
-    border-bottom : 1px solid #4c6ed7 !important;
+    border-bottom: 1px solid #4c6ed7 !important;
 }
 
 .fc .fc-daygrid-day-top {
-    justify-content : center;
-    display         : flex;
-    flex-direction  : initial;
+    justify-content: center;
+    display: flex;
+    flex-direction: initial;
 }
 
 .fc .fc-daygrid-day-frame {
-    display         : flex;
-    position        : relative;
-    min-height      : 100%;
-    justify-content : center;
-    align-items     : center;
+    display: flex;
+    position: relative;
+    min-height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .fc .fc-scrollgrid-section-liquid > td {
-    border : 0 !important;
+    border: 0 !important;
 }
 
 .fc-col-header-cell .fc-scrollgrid-sync-inner {
-    border-right  : 0 !important;
-    border-bottom : 1px solid #4c6ed7;
+    border-right: 0 !important;
+    border-bottom: 1px solid #4c6ed7;
 }
 
 .fc-scrollgrid-section.fc-scrollgrid-section-header td {
-    border : none !important;
+    border: none !important;
 }
 
 .fc .fc-view-harness-active > .fc-view {
-    display         : flex;
-    justify-content : center;
+    display: flex;
+    justify-content: center;
 }
 
 .fc-header-toolbar {
-    max-width : 100%;
+    max-width: 100%;
 }
 
 .fc .fc-toolbar {
-    align-self : center;
-    display    : flex;
+    align-self: center;
+    display: flex;
 }
 
 .fc-daygrid-dot-event {
-    display : none !important;
+    display: none !important;
 }
 
-@media (min-width : 900px) {
+@media (min-width: 900px) {
     .fc-toolbar-chunk {
-        margin-right : 30px;
+        margin-right: 30px;
     }
 }
 

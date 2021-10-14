@@ -79,9 +79,22 @@ class PageController extends Controller
         $next_lesson_time = $next['time'];
 
         $next_lesson = Carbon::parse('next ' . $next_lesson_day)->format('d/m');
+
+        $calendar_exams = $user->practice_exam_dates->map(function ($item, $index) {
+            return [
+                'start' => Carbon::parse($item['date_time'])->toDateString()
+            ];
+        });
+        $calendar_lessons = $user->lesson_dates->map(function ($item, $index) {
+            return [
+                'startTime' => $item['time'],
+                'daysOfWeek' => date('N', strtotime($item['day'])),
+            ];
+        });
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'next_practice_exam' => $next_practice_exam,
             'user_courses' => $user_courses, 'profile' => $user_profile,
-            'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag]);
+            'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag
+            , 'calendar_exams' => $calendar_exams, 'calendar_lessons' => $calendar_lessons]);
     }
 
     public function profile()

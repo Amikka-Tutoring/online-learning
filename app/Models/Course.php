@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Subscription;
+use Stripe\Plan;
+use Stripe\Stripe;
 
 class Course extends Model
 {
@@ -19,6 +21,24 @@ class Course extends Model
         'plan_id'
     ];
     protected $appends = ['quizzes_count', 'quizzes_attempted'];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($model) {
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $plan = Plan::create([
+                "amount" => 3000,
+                "interval" => "month",
+                "product" => array(
+                    "name" => $model->name
+                ),
+                "currency" => "USD",
+            ]);
+            $model->plan_id = $plan->id;
+            $model->save();
+        });
+    }
 
 
     public function layers()

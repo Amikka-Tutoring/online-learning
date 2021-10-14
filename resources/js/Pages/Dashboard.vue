@@ -287,12 +287,12 @@
                         <div class="col-lg-3 col-12">
                             <div class="calendar-box">
                                 <div class="row">
-                                    <span class="blue-text font-weight-bold">Next Lesson:</span>
+                                    <span class="blue-text font-weight-bold">Next Lesson: ⏳</span>
                                     <p>{{ next_lesson_day }}, {{ next_lesson }} at
                                         {{ next_lesson_time }}</p>
                                 </div>
                                 <div class="row">
-                                    <span class="blue-text font-weight-bold">Next Practice Exam:</span>
+                                    <span class="blue-text font-weight-bold">Next Practice Exam: 🚀</span>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
                                         next_practice_exam_time
@@ -300,7 +300,11 @@
                                     <p v-else>N/A</p>
                                 </div>
                             </div>
-                            <a type="button" class="blue-text font-weight-bold pt-4" :href="route('set-calendar')">
+
+                        </div>
+                        <div class="col-lg-5">
+                            <full-calendar :exams="calendar_exams" :lessons="calendar_lessons"/>
+                            <a type="button" class="blue-text font-weight-bold pt-4 pl-2" :href="route('set-calendar')">
                                 Edit Schedule
                             </a>
                         </div>
@@ -378,12 +382,14 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
+import FullCalendar from "@/components/FullCalendar";
 
 export default {
     components: {
         AppLayout,
+        FullCalendar
     },
-    props: ['flash', 'academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
+    props: ['calendar_lessons', 'calendar_exams', 'flash', 'academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',

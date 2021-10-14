@@ -21,32 +21,13 @@ class LayerSeeder extends Seeder
      */
     public function run()
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-        $plan1 = Plan::create([
-            "amount" => 5000,
-            "interval" => "month",
-            "product" => array(
-                "name" => "Grammar"
-            ),
-            "currency" => "USD",
-        ]);
         $course = Course::create([
             'name' => 'Grammar',
             'slug' => Str::slug('Grammar'),
-            'plan_id' => $plan1->id
-        ]);
-        $plan2 = Plan::create([
-            "amount" => 5000,
-            "interval" => "month",
-            "product" => array(
-                "name" => "Reading"
-            ),
-            "currency" => "USD",
         ]);
         $course2 = Course::create([
             'name' => 'Reading',
             'slug' => Str::slug('Reading'),
-            'plan_id' => $plan2->id
         ]);
         $parent_1 = Layer::create([
             'name' => 'English Strategy',

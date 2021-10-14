@@ -19,7 +19,10 @@
                             <button :disabled="loading" id="card-button" :data-secret="intent.client_secret"
                                     class="btn btn-primary w-100 d-flex items-center text-uppercase justify-content-center align-items-center">
                                 <div v-if="loading" class="spinner-border spinner-border-sm mr-2"/>
-                                SUBMIT
+                                SUBMIT <i
+                                style="color: #83d583"
+                                v-if="onsuccess" class="ml-2 bi bi-check-circle-fill" data-aos="zoom-in"
+                                data-aos-delay="300"></i>
                             </button>
                         </div>
                     </form>
@@ -40,7 +43,8 @@ export default {
 
     data() {
         return {
-            loading: false
+            loading: false,
+            onsuccess: false
         }
     },
     mounted() {
@@ -75,6 +79,7 @@ export default {
                 axios.post(route('set.payment.method'), {
                     payment_method: setupIntent.payment_method
                 }).then(response => {
+                    this.onsuccess = true
                     window.location.href = '/dashboard'
                 }).catch(error => {
                     this.toast.error('Something went wrong!')
@@ -89,29 +94,29 @@ export default {
 
 <style>
 .card {
-    display    : block;
-    box-shadow : 0 7px 14px 0 rgb(49 49 93 / 10%), 0 3px 6px 0 rgb(0 0 0 / 8%);
+    display: block;
+    box-shadow: 0 7px 14px 0 rgb(49 49 93 / 10%), 0 3px 6px 0 rgb(0 0 0 / 8%);
 }
 
 img.credit-card {
-    width      : 65%;
-    margin-top : -100px;
+    width: 65%;
+    margin-top: -100px;
 }
 
 form button {
-    float         : left;
-    display       : block;
-    background    : #666EE8 !important;
-    color         : white;
-    box-shadow    : 0 7px 14px 0 rgb(49 49 93 / 10%), 0 3px 6px 0 rgb(0 0 0 / 8%);
-    border-radius : 4px;
-    border        : 0;
-    margin-top    : 20px;
-    font-size     : 15px;
-    font-weight   : 400;
-    width         : 100%;
-    height        : 40px;
-    line-height   : 38px;
-    outline       : none;
+    float: left;
+    display: block;
+    background: #666EE8 !important;
+    color: white;
+    box-shadow: 0 7px 14px 0 rgb(49 49 93 / 10%), 0 3px 6px 0 rgb(0 0 0 / 8%);
+    border-radius: 4px;
+    border: 0;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 400;
+    width: 100%;
+    height: 40px;
+    line-height: 38px;
+    outline: none;
 }
 </style>
