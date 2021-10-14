@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OneOnOne;
+use App\Mail\ReminderMail;
 use App\Models\Course;
 use App\Models\Diagnostic;
 use App\Models\Layer;
@@ -13,6 +15,7 @@ use App\Scopes\LayerScope;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class PageController extends Controller
@@ -31,7 +34,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if (Auth::user()->profile) {
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -46,9 +49,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ($user_profile->tutor_match)
+        if ( $user_profile->tutor_match )
             $tutor_match_done = true;
-        if ($user_profile->learning_style)
+        if ( $user_profile->learning_style )
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -62,7 +65,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ($d['day'] > $date_now)
+            if ( $d['day'] > $date_now )
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -140,7 +143,7 @@ class PageController extends Controller
     {
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
         $user = Auth::user()->load('layer_quiz_results');
-        if (!$user->subscribed($lesson->course->slug))
+        if ( !$user->subscribed($lesson->course->slug) )
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
 
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
@@ -151,7 +154,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -228,6 +231,26 @@ class PageController extends Controller
     public function oneToOne()
     {
         return Inertia::render('OneToOne');
+    }
+
+    public function oneToOneSubmit(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required',
+            'discussion' => 'required',
+            'availability' => 'required',
+        ]);
+        $details = [];
+        $details['phone'] = $request->phone;
+        $details['discuss'] = $request->discussion;
+        $details['availability'] = $request->availability;
+
+        try {
+            Mail::to('email@amikka.com')->send(new OneOnOne($details));
+        } catch (\Throwable $th) {
+            \Log::log(1, $th);
+        }
+        return ['message' => 'Submitted'];
     }
 
     public function review()
