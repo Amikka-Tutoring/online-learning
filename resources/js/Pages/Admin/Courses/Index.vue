@@ -43,7 +43,7 @@ $query
                     <h1 class="blue-text">Courses</h1>
                     <div class="courses-content" style="margin-top: 90px">
                         <div class="row">
-                            <div v-for="course in courses" class="col-md-3" data-aos="fade-up"
+                            <div v-for="course in courses" class="col-lg-3 col-md-6" data-aos="fade-up"
                                  data-aos-delay="50"
                                  data-aos-once="true">
                                 <div class="input-cards mb-4">
@@ -62,7 +62,7 @@ $query
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3" data-aos="fade-up"
+                            <div class="col-lg-3 col-md-6" data-aos="fade-up"
                                  data-aos-delay="50"
                                  data-aos-once="true">
                                 <div class="input-cards mb-4">

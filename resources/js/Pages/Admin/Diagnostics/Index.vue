@@ -42,7 +42,8 @@
                     <h1 class="blue-text">{{ diagnostic_name }} Diagnostics</h1>
                     <div class="courses-content" style="margin-top: 90px">
                         <div class="row">
-                            <div v-if="quizzes.length" v-for="quiz in quizzes" class="col-md-3" data-aos="fade-up"
+                            <div v-if="quizzes.length" v-for="quiz in quizzes" class="col-lg-3 col-md-6"
+                                 data-aos="fade-up"
                                  data-aos-delay="50"
                                  data-aos-once="true">
                                 <div class="input-cards mb-4">
