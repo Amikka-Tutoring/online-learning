@@ -53,8 +53,8 @@
                                     <label for="created">Created</label>
                                 </div>
                                 <div class="col-6">
-                                    <input :formatter="format()" type="text" id="created" name="created" disabled
-                                           v-model="user.created_at">
+                                    <input type="text" id="created" name="created" disabled
+                                           :value="moment(user.created_at).format('YYYY-MM-DD')">
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,8 @@
                                     <label for="enrolled_courses">Enrolled Courses</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="enrolled_courses" name="enrolled_courses" disabled>
+                                    <input type="text" id="enrolled_courses" name="enrolled_courses" disabled
+                                           :value="enrollmentsArray">
                                 </div>
                             </div>
                         </div>
@@ -117,7 +118,8 @@
                                     <label for="lesson_dates">Lesson Dates</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="lesson_dates" name="lesson_dates" disabled>
+                                    <input type="text" id="lesson_dates" name="lesson_dates" disabled
+                                           :value="lessonDatesArray">
                                 </div>
                             </div>
                         </div>
@@ -127,7 +129,8 @@
                                     <label for="lesson_frequency">Lesson Frequency</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="lesson_frequency" name="lesson_frequency" disabled>
+                                    <input type="text" id="lesson_frequency" name="lesson_frequency" disabled
+                                           :value="lessonDatesArray.length+'x a week'">
                                 </div>
                             </div>
                         </div>
@@ -137,7 +140,8 @@
                                     <label for="lesson_length">Lesson Length</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="lesson_length" name="lesson_length" disabled>
+                                    <input type="text" id="lesson_length" name="lesson_length" disabled
+                                           v-model="user.profile.lesson_length">
                                 </div>
                             </div>
                         </div>
@@ -158,7 +162,8 @@
                                     <label for="practice_exam_dates">Practice Exam Dates</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="practice_exam_dates" name="practice_exam_dates" disabled>
+                                    <input type="text" id="practice_exam_dates" name="practice_exam_dates" disabled
+                                           :value="examsArray">
                                 </div>
                             </div>
                         </div>
@@ -201,7 +206,11 @@ export default {
     },
     data() {
         return {
-            moment: moment
+            moment: moment,
+            user_data: this.user_data,
+            enrollmentsArray: [],
+            lessonDatesArray: [],
+            examsArray: [],
         }
     },
     props: ['user', 'user_tag'],
@@ -211,10 +220,27 @@ export default {
         },
         format(value, event) {
             return moment(value).format("DD-MM-YYYY")
+        },
+        getEnrollments: function () {
+            this.user.enrollments.forEach((element) => {
+                this.enrollmentsArray.push(element.course.name)
+            });
+        },
+        getLessonDates: function () {
+            this.user.lesson_dates.forEach((element) => {
+                this.lessonDatesArray.push(element.day)
+            });
+        },
+        getExams: function () {
+            this.user.practice_exam_dates.forEach((element) => {
+                this.examsArray.push(moment(element.date_time).format("MM/DD"))
+            });
         }
     },
     mounted() {
-        console.log(this.user)
+        this.getEnrollments()
+        this.getLessonDates()
+        this.getExams()
     }
 }
 </script>

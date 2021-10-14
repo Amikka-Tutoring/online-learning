@@ -60,7 +60,7 @@ class StudentReminder extends Command
                         'name' => $user->name,
                         'lesson_text' => 'Hello <strong>' . $user->name . '</strong>, do not forget you have a practice exam today at: <strong>' . Carbon::parse($practice_exam->date_time)->format('h:i') . '</strong>'
                     ];
-                    Mail::to('edin.vllaco@gmail.com')->send(new ReminderMail($details));
+                    Mail::to($user->email)->send(new ReminderMail($details));
                 }
             }
         }

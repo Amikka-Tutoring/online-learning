@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with('profile')->find($id);
+        $user = User::with('profile', 'lesson_dates', 'practice_exam_dates', 'enrollments', 'enrollments.course')->find($id);
         $userTag = $user->getTag();
         return Inertia::render('Admin/Users/Show', ['user' => $user, 'user_tag' => $userTag]);
     }
@@ -33,14 +33,14 @@ class UserController extends Controller
 
     public function initialQuestionnaire(Request $request)
     {
-//        $request->validate([
-//            'first_day_time' => 'required',
-//            'second_day_time' => 'required',
-//            'desire_score' => 'required',
-//            'exam_date' => 'required',
-//            'reminder_phone' => 'required',
-//            'reminder_email' => 'required',
-//        ]);
+        $request->validate([
+            'first_day_time' => 'required',
+            'second_day_time' => 'required',
+            'desire_score' => 'required',
+            'exam_date' => 'required',
+            'tel' => 'required',
+            'email' => 'required',
+        ]);
         $user = Auth::user();
         foreach ($request->courses as $id) {
             $course = Course::where('plan_id', $id)->first();
