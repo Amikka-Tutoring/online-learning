@@ -20,8 +20,8 @@
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" @click="logout()" href="">Logout</a>
                 <a class="dropdown-item" :href="route('dashboard')">Homepage</a>
+                <a class="dropdown-item" @click="logout()" href="">Logout</a>
             </div>
         </div>
     </nav>
@@ -46,7 +46,6 @@
                 <li><a
                     v-bind:class="route().current('diagnostics', { slug: 'academic' }) || route().current('academic.diagnostics.create') ? 'active' : ''"
                     :href="route('diagnostics','academic')">Academic Diagnostics</a></li>
-                <li><p>{{ this.$route }}</p></li>
                 <li><a
                     v-bind:class="route().current('diagnostics', { slug: 'personality' }) || route().current('personality.diagnostics.create') ? 'active' : ''"
                     :href="route('diagnostics','personality')">Personality Diagnostics</a></li>

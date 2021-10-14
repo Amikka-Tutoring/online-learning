@@ -12,34 +12,35 @@
                         <div class="row" style="">
                             <ol>
                                 <li>
-                                    <strong class="blue-text">Academic Diagnostic</strong>
+                                    <strong class="blue-text">Math Diagnostic</strong>
                                     <br><br>
                                     Access your strengths and weakness in order to know <span
                                     class="blue-text">what </span>content you need to study.
                                     <br><br>
-                                    <a href="">
-                                        Start
-                                    </a>
+                                    <a :href="route('diagnostic.show','mathematics')">
+                                        <h4>
+                                            Start</h4></a>
                                 </li>
                                 <li>
-                                    <strong class="blue-text">Academic Diagnostic</strong>
+                                    <strong class="blue-text">Grammar Diagnostic</strong>
                                     <br><br>
                                     Access your strengths and weakness in order to know <span
                                     class="blue-text">what </span>content you need to study.
                                     <br><br>
-                                    <a href="">
-                                        Start
-                                    </a>
+                                    <a :href="route('diagnostic.show','grammar')">
+                                        <h4>
+                                            Start</h4></a>
+                                    <!--                                    <h4 v-else>Done</h4>-->
                                 </li>
                                 <li>
-                                    <strong class="blue-text">Academic Diagnostic</strong>
+                                    <strong class="blue-text">Reading Diagnostic</strong>
                                     <br><br>
                                     Access your strengths and weakness in order to know <span
                                     class="blue-text">what </span>content you need to study.
                                     <br><br>
-                                    <a href="">
-                                        Start
-                                    </a>
+                                    <a :href="route('diagnostic.show','reading')">
+                                        <h4>
+                                            Start</h4></a>
                                 </li>
                             </ol>
                         </div>
@@ -59,11 +60,15 @@ export default {
         CollapseTransition,
     },
     methods: {},
+    props: ['user'],
 
     data() {
         return {
             checklist: false,
+            user: this.user
         }
     },
+    mounted() {
+    }
 }
 </script>
