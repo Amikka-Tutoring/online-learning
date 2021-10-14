@@ -26,7 +26,7 @@ const options = {
 
 createApp({
     created() {
-        AOS.init();
+        AOS.init({disable: 'mobile'});
     },
     render: () =>
         h(InertiaApp, {

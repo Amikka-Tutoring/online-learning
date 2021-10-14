@@ -117,20 +117,24 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-12">
                             <div class="reach-form">
-                                <form action="">
+                                <form @submit.prevent>
                                     <div class="form-group">
                                         <i class="fas fa-envelope icon fa-2x"></i>
-                                        <input type="text" placeholder="Enter your phone number">
+                                        <input type="text" placeholder="Enter your phone number" name="phone"
+                                               v-model="form.phone" required>
                                     </div>
                                     <div class="form-group">
                                         <i class="fas fa-envelope icon fa-2x"></i>
-                                        <textarea name="" id="" cols="30" rows="10"
+                                        <textarea name="discuss" id="" cols="30" rows="10" v-model="form.discussion"
+                                                  required
                                                   placeholder="Describe what you’d like to discuss over the phone. If you know which package you’d like just let us know here. "></textarea>
                                     </div>
 
                                     <i class="fas fa-envelope icon fa-2x"></i>
-                                    <input type="text" placeholder="What is your availability?">
-                                    <button class="blue-button w-100">Submit</button>
+                                    <input type="text" placeholder="What is your availability?" name="availability"
+                                           v-model="form.availability" required>
+                                    <button :disabled=disabled class="blue-button w-100" @click="submitForm">Submit
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -150,10 +154,32 @@ export default {
     components: {
         AppLayout,
     },
-    methods: {},
+    methods: {
+        submitForm: function () {
+            axios.post(route('submit-one-to-one'), this.form)
+                .then((response) => {
+                    this.toast.success(response.data.message)
+                    this.form.phone = null;
+                    this.form.discussion = null;
+                    this.form.availability = null;
+                    this.disabled = false
+                }).catch(error => {
+                console.log(error)
+                Object.values(error).flat().forEach(element => this.toast.error(element))
+            });
+
+        }
+    },
 
     data() {
-        return {}
+        return {
+            disabled: false,
+            form: {
+                phone: null,
+                discussion: null,
+                availability: null,
+            }
+        }
     },
 }
 </script>

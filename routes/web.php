@@ -72,6 +72,7 @@ Route::middleware(['auth',])->group(function () {
             Route::get('notes/{note}/get', [NotesController::class, 'getNote'])->name('get.note');
 
             Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
+            Route::post('one-to-one', [PageController::class, 'oneToOneSubmit'])->name('submit-one-to-one');
             Route::get('review', [PageController::class, 'review'])->name('review');
 
 

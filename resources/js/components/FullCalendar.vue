@@ -26,7 +26,6 @@ export default {
     },
     mounted() {
         this.updateCss();
-
         $('.fc-button-group').on('click', function () {
             $('.fc-daygrid-day:has(.fc-daygrid-block-event)').addClass('rocket-bg');
             $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
