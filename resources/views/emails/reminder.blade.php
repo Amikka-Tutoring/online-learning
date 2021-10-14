@@ -43,21 +43,24 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        strong {
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
 <div class="wrap">
     <div style="text-align: center">
-        {{--        <img src="https://barviewguru.com/images/logo.png" alt="">--}}
+        <img src="{{asset('images/logo.png')}}" alt="" style="width: 100%; max-width: 300px">
     </div>
     <div class="" style="width: 100%">
-        <p class="bold-text"><b>Name:</b> {{ $details['name'] }}</strong></p>
         <hr>
-        <p>Message:</p>
+        <p>{!! $details['lesson_text']!!}</p>
         <hr>
         <div class="link">
-            <a href="">Online Learning</a>
+            <a href="{{env('APP_URL')}}">Online Learning</a>
         </div>
     </div>
 </div>

@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Mail\ReminderMail;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -39,9 +41,17 @@ class StudentReminder extends Command
      */
     public function handle()
     {
-        $details = [
-            'name' => 'Test Name'
-        ];
-        Mail::to('edin.vllaco@gmail.com')->send(new ReminderMail($details));
+        $date_now = Carbon::now();
+        foreach (User::all() as $user) {
+            foreach ($user->lesson_dates as $lesson_date) {
+                if ($lesson_date->day == $date_now->isoFormat('dddd') && Carbon::parse($lesson_date->time)->subHour(1)->format('h:i') == $date_now->format('h:i')) {
+                    $details = [
+                        'name' => $user->name,
+                        'lesson_text' => 'Hello <strong>' . $user->name . '</strong>, do not forget you have a lesson today at: <strong>' . Carbon::parse($lesson_date->time)->format('h:i') . '</strong>'
+                    ];
+                    Mail::to($user->email)->send(new ReminderMail($details));
+                }
+            }
+        }
     }
 }
