@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use App\Models\User;
 use App\Models\UserLessonDate;
 use App\Models\UserProfile;

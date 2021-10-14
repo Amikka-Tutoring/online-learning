@@ -14,7 +14,7 @@ use App\Http\Controllers\LayerQuizResultController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\PracticeExamController;
 use App\Http\Controllers\UserExamVisitController;
-use App\Http\Controllers\SMSController;
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\UserPracticeExamDateController;
 use App\Http\Controllers\UserLessonDateController;
 
@@ -157,4 +157,5 @@ Route::post('subscription/cancel/{plan_id}', [\App\Http\Controllers\Subscription
 Route::post('subscribe-course', [UserController::class, 'subscribeForCourse'])->name('subscribe.course');
 Route::get('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUserGet']);
 
-Route::get('/send-sms', [SMSController::class, 'sendSMS'])->name('send.sms');
+Route::get('/send-sms', [ReminderController::class, 'sendSMS'])->name('send.sms');
+Route::get('/send-email', [ReminderController::class, 'sendEmail'])->name('send.email');

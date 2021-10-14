@@ -117,6 +117,11 @@ class User extends Authenticatable
         self::created(function ($model) {
             $model->setEasy();
         });
+        self::deleting(function ($model) {
+            foreach ($model->subscriptions as $subscription) {
+                $subscription->cancel();
+            }
+        });
     }
 
     public function enrollments()

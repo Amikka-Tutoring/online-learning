@@ -251,7 +251,7 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{ user_course.course.quizzes_attempted }}/{{
-                                            user_course.course.quizzes_count
+                                                user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -271,8 +271,8 @@
                         <div v-if="calendar" class="question-box text-left">
                             <div class="row">
                                 <div class="col-lg-11 col-10">
-                                    Answer these 10 questions in order to help us build you a
-                                    personalized program.
+                                    This calendar is based on your current progress versus expected progress, exam date,
+                                    goals, and availability.
                                 </div>
                                 <div class="col-lg-1 col-2 d-flex align-items-center"
                                      data-aos="fade-up" data-aos-delay="50"
@@ -287,15 +287,15 @@
                         <div class="col-lg-3 col-12">
                             <div class="calendar-box">
                                 <div class="row">
-                                    <span class="blue-text font-weight-bold">Next Lesson: ⏳</span>
+                                    <p class="blue-text font-weight-bold m-0">Next Lesson: ⏳</p>
                                     <p>{{ next_lesson_day }}, {{ next_lesson }} at
                                         {{ next_lesson_time }}</p>
                                 </div>
-                                <div class="row">
-                                    <span class="blue-text font-weight-bold">Next Practice Exam: 🚀</span>
+                                <div class="row flex-column">
+                                    <p class="blue-text font-weight-bold m-0">Next Practice Exam: 🚀</p>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                        next_practice_exam_time
+                                            next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>

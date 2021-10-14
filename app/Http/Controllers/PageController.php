@@ -140,7 +140,7 @@ class PageController extends Controller
         $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
         $user = Auth::user()->load('layer_quiz_results');
         if (!$user->subscribed($lesson->course->slug))
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
 
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
         $notes = $user->notes->where('layer_id', $lesson->id)->first();

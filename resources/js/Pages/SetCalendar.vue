@@ -7,8 +7,12 @@
                     <p class="question-box mb-0">If your schedule changes last minute, edit specific lessons or exams by
                         clicking on the date. This will allow you to change the time, duration, or type of lesson right
                         below it. </p>
-                    <div class="my-4">
-                        <full-calendar :exams="calendar_exams" :lessons="calendar_lessons"/>
+                    <div class="row justify-content-center my-4">
+                        <div class="col-lg-6">
+                            <div class="my-4">
+                                <full-calendar :exams="calendar_exams" :lessons="calendar_lessons"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -18,11 +18,12 @@
                         <div class="">
                             <button :disabled="loading" id="card-button" :data-secret="intent.client_secret"
                                     class="btn btn-primary w-100 d-flex items-center text-uppercase justify-content-center align-items-center">
-                                <div v-if="loading" class="spinner-border spinner-border-sm mr-2"/>
-                                SUBMIT <i
-                                style="color: #83d583"
-                                v-if="onsuccess" class="ml-2 bi bi-check-circle-fill" data-aos="zoom-in"
-                                data-aos-delay="300"></i>
+                                {{ submit_text }}
+                                <div v-if="loading" class="spinner-border spinner-border-sm ml-2"/>
+                                <i
+                                    style="color: #83d583"
+                                    v-if="onsuccess" class="ml-2 bi bi-check-circle-fill" data-aos="zoom-in"
+                                    data-aos-delay="300"></i>
                             </button>
                         </div>
                     </form>
@@ -44,7 +45,8 @@ export default {
     data() {
         return {
             loading: false,
-            onsuccess: false
+            onsuccess: false,
+            submit_text: 'SUBMIT'
         }
     },
     mounted() {
@@ -61,6 +63,7 @@ export default {
 
         cardButton.addEventListener('click', async (e) => {
             this.loading = true
+            this.submit_text = 'PROCESSING...'
             const {setupIntent, error} = await stripe.confirmCardSetup(
                 clientSecret, {
                     payment_method: {
@@ -74,11 +77,13 @@ export default {
                 // Display "error.message" to the user...
                 this.toast.error(error.message)
                 this.loading = false
+                this.submit_text = 'SUBMIT'
             } else {
                 // The card has been verified successfully...
                 axios.post(route('set.payment.method'), {
                     payment_method: setupIntent.payment_method
                 }).then(response => {
+                    this.submit_text = 'SUCCESS'
                     this.onsuccess = true
                     window.location.href = '/dashboard'
                 }).catch(error => {
