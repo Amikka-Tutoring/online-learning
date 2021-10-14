@@ -18,17 +18,25 @@ class ReminderController extends Controller
     {
 
         $date_now = Carbon::now();
-//        $next_practice_exam = $user->practice_exam_dates->where('date_time', '>', $date_now)->first()->date_time ?? null;
+        $next_practice_exam = Carbon::parse(Auth::user()->practice_exam_dates->where('date_time', '>', $date_now)->first()->date_time)->format('Y-m-d h:i');
+//        dd($next_practice_exam);
 //        dd(Carbon::parse($user->lesson_dates->last()->time)->subHour(1)->format('h:i') == Carbon::now()->format('h:i'));
         foreach (User::all() as $user) {
-            foreach ($user->lesson_dates as $lesson_date) {
-                if ($lesson_date->day == $date_now->isoFormat('dddd') && Carbon::parse($lesson_date->time)->subHour(1)->format('h:i') == $date_now->format('h:i')) {
-                    $details = [
-                        'name' => $user->name,
-                    ];
-                    Mail::to('edin.vllaco@gmail.com')->send(new ReminderMail($details));
+//            foreach ($user->lesson_dates as $lesson_date) {
+//                if ($lesson_date->day == $date_now->isoFormat('dddd') && Carbon::parse($lesson_date->time)->subHour(1)->format('h:i') == $date_now->format('h:i')) {
+//                    $details = [
+//                        'name' => $user->name,
+//                    ];
+//                    Mail::to('edin.vllaco@gmail.com')->send(new ReminderMail($details));
+//                }
+//            }
+            foreach ($user->practice_exam_dates as $practice_exam) {
+                dd(Carbon::parse($practice_exam->date_time)->subHour(1)->format('Y-m-d h:i'), $date_now->format('Y-m-d h:i'));
+                if (Carbon::parse($practice_exam->date_time)->format('Y-m-d h:i') == $date_now->format('Y-m-d h:i')) {
+                    dd('true');
                 }
             }
+            dd('false');
         }
 
         dd('test');

@@ -54,6 +54,7 @@ class PageController extends Controller
 
         $date_now = Carbon::now();
         $next_practice_exam = $user->practice_exam_dates->where('date_time', '>', $date_now)->first()->date_time ?? null;
+
         $lesson_days = [];
         $date_now = Carbon::now()->dayOfWeek;
         foreach ($user->lesson_dates as $day) {

@@ -90,7 +90,6 @@ class UserController extends Controller
     public function subscribeForCourse(Request $request)
     {
         $user = Auth::user();
-
         foreach ($request->courses as $id) {
             $course = Course::where('plan_id', $id)->first();
             $user->newSubscription($course->slug, $id)->trialDays(7)->add();

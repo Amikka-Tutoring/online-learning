@@ -212,6 +212,9 @@ export default {
         format(value, event) {
             return moment(value).format("DD-MM-YYYY")
         }
+    },
+    mounted() {
+        console.log(this.user)
     }
 }
 </script>

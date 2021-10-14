@@ -57,6 +57,8 @@
     </div>
     <div class="" style="width: 100%">
         <hr>
+        <h3 style="text-align: center"><strong>{{$details['title']}}</strong></h3>
+        <hr>
         <p>{!! $details['lesson_text']!!}</p>
         <hr>
         <div class="link">

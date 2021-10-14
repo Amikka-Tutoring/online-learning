@@ -46,10 +46,21 @@ class StudentReminder extends Command
             foreach ($user->lesson_dates as $lesson_date) {
                 if ($lesson_date->day == $date_now->isoFormat('dddd') && Carbon::parse($lesson_date->time)->subHour(1)->format('h:i') == $date_now->format('h:i')) {
                     $details = [
+                        'title' => 'Lesson Reminder',
                         'name' => $user->name,
                         'lesson_text' => 'Hello <strong>' . $user->name . '</strong>, do not forget you have a lesson today at: <strong>' . Carbon::parse($lesson_date->time)->format('h:i') . '</strong>'
                     ];
                     Mail::to($user->email)->send(new ReminderMail($details));
+                }
+            }
+            foreach ($user->practice_exam_dates as $practice_exam) {
+                if (Carbon::parse($practice_exam->date_time)->subHour(1)->format('Y-m-d h:i') == $date_now->format('Y-m-d h:i')) {
+                    $details = [
+                        'title' => 'Practice Exam Reminder',
+                        'name' => $user->name,
+                        'lesson_text' => 'Hello <strong>' . $user->name . '</strong>, do not forget you have a practice exam today at: <strong>' . Carbon::parse($practice_exam->date_time)->format('h:i') . '</strong>'
+                    ];
+                    Mail::to('edin.vllaco@gmail.com')->send(new ReminderMail($details));
                 }
             }
         }
