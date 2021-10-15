@@ -24,19 +24,29 @@ class NotesController extends Controller
         return $note->load(['lesson', 'lesson.tags']);
     }
 
-    public function getNotes($course = '', $input = '')
+    public function getNotes(Request $request)
     {
         $user = Auth::user();
         $user->load('enrollments', 'enrollments.course');
+        $course = $request->params['course'];
+        $input = $request->params['input'];
         $notes = $user->notes()->whereHas('lesson.course', function ($query) use ($course) {
             $query->where('name', 'like', '%' . $course . '%');
         })->where('written_notes', 'like', '%' . $input . '%')->with('lesson', 'lesson.course', 'lesson.tags')->get();
-        return ['notes' => $notes, 'user' => $user];
+        return ['notes' => $notes, 'user' => $user, 'course' => $request->all(), 'input' => $input];
     }
 
     public function notesList()
     {
-        return Inertia::render('NotesList', $this->getNotes());
+        $user = Auth::user();
+        $user->load('enrollments', 'enrollments.course');
+        $course = '';
+        $input = '';
+        $notes = $user->notes()->whereHas('lesson.course', function ($query) use ($course) {
+            $query->where('name', 'like', '%' . $course . '%');
+        })->where('written_notes', 'like', '%' . $input . '%')->with('lesson', 'lesson.course', 'lesson.tags')->get();
+
+        return Inertia::render('NotesList', ['notes' => $notes]);
     }
 
     public function dashboardNotesByDate()
@@ -53,7 +63,7 @@ class NotesController extends Controller
         $user = Auth::user();
         $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                if ($course == 'All')
+                if ( $course == 'All' )
                     $q->where('name', 'like', '%' . '' . '%');
                 else
                     $q->where('name', 'like', '%' . $course . '%');
@@ -66,7 +76,7 @@ class NotesController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->hasFile('audio_notes')) {
+        if ( $request->hasFile('audio_notes') ) {
             $fileName = time() . '_' . $request->audio_notes->getClientOriginalName() . '.mp3';
             $filePath = $request->file('audio_notes')->storeAs('uploads', $fileName, 'public');
             $fullPath = 'storage/' . $filePath;

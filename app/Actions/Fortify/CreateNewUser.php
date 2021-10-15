@@ -35,12 +35,5 @@ class CreateNewUser implements CreatesNewUsers
         $user->profile_photo_path = 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF';
         $user->save();
         return $user;
-
-//        return User::create([
-//            'name' => $input['name'],
-//            'email' => $input['email'],
-//            'password' => Hash::make($input['password']),
-//            'profile_photo_path' => 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF',
-//        ]);
     }
 }

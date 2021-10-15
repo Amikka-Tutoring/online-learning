@@ -67,16 +67,18 @@ export default {
             calendar: false,
             moment: moment,
             notes: this.notes,
-            selected_course: 'Grammar'
         }
     },
     methods: {
         filterNotes: function (input = '', course = '') {
-            console.log('input: ' + input, 'course :' + course)
-            axios.get('notes/search/' + course + '/' + input)
+            axios.get(route('notes-search', {
+                params: {
+                    input: input,
+                    course: course,
+                }
+            }))
                 .then(response => {
                     this.notes = response.data.notes
-                    console.log(response.data)
                 })
                 .catch(error => {
                     this.toast.error('Something went wrong!');

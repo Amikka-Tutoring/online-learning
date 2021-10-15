@@ -66,7 +66,7 @@ Route::middleware(['auth',])->group(function () {
             Route::get('notes', [NotesController::class, 'notesList'])->name('notes-list');
             Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');
             Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
-            Route::get('notes/search/{course?}/{input?}', [NotesController::class, 'getNotes'])->name('notes-search');
+            Route::get('notes/search', [NotesController::class, 'getNotes'])->name('notes-search');
 //        Route::get('notes/block', [PageController::class, 'notesBlock'])->name('notes-block');
             Route::get('notes/{note}', [NotesController::class, 'show'])->name('notes-show');
             Route::get('notes/{note}/get', [NotesController::class, 'getNote'])->name('get.note');
