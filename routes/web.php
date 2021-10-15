@@ -53,6 +53,7 @@ Route::middleware(['auth',])->group(function () {
             Route::get('profile', [PageController::class, 'profile'])->name('profile');
             Route::post('change/tag', [PageController::class, 'changeTag'])->name('change.tag');
             Route::post('change/lesson-date/{date}', [UserController::class, 'changeExamDate'])->name('change.exam.date');
+            Route::post('change/goal-score/{score}', [UserController::class, 'changeScoreGoal'])->name('change.score.goal');
             Route::post('change/lesson-length/{length}', [ApiController::class, 'set_lesson_length'])->name('change.lesson.length');
             Route::get('math-diagnostic', [PageController::class, 'mathDiagnostic'])->name('math-diagnostic');
             Route::post('math-diagnostic', [PageController::class, 'postMathDiagnostic'])->name('math-diagnostic-post');
@@ -68,7 +69,6 @@ Route::middleware(['auth',])->group(function () {
             Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');
             Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
             Route::get('notes/search', [NotesController::class, 'getNotes'])->name('notes-search');
-//        Route::get('notes/block', [PageController::class, 'notesBlock'])->name('notes-block');
             Route::get('notes/{note}', [NotesController::class, 'show'])->name('notes-show');
             Route::get('notes/{note}/get', [NotesController::class, 'getNote'])->name('get.note');
 

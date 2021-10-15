@@ -66,7 +66,7 @@
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right">Edit</p>
+                                        <a href="/set-calendar"><p class="text-right">Edit</p></a>
                                     </div>
                                 </div>
                             </li>
@@ -81,7 +81,7 @@
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right">Edit</p>
+                                        <a href="/set-calendar"><p class="text-right">Edit</p></a>
                                     </div>
                                 </div>
                             </li>
@@ -125,7 +125,7 @@
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right">Edit</p>
+                                        <p class="text-right" @click="openScoreGoalModal">Edit</p>
                                     </div>
                                 </div>
                             </li>
@@ -143,7 +143,7 @@
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right">Edit</p>
+                                        <a href="/set-calendar"><p class="text-right">Edit</p></a>
                                     </div>
                                 </div>
                             </li>
@@ -158,7 +158,7 @@
                                         </h6>
                                     </div>
                                     <div class="col-lg-2 col-2 align-items-center">
-                                        <p class="text-right">Edit</p>
+                                        <p class="text-right"><i class="blue-text fas fa-lock"></i></p>
                                     </div>
                                 </div>
                             </li>
@@ -340,7 +340,33 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" @click="changeExamDate">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-goal-score" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Score Goal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <input type="number" class="form-control"
+                                   value="{{user.profile.desire_score}}"
+                                   v-model="user.profile.desire_score">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="changeScoreGoal">Save changes</button>
                 </div>
             </div>
         </div>
@@ -403,8 +429,25 @@ export default {
         openExamDateModal: function () {
             $('#modal-lesson-date').modal('show');
         },
+        openScoreGoalModal: function () {
+            $('#modal-goal-score').modal('show');
+        },
         hideModal: function () {
             $('#modal').modal('hide');
+        },
+        changeExamDate: function () {
+            axios.post(route('change.exam.date', this.user_data.profile.exam_date)).then((response) => {
+                this.toast.success(response.data.message)
+            }).catch(() => {
+                console.log('error')
+            });
+        },
+        changeScoreGoal: function () {
+            axios.post(route('change.score.goal', this.user.profile.desire_score)).then((response) => {
+                this.toast.success(response.data.message)
+            }).catch(() => {
+                console.log('error')
+            });
         },
         enroll: function () {
             this.loadingButton = true

@@ -103,10 +103,19 @@ class UserController extends Controller
         return ['available_courses' => $available_courses, 'enrollments' => $user_enrollments];
     }
 
-    public function changeExamDate($date)
+    public function changeExamDate($date): array
     {
         $user = Auth::user();
         $user->profile->exam_date = $date;
+        $user->profile->save();
         return ['message' => 'Exam Date has been updated!'];
+    }
+
+    public function changeScoreGoal($score): array
+    {
+        $user = Auth::user();
+        $user->profile->desire_score = $score;
+        $user->profile->save();
+        return ['message' => 'Score Goal has been updated!'];
     }
 }
