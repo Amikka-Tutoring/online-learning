@@ -43,7 +43,7 @@ Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('u
 Route::middleware(['auth',])->group(function () {
     Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method');
     Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method');
-    Route::middleware(['has.payment.method', 'subscribed', 'initial'])->group(function () {
+    Route::middleware(['has.payment.method', 'initial'])->group(function () {
         Route::get('/', [PageController::class, 'dashboard'])->name('main');
         Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
         Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');

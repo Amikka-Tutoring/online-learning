@@ -42,9 +42,12 @@ class UserController extends Controller
             'email' => 'required',
         ]);
         $user = Auth::user();
-        foreach ($request->courses as $id) {
+        foreach ($request->courses as $index => $id) {
             $course = Course::where('plan_id', $id)->first();
-            $user->newSubscription($course->slug, $id)->trialDays(7)->add();
+            if ($index == 0)
+                $user->newSubscription($course->slug, $id)->trialDays(7)->add();
+            else
+                $user->newSubscription($course->slug, $id)->trialDays(30)->add();
         }
 
         UserLessonDate::updateOrCreate([
