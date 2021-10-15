@@ -256,7 +256,7 @@ class PageController extends Controller
 
     public function review()
     {
-        $user = Auth::user()->load('enrollments', 'enrollments . course', 'layer_quiz_results');
+        $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
         $completed_layers = $user->layer_quiz_results()->where('score', ' < ', '50')->get()->pluck('layer_id');
         $courses_to_review = $user->enrollments()->with(['course', 'course . layers' => function ($query) use ($completed_layers) {
             $query->whereIn('id', $completed_layers);
@@ -267,7 +267,7 @@ class PageController extends Controller
     public function test()
     {
         $user = Auth::user();
-        $notes = $user->notes()->latest()->with(['lesson', 'lesson . course', 'lesson . tags'])->whereHas('lesson', function ($query) {
+        $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson . tags'])->whereHas('lesson', function ($query) {
             $query->whereHas('course', function ($q) {
                 $q->where('name', 'like', ' % ' . '' . ' % ');
             });
