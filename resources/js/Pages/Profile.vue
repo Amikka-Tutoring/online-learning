@@ -7,9 +7,6 @@
                 </div>
                 <h1>{{ user.name }}</h1>
                 <p>{{ user.email }}</p>
-                <!--                <button class="premium-btn">-->
-                <!--                    Become Premium-->
-                <!--                </button>-->
                 <div class="btn-group">
                     <button @click="tab = changeTab('specific')"
                             v-bind:class="[tab==='specific' ? 'active-button' : 'passive-button']">Course Specific
@@ -52,7 +49,7 @@
                                         <h5>Exam Date</h5>
                                         <h6>{{ moment(user_data.profile.exam_date).format("MM/DD") }}</h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 col-2 align-items-center" v-on:click="openExamDateModal()">
                                         <p class="text-right">Edit</p>
                                     </div>
                                 </div>
@@ -297,7 +294,7 @@
                 <a href="" @click="logout()" class="blue-text">LOG OUT</a>
             </div>
         </div>
-        <CheckList/>
+        <CheckList :user="user"/>
     </app-layout>
     <div class="modal fade" id="modal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -321,13 +318,33 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-lesson-date" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body px-5 pt-5">
+                    <div class="form-group row align-items-center" v-for="course in available_courses">
+                        <label for="" class="col-9 h4 m-0">{{ course.name }}</label>
+                        <input type="checkbox" class="form-control col-3 enroll_course_checkboxes" v-model="plans"
+                               :value="course.plan_id"/>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-start px-5">
+                    <button type="button" class="btn btn-primary" v-on:click="update">Enroll <span
+                        v-if="loadingButton"
+                        class="spinner-border ml-2"
+                        style="width: 1rem; height: 1rem"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style>
 .enroll_course_checkboxes:focus {
-    border: none !important;
-    outline: 0 !important;
-    box-shadow: none !important;
+    border     : none !important;
+    outline    : 0 !important;
+    box-shadow : none !important;
 }
 </style>
 
@@ -375,6 +392,9 @@ export default {
         },
         openModal: function () {
             $('#modal').modal('show');
+        },
+        openExamDateModal: function () {
+            $('#modal-lesson-date').modal('show');
         },
         hideModal: function () {
             $('#modal').modal('hide');

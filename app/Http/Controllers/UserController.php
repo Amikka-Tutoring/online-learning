@@ -99,4 +99,11 @@ class UserController extends Controller
         $user_enrollments = $user->enrollments;
         return ['available_courses' => $available_courses, 'enrollments' => $user_enrollments];
     }
+
+    public function changeExamDate($date)
+    {
+        $user = Auth::user();
+        $user->profile->exam_date = $date;
+        return ['message' => 'Exam Date has been updated!'];
+    }
 }

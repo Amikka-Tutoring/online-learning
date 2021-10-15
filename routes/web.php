@@ -52,6 +52,7 @@ Route::middleware(['auth',])->group(function () {
         Route::middleware(['personality', 'academic'])->group(function () {
             Route::get('profile', [PageController::class, 'profile'])->name('profile');
             Route::post('change/tag', [PageController::class, 'changeTag'])->name('change.tag');
+            Route::post('change/lesson-date/{date}', [UserController::class, 'changeExamDate'])->name('change.exam.date');
             Route::post('change/lesson-length/{length}', [ApiController::class, 'set_lesson_length'])->name('change.lesson.length');
             Route::get('math-diagnostic', [PageController::class, 'mathDiagnostic'])->name('math-diagnostic');
             Route::post('math-diagnostic', [PageController::class, 'postMathDiagnostic'])->name('math-diagnostic-post');
