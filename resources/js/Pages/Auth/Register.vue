@@ -7,7 +7,9 @@
         <div class="card-body">
 
             <jet-validation-errors class="mb-3"/>
-            <h1 class="blue-text my-4 text-center login-title">Amikka</h1>
+            <div class="logo text-center my-4">
+                <img src="images/logo.png" alt="" style="width:70%">
+            </div>
             <form @submit.prevent="submit">
                 <div class="form-group">
                     <jet-label for="name" value="Name"/>

@@ -11,7 +11,10 @@
             <div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
                 {{ status }}
             </div>
-            <h1 class="blue-text my-4 text-center login-title">Amikka</h1>
+            <div class="logo text-center my-4">
+                <img src="images/logo.png" alt="" style="width:70%">
+            </div>
+
 
             <form @submit.prevent="submit">
                 <div class="form-group">
