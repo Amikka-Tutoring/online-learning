@@ -94,16 +94,15 @@
                                     <button class="light-button">Submit</button>
                                 </form>
                             </div>
-                            <div v-show="audio" @click="recorder"
+                            <div v-show="audio"
                                  class="audio h-100" style="margin-top: 30%">
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="w-50 d-flex flex-column align-items-center mb-4">
-                                        <button v-show="started" id="btnStop" class="border-0 bg-transparent"
-                                                @click="stopped = true; started = false"><i
+                                        <button v-show="started" id="btnStop" class="border-0 bg-transparent"><i
                                             class="fas fa-microphone-alt blue-text fa-2x"></i>
                                         </button>
                                         <button v-show="stopped" id="btnStart" class="bg-transparent  border-0"
-                                                @click="started = true; stopped=false"><i
+                                                v-on:click="record"><i
                                             class="fas fa-microphone-alt blue-text fa-2x"></i>
                                         </button>
                                         <div v-if="started" class="spinner-grow text-danger" role="status">
@@ -111,6 +110,7 @@
                                         </div>
                                     </div>
                                     <audio id="adioPlay" controls></audio>
+                                    <!--                                    <audio controls :src="appUrl+notes.audio_notes"></audio>-->
                                 </div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@ import {Inertia} from '@inertiajs/inertia'
 
 
 export default {
-    props: ['lesson', 'notes', 'user', 'user_attempt'],
+    props: ['lesson', 'notes', 'user', 'user_attempt', 'appUrl'],
 
     components: {
         Button,
@@ -217,6 +217,7 @@ export default {
             Inertia.get(route('lesson.quiz', lesson_id))
         },
         submit: function () {
+            console.log(this.form)
             axios.post(route('notes.store'), this.form)
                 .then(response => {
                     this.toast.success(response.data.message)
@@ -235,6 +236,64 @@ export default {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 });
         },
+        record: function () {
+            let audioIN = {audio: true};
+
+            let parentForm = this.form
+            let parentThis = this
+
+            navigator.mediaDevices.getUserMedia(audioIN)
+                .then(function (mediaStreamObj) {
+                        let mediaRecorder = new MediaRecorder(mediaStreamObj);
+                        mediaRecorder.start();
+                        mediaRecorder.onstart = function (ev) {
+                            setTimeout(() => {
+                                parentThis.started = true
+                                parentThis.stopped = false
+                            }, 800)
+                        }
+
+                        let stop = document.getElementById('btnStop');
+                        let playAudio = document.getElementById('adioPlay');
+
+                        stop.addEventListener('click', function (ev) {
+                            mediaRecorder.stop();
+                        });
+                        mediaRecorder.ondataavailable = function (ev) {
+                            dataArray.push(ev.data);
+                        }
+
+                        let dataArray = [];
+                        mediaRecorder.onstop = function (ev) {
+                            parentThis.stopped = true
+                            parentThis.started = false
+
+                            let audioData = new Blob(dataArray,
+                                {'type': 'audio/mp3;'});
+
+                            dataArray = [];
+                            let audioSrc = window.URL
+                                .createObjectURL(audioData);
+                            let formData = new FormData();
+                            formData.append("audio_notes", audioData);
+                            formData.append('user_id', parentForm.user_id)
+                            formData.append('layer_id', parentForm.layer_id)
+                            formData.append('written_notes', parentForm.written_notes)
+                            axios.post(route('notes.store'), formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).then(response => {
+                                parentThis.toast.success(response.data.message);
+                            });
+                            playAudio.src = audioSrc;
+                        }
+                    }
+                )
+                .catch(function (err) {
+                    console.log(err.name, err.message);
+                });
+        }
     },
     data() {
         return {
@@ -246,7 +305,7 @@ export default {
             form: {
                 written_notes: this.notes?.written_notes,
                 layer_id: this.lesson.id,
-                audio_notes: '',
+                audio_notes: this.notes?.audio_notes,
                 topic: null,
             },
             questionForm: {
@@ -256,88 +315,7 @@ export default {
         }
     },
     mounted() {
-        let audioIN = {audio: true};
-
-        let parentForm = this.form
-        let parentThis = this
-
-        navigator.mediaDevices.getUserMedia(audioIN)
-            // 'then()' method returns a Promise
-            .then(function (mediaStreamObj) {
-
-
-                    // Start record
-                    let start = document.getElementById('btnStart');
-
-                    // Stop record
-                    let stop = document.getElementById('btnStop');
-
-                    // 2nd audio tag for play the audio
-                    let playAudio = document.getElementById('adioPlay');
-
-                    // This is the main thing to recorde
-                    // the audio 'MediaRecorder' API
-                    let mediaRecorder = new MediaRecorder(mediaStreamObj);
-                    // Pass the audio stream
-
-                    // Start event
-                    start.addEventListener('click', function (ev) {
-                        mediaRecorder.start();
-                        // console.log(mediaRecorder.state);
-                    })
-
-                    // Stop event
-                    stop.addEventListener('click', function (ev) {
-                        mediaRecorder.stop();
-                        // console.log(mediaRecorder.state);
-                    });
-
-                    // If audio data available then push
-                    // it to the chunk array
-                    mediaRecorder.ondataavailable = function (ev) {
-                        dataArray.push(ev.data);
-                    }
-
-                    // Chunk array to store the audio data
-                    let dataArray = [];
-
-
-                    // Convert the audio data in to blob
-                    // after stopping the recording
-                    mediaRecorder.onstop = function (ev) {
-
-                        // blob of type mp3
-                        let audioData = new Blob(dataArray,
-                            {'type': 'audio/mp3;'});
-
-                        // After fill up the chunk
-                        // array make it empty
-                        dataArray = [];
-
-                        // Creating audio url with reference
-                        // of created blob named 'audioData'
-                        let audioSrc = window.URL
-                            .createObjectURL(audioData);
-                        let formData = new FormData();
-                        formData.append("audio_notes", audioData);
-                        formData.append('user_id', parentForm.user_id)
-                        formData.append('layer_id', parentForm.layer_id)
-                        formData.append('written_notes', parentForm.written_notes)
-                        axios.post(route('notes.store'), formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        }).then(response => {
-                            parentThis.toast.success(response.data.message);
-                            parentThis.getNote()
-                        });
-                        playAudio.src = audioSrc;
-                    }
-                }
-            )
-            .catch(function (err) {
-                console.log(err.name, err.message);
-            });
+        console.log(this.notes)
     }
 }
 </script>

@@ -252,7 +252,7 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{ user_course.course.quizzes_attempted }}/{{
-                                                user_course.course.quizzes_count
+                                            user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -285,7 +285,7 @@
                         </div>
                     </transition>
                     <div class="row justify-content-md-center">
-                        <div class="col-lg-3 col-12">
+                        <div class="col-lg-3 col-md-5 col-12">
                             <div class="calendar-box">
                                 <div class="row">
                                     <p class="blue-text font-weight-bold m-0">Next Lesson: ⏳</p>
@@ -296,7 +296,7 @@
                                     <p class="blue-text font-weight-bold m-0">Next Practice Exam: 🚀</p>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                            next_practice_exam_time
+                                        next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>

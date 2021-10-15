@@ -1961,6 +1961,14 @@ input[type="radio"] {
     .audio-notes-box {
         margin-bottom: 50px;
     }
+
+    .side-bar .mb-5 {
+        margin-bottom: 100px !important;
+    }
+
+    .admin-sidebar .list {
+        margin-bottom: 100px !important;
+    }
 }
 
 /*Full Calendar*/
