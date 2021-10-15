@@ -6,6 +6,7 @@ use App\Models\Course;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Laravel\Cashier\Subscription;
@@ -13,6 +14,7 @@ use Stripe\BaseStripeClient;
 use Stripe\Plan;
 use Stripe\Stripe;
 use Stripe\StripeClient;
+use function PHPUnit\Framework\throwException;
 
 class SubscriptionController extends Controller
 {
@@ -51,6 +53,12 @@ class SubscriptionController extends Controller
 
     public function cancelSubscription($plan_id)
     {
+        if ( Auth::user()->enrollments->where('ends_at', null)->count() == 1 ) {
+            return Response::json([
+                'code' => 401,
+                'message' => 'You need to be subscribed at least in one course'
+            ], 401);
+        }
         $subscription = Auth::user()->enrollments->where('stripe_price', $plan_id)->first();
         $subscription->cancel();
         return ['message' => 'Canceled! Your subscription will end at: ' . $subscription->ends_at->format('Y-m-d')];
@@ -75,11 +83,6 @@ class SubscriptionController extends Controller
     public function subscribeUserGet()
     {
         $user = Auth::user();
-
-//        $plan = env('PLAN_ID');
-
-
-//        $user->newSubscription('default', 'plan_KOqNkHieifQD6F')->add();
         $subscriptions = $user->subscriptions->pluck('stripe_price');
         dd(Course::whereIn('plan_id', $subscriptions)->get());
     }

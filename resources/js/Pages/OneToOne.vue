@@ -157,7 +157,8 @@ export default {
     methods: {
         submitForm: function () {
             axios.post(route('submit-one-to-one'), this.form)
-                .then((response) => {
+                .then(response => {
+                    console.log(response.data)
                     this.toast.success(response.data.message)
                     this.form.phone = null;
                     this.form.discussion = null;

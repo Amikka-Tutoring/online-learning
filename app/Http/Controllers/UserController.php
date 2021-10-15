@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Laravel\Cashier\Exceptions\IncompletePayment;
 use Stripe\BaseStripeClient;
 use function PHPUnit\Framework\throwException;
 
@@ -42,12 +43,13 @@ class UserController extends Controller
             'email' => 'required',
         ]);
         $user = Auth::user();
-        foreach ($request->courses as $index => $id) {
-            $course = Course::where('plan_id', $id)->first();
-            if ($index == 0)
+        try {
+            $user->newSubscription('platform', env('PLAN_ID'))->trialDays(7)->add();
+            foreach ($request->courses as $id) {
+                $course = Course::where('plan_id', $id)->first();
                 $user->newSubscription($course->slug, $id)->trialDays(7)->add();
-            else
-                $user->newSubscription($course->slug, $id)->trialDays(30)->add();
+            }
+        } catch (IncompletePayment $e) {
         }
 
         UserLessonDate::updateOrCreate([

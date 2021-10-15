@@ -246,8 +246,9 @@ class PageController extends Controller
         $details['availability'] = $request->availability;
 
         try {
-            Mail::to('email@amikka.com')->send(new OneOnOne($details));
+            Mail::to('Info@amikkatutoring.com')->send(new OneOnOne($details));
         } catch (\Throwable $th) {
+            return $th;
             \Log::log(1, $th);
         }
         return ['message' => 'Submitted'];
@@ -255,9 +256,9 @@ class PageController extends Controller
 
     public function review()
     {
-        $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
-        $completed_layers = $user->layer_quiz_results()->where('score', '<', '50')->get()->pluck('layer_id');
-        $courses_to_review = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
+        $user = Auth::user()->load('enrollments', 'enrollments . course', 'layer_quiz_results');
+        $completed_layers = $user->layer_quiz_results()->where('score', ' < ', '50')->get()->pluck('layer_id');
+        $courses_to_review = $user->enrollments()->with(['course', 'course . layers' => function ($query) use ($completed_layers) {
             $query->whereIn('id', $completed_layers);
         }])->get()->pluck('course');
         return Inertia::render('Review', ['courses_to_review' => $courses_to_review]);
@@ -266,12 +267,12 @@ class PageController extends Controller
     public function test()
     {
         $user = Auth::user();
-        $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) {
+        $notes = $user->notes()->latest()->with(['lesson', 'lesson . course', 'lesson . tags'])->whereHas('lesson', function ($query) {
             $query->whereHas('course', function ($q) {
-                $q->where('name', 'like', '%' . '' . '%');
+                $q->where('name', 'like', ' % ' . '' . ' % ');
             });
         })->paginate(12)->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('m/d');
+            return Carbon::parse($val->created_at)->format('m / d');
         });
         return ['notes' => $notes];
     }

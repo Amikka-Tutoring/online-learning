@@ -89,10 +89,12 @@ export default {
             if (!confirm('Are you sure want to cancel subscription?')) return;
             axios.post(route('cancel.subscription', plan_id))
                 .then(response => {
+                    console.log(response.data)
                     this.toast.success(response.data.message);
                 })
                 .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                    this.toast.error(error.response.data.message)
+                    // Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 })
         }
     },

@@ -158,6 +158,3 @@ Route::post('subscribe', [\App\Http\Controllers\SubscriptionController::class, '
 Route::post('subscription/cancel/{plan_id}', [\App\Http\Controllers\SubscriptionController::class, 'cancelSubscription'])->name('cancel.subscription');
 Route::post('subscribe-course', [UserController::class, 'subscribeForCourse'])->name('subscribe.course');
 Route::get('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUserGet']);
-
-Route::get('/send-sms', [ReminderController::class, 'sendSMS'])->name('send.sms');
-Route::get('/send-email', [ReminderController::class, 'sendEmail'])->name('send.email');

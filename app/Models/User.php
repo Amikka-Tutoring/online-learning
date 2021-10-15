@@ -126,7 +126,7 @@ class User extends Authenticatable
 
     public function enrollments()
     {
-        return $this->hasMany(\App\Models\Subscription::class, 'user_id', 'id')->whereIn('stripe_status', ['active', 'trialing']);
+        return $this->hasMany(\App\Models\Subscription::class, 'user_id', 'id')->whereIn('stripe_status', ['active', 'trialing'])->where('name', '!=', 'platform');
     }
 
     public function exams_visited()
