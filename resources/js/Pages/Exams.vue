@@ -107,9 +107,7 @@
                                         Real Exam Day
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
-                                            }}</h5>
+                                        <h5 class="blue-text">{{ moment(user.profile.exam_date).format("MM/DD") }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <CheckList/>
+        <CheckList :user="user"/>
     </app-layout>
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

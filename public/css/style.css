@@ -1969,6 +1969,10 @@ input[type="radio"] {
     .admin-sidebar .list {
         margin-bottom: 100px !important;
     }
+
+    .header-menu .step-one {
+        margin-bottom: 100px !important;
+    }
 }
 
 /*Full Calendar*/
