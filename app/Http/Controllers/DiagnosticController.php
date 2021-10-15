@@ -445,7 +445,7 @@ class DiagnosticController extends Controller
 
         foreach ($importData_arr as $row) {
             if (count($row) != 10) {
-                return ['error_msg' => $row];
+                return ['error_msg' => 'Wrong format'];
             }
 
             $question = new Question();
