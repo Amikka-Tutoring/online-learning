@@ -17,9 +17,10 @@
                                     Access your strengths and weakness in order to know <span
                                     class="blue-text">what </span>content you need to study.
                                     <br><br>
-                                    <a :href="route('diagnostic.show','mathematics')">
+                                    <a v-if="!user.profile.math_score" :href="route('diagnostic.show','mathematics')">
                                         <h4>
                                             Start</h4></a>
+                                    <h4 v-else>Done</h4>
                                 </li>
                                 <li>
                                     <strong class="blue-text">Grammar Diagnostic</strong>
@@ -27,9 +28,11 @@
                                     Access your strengths and weakness in order to know <span
                                     class="blue-text">what </span>content you need to study.
                                     <br><br>
-                                    <a :href="route('diagnostic.show','grammar')">
+                                    <a v-if="!user.profile.grammar_score"
+                                       :href="route('diagnostic.show','grammar')">
                                         <h4>
                                             Start</h4></a>
+                                    <h4 v-else>Done</h4>
                                     <!--                                    <h4 v-else>Done</h4>-->
                                 </li>
                                 <li>
@@ -38,9 +41,11 @@
                                     Access your strengths and weakness in order to know <span
                                     class="blue-text">what </span>content you need to study.
                                     <br><br>
-                                    <a :href="route('diagnostic.show','reading')">
+                                    <a v-if="!user.profile.reading_score"
+                                       :href="route('diagnostic.show','reading')">
                                         <h4>
                                             Start</h4></a>
+                                    <h4 v-else>Done</h4>
                                 </li>
                             </ol>
                         </div>
