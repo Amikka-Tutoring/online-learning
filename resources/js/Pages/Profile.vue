@@ -322,18 +322,25 @@
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-body px-5 pt-5">
-                    <div class="form-group row align-items-center" v-for="course in available_courses">
-                        <label for="" class="col-9 h4 m-0">{{ course.name }}</label>
-                        <input type="checkbox" class="form-control col-3 enroll_course_checkboxes" v-model="plans"
-                               :value="course.plan_id"/>
-                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Exam Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-footer justify-content-start px-5">
-                    <button type="button" class="btn btn-primary" v-on:click="update">Enroll <span
-                        v-if="loadingButton"
-                        class="spinner-border ml-2"
-                        style="width: 1rem; height: 1rem"></span></button>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <input type="date" class="form-control" id="datetimepicker"
+                                   value="{{user_data.profile.exam_date}}"
+                                   v-model="user_data.profile.exam_date">
+                            <div id="datepicker"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
