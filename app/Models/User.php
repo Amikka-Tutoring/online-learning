@@ -33,8 +33,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'role_id'
     ];
+
+
+    public function getIsAdminAttribute()
+    {
+        return $this->is_admin();
+    }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -64,7 +70,8 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
-        'attempted_quiz'
+        'attempted_quiz',
+        'is_admin'
     ];
 
     protected static function booted()
@@ -72,6 +79,21 @@ class User extends Authenticatable
 //        static::updated(queueable(function ($customer) {
 //            $customer->syncStripeCustomerDetails();
 //        }));
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function check_role($slug)
+    {
+        return $this->role->slug == $slug;
+    }
+
+    public function is_admin()
+    {
+        return $this->check_role('admin');
     }
 
     public function profile()
@@ -110,7 +132,7 @@ class User extends Authenticatable
 
     public function getTag()
     {
-        if ($this->tags->count())
+        if ( $this->tags->count() )
             return $this->tags->last()->name;
     }
 
