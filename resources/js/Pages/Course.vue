@@ -37,12 +37,25 @@
         </div>
         <div class="notes-section">
             <div class="container">
-                <h1 class="blue-text text-center">Notes</h1>
+                <h1 class="blue-text text-center mb-4">Notes</h1>
                 <div class="notes-section-content d-flex justify-content-center align-items-center flex-column">
                     <div class="row d-flex justify-content-center">
-                        <p class="w-75">If you’re an auditory learner it may help to use our voice note feature as well
-                            as written notes. If you’re a visual learner written notes might be more beneficial for
-                            you.</p>
+                        <transition name="list">
+                            <div v-if="notes_section" class="question-box text-left">
+                                <div class="row">
+                                    <div class="col-lg-11 col-10">
+                                        If you’re an auditory learner it may help to use our voice note feature as well
+                                        as written notes. If you’re a visual learner written notes might be more
+                                        beneficial for
+                                        you.
+                                    </div>
+                                    <div class="col-lg-1 col-2 d-flex align-items-center">
+                                        <i v-on:click="notes_section = disableNotification('notes_section')"
+                                           class="fas fa-times red-text"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
                     </div>
                     <div class="notes-box row w-75">
                         <div class="col-lg-2 col-12">
@@ -111,11 +124,23 @@
         </div>
         <div class="container">
             <div class="faq">
-                <h1 class="blue-text text-center">Student FAQ</h1>
+                <h1 class="blue-text text-center mb-4">Student FAQ</h1>
                 <div class="faq-section-content d-flex justify-content-center align-items-center flex-column">
                     <div class="row d-flex justify-content-center">
-                        <p class="w-75">Still confused? Check out the student FAQ’s below with video responses. You can
-                            even ask us a question and we’ll respond within 72 hrs.</p>
+                        <transition name="list">
+                            <div v-if="faq_section" class="question-box text-left">
+                                <div class="row">
+                                    <div class="col-lg-11 col-10">
+                                        Still confused? Check out the student FAQ’s below with video responses. You can
+                                        even ask us a question and we’ll respond within 72 hrs.
+                                    </div>
+                                    <div class="col-lg-1 col-2 d-flex align-items-center">
+                                        <i v-on:click="faq_section = disableNotification('faq_section')"
+                                           class="fas fa-times red-text"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
                     </div>
                     <div class="recommended-box col-md-6 col-12">
                         <div class="recommended-title">Top Questions</div>
@@ -158,6 +183,9 @@ export default {
         ToolsMenu,
     },
     methods: {
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        },
         embed: function (str) {
             let embeddedUrl = "https://player.vimeo.com/video/" + str + "?h=af48f9e87f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479";
             return embeddedUrl;
@@ -260,7 +288,17 @@ export default {
                 question_text: null,
                 video_id: this.video.id,
             },
-            notes: this.notes
+            notes: this.notes,
+            faq_section: localStorage.getItem('faq_section') === 'true',
+            notes_section: localStorage.getItem('notes_section') === 'true',
+        }
+    },
+    setup() {
+        let saved = localStorage.getItem('video_page') === null;
+        if (saved) {
+            localStorage.setItem('faq_section', true)
+            localStorage.setItem('notes_section', true)
+            localStorage.setItem('video_page', true)
         }
     },
     mounted() {

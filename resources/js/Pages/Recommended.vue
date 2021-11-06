@@ -61,10 +61,12 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-8 d-flex align-items-center">
-                                                        <h5>{{ top_videos.title }}<span
-                                                            class="ml-2 badges gray-badge">Strategy</span><span
-                                                            class="ml-2 badges gray-badge">All</span>
-                                                        </h5>
+                                                        <h5>{{ top_videos.title }}</h5>
+                                                        <div><span v-for="tag in top_videos.tags"
+                                                                   class="ml-2 badges lightblue-badge">{{
+                                                                tag.name
+                                                            }}</span>
+                                                        </div>
                                                     </div>
                                                     <div
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -99,10 +101,12 @@
                                                                     </a>
                                                                 </div>
                                                                 <div class="col-8 d-flex align-items-center">
-                                                                    <h5>{{ mid_videos.title }}<span
-                                                                        class="ml-2 badges gray-badge">Strategy</span><span
-                                                                        class="ml-2 badges gray-badge">All</span>
-                                                                    </h5>
+                                                                    <h5>{{ mid_videos.title }}</h5>
+                                                                    <div><span v-for="tag in mid_videos.tags"
+                                                                               class="ml-2 badges lightblue-badge">{{
+                                                                            tag.name
+                                                                        }}</span>
+                                                                    </div>
                                                                 </div>
                                                                 <div
                                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -138,10 +142,13 @@
                                                                             </div>
                                                                             <div
                                                                                 class="col-8 d-flex align-items-center">
-                                                                                <h5>{{ less_videos.title }}<span
-                                                                                    class="ml-2 badges gray-badge">Strategy</span><span
-                                                                                    class="ml-2 badges gray-badge">All</span>
-                                                                                </h5>
+                                                                                <h5>{{ less_videos.title }}</h5>
+                                                                                <div><span
+                                                                                    v-for="tag in less_videos .tags"
+                                                                                    class="ml-2 badges lightblue-badge">{{
+                                                                                        tag.name
+                                                                                    }}</span>
+                                                                                </div>
                                                                             </div>
                                                                             <div
                                                                                 class="col-2 d-flex justify-content-center align-items-center text-center">
