@@ -14,7 +14,7 @@ class AddDurationVideosTable extends Migration
     public function up()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->integer('duration')->nullable();
+            $table->integer('duration')->default(0)->nullable();
         });
     }
 

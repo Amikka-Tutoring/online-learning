@@ -23,15 +23,15 @@ class LayerSeeder extends Seeder
     {
         $course = Course::create([
             'name' => 'SAT Grammar',
-            'slug' => Str::slug('Grammar'),
+            'slug' => Str::slug('SAT Grammar'),
         ]);
         $course2 = Course::create([
             'name' => 'SAT Reading',
-            'slug' => Str::slug('Reading'),
+            'slug' => Str::slug('SAT Reading'),
         ]);
         $course3 = Course::create([
             'name' => 'SAT Maths',
-            'slug' => Str::slug('Reading'),
+            'slug' => Str::slug('SAT Maths'),
         ]);
         $parent_1 = Layer::create([
             'name' => 'English Strategy',
