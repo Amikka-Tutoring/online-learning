@@ -73,7 +73,10 @@
                                                         </div>
                                                         <div
                                                             class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                            <h5>03:23</h5>
+                                                            <h5>{{
+                                                                    moment.duration(top_videos.duration,
+                                                                        'seconds').format("hh:mm:ss")
+                                                                }}</h5>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -95,6 +98,8 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import CollapseTransition from '@ivanv/vue-collapse-transition/src'
+import moment from "moment";
+import 'moment-duration-format';
 
 export default {
     components: {
@@ -133,6 +138,7 @@ export default {
 
     data() {
         return {
+            moment: moment,
             rec: false,
             review: true,
             review_box: localStorage.getItem('review_box') === 'true',
