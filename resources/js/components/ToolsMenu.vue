@@ -7,63 +7,23 @@
                 <li v-show="next">
                     <div class="next-lessons">
                         <div class="next-up">Next Up</div>
-                        <div class="next-item">
+                        <div v-for="video in videos" class="next-item">
                             <div class="row">
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                    <i class="fas fa-play-circle" style="color: #4C6ED7"></i>
-                                </div>
-                                <div class="col-7">
-                                    <div class="row">
-                                        <p>Concision</p>
-                                    </div>
-                                    <div class="row">
-                                        <span class="ml-2 badges gray-badge">Strategy</span><span
-                                        class="ml-2 badges gray-badge">All</span>
-                                    </div>
-                                </div>
                                 <div class="col-3 d-flex justify-content-center align-items-center text-center">
-                                    <p>03:23</p>
+                                    <i class="fas fa-play-circle" style="color: #4C6ED7; font-size: 1.8rem"></i>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="next-item">
-                            <div class="row">
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                    <i class="fas fa-play-circle" style="color: #4C6ED7"></i>
-                                </div>
-                                <div class="col-7">
+                                <div class="col-9">
                                     <div class="row">
-                                        <p>Concision</p>
+                                        <p>{{ video.title }}</p>
                                     </div>
                                     <div class="row">
-                                        <span class="ml-2 badges gray-badge">Strategy</span><span
-                                        class="ml-2 badges gray-badge">All</span>
+                                        <span v-for="tag in video.tags"
+                                              class="ml-2 badges lightblue-badge">{{ tag.name }}</span>
                                     </div>
                                 </div>
-                                <div class="col-3 d-flex justify-content-center align-items-center text-center">
-                                    <p>03:23</p>
-                                </div>
-                            </div>
-                        </div>
-                        <p>{{ videos }}</p>
-
-                        <div class="next-item">
-                            <div class="row">
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                    <i class="fas fa-play-circle" style="color: #4C6ED7"></i>
-                                </div>
-                                <div class="col-7">
-                                    <div class="row">
-                                        <p>Concision</p>
-                                    </div>
-                                    <div class="row">
-                                        <span class="ml-2 badges gray-badge">Strategy</span><span
-                                        class="ml-2 badges gray-badge">All</span>
-                                    </div>
-                                </div>
-                                <div class="col-3 d-flex justify-content-center align-items-center text-center">
-                                    <p>03:23</p>
-                                </div>
+                                <!--                                <div class="col-3 d-flex justify-content-center align-items-center text-center">-->
+                                <!--                                    <p>03:23</p>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
                     </div>

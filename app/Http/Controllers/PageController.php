@@ -151,7 +151,7 @@ class PageController extends Controller
         $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions');
         $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
-        $next_videos = $video->layer->videos->where('id', '>', $video->id);
+        $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->get();
         $user = Auth::user()->load('layer_quiz_results');
         if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
@@ -282,8 +282,7 @@ class PageController extends Controller
         return Video::with('tags')->get();
         dd($video, $tags, !array_diff($tags, $video));
         $user = Auth::user();
-<<<<<<< Updated upstream
-=======
+
 //        dd($user->tags);
         return Video::withoutGlobalScopes()->with('tags')->get();
 
@@ -297,7 +296,6 @@ class PageController extends Controller
 
         return Video::with('tags')->get();
 
->>>>>>> Stashed changes
         $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) {
             $query->whereHas('course', function ($q) {
                 $q->where('name', 'like', ' % ' . '' . ' % ');
