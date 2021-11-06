@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +34,7 @@ class CreateNewUser implements CreatesNewUsers
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
         $user->profile_photo_path = 'https://ui-avatars.com/api/?name=' . $input['name'] . '&color=7F9CF5&background=EBF4FF';
+        $user->role_id = Role::where('slug', 'student')->first()->id;
         $user->save();
         return $user;
     }

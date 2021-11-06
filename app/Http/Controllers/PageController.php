@@ -34,8 +34,8 @@ class PageController extends Controller
 
     public function initialQuestionnaire()
     {
-        $courses = Course::all();
-        if (Auth::user()->profile) {
+        $courses = Course::where('name', 'not like', 'SAT%')->get();
+        if ( Auth::user()->profile ) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -50,9 +50,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ($user_profile->tutor_match)
+        if ( $user_profile->tutor_match )
             $tutor_match_done = true;
-        if ($user_profile->learning_style)
+        if ( $user_profile->learning_style )
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -66,7 +66,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ($d['day'] > $date_now)
+            if ( $d['day'] > $date_now )
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -83,7 +83,7 @@ class PageController extends Controller
         $next_lesson_day = '';
         $next_lesson_time = '';
         $next_lesson = '';
-        if ($next != 0) {
+        if ( $next != 0 ) {
             $next_lesson_day = $days[$next['day']];
             $next_lesson_time = $next['time'];
 
@@ -110,7 +110,7 @@ class PageController extends Controller
 
     public function profile()
     {
-        $tags = Tag::whereIn('name', ['Easy', 'Medium', 'Hard', 'Expert'])->get();
+        $tags = Tag::whereIn('name', ['Easy', 'Medium', 'Hard', 'Expert', 'All'])->get();
         $userTag = Auth::user()->getTag();
         $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile', 'lesson_dates', 'practice_exam_dates']);
         $enrollments = $user->enrollments->pluck('stripe_price');
@@ -153,7 +153,7 @@ class PageController extends Controller
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
         $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->get();
         $user = Auth::user()->load('layer_quiz_results');
-        if (!$user->subscribed($video->layer->course->slug))
+        if ( !$user->subscribed($video->layer->course->slug) )
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
         $notes = $video->notes->first();
 
@@ -164,7 +164,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if (count($user->layer_quiz_results->where('layer_id', $id)))
+        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -232,7 +232,6 @@ class PageController extends Controller
         return Inertia::render('SetCalendar', ['date_diff' => $date_diff, 'practice_exams' => $exams, 'lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy, 'calendar_lessons' => $calendar_lessons, 'calendar_exams' => $calendar_exams]);
     }
 
-
     public function notesBlock()
     {
         return Inertia::render('NotesBlock');
@@ -279,9 +278,15 @@ class PageController extends Controller
         $user = Auth::user()->load('profile', 'tags');
         $video = ['Easy', 'Tactile', 'ENFP', 'ALL'];
         $tags = [$user->tags->last()->name, $user->profile->learning_style, $user->profile->tutor_match];
-        return Video::with('tags')->get();
-        dd($video, $tags, !array_diff($tags, $video));
-        $user = Auth::user();
+
+        return Video::with(['tags.videos' => function ($query) use ($tags) {
+            dd($query->get());
+        }])->get();
+//        return Video::with('tags')->whereHas('tags', function ($query) use ($tags) {
+//            $query->whereIn('name', $tags);
+//        })->get();
+////        dd($video, $tags, !array_diff($tags, $video));
+//        $user = Auth::user();
 
 //        dd($user->tags);
         return Video::withoutGlobalScopes()->with('tags')->get();

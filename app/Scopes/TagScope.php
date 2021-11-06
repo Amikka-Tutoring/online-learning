@@ -10,19 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class TagScope implements Scope
 {
-    /**
-     * Apply the scope to a given Eloquent query builder.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return void
-     */
-    // protected const $user_tag = Auth::user()->tags->last();
-
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('tags', function ($query) {
-            $query->where('tags.name', Auth::user()->tags->pluck('name')->last());
-        });
+//        $user = \Auth::user();
+//        $user_tags = [$user->tutor_match, $user->learning_style, $user->tags->pluck('name')];
+//        $builder->join('taggables', 'id', '=', 'taggables.taggable_id')
+//            ->join('tags', 'taggables.tag_id', '=', 'tags.id')
+//            ->whereIn('tags.id', $user_tags);
+
+//        $builder->whereHasMorph('tags', 'App\Models\Video', function ($query) use ($user_tags) {
+//            $query->pluck('name');
+//        });
+//        $builder->joinWhere('taggables', 'id', '=', 'taggables.taggable_id');
+//        $builder->with('tags');
     }
 }

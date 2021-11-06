@@ -22,11 +22,15 @@ class LayerSeeder extends Seeder
     public function run()
     {
         $course = Course::create([
-            'name' => 'Grammar',
+            'name' => 'SAT Grammar',
             'slug' => Str::slug('Grammar'),
         ]);
         $course2 = Course::create([
-            'name' => 'Reading',
+            'name' => 'SAT Reading',
+            'slug' => Str::slug('Reading'),
+        ]);
+        $course3 = Course::create([
+            'name' => 'SAT Maths',
             'slug' => Str::slug('Reading'),
         ]);
         $parent_1 = Layer::create([
@@ -124,7 +128,6 @@ class LayerSeeder extends Seeder
             'is_correct' => 1,
             'question_id' => $question_grand_children_1->id,
         ]);
-
 
         $grand_children_1 = Layer::create([
             'name' => 'Redundancy',

@@ -22,7 +22,6 @@ class Video extends Model
         static::addGlobalScope(new TagScope);
     }
 
-
     public function layer()
     {
         return $this->belongsTo(Layer::class);

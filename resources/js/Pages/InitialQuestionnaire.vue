@@ -51,6 +51,21 @@
                             covered by your subscription, any additonal courses will cost $30/month extra.
                         </p>
                         <div class="row">
+                            <div class="col-lg-3 col-12">
+                                <div class="input-cards">
+                                    <img class="w-100" :src="'images/course-img.png'">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <h4>SAT</h4>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="check-box"></label>
+                                            <input id="check-box" type="checkbox"
+                                                   v-model="sat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-3 col-12" v-for="c in courses_data">
                                 <div class="input-cards">
                                     <img class="w-100" :src="'images/course-img.png'">
@@ -305,6 +320,7 @@ export default {
 
         function next() {
             const toast = useToast();
+            toast.success(sat);
             if (form.currentstep === 2 && !form.courses.length) {
                 return toast.error('Course is required');
             }
