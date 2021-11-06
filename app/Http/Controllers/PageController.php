@@ -268,7 +268,7 @@ class PageController extends Controller
         $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
         $completed_layers = $user->layer_quiz_results()->where('score', ' < ', '50')->get()->pluck('layer_id');
         $courses_to_review = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
-            $query->whereIn('id', $completed_layers);
+            $query->whereIn('id', $completed_layers)->with('videos', 'videos.tags');
         }])->get()->pluck('course');
         return Inertia::render('Review', ['courses_to_review' => $courses_to_review]);
     }
