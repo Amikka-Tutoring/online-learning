@@ -94,13 +94,13 @@ class CourseController extends Controller
                 //Top Layer Video
                 if ( $row[2] != '' ) {
                     $client = new Vimeo("c23af4c046b1670febedb68569f2c315de8e9012", "7Uu9kys+8Mswir+ltgcss1KxjQFcrciQ6wkPblrVIznbqpiZR6YjKaqoMp3Al9TMYv2OerrtJ1A9K4wyF/Ak58mvf/aVINXkzHOt3kOcyoJ/m2VZZxsQ7XlM2cNeDYC4", "1022a3e17c841a426425a73b502d9018");
-                    $response = $client->request('/tutorial', [], 'GET');
-                    dd($response);
+                    $response = $client->request('/videos/' . $row[3], [], 'GET');
                     $top_layer_video = Video::create([
                         'title' => $row[2],
                         'url' => $row[3],
                         'description' => $row[4],
                         'layer_id' => $top_layer->id,
+                        'duration' => $response['body']['duration']
                     ]);
                     foreach (explode(', ', $row[5]) as $tag) {
                         $top_layer_video->setTag($tag);

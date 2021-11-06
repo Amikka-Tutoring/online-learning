@@ -15,6 +15,7 @@ class Video extends Model
         'url',
         'description',
         'layer_id',
+        'duration'
     ];
 
     protected static function booted()
