@@ -96,7 +96,6 @@ class DiagnosticController extends Controller
 //            $user->setTag($user->profile->tutor_match);
             $results = DiagnosticUserTag::where('title', $user->profile->tutor_match)->first();
 
-
             $learned = unserialize($results->learned);
             $tips = unserialize($results->tips);
             $plan = unserialize($results->plan);
@@ -127,7 +126,12 @@ class DiagnosticController extends Controller
                 $points += $answer['is_correct'];
             }
             $score = $points / $sum * 100;
+
+            dd($score);
+
             $user->profile->math_score = number_format($score, 2);
+            $user->profile->save();
+            $user->profile->total_score += $user->profile->math_score;
             $user->profile->save();
             return redirect()->route('main');
         } else if ($request->all()['diagnostic_name'] == 'grammar') {

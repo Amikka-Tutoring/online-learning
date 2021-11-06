@@ -276,6 +276,7 @@ class PageController extends Controller
     public function test()
     {
         $user = Auth::user()->load('profile', 'tags');
+        dd($user->profile);
         $video = ['Easy', 'Tactile', 'ENFP', 'ALL'];
         $tags = [$user->tags->last()->name, $user->profile->learning_style, $user->profile->tutor_match];
 

@@ -23,7 +23,8 @@ class UserProfile extends Model
         'learning_style',
         'math_score',
         'grammar_score',
-        'reading_score'
+        'reading_score',
+        'total_score'
     ];
 
     public function user()
