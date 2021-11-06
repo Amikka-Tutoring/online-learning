@@ -5,9 +5,23 @@
                 <div class="grammar-course mt-0" data-aos="fade-up" data-aos-once="true">
                     <h1 class="blue-text">Content to review</h1>
                     <div class="grammar-course-content">
-                        <p>These recommendations are based on a variety of factors including your diagnostic, goal
-                            score,
-                            time until exam, and progress.</p>
+                        <transition name="list">
+                            <div v-if="review_box" class="question-box text-left">
+                                <div class="row">
+                                    <div class="col-lg-11 col-10">
+                                        These recommendations are based on a variety of factors including your
+                                        diagnostic,
+                                        goal
+                                        score,
+                                        time until exam, and progress.
+                                    </div>
+                                    <div class="col-lg-1 col-2 d-flex align-items-center">
+                                        <i v-on:click="review_box = disableNotification('review_box')"
+                                           class="fas fa-times red-text"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
                         <template v-for="course in courses_to_review">
                             <div class="first-list grammar-list w-100">
                                 <div class="row" @click="hideRec(course.id)">
@@ -55,6 +69,10 @@ export default {
     },
     props: ['courses_to_review'],
     methods: {
+
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        },
         hideRec(value) {
             $('.rec-full-course-' + value).toggleClass('d-none', 'd-block')
             $('.rec-course-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
@@ -72,11 +90,18 @@ export default {
             $('.rec-less-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
         }
     },
+    setup() {
+        let saved = localStorage.getItem('review_box') === null;
+        if (saved) {
+            localStorage.setItem('review_box', true)
+        }
+    },
 
     data() {
         return {
             rec: false,
-            review: true
+            review: true,
+            review_box: localStorage.getItem('review_box') === 'true',
         }
     },
 }

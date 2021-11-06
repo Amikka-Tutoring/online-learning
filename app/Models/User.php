@@ -96,6 +96,12 @@ class User extends Authenticatable
         $this->tags()->sync($tag);
     }
 
+    public function setTag($tag_data)
+    {
+        $tag = Tag::where('name', $tag_data)->first();
+        $this->tags()->attach($tag);
+    }
+
     public function setHard()
     {
         $tag = Tag::where('name', 'Hard')->first();
@@ -104,7 +110,8 @@ class User extends Authenticatable
 
     public function getTag()
     {
-        return $this->tags->last()->name;
+        if ($this->tags->count())
+            return $this->tags->last()->name;
     }
 
 

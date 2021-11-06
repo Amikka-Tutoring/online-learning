@@ -12,7 +12,7 @@ class StudentLayerQuestion extends Model
 
     protected $fillable = [
         'user_id',
-        'layer_id',
+        'video_id',
         'question_text'
     ];
 

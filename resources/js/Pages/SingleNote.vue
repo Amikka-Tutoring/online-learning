@@ -1,37 +1,31 @@
 <template>
     <app-layout>
         <div class="container">
-
             <h1 class="blue-text mb-5">{{ moment(note.created_at).format("MM/DD") }}</h1>
             <div class="row create-notes-content">
                 <div class="col-12">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <div class="col-lg-6 col-12">
                             <div class="row text-center justify-content-center topics-title mb-2">
-                                <i class="fas fa-pen mr-2 blue-text"></i>Topic
+                                Lesson Name
                             </div>
                             <div style="padding: 10px"
                                  class="row written-notes-boxes text-center justify-content-center">
-                                {{ note.lesson.name }}
+                                {{ note.video.layer.name }}
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-12">
-                            <div class="row justify-content-center topics-title mb-2">
-                                <i class="fas fa-tags mr-2 blue-text"></i>Tags
-                            </div>
-                            <div class="row written-notes-boxes text-center justify-content-center">
-                                <span v-for="tag in note.lesson.tags" class="lightblue-badge badges">{{
-                                        tag.name
-                                    }}</span>
-                            </div>
-
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-8 col-12 text-center">
+                    <div class="row justify-content-center my-4">
+                        <div class="col-md-8">
+                            <iframe id="youtube_id" :src="embed(note.video.url)"
+                                    style="max-width: 826px; width: 100%; height: 500px; margin: 90px 0; border: none">
+                            </iframe>
+                        </div>
 
-                            <!--                            <audio :src="note.audio_notes"></audio>-->
-                            <h5 class="written-notes-title">Written Notes</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center my-5">
+                            <h5 class="written-notes-title mb-4">Written Notes</h5>
                             <div class="written-notes-box position-relative">
                                 <a class="blue-text position-absolute"
                                    style="bottom: 10px; right: 50px" @click="writtenNotesStore">Edit</a>
@@ -39,8 +33,8 @@
                                           v-model="form.written_notes"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-12 text-center d-flex flex-column align-items-center">
-                            <h5 class="written-notes-title">Audio Notes</h5>
+                        <div class="col-12 text-center d-flex flex-column align-items-center">
+                            <h5 class="written-notes-title mb-4">Audio Notes</h5>
                             <div class="d-flex flex-column align-items-center">
                                 <div class="audio-notes-box w-50 d-flex flex-column align-items-center mb-4">
                                     <button v-show="started" id="btnStop" class="border-0 bg-transparent"
@@ -79,6 +73,11 @@ export default {
         AppLayout,
     },
     methods: {
+        embed: function (str) {
+            let res = str.split("=");
+            let embeddedUrl = "https://www.youtube.com/embed/" + res[1];
+            return embeddedUrl;
+        },
         writtenNotesStore: function () {
             axios.post(route('notes.store'), this.form)
                 .then(response => {
@@ -87,7 +86,6 @@ export default {
         },
         getNote: function () {
             axios.get(route('get.note', this.note.id)).then(response => {
-                console.log('from get note')
                 this.note = response.data
             })
         },
@@ -133,7 +131,7 @@ export default {
                             let formData = new FormData();
                             formData.append("audio_notes", audioData);
                             formData.append('user_id', parentForm.user_id)
-                            formData.append('layer_id', parentForm.layer_id)
+                            formData.append('video_id', parentForm.video_id)
                             formData.append('written_notes', parentForm.written_notes)
                             axios.post(route('notes.store'), formData, {
                                 headers: {
@@ -158,7 +156,7 @@ export default {
             form: {
                 written_notes: this.note.written_notes,
                 audio_notes: this.note.audio_notes,
-                layer_id: this.note.layer_id,
+                video_id: this.note.video_id,
                 user_id: this.note.user_id
             },
             moment: moment,

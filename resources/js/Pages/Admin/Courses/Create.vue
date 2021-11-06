@@ -122,6 +122,7 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
+import {Inertia} from "@inertiajs/inertia";
 
 export default {
     props: {
@@ -152,6 +153,7 @@ export default {
             this.loading = true
             this.onsuccess = false
             this.onerror = false
+
             axios.post(route('admin.courses.store'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

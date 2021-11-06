@@ -13,7 +13,7 @@ class Note extends Model
     protected $fillable = [
         'written_notes',
         'audio_notes',
-        'layer_id',
+        'video_id',
         'user_id'
     ];
 
@@ -24,8 +24,8 @@ class Note extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function lesson()
+    public function video()
     {
-        return $this->belongsTo(Layer::class, 'layer_id')->withoutGlobalScope(LayerScope::class);
+        return $this->belongsTo(Video::class);
     }
 }

@@ -57,13 +57,16 @@ class CourseController extends Controller
         }
         fclose($file);
 
+
         // Insert to MySQL database
         $coursesArray = array();
         $topLayersArray = array();
         $midLayersArray = array();
         $lessLayersArray = array();
         foreach ($importData_arr as $row) {
-            if (count($row) != 67) {
+
+
+            if (count($row) != 64) {
                 return ['error' => 'Wrong format'];
             }
 
@@ -86,85 +89,62 @@ class CourseController extends Controller
                     ]);
                     array_push($topLayersArray, $top_layer->course->name . ' / ' . $top_layer->name);
                 }
-                switch ($row[2]) {
-                    case 'Hard':
-                        $top_layer->setHard();
-                        break;
-                    case 'Medium':
-                        $top_layer->setMedium();
-                        break;
-                    default:
-                        $top_layer->setEasy();
-                }
 
                 //Top Layer Video
-                if ($row[3] != '') {
+                if ($row[2] != '') {
                     $top_layer_video = Video::create([
-                        'title' => $row[3],
-                        'url' => $row[4],
-                        'description' => $row[5],
+                        'title' => $row[2],
+                        'url' => $row[3],
+                        'description' => $row[4],
                         'layer_id' => $top_layer->id,
                     ]);
-                    switch ($row[6]) {
-                        case 'Hard':
-                            $top_layer_video->setHard();
-                            break;
-                        case 'Medium':
-                            $top_layer_video->setMedium();
-                            break;
-                        default:
-                            $top_layer_video->setEasy();
+                    foreach (explode(', ', $row[5]) as $tag) {
+                        $top_layer_video->setTag($tag);
                     }
                 }
                 //Top Layer Question
-                if ($row[7] != '') {
+                if ($row[6] != '') {
                     $top_layer_question = new Question;
-                    $top_layer_question->title = $row[7];
+                    $top_layer_question->title = $row[6];
 
-                    switch ($row[8]) {
-                        case 'Hard':
-                            $top_layer_question->setHard();
-                            break;
-                        case 'Medium':
-                            $top_layer_question->setMedium();
-                            break;
-                        default:
-                            $top_layer_question->setEasy();
+                    foreach (explode(', ', $row[7]) as $tag) {
+                        $top_layer_question->setTag($tag);
                     }
-                    $top_layer_question->image = $row[9];
-                    $top_layer_question->explanation = $row[10];
+
+                    $top_layer_question->image = $row[8];
+                    $top_layer_question->explanation = $row[9];
                     $top_layer->questions()->save($top_layer_question);
 
                     //Top Layer Question Answers
                     if ($row[11] != '') {
                         Answer::create([
-                            'title' => $row[11],
-                            'explanation' => $row[12],
-                            'is_correct' => $row[13],
+                            'title' => $row[10],
+                            'explanation' => $row[11],
+                            'is_correct' => $row[12],
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
-                    if ($row[14] != '') {
+                    if ($row[13] != '') {
                         Answer::create([
-                            'title' => $row[14],
-                            'explanation' => $row[15],
-                            'is_correct' => $row[16],
+                            'title' => $row[13],
+                            'explanation' => $row[14],
+                            'is_correct' => $row[15],
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
-                    if ($row[17] != '') {
+                    if ($row[16] != '') {
                         Answer::create([
-                            'title' => $row[17],
-                            'explanation' => $row[18],
-                            'is_correct' => $row[19],
+                            'title' => $row[16],
+                            'explanation' => $row[17],
+                            'is_correct' => $row[18],
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
-                    if ($row[20] != '') {
+                    if ($row[19] != '') {
                         Answer::create([
-                            'title' => $row[20],
-                            'explanation' => $row[21],
-                            'is_correct' => $row[22],
+                            'title' => $row[19],
+                            'explanation' => $row[20],
+                            'is_correct' => $row[21],
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
@@ -173,164 +153,127 @@ class CourseController extends Controller
 
 
             //MidLayer
-            if ($row[23] != '') {
-                $mid_layer = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[23])->where('parent_id', $top_layer->id)->first();
+            if ($row[22] != '') {
+                $mid_layer = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[22])->where('parent_id', $top_layer->id)->first();
                 if ($mid_layer == null) {
                     //Top Layer
                     $mid_layer = Layer::create([
-                        'name' => $row[23],
+                        'name' => $row[22],
                         'course_id' => $course->id,
                         'parent_id' => $top_layer->id,
                     ]);
                     array_push($midLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name);
                 }
-                switch ($row[24]) {
-                    case 'Hard':
-                        $mid_layer->setHard();
-                        break;
-                    case 'Medium':
-                        $mid_layer->setMedium();
-                        break;
-                    default:
-                        $mid_layer->setEasy();
-                }
 
-                //Top Layer Video
-                if ($row[25] != '') {
+
+                //Mid Layer Video
+                if ($row[23] != '') {
                     $mid_layer_video = Video::create([
-                        'title' => $row[25],
-                        'url' => $row[26],
-                        'description' => $row[27],
+                        'title' => $row[23],
+                        'url' => $row[24],
+                        'description' => $row[25],
                         'layer_id' => $mid_layer->id,
                     ]);
-                    switch ($row[28]) {
-                        case 'Hard':
-                            $mid_layer_video->setHard();
-                            break;
-                        case 'Medium':
-                            $mid_layer_video->setMedium();
-                            break;
-                        default:
-                            $mid_layer_video->setEasy();
+                    foreach (explode(', ', $row[26]) as $tag) {
+                        $mid_layer_video->setTag($tag);
                     }
                 }
 
-                if ($row[29] != '') {
+                if ($row[27] != '') {
                     //Top Layer Question
                     $mid_layer_question = new Question;
-                    $mid_layer_question->title = $row[29];
+                    $mid_layer_question->title = $row[27];
 
-                    switch ($row[30]) {
-                        case 'Hard':
-                            $mid_layer_question->setHard();
-                            break;
-                        case 'Medium':
-                            $mid_layer_question->setMedium();
-                            break;
-                        default:
-                            $mid_layer_question->setEasy();
+                    foreach (explode(', ', $row[28]) as $tag) {
+                        $mid_layer_question->setTag($tag);
                     }
-                    if ($row[31] != '') {
-                        $mid_layer_question->image = $row[31];
-                        $mid_layer_question->explanation = $row[32];
+
+                    if ($row[29] != '') {
+                        $mid_layer_question->image = $row[29];
+                        $mid_layer_question->explanation = $row[30];
                         $mid_layer->questions()->save($mid_layer_question);
 
                         //Top Layer Question Answers
-                        if ($row[33] != '') {
+                        if ($row[31] != '') {
                             Answer::create([
-                                'title' => $row[33],
-                                'explanation' => $row[34],
-                                'is_correct' => $row[35],
+                                'title' => $row[31],
+                                'explanation' => $row[32],
+                                'is_correct' => $row[33],
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
-                        if ($row[36] != '') {
+                        if ($row[34] != '') {
                             Answer::create([
-                                'title' => $row[36],
-                                'explanation' => $row[37],
-                                'is_correct' => $row[38],
+                                'title' => $row[34],
+                                'explanation' => $row[35],
+                                'is_correct' => $row[36],
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
-                        if ($row[39] != '') {
+                        if ($row[37] != '') {
                             Answer::create([
-                                'title' => $row[39],
-                                'explanation' => $row[40],
-                                'is_correct' => $row[41],
+                                'title' => $row[37],
+                                'explanation' => $row[38],
+                                'is_correct' => $row[39],
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
-                        if ($row[42] != '') {
+                        if ($row[40] != '') {
                             Answer::create([
-                                'title' => $row[42],
-                                'explanation' => $row[43],
-                                'is_correct' => $row[44],
+                                'title' => $row[40],
+                                'explanation' => $row[41],
+                                'is_correct' => $row[42],
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
                     }
                 }
                 //Lesson
-                if ($row[45] != '') {
-                    $lesson = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[45])->where('parent_id', $mid_layer->id)->first();
+                if ($row[43] != '') {
+                    $lesson = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[43])->where('parent_id', $mid_layer->id)->first();
                     if ($lesson == null) {
                         //Top Layer
                         $lesson = Layer::create([
-                            'name' => $row[45],
+                            'name' => $row[43],
                             'course_id' => $course->id,
                             'parent_id' => $mid_layer->id,
                         ]);
                         array_push($lessLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name . ' / ' . $lesson->name);
                     }
-                    switch ($row[46]) {
-                        case 'Hard':
-                            $lesson->setHard();
-                            break;
-                        case 'Medium':
-                            $lesson->setMedium();
-                            break;
-                        default:
-                            $lesson->setEasy();
-                    }
 
                     //Top Layer Video
-                    if ($row[47] != '') {
+                    if ($row[44] != '') {
                         $lesson_video = Video::create([
-                            'title' => $row[47],
-                            'url' => $row[48],
-                            'description' => $row[49],
+                            'title' => $row[44],
+                            'url' => $row[45],
+                            'description' => $row[46],
                             'layer_id' => $lesson->id,
                         ]);
-                        switch ($row[50]) {
-                            case 'Hard':
-                                $lesson_video->setHard();
-                                break;
-                            case 'Medium':
-                                $lesson_video->setMedium();
-                                break;
-                            default:
-                                $lesson_video->setEasy();
+                        foreach (explode(', ', $row[47]) as $tag) {
+                            $lesson_video->setTag($tag);
                         }
                     }
                     //Top Layer Question
-                    if ($row[51] != '') {
+                    if ($row[48] != '') {
                         $lesson_question = new Question;
-                        $lesson_question->title = $row[51];
+                        $lesson_question->title = $row[48];
 
-                        switch ($row[52]) {
-                            case 'Hard':
-                                $lesson_question->setHard();
-                                break;
-                            case 'Medium':
-                                $lesson_question->setMedium();
-                                break;
-                            default:
-                                $lesson_question->setEasy();
+                        foreach (explode(', ', $row[49]) as $tag) {
+                            $lesson_question->setTag($tag);
                         }
-                        $lesson_question->image = $row[53];
-                        $lesson_question->explanation = $row[54];
+
+                        $lesson_question->image = $row[50];
+                        $lesson_question->explanation = $row[51];
                         $lesson->questions()->save($lesson_question);
                         //Top Layer Question Answers
+                        if ($row[52] != '') {
+                            Answer::create([
+                                'title' => $row[52],
+                                'explanation' => $row[53],
+                                'is_correct' => $row[54],
+                                'question_id' => $lesson_question->id,
+                            ]);
+                        }
                         if ($row[55] != '') {
                             Answer::create([
                                 'title' => $row[55],
@@ -352,14 +295,6 @@ class CourseController extends Controller
                                 'title' => $row[61],
                                 'explanation' => $row[62],
                                 'is_correct' => $row[63],
-                                'question_id' => $lesson_question->id,
-                            ]);
-                        }
-                        if ($row[64] != '') {
-                            Answer::create([
-                                'title' => $row[64],
-                                'explanation' => $row[65],
-                                'is_correct' => $row[66],
                                 'question_id' => $lesson_question->id,
                             ]);
                         }

@@ -4,10 +4,23 @@
             <div class="practice-exams" data-aos="fade-up">
                 <h1 class="blue-text">Practice Exams</h1>
                 <div class="practice-exams-content">
-                    <p class="question-box">Because your exam is <span class="blue-text">{{ date_diff }}</span> we
-                        recommend that you add at least <span class="blue-text">two full timed practice exams</span>
-                        before then. Press the <span class="blue-text">+</span> button to add study times that may work
-                        for you. </p>
+                    <transition name="list">
+                        <div v-if="e_exams" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    Because your exam is <span class="blue-text">{{ date_diff }}</span> we
+                                    recommend that you add at least <span class="blue-text">two full timed practice exams</span>
+                                    before then. Press the <span class="blue-text">+</span> button to add study times
+                                    that may work
+                                    for you.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="e_exams = disableNotification('e_exams')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <div class="row d-flex justify-content-center">
                         <div class="exam-box" data-aos="fade-up">
                             <div class="exam-box-tile"><h1>Practice Exams</h1></div>
@@ -55,13 +68,29 @@
             <div class="video-exams" data-aos="fade-up">
                 <h1 class="blue-text">Videos and Quizzes</h1>
                 <div class="video-exams-content">
-                    <p class="question-box">On top of building your <span class="blue-text">endurance</span> for the
-                        full test it’s important to <span class="blue-text">master</span> all of the content. We
-                        initially recommended that you schedule two <span
-                            class="blue-text">1.5 hour lessons per week.</span><br><br>However because your exam is in
-                        <span class="blue-text">{{ date_diff }}</span> and you want to <span class="blue-text">improve 100 points</span>
-                        we recommend that you do <span class="blue-text">our fast track course.</span><br><br><span
-                            class="blue-text">Practice makes perfect.</span></p>
+                    <transition name="list">
+                        <div v-if="e_videos" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    On top of building your <span class="blue-text">endurance</span> for the
+                                    full test it’s important to <span class="blue-text">master</span> all of the
+                                    content. We
+                                    initially recommended that you schedule two <span
+                                    class="blue-text">1.5 hour lessons per week.</span><br><br>However because your exam
+                                    is in
+                                    <span class="blue-text">{{ date_diff }}</span> and you want to <span
+                                    class="blue-text">improve 100 points</span>
+                                    we recommend that you do <span
+                                    class="blue-text">our fast track course.</span><br><br><span
+                                    class="blue-text">Practice makes perfect.</span>
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="e_videos = disableNotification('e_videos')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <div class="row d-flex justify-content-center">
                         <div class="exam-box" data-aos="fade-up">
                             <div class="exam-box-tile"><h1>Videos and Quizzes</h1></div>
@@ -183,8 +212,20 @@ export default {
                 })
             $('#exampleModalCenter').modal('hide');
         },
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        },
     },
     props: ['practice_exams', 'user', 'date_diff'],
+
+    setup() {
+        let saved = localStorage.getItem('exams_page') === null;
+        if (saved) {
+            localStorage.setItem('e_exams', true)
+            localStorage.setItem('e_videos', true)
+            localStorage.setItem('exams_page', true)
+        }
+    },
 
     data() {
         return {
@@ -194,6 +235,8 @@ export default {
                 date_time: null,
                 exam_id: null,
             },
+            e_exams: localStorage.getItem('e_exams') === 'true',
+            e_videos: localStorage.getItem('e_videos') === 'true',
         }
     },
     mounted() {

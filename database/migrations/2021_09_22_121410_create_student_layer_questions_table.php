@@ -16,7 +16,7 @@ class CreateStudentLayerQuestionsTable extends Migration
         Schema::create('student_layer_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
-            $table->foreignId('layer_id')->nullable()->constrained('layers')->cascadeOnDelete();
+            $table->foreignId('video_id')->nullable()->constrained('videos')->cascadeOnDelete();
             $table->text('question_text')->nullable();
             $table->timestamps();
         });

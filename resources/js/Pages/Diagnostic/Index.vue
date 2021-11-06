@@ -1,29 +1,33 @@
 <template>
     <app-layout>
         <div class="container">
-            <calculator/>
-            <!--            <div  class="d-flex justify-content-center">-->
-            <div
-                v-if="form.currentstep != 1 && form.currentstep != diagnostic.length"
-                class="row justify-content-center align-items-center"
-                style="margin-bottom: 50px; margin-top: -20px"
-            >
+            <calculator v-if="diagnostic.name=='Mathematics'"/>
+            <template v-if="form.currentstep != 1 && form.currentstep != diagnostic.length">
                 <div
-                    class="progress"
-                    style="height: 5px; width: 370px; margin: 0 20px"
+
+                    class="row justify-content-center align-items-center"
+                    style="margin-bottom: 50px; margin-top: -20px"
                 >
                     <div
-                        :style="{ width: form.progress_value + '%' }"
-                        aria-valuemax="100"
-                        aria-valuemin="0"
-                        aria-valuenow="50"
-                        class="progress-bar"
-                        role="progressbar"
-                        style="background: #56c880"
-                    ></div>
+                        class="progress"
+                        style="height: 5px; width: 370px; margin: 0 20px"
+                    >
+                        <div
+                            :style="{ width: form.progress_value + '%' }"
+                            aria-valuemax="100"
+                            aria-valuemin="0"
+                            aria-valuenow="50"
+                            class="progress-bar"
+                            role="progressbar"
+                            style="background: #56c880"
+                        ></div>
+                    </div>
+                    <div class="blue-text">Skip</div>
+
                 </div>
-                <div class="blue-text">Skip</div>
-            </div>
+                <reading-diagnostic v-if="diagnostic.name=='Reading'"/>
+                <grammar-diagnostic v-if="diagnostic.name=='Grammar'"/>
+            </template>
             <div>
                 <form class="form" method="POST">
                     <div v-if="form.currentstep === 1" class="first-step">
@@ -75,25 +79,28 @@
                     <div v-for="(question, index) in diagnostic.questions">
                         <div v-if="form.currentstep === index + 2"
                              class="row w-100">
-                            <div class="col-lg-6 col-12">
+                            <div class="col-12">
                                 <p class="quiz-question-box">{{ question.title }}</p>
+                            </div>
+                            <div class="col-lg-6 col-12">
                                 <div class="image-box text-center">
                                     <img class="w-100" :src="question.image">
                                 </div>
-                                <p class="quiz-question-box text-left">
-                                <ol style="list-style-type: upper-latin">
-                                    <li v-for=" (answer, index) in question.answers">{{ answer.title }}</li>
-                                </ol>
-                                </p>
+                                <!--                                <p class="quiz-question-box text-left">-->
+                                <!--                                <ol style="list-style-type: upper-latin">-->
+                                <!--                                    <li v-for=" (answer, index) in question.answers">{{ answer.title }}</li>-->
+                                <!--                                </ol>-->
+                                <!--                                </p>-->
                             </div>
-                            <div class="col-lg-6 col-12 d-flex align-items-center">
+                            <div class="d-flex align-items-center justify-content-center my-4"
+                                 v-bind:class="[question.image ? 'col-md-6':'col-12']">
                                 <div class="row w-100">
                                     <div class="wrapper d-flex flex-column">
                                         <div class="row w-100">
                                             <div v-for="(answer, index) in question.answers"
                                                  :key="answer"
                                                  :index="question.key"
-                                                 class="col-6"
+                                                 class="col-12 p-0"
                                             >
                                                 <div class="options">
                                                     <input :id="'option-' +answer.id"
@@ -106,7 +113,7 @@
                                                     <label :class="'option option-' +answer.id"
                                                            :for="'option-' +answer.id">
                                                         <div class="dot"></div>
-                                                        <span>{{ toLetter(index + 1) }}</span>
+                                                        <span>{{ answer.title }}</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -117,8 +124,8 @@
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-6">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 col-4">
                             <button
                                 v-if="form.currentstep > 1"
                                 class="blue-button w-100"
@@ -128,7 +135,7 @@
                                 <i class="bi bi-arrow-left-circle"></i>
                             </button>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-3 col-4">
                             <button
                                 v-if="
                                 form.currentstep !==
@@ -166,6 +173,8 @@ import {Inertia} from "@inertiajs/inertia";
 import {useToast} from "vue-toastification";
 import Question from "../../components/Question";
 import Calculator from "@/components/Calculator";
+import ReadingDiagnostic from "@/components/ReadingDiagnostic";
+import GrammarDiagnostic from "@/components/GrammarDiagnostic";
 
 
 export default {
@@ -173,21 +182,11 @@ export default {
     components: {
         AppLayout,
         Question,
-        Calculator
+        Calculator,
+        ReadingDiagnostic,
+        GrammarDiagnostic
     },
-    methods: {
-        toLetter(value) {
-            if (value == 1) {
-                return 'A'
-            } else if (value == 2) {
-                return 'B'
-            } else if (value == 3) {
-                return 'C'
-            } else {
-                return 'D'
-            }
-        },
-    },
+    methods: {},
     props: {
         diagnostic: Object,
     },

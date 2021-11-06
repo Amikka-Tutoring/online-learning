@@ -48,4 +48,10 @@ class Question extends Model
         $tag = Tag::save('name', 'Hard')->first();
         $this->tags()->attach($tag);
     }
+
+    public function setTag($tag_data)
+    {
+        $tag = Tag::where('name', $tag_data)->first();
+        $this->tags()->attach($tag);
+    }
 }

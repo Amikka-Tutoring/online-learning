@@ -75,7 +75,7 @@ class DiagnosticController extends Controller
                 $user->profile->tutor_match = 'INFP';
             else if (in_array($introvert, [0, 1]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'INTP';
-            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ESTP';
             else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
                 $user->profile->tutor_match = 'ESFP';
@@ -83,16 +83,19 @@ class DiagnosticController extends Controller
                 $user->profile->tutor_match = 'ENTP';
             else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ESTJ';
-            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [2, 3]) && in_array($judging, [0, 1]))
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ESFJ';
-            else if (in_array($introvert, [2, 3]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ENFJ';
-            else if (in_array($introvert, [0, 1]) && in_array($intuition, [2, 3]) && in_array($feeling, [0, 1]) && in_array($judging, [2, 3]))
+            else if (in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [2, 3]) && in_array($judging, [2, 3]))
                 $user->profile->tutor_match = 'ENTJ';
-            else if (in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
+//            else if (in_array($introvert, [2, 3]) && in_array($intuition, [0, 1]) && in_array($feeling, [0, 1]) && in_array($judging, [0, 1]))
+            else
                 $user->profile->tutor_match = 'ENFP';
             $user->profile->save();
+//            $user->setTag($user->profile->tutor_match);
             $results = DiagnosticUserTag::where('title', $user->profile->tutor_match)->first();
+
 
             $learned = unserialize($results->learned);
             $tips = unserialize($results->tips);
@@ -108,6 +111,7 @@ class DiagnosticController extends Controller
             }
             $score = $points / $sum;
             $user->profile->learning_style = $score;
+//            $user->setTag($user->profile->learning_style);
             $results = DiagnosticUserTag::where('title', $user->profile->learning_style)->first();
 
             $learned = unserialize($results->learned);

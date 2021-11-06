@@ -45,6 +45,7 @@
                                 </div>
                             </div>
                         </div>
+                        <p>{{ videos }}</p>
 
                         <div class="next-item">
                             <div class="row">
@@ -71,24 +72,45 @@
             <li @click="tools = !tools">Tools <i class="pl-2 blue-text fas"
                                                  v-bind:class="tools ? 'fa-arrow-up' : 'fa-arrow-down'"></i></li>
             <collapse-transition>
-                <li v-if="tools">
+                <li v-if="tools" class="p-0">
                     <div class="tools">
                         <div class="row">
                             <div class="col-3">
-                                <div class="notes-circle rounded-circle"><i class="fas fa-question"></i></div>
+                                <div class="notes-circle rounded-circle" title="Ask a question"
+                                     v-on:click="written_notes = false; question_box = true"><i
+                                    class="fas fa-question"></i></div>
                             </div>
                             <div class="col-3">
-                                <div class="notes-circle rounded-circle"><i class="fas fa-pen"></i></div>
+                                <div class="notes-circle rounded-circle" title="Write notes"
+                                     v-on:click="written_notes = true; question_box = false"><i
+                                    class="fas fa-pen"></i></div>
                             </div>
                             <div class="col-3">
-                                <div class="notes-circle rounded-circle"><i class="fas fa-flag"></i></div>
+                                <div class="notes-circle rounded-circle" title="Save for later"><i
+                                    class="fas fa-flag"></i>
+                                </div>
                             </div>
                             <div class="col-3">
-                                <div class="notes-circle rounded-circle"><i class="fas fa-microphone-alt"></i></div>
+                                <div class="notes-circle rounded-circle" title="Voice notes"><i
+                                    class="fas fa-microphone-alt"></i></div>
                             </div>
                         </div>
-                        <textarea placeholder="Notes..." name="" id="" cols="25" rows="10"></textarea>
-                        <button>Submit</button>
+                        <collapse-transition>
+                            <div v-if="written_notes">
+                                  <textarea v-model="form.written_notes" placeholder="Notes..." cols="25"
+                                            rows="10"></textarea>
+                                <button v-on:click="submit">Submit</button>
+                            </div>
+                        </collapse-transition>
+                        <collapse-transition>
+                            <div v-if="question_box">
+                                <textarea v-model="question_form.question_text" placeholder="Question..." id=""
+                                          cols="25"
+                                          rows="10"></textarea>
+                                <button v-on:click="submitQuestion">Submit</button>
+                            </div>
+                        </collapse-transition>
+
                     </div>
                 </li>
             </collapse-transition>
@@ -104,12 +126,37 @@ export default {
     components: {
         CollapseTransition,
     },
-    methods: {},
+    methods: {
+        submit: function () {
+            axios.post(route('notes.store'), this.form)
+                .then(response => {
+                    this.toast.success(response.data.message)
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        },
+        submitQuestion: function () {
+            axios.post(route('notes.store.question'), this.question_form)
+                .then(response => {
+                    this.toast.success(response.data)
+                    this.question_form.question_text = null
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                });
+        },
+    },
+    props: ['form', 'question_form', 'videos'],
 
     data() {
         return {
             next: false,
-            tools: false
+            tools: false,
+            written_notes: false,
+            question_box: false,
+            form: this.form,
+            question_form: this.question_form
         }
     },
 }

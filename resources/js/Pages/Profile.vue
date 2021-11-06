@@ -24,78 +24,69 @@
                     <div v-if="tab === 'specific'" class="profile-course-listing">
                         <ul>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Enrolled Courses</h5>
                                         <span class="h6"
                                               v-for="(c,index) in user_data.enrollments">
                                             <span v-if="index>0">, </span>{{ c.course.name }}</span>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center" v-on:click="openModal()">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center"
+                                         v-on:click="openModal()">
                                         <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
                                         </p>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Exam Date</h5>
                                         <h6>{{ moment(user_data.profile.exam_date).format("MM/DD") }}</h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center" v-on:click="openExamDateModal()">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center"
+                                         v-on:click="openExamDateModal()">
                                         <p class="text-right">Edit</p>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Lesson Dates</h5>
                                         <h6><span class="" v-for="(days,index) in user.lesson_dates">
                                             <span v-if="index!=0">, </span>{{ days.day }}</span>
                                         </h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <a href="/set-calendar"><p class="text-right">Edit</p></a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Lesson Frequency</h5>
                                         <h6><span class="mr-2">{{ user.lesson_dates.length }}x a week</span>
                                         </h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <a href="/set-calendar"><p class="text-right">Edit</p></a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Lesson Length</h5>
                                         <h6><span class="mr-2">{{ user.profile.lesson_length }} minutes</span>
                                         </h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <div class="text-right">
                                             <select class="blue-text tag-select" v-model="lesson_length"
                                                     name="tag"
@@ -115,26 +106,21 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Goal Score</h5>
                                         <h6><span class="mr-2">{{ user.profile.desire_score }}</span>
                                         </h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <p class="text-right" @click="openScoreGoalModal">Edit</p>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Practice Exam Dates</h5>
                                         <h6><span v-if="user_data.practice_exam_dates.length"
                                                   v-for="(p_e,index) in user_data.practice_exam_dates"><span
@@ -142,51 +128,46 @@
                                             <span v-else>N/A</span>
                                         </h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <a href="/set-calendar"><p class="text-right">Edit</p></a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Diagnostic Score</h5>
                                         <h6><span class="mr-2">1300</span>
                                         </h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <p class="text-right"><i class="blue-text fas fa-lock"></i></p>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Learning Style</h5>
                                         <h6>{{ user.profile.learning_style }}</h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <p class="text-right"><i class="blue-text fas fa-angle-right"></i>
                                         </p>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Course Level</h5>
                                         <h6>{{ user_tag }}</h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <div class="text-right">
                                             <select class="blue-text tag-select" v-model="key"
                                                     name="tag" id=""
@@ -200,15 +181,13 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Tutor Match Personality</h5>
                                         <h6>{{ user.profile.tutor_match }}</h6>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <p class="text-right"><i class="blue-text fas fa-lock"></i></p>
                                     </div>
                                 </div>
@@ -218,10 +197,8 @@
                     <div v-else class="profile-course-listing">
                         <ul>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
+                                <div class="row justify-content-between">
+
                                     <div class="col-lg-11 col-9 align-items-center">
                                         <h5>Name</h5>
                                         <h6>{{ user.name }}</h6>
@@ -230,9 +207,7 @@
                             </li>
                             <li>
                                 <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
+
                                     <div class="col-lg-11 col-9 align-items-center">
                                         <h5>Email</h5>
                                         <h6>{{ user.email }}</h6>
@@ -241,9 +216,7 @@
                             </li>
                             <li>
                                 <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
+
                                     <div class="col-lg-11 col-9 align-items-center">
                                         <h5>Password</h5>
                                         <a href="user/profile"><h6>Tap to Change Password</h6></a>
@@ -253,9 +226,7 @@
                             </li>
                             <li>
                                 <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
+
                                     <div class="col-lg-11 col-9 align-items-center">
                                         <h5>Phone Number</h5>
                                         <h6>{{ user.profile.reminder_phone }}</h6>
@@ -264,9 +235,7 @@
                             </li>
                             <li>
                                 <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
+
                                     <div class="col-lg-11 col-9 align-items-center">
                                         <h5>Payment</h5>
                                         <a :href="route('add.payment.method')"><h6>Tap to Change Payment</h6></a>
@@ -274,15 +243,12 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-                                    <div class="col-lg-1 col-3 align-items-center">
-                                        <div class="courses-list-box"></div>
-                                    </div>
-                                    <div class="col-lg-9 col-7 align-items-center">
+                                <div class="row justify-content-between">
+                                    <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Privacy Policy</h5>
                                         <span class="h6 mr-2">Tap to See Privacy Policy</span>
                                     </div>
-                                    <div class="col-lg-2 col-2 align-items-center">
+                                    <div class="col-lg-2 align-self-center col-2 align-items-center">
                                         <p class="text-right"><i style="color: #4C6ED7;" class="fas fa-angle-right"></i>
                                         </p>
                                     </div>
@@ -332,7 +298,6 @@
                     <form action="">
                         <div class="form-group">
                             <input type="date" class="form-control" id="datetimepicker"
-                                   value="{{user_data.profile.exam_date}}"
                                    v-model="user_data.profile.exam_date">
                             <div id="datepicker"></div>
                         </div>
@@ -359,7 +324,6 @@
                     <form action="">
                         <div class="form-group">
                             <input type="number" class="form-control"
-                                   value="{{user.profile.desire_score}}"
                                    v-model="user.profile.desire_score">
                         </div>
                     </form>
@@ -375,9 +339,9 @@
 
 <style>
 .enroll_course_checkboxes:focus {
-    border     : none !important;
-    outline    : 0 !important;
-    box-shadow : none !important;
+    border: none !important;
+    outline: 0 !important;
+    box-shadow: none !important;
 }
 </style>
 

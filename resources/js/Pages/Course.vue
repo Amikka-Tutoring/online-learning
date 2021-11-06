@@ -1,41 +1,32 @@
 <template>
     <app-layout>
-        <tools-menu/>
+        <tools-menu :form="this.form" :question_form="this.questionForm" :videos="next_videos"/>
 
-        <div class="container"
-             v-bind:class="[lesson.videos.length ? 'lesson-container-margin' : '']">
-            <div v-if=" lesson.videos.length
-        " id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
-                 data-interval="false">
-                <div class="carousel-inner">
-                    <div class="carousel-item lesson" v-for="(video,index) in lesson.videos"
-                         :class="{ 'active' : index === 0 }">
-                        <div class=" row flex-column align-items-center p-4">
-                            <h1 id="topic" ref="title">{{ video.title }}</h1>
-                            <iframe id="youtube_id" :src="embed(video.url)"
-                                    style="max-width: 826px; width: 100%; height: 500px; margin: 90px 0; border: none">
-                            </iframe>
-                        </div>
+        <div class="container" style="margin-top: -50px">
+
+            <div class=" row flex-column align-items-center p-4">
+                <h1 id="topic" ref="title">{{ video.title }}</h1>
+                <iframe id="youtube_id" :src="embed(video.url)"
+                        style="max-width: 826px; width: 100%; height: 500px; margin: 50px 0; border: none">
+                </iframe>
+            </div>
+            <div class="row justify-content-center mb-5"
+                 style="font-size: 25px;font-weight: 400;font-style: italic;text-decoration: underline;">
+                <div class="col-md-2 col-6 text-center" v-if="prev_link">
+                    <div class="blue-link">
+                        <a :href="route('lesson',prev_link)">Prev Video</a>
                     </div>
                 </div>
-                <div v-if="lesson.videos.length > 1">
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                       data-slide="prev">
-                        <span class="bi bi-arrow-left-circle fa-3x" aria-hidden="true"
-                              style="color: rgba(76, 110, 215, 0.9)"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators"
-                       role="button"
-                       data-slide="next">
-                        <span class="bi bi-arrow-right-circle fa-3x" aria-hidden="true"
-                              style="color: rgba(76, 110, 215, 0.9)"></span>
-                        <span class="sr-only text-black">Next</span>
-                    </a>
+                <div class="col-md-2 col-6 text-center" v-if="next_link">
+                    <div class="blue-link">
+                        <a :href="route('lesson',next_link)">Next Video</a>
+                    </div>
                 </div>
             </div>
-            <div v-if="lesson.questions.length" class="row justify-content-center" style="margin-bottom: 100px">
-                <button class="blue-button" @click="quiz(lesson.id)" v-if="user_attempt === 0">Quiz
+
+
+            <div v-if="video.layer.questions.length" class="row justify-content-center" style="margin-bottom: 100px">
+                <button class="blue-button" @click="quiz(video.layer.id)" v-if="user_attempt === 0">Quiz
                 </button>
                 <button class="blue-button" v-if="user_attempt !== 0"
                         disabled="">Quiz Completed <i class="ml-2 bi bi-check-circle-fill"
@@ -43,10 +34,9 @@
                 </button>
             </div>
         </div>
-        <div class="notes-section"
-             v-bind:class="[(lesson.videos.length || lesson.questions.length )? '' : 'p-0 border-0']">
+        <div class="notes-section">
             <div class="container">
-                <h1 class="blue-text">Notes</h1>
+                <h1 class="blue-text text-center">Notes</h1>
                 <div class="notes-section-content d-flex justify-content-center align-items-center flex-column">
                     <div class="row d-flex justify-content-center">
                         <p class="w-75">If you’re an auditory learner it may help to use our voice note feature as well
@@ -120,7 +110,7 @@
         </div>
         <div class="container">
             <div class="faq">
-                <h1 class="blue-text">Student FAQ</h1>
+                <h1 class="blue-text text-center">Student FAQ</h1>
                 <div class="faq-section-content d-flex justify-content-center align-items-center flex-column">
                     <div class="row d-flex justify-content-center">
                         <p class="w-75">Still confused? Check out the student FAQ’s below with video responses. You can
@@ -200,7 +190,7 @@ import {Inertia} from '@inertiajs/inertia'
 
 
 export default {
-    props: ['lesson', 'notes', 'user', 'user_attempt', 'appUrl'],
+    props: ['video', 'notes', 'user', 'user_attempt', 'appUrl', 'next_link', 'prev_link', 'next_videos'],
 
     components: {
         Button,
@@ -217,7 +207,6 @@ export default {
             Inertia.get(route('lesson.quiz', lesson_id))
         },
         submit: function () {
-            console.log(this.form)
             axios.post(route('notes.store'), this.form)
                 .then(response => {
                     this.toast.success(response.data.message)
@@ -277,7 +266,7 @@ export default {
                             let formData = new FormData();
                             formData.append("audio_notes", audioData);
                             formData.append('user_id', parentForm.user_id)
-                            formData.append('layer_id', parentForm.layer_id)
+                            formData.append('video_id', parentForm.video_id)
                             formData.append('written_notes', parentForm.written_notes)
                             axios.post(route('notes.store'), formData, {
                                 headers: {
@@ -304,18 +293,18 @@ export default {
             started: false,
             form: {
                 written_notes: this.notes?.written_notes,
-                layer_id: this.lesson.id,
                 audio_notes: this.notes?.audio_notes,
-                topic: null,
+                video_id: this.video.id,
+                user_id: this.notes?.user_id
             },
             questionForm: {
                 question_text: null,
-                lesson_id: this.lesson.id,
-            }
+                video_id: this.video.id,
+            },
+            notes: this.notes
         }
     },
     mounted() {
-        console.log(this.notes)
     }
 }
 </script>

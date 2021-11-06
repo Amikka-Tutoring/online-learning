@@ -27,7 +27,9 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <div class="row">
                                     <div class="col-7">
-                                        <h4>{{ user_course.course.name }}</h4>
+                                        <a :href="route('recommended')+'#'+user_course.course.name"><h4>{{
+                                                user_course.course.name
+                                            }}</h4></a>
                                     </div>
                                     <div class="col-5 text-center">
                                         <button v-if="user_course.ends_at?.length>0" type="button"

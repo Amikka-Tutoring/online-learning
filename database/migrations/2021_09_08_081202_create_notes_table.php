@@ -17,7 +17,7 @@ class CreateNotesTable extends Migration
             $table->id();
             $table->text('written_notes')->nullable();
             $table->text('audio_notes')->nullable();
-            $table->foreignId('layer_id')->constrained('layers')->cascadeOnDelete();
+            $table->foreignId('video_id')->constrained('videos')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });

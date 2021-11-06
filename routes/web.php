@@ -60,7 +60,7 @@ Route::middleware(['auth',])->group(function () {
             Route::get('exams', [PageController::class, 'exams'])->name('exams');
             Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
             Route::get('my-courses/course', [PageController::class, 'course'])->name('course');
-            Route::get('lesson/{id}', [PageController::class, 'lesson'])->name('lesson');
+            Route::get('lesson/{video}', [PageController::class, 'lesson'])->name('lesson');
             Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
             Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');

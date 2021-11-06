@@ -4,9 +4,22 @@
             <div class="practice-exams">
                 <h1 class="blue-text">Quick Calendar Changes</h1>
                 <div class="practice-exams-content">
-                    <p class="question-box mb-0">If your schedule changes last minute, edit specific lessons or exams by
-                        clicking on the date. This will allow you to change the time, duration, or type of lesson right
-                        below it. </p>
+                    <transition name="list">
+                        <div v-if="quick_calendar" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    If your schedule changes last minute, edit specific lessons or exams by
+                                    clicking on the date. This will allow you to change the time, duration, or type of
+                                    lesson right
+                                    below it.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="quick_calendar = disableNotification('quick_calendar')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <div class="row justify-content-center my-4">
                         <div class="col-lg-6">
                             <div class="my-4">
@@ -17,12 +30,25 @@
                 </div>
             </div>
 
-            <div class="practice-exams" data-aos="fade-up">
+            <div class="practice-exams" data-aos="fade-up" data-aos-once="true">
                 <h1 class="blue-text">Recurring Calendar Changes</h1>
                 <div class="practice-exams-content">
-                    <p class="question-box">If your schedule changes completely, you can edit the recurring lesson dates
-                        and times for all of your future sessions below. Beware that this will change your entire
-                        schedule moving forward. </p>
+                    <transition name="list">
+                        <div v-if="recurring" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    If your schedule changes completely, you can edit the recurring lesson dates
+                                    and times for all of your future sessions below. Beware that this will change your
+                                    entire
+                                    schedule moving forward.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="recurring = disableNotification('recurring')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <div class="row justify-content-center align-items-center">
                         <div class="days-box work-times">
                             <div class="row" v-for="l_dates in lesson_dates">
@@ -67,15 +93,28 @@
                 </div>
             </div>
 
-            <div class="practice-exams" data-aos="fade-up">
+            <div class="practice-exams" data-aos="fade-up" data-aos-once="true">
                 <h1 class="blue-text">Practice Exams</h1>
                 <div class="practice-exams-content">
-                    <p class="question-box">Because your exam is <span class="blue-text">{{ date_diff }}</span> we
-                        recommend that you add at least <span class="blue-text">two full timed practice exams</span>
-                        before then. Press the <span class="blue-text">+</span> button to add study times that may work
-                        for you. </p>
+                    <transition name="list">
+                        <div v-if="exams" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    Because your exam is <span class="blue-text">{{ date_diff }}</span> we
+                                    recommend that you add at least <span class="blue-text">two full timed practice exams</span>
+                                    before then. Press the <span class="blue-text">+</span> button to add study times
+                                    that may work
+                                    for you.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="exams = disableNotification('exams')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <div class="row d-flex justify-content-center">
-                        <div class="exam-box" data-aos="fade-up">
+                        <div class="exam-box" data-aos="fade-up" data-aos-once="true">
                             <div class="exam-box-tile"><h1>Practice Exams</h1></div>
                             <div class="exam-box-list">
                                 <div class="row p-2 mb-3 mt-3" v-for="exam in practice_exams"
@@ -116,18 +155,34 @@
                     </div>
                 </div>
             </div>
-            <div class="video-exams" data-aos="fade-up">
+            <div class="video-exams" data-aos="fade-up" data-aos-once="true">
                 <h1 class="blue-text">Videos and Quizzes</h1>
                 <div class="video-exams-content">
-                    <p class="question-box">On top of building your <span class="blue-text">endurance</span> for the
-                        full test it’s important to <span class="blue-text">master</span> all of the content. We
-                        initially recommended that you schedule two <span
-                            class="blue-text">1.5 hour lessons per week.</span><br><br>However because your exam is in
-                        <span class="blue-text">{{ date_diff }}</span> and you want to <span class="blue-text">improve 100 points</span>
-                        we recommend that you do <span class="blue-text">our fast track course.</span><br><br><span
-                            class="blue-text">Practice makes perfect.</span></p>
+                    <transition name="list">
+                        <div v-if="videos" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    On top of building your <span class="blue-text">endurance</span> for the
+                                    full test it’s important to <span class="blue-text">master</span> all of the
+                                    content. We
+                                    initially recommended that you schedule two <span
+                                    class="blue-text">1.5 hour lessons per week.</span><br><br>However because your exam
+                                    is in
+                                    <span class="blue-text">{{ date_diff }}</span> and you want to <span
+                                    class="blue-text">improve 100 points</span>
+                                    we recommend that you do <span
+                                    class="blue-text">our fast track course.</span><br><br><span
+                                    class="blue-text">Practice makes perfect.</span>
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="videos = disableNotification('videos')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <div class="row d-flex justify-content-center">
-                        <div class="exam-box" data-aos="fade-up">
+                        <div class="exam-box">
                             <div class="exam-box-tile"><h1>Videos and Quizzes</h1></div>
                             <div class="exam-box-list">
                                 <div class="row p-2 mb-3 mt-3">
@@ -172,7 +227,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -289,12 +344,29 @@ export default {
                 }
             );
         },
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        },
+    },
+    setup() {
+        let saved = localStorage.getItem('set_calendar') === null;
+        if (saved) {
+            localStorage.setItem('quick_calendar', true)
+            localStorage.setItem('recurring', true)
+            localStorage.setItem('exams', true)
+            localStorage.setItem('videos', true)
+            localStorage.setItem('set_calendar', true)
+        }
     },
 
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy', 'calendar_lessons', 'calendar_exams'],
 
     data() {
         return {
+            quick_calendar: localStorage.getItem('quick_calendar') === 'true',
+            recurring: localStorage.getItem('recurring') === 'true',
+            exams: localStorage.getItem('exams') === 'true',
+            videos: localStorage.getItem('videos') === 'true',
             moment: moment,
             practice_exams: this.practice_exams,
             lesson_dates: this.lesson_dates,

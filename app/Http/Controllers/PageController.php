@@ -11,6 +11,7 @@ use App\Models\LayerQuizResult;
 use App\Models\PracticeExam;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Video;
 use App\Scopes\LayerScope;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::all();
-        if ( Auth::user()->profile ) {
+        if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -49,9 +50,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ( $user_profile->tutor_match )
+        if ($user_profile->tutor_match)
             $tutor_match_done = true;
-        if ( $user_profile->learning_style )
+        if ($user_profile->learning_style)
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -65,7 +66,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ( $d['day'] > $date_now )
+            if ($d['day'] > $date_now)
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -79,10 +80,16 @@ class PageController extends Controller
             6 => 'Saturday',
             7 => 'Sunday'
         ];
-        $next_lesson_day = $days[$next['day']];
-        $next_lesson_time = $next['time'];
+        $next_lesson_day = '';
+        $next_lesson_time = '';
+        $next_lesson = '';
+        if ($next != 0) {
+            $next_lesson_day = $days[$next['day']];
+            $next_lesson_time = $next['time'];
 
-        $next_lesson = Carbon::parse('next ' . $next_lesson_day)->format('d/m');
+            $next_lesson = Carbon::parse('next ' . $next_lesson_day)->format('d/m');
+        }
+
 
         $calendar_exams = $user->practice_exam_dates->map(function ($item, $index) {
             return [
@@ -103,7 +110,7 @@ class PageController extends Controller
 
     public function profile()
     {
-        $tags = Tag::all();
+        $tags = Tag::whereIn('name', ['Easy', 'Medium', 'Hard', 'Expert'])->get();
         $userTag = Auth::user()->getTag();
         $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile', 'lesson_dates', 'practice_exam_dates']);
         $enrollments = $user->enrollments->pluck('stripe_price');
@@ -139,22 +146,25 @@ class PageController extends Controller
         return Inertia::render('MyCourses', ['user_courses' => $user_courses]);
     }
 
-    public function lesson($id)
+    public function lesson($video)
     {
-        $lesson = Layer::withoutGlobalScope(LayerScope::class)->with('videos', 'questions')->find($id);
+        $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions');
+        $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
+        $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
+        $next_videos = $video->layer->videos->where('id', '>', $video->id);
         $user = Auth::user()->load('layer_quiz_results');
-        if ( !$user->subscribed($lesson->course->slug) )
+        if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
+        $notes = $video->notes->first();
 
-        $user_attempt = count($user->layer_quiz_results->where('layer_id', $id));
-        $notes = $user->notes->where('layer_id', $lesson->id)->first();
-        return Inertia::render('Course', ['lesson' => $lesson, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt]);
+        $user_attempt = count($user->layer_quiz_results->where('layer_id', $video->layer->id));
+        return Inertia::render('Course', ['video' => $video, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt, 'next_link' => $next_link, 'prev_link' => $prev_link, 'next_videos' => $next_videos]);
     }
 
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -167,7 +177,7 @@ class PageController extends Controller
 
 
         $courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) {
-            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'children.videos', 'children.children.videos']);
+            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children.children.videos', 'children.children.videos.tags']);
         }])->get()->pluck('course');
 
         $recommended_courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
@@ -266,7 +276,28 @@ class PageController extends Controller
 
     public function test()
     {
+        $user = Auth::user()->load('profile', 'tags');
+        $video = ['Easy', 'Tactile', 'ENFP', 'ALL'];
+        $tags = [$user->tags->last()->name, $user->profile->learning_style, $user->profile->tutor_match];
+        return Video::with('tags')->get();
+        dd($video, $tags, !array_diff($tags, $video));
         $user = Auth::user();
+<<<<<<< Updated upstream
+=======
+//        dd($user->tags);
+        return Video::withoutGlobalScopes()->with('tags')->get();
+
+
+//
+//        $tag = Tag::where('name', 'Auditory')->first();
+//        $user->tags()->detach($tag);
+////        $tag = Tag::where('name', 'Easy')->first();
+//        $user->tags()->attach($tag);
+        dd($user->tags);
+
+        return Video::with('tags')->get();
+
+>>>>>>> Stashed changes
         $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) {
             $query->whereHas('course', function ($q) {
                 $q->where('name', 'like', ' % ' . '' . ' % ');

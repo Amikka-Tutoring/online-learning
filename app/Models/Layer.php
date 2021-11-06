@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\LayerScope;
+use App\Scopes\TagScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class Layer extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new LayerScope);
+//        static::addGlobalScope(new TagScope);
     }
 
     public function children()

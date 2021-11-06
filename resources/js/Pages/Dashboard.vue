@@ -1,7 +1,7 @@
 <template>
     <app-layout>
         <div class="container">
-            <div class="academic">
+            <div v-if="!profile.math_score || !profile.grammar_score || !profile.reading_score" class="academic">
                 <h1 class="blue-text">Academic Diagnostic</h1>
                 <div class="academic-content pl-5" style="margin-top: 90px">
                     <transition name="list">
@@ -121,7 +121,7 @@
 
             <!--        Personality-->
 
-            <div class="personality">
+            <div class="personality" v-if="!profile.learning_style || !profile.tutor_match">
                 <h1 class="blue-text">Personality Diagnostic</h1>
                 <div class="personality-content pl-5" style="margin-top: 90px">
                     <transition name="list">
@@ -235,7 +235,9 @@
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <h4>{{ user_course.course.name }}</h4>
+                                <a :href="route('recommended')+'#'+user_course.course.name"><h4>{{
+                                        user_course.course.name
+                                    }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
                                     <div class="col-9">
@@ -252,7 +254,7 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{ user_course.course.quizzes_attempted }}/{{
-                                            user_course.course.quizzes_count
+                                                user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -289,14 +291,15 @@
                             <div class="calendar-box">
                                 <div class="row">
                                     <p class="blue-text font-weight-bold m-0">Next Lesson: ⏳</p>
-                                    <p>{{ next_lesson_day }}, {{ next_lesson }} at
+                                    <p v-if="next_lesson_day">{{ next_lesson_day }}, {{ next_lesson }} at
                                         {{ next_lesson_time }}</p>
+                                    <p v-else>N/A</p>
                                 </div>
                                 <div class="row flex-column">
                                     <p class="blue-text font-weight-bold m-0">Next Practice Exam: 🚀</p>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                        next_practice_exam_time
+                                            next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>
@@ -310,7 +313,6 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -357,7 +359,7 @@
                              v-for="(key,value) in notesByCourse">
                             <p><span
                                 v-for="(date,index) in key"><span
-                                class="badges orange-badge">{{ date.lesson.course.name }} </span></span>
+                                class="badges orange-badge">{{ date.video.layer.course.name }} </span></span>
                             </p>
                             <div class="notes-box">
                                 <h1>{{ moment(value).format("MM/DD") }}</h1>
@@ -367,7 +369,7 @@
                                 <h5>Lessons</h5>
                                 <p><span
                                     v-for="(date,index) in key"><span
-                                    v-if="index !== 0">, </span>{{ date.lesson?.name }} </span>
+                                    v-if="index !== 0">, </span>{{ date.video.layer?.name }} </span>
                                 </p>
                             </div>
                             <p class="my-4" v-if="this.notesByCourse == null">No notes
@@ -376,6 +378,214 @@
                     </div>
                 </div>
             </div>
+
+            <div v-if="profile.math_score && profile.grammar_score && profile.reading_score" class="academic my-5">
+                <h1 class="blue-text">Academic Diagnostic</h1>
+                <div class="academic-content pl-5" style="margin-top: 90px">
+                    <transition name="list">
+                        <div class="question-box text-left" v-if="academic">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    Answer these short quizzes in order to help us build you a personalized program
+                                    based on
+                                    your current strengths and weaknesses.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="academic = disableNotification('academic')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a v-if="!profile.math_score" :href="route('diagnostic.show','mathematics')"><h4>
+                                    Mathematics</h4></a>
+                                <h4 v-else>Mathematics</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7;" class="progress-bar"
+                                                 :style="{width:profile.math_score +'%'}"
+                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(1) }}/10
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a v-if="!profile.reading_score" :href="route('diagnostic.show','reading')"><h4>
+                                    Reading</h4></a>
+                                <h4 v-else>Reading</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7;" class="progress-bar"
+                                                 :style="{width:profile.reading_score +'%'}"
+                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">
+                                            {{ parseFloat(profile.reading_score / 10).toFixed(1) }}/10
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a v-if="!profile.grammar_score" :href="route('diagnostic.show','grammar')"><h4>
+                                    Grammar</h4></a>
+                                <h4 v-else>Grammar</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7;" class="progress-bar"
+                                                 :style="{width:profile.grammar_score +'%'}"
+                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">
+                                            {{ parseFloat(profile.grammar_score / 10).toFixed(1) }}/10
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200"
+                             data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <h4>Initial Questionnaire</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 100%" class="progress-bar"
+                                                 role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text">10/10</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="personality my-5" v-if="profile.learning_style && profile.tutor_match">
+                <h1 class="blue-text">Personality Diagnostic</h1>
+                <div class="personality-content pl-5" style="margin-top: 90px">
+                    <transition name="list">
+                        <div v-if="personality" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    Answer these 10 questions in order to help us build you a personalized program.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="personality = disableNotification('personality')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a v-if="!profile.learning_style" :href="route('diagnostic.show','learning-style')">
+                                    <h4>Learning Style </h4>
+                                </a>
+                                <h4 v-else>Learning Style</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div v-if="profile.learning_style"
+                                             class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 100%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                        <div v-else class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 0%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text"
+                                             v-if="profile.learning_style"><i
+                                            class="bi bi-check2-square blue-text fa-2x"></i>
+                                        </div>
+                                        <div class="blue-text" v-else><i class="bi bi-app blue-text fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
+                             data-aos-delay="50" data-aos-once="true">
+                            <div class="input-cards">
+                                <img class="w-100" :src="'images/course-img.png'">
+                                <a v-if="!profile.tutor_match" :href="route('diagnostic.show','perfect-tutor-match')">
+                                    <h4>Perfect Tutor Match</h4>
+                                </a>
+                                <h4 v-else>Perfect Tutor Match</h4>
+                                <div class="row justify-content-center align-items-center"
+                                     style="margin-top: 60px; margin-bottom: 10px">
+                                    <div class="col-9">
+                                        <div v-if="profile.tutor_match"
+                                             class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 100%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                        <div v-else class="progress" style="height: 5px; margin-left: 20px">
+                                            <div style="background: #4C6ED7; width: 0%" class="progress-bar"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="blue-text"
+                                             v-if="profile.tutor_match"><i
+                                            class="bi bi-check2-square blue-text fa-2x"></i>
+                                        </div>
+                                        <div class="blue-text" v-else><i class="bi bi-app blue-text fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </app-layout>
 </template>
@@ -435,6 +645,7 @@ export default {
             this.loading = true
             axios.get(route('dashboard.notes.course', course)).then(response => {
                 this.notesByCourse = response.data.notes
+                console.log(response.data)
                 this.loading = false
             })
         },

@@ -7,6 +7,8 @@
                         <div class="text">
                             <h1 class="blue-text" style="margin-top: 0">Results</h1>
                             <p>{{ this.results.summary }}</p>
+                            <a :href="route('dashboard')"
+                               style="font-size: 1.5rem; color: #3490dc; text-decoration: underline">Next</a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -47,14 +49,17 @@
                     </div>
                 </div>
             </div>
-            <div class="plan">
+            <div class="plan position-relative">
                 <div class="container">
                     <h1 class="blue-text">Our Plan For You</h1>
                     <ol>
                         <li v-for="p in this.plan">{{ p }}</li>
+                        <a :href="route('dashboard')"
+                           style="position: absolute; font-size: 1.5rem; right: 10px; bottom:10px; color: #3490dc; text-decoration: underline">Next</a>
                     </ol>
                 </div>
             </div>
+
         </div>
     </app-layout>
 </template>

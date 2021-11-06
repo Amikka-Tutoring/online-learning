@@ -4,9 +4,22 @@
             <div class="grammar-course mt-0" data-aos="fade-up" data-aos-once="true">
                 <h1 class="blue-text">Recommended</h1>
                 <div class="grammar-course-content">
-                    <p>These recommendations are based on a variety of factors including your diagnostic, goal
-                        score,
-                        time until exam, and progress.</p>
+                    <transition name="list">
+                        <div v-if="recommended" class="question-box text-left">
+                            <div class="row">
+                                <div class="col-lg-11 col-10">
+                                    These recommendations are based on a variety of factors including your diagnostic,
+                                    goal
+                                    score,
+                                    time until exam, and progress.
+                                </div>
+                                <div class="col-lg-1 col-2 d-flex align-items-center">
+                                    <i v-on:click="recommended = disableNotification('recommended')"
+                                       class="fas fa-times red-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                     <template v-for="course in recommended_courses">
                         <div class="first-list grammar-list w-100">
                             <div class="row" @click="hideRec(course.id)">
@@ -66,7 +79,7 @@
                                                     <div class="row">
                                                         <div class="col-10">
                                                             <a :href="route('lesson',midLayer.id)">{{
-                                                                midLayer.name
+                                                                    midLayer.name
                                                                 }}</a>
                                                         </div>
                                                         <div class="col-2 text-right"
@@ -150,18 +163,20 @@
                     </template>
                 </div>
             </div>
-            <div class="grammar-course" data-aos="fade-up" data-aos-once="true" v-for="course in courses">
+
+            <div :id="course.name" class="grammar-course" data-aos="fade-up" data-aos-once="true"
+                 v-for="course in courses">
                 <h1 class="blue-text">Full {{ course.name }} Course</h1>
                 <div class="grammar-course-content">
-                    <p>These recommendations are based on a variety of factors including your diagnostic, goal
-                        score,
-                        time until exam, and progress.</p>
+                    <!--                    <p>These recommendations are based on a variety of factors including your diagnostic, goal-->
+                    <!--                        score,-->
+                    <!--                        time until exam, and progress.</p>-->
                     <div class="first-list grammar-list w-100" @click="hide(course.id)">
                         <div class="row">
                             <div class="col-10">
                                 {{ course.name }}
                             </div>
-                            <div class="col-2 text-right" v-if="course.layers.length">
+                            <div class="col-2 text-right" v-if="course.layers.lsength">
                                 <i :class="'course-icon-'+course.id" class="fas fa-chevron-down text-white"></i>
                             </div>
                         </div>
@@ -173,7 +188,7 @@
                                      @click="hideTop(topLayer.id)">
                                     <div class="row">
                                         <div class="col-10">
-                                            <a :href="route('lesson',topLayer.id)">{{ topLayer.name }}</a>
+                                            <span>{{ topLayer.name }}</span>
                                         </div>
                                         <div class="col-2 text-right"
                                              v-if="topLayer.children.length || topLayer.videos.length">
@@ -190,17 +205,18 @@
                                             <div class="row">
                                                 <div
                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                    <a :href="top_videos.url"
-                                                       target="_blank">
+                                                    <a :href="route('lesson',top_videos.id)">
                                                         <i class="fas fa-play-circle fa-2x"
                                                            style="color: #4C6ED7"></i>
                                                     </a>
                                                 </div>
-                                                <div class="col-8 d-flex align-items-center">
-                                                    <h5>{{ top_videos.title }}<span
-                                                        class="ml-2 badges gray-badge">Strategy</span><span
-                                                        class="ml-2 badges gray-badge">All</span>
-                                                    </h5>
+                                                <div class="col-8 d-flex align-items-center justify-content-between">
+                                                    <h5>{{ top_videos.title }}</h5>
+                                                    <div><span v-for="tag in top_videos.tags"
+                                                               class="ml-2 badges lightblue-badge">{{
+                                                            tag.name
+                                                        }}</span>
+                                                    </div>
                                                 </div>
                                                 <div
                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -213,9 +229,7 @@
                                                  @click="hideMid(midLayer.id)">
                                                 <div class="row">
                                                     <div class="col-10">
-                                                        <a :href="route('lesson',midLayer.id)">{{
-                                                            midLayer.name
-                                                            }}</a>
+                                                        <span>{{ midLayer.name }}</span>
                                                     </div>
                                                     <div class="col-2 text-right"
                                                          v-if="midLayer.children.length || midLayer.videos.length">
@@ -231,14 +245,18 @@
                                                         <div class="row">
                                                             <div
                                                                 class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                <i class="fas fa-play-circle fa-2x"
-                                                                   style="color: #4C6ED7"></i>
+                                                                <a :href="route('lesson',mid_videos.id)">
+                                                                    <i class="fas fa-play-circle fa-2x"
+                                                                       style="color: #4C6ED7"></i>
+                                                                </a>
                                                             </div>
                                                             <div class="col-8 d-flex align-items-center">
-                                                                <h5>{{ mid_videos.title }}<span
-                                                                    class="ml-2 badges gray-badge">Strategy</span><span
-                                                                    class="ml-2 badges gray-badge">All</span>
-                                                                </h5>
+                                                                <h5>{{ mid_videos.title }}</h5>
+                                                                <div><span v-for="tag in mid_videos.tags"
+                                                                           class="ml-2 badges lightblue-badge">{{
+                                                                        tag.name
+                                                                    }}</span>
+                                                                </div>
                                                             </div>
                                                             <div
                                                                 class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -252,8 +270,7 @@
                                                                  @click="hideLess(lesson.id)">
                                                                 <div class="row">
                                                                     <div class="col-10">
-                                                                        <a :href="route('lesson',lesson.id)">
-                                                                            {{ lesson.name }}</a>
+                                                                        <span>{{ lesson.name }}</span>
                                                                     </div>
                                                                     <div class="col-2 text-right"
                                                                          v-if="lesson.videos.length">
@@ -268,15 +285,19 @@
                                                                     <div class="row">
                                                                         <div
                                                                             class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                            <i class="fas fa-play-circle fa-2x"
-                                                                               style="color: #4C6ED7"></i>
+                                                                            <a :href="route('lesson',less_videos.id)">
+                                                                                <i class="fas fa-play-circle fa-2x"
+                                                                                   style="color: #4C6ED7"></i>
+                                                                            </a>
                                                                         </div>
                                                                         <div
                                                                             class="col-8 d-flex align-items-center">
-                                                                            <h5>{{ less_videos.title }}<span
-                                                                                class="ml-2 badges gray-badge">Strategy</span><span
-                                                                                class="ml-2 badges gray-badge">All</span>
-                                                                            </h5>
+                                                                            <h5>{{ less_videos.title }}</h5>
+                                                                            <div><span v-for="tag in less_videos.tags"
+                                                                                       class="ml-2 badges lightblue-badge">{{
+                                                                                    tag.name
+                                                                                }}</span>
+                                                                            </div>
                                                                         </div>
                                                                         <div
                                                                             class="col-2 d-flex justify-content-center align-items-center text-center">
@@ -312,6 +333,11 @@ export default {
         CollapseTransition
     },
     methods: {
+        disableNotification(attribute) {
+            localStorage.setItem(attribute, false);
+        },
+
+
         hide(value) {
             $('.full-course-' + value).toggleClass('d-none', 'd-block')
             $('.course-icon-' + value).toggleClass('fa-chevron-up', 'fa-chevron-down')
@@ -348,6 +374,12 @@ export default {
         }
     },
     props: ['courses', 'recommended_courses'],
+    setup() {
+        let saved = localStorage.getItem('recommended') === null;
+        if (saved) {
+            localStorage.setItem('recommended', true)
+        }
+    },
 
     data() {
         return {
@@ -358,6 +390,7 @@ export default {
             english_strategy: true,
             full_course: true,
             rec: true,
+            recommended: localStorage.getItem('recommended') === 'true',
         }
     },
     mounted() {

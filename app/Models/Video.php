@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\TagScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,10 +17,20 @@ class Video extends Model
         'layer_id',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new TagScope);
+    }
+
 
     public function layer()
     {
         return $this->belongsTo(Layer::class);
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
     }
 
     public function tags()
@@ -44,4 +55,11 @@ class Video extends Model
         $tag = Tag::where('name', 'Hard')->first();
         $this->tags()->attach($tag);
     }
+
+    public function setTag($tag_data)
+    {
+        $tag = Tag::where('name', $tag_data)->first();
+        $this->tags()->attach($tag);
+    }
+
 }

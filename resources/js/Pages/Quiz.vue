@@ -67,26 +67,26 @@
                     </div>
                     <div v-for="(question, index) in layer.questions">
                         <div v-if="form.currentstep === index + 2"
-                             class="row w-100">
-                            <div class="col-lg-6 col-12">
+                             class="row w-100 m-0">
+                            <div class="col-12">
                                 <p class="quiz-question-box">{{ question.title }}</p>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+
                                 <div class="image-box text-center">
                                     <img class="w-100" :src="question.image">
                                 </div>
-                                <p class="quiz-question-box text-left">
-                                <ol style="list-style-type: upper-latin">
-                                    <li v-for=" (answer, index) in question.answers">{{ answer.title }}</li>
-                                </ol>
-                                </p>
                             </div>
-                            <div class="col-lg-6 col-12 d-flex align-items-center">
+                            <div class="col-12 d-flex align-items-center justify-content-center"
+                                 v-bind:class="[question.image ? 'col-md-6':'col-12']">
                                 <div class="row w-100">
                                     <div class="wrapper d-flex flex-column">
                                         <div class="row w-100">
                                             <div v-for="(answer, index) in question.answers"
                                                  :key="answer"
                                                  :index="question.key"
-                                                 class="col-6"
+                                                 class="col-12 p-0"
                                             >
                                                 <div class="options">
                                                     <input :id="'option-' +answer.id"
@@ -99,7 +99,7 @@
                                                     <label :class="'option option-' +answer.id"
                                                            :for="'option-' +answer.id">
                                                         <div class="dot"></div>
-                                                        <span>{{ toLetter(index + 1) }}</span>
+                                                        <span>{{ answer.title }}</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -109,8 +109,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 col-4">
                             <button
                                 v-if="form.currentstep > 1"
                                 class="blue-button w-100"
@@ -120,7 +120,7 @@
                                 <i class="bi bi-arrow-left-circle"></i>
                             </button>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-3 col-4">
                             <button
                                 v-if="
                                 form.currentstep !==
@@ -144,7 +144,6 @@
                                 Finish
                             </button>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -163,18 +162,7 @@ export default {
         AppLayout,
     },
     methods: {
-        toLetter(value) {
-            //do something here
-            if (value == 1) {
-                return 'A'
-            } else if (value == 2) {
-                return 'B'
-            } else if (value == 3) {
-                return 'C'
-            } else {
-                return 'D'
-            }
-        },
+
         next: function () {
             if (!this.validate()) {
                 this.toast.error('You need to select the answer')

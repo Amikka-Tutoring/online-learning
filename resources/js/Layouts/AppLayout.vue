@@ -4,24 +4,25 @@
                 data-toggle="collapse" data-target="#navbarToggleExternalContent"
                 aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <svg v-bind:class="[isHidden ? 'rotate-effect':'']"
-                 xmlns="http://www.w3.org/2000/svg" width="47"
-                 height="47"
+                 xmlns="http://www.w3.org/2000/svg" width="30"
+                 height="30"
                  fill="#4C6ED7"
                  class="bi bi-list rotate" viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
                       d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
             </svg>
         </button>
+        <img src="/images/logo.png" alt="" style="height: 80%">
 
         <div class="dropdown">
             <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img style="object-fit: cover; margin-right: 20px; margin-top: 20px; width: 47px; height: 47px"
+                <img style="object-fit: cover; width: 40px; height: 40px"
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" :href="route('admin.dashboard')" v-if="this.user.is_admin">Admin Panel</a>
-                <a class="dropdown-item" @click="logout()" href="">Logout</a>
+                <a class="dropdown-item" v-on:click.prevent="logout()" href="">Logout</a>
             </div>
         </div>
     </nav>
@@ -65,7 +66,7 @@
 
         <div v-bind:class="[isHidden ? 'main-content' : 'main-content-1']" class="bg-white p-0 transition">
             <img class="banner-img" :src="'/images/banner.png'" alt=""
-                 style="width: 100%; height:140px; margin-bottom: 100px">
+                 style="width: 100%; height:100px; margin-bottom: 100px">
             <div class="container-fluid p-0">
                 <main class="mb-4">
                     <slot></slot>
@@ -79,7 +80,6 @@
 <script>
 
 
-// import { Link, Head } from "@inertiajs/inertia-vue3";
 import {computed} from 'vue'
 import {usePage} from '@inertiajs/inertia-vue3'
 
@@ -108,7 +108,9 @@ export default {
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
-                });
+                }).finally(() => {
+                window.location = '/login'
+            });
         },
         toggleClass: function (event) {
             this.isHidden = !this.isHidden;
