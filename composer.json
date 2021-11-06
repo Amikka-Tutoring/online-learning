@@ -19,7 +19,8 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "tightenco/ziggy": "^1.0",
-        "twilio/sdk": "^6.29"
+        "twilio/sdk": "^6.29",
+        "vimeo/vimeo-api": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

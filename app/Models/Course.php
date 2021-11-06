@@ -28,11 +28,11 @@ class Course extends Model
         self::created(function ($model) {
             Stripe::setApiKey(env('STRIPE_SECRET'));
             $plan = Plan::create([
-                "amount" => 3000,
+                "amount" => substr($model->name, 0, 3) === "SAT" ? "1000" : "3000",
                 "interval" => "month",
-                "product" => array(
+                "product" => [
                     "name" => $model->name
-                ),
+                ],
                 "currency" => "USD",
             ]);
             $model->plan_id = $plan->id;
@@ -61,15 +61,15 @@ class Course extends Model
     {
         $quizzes_count = 0;
         foreach ($this->topLayers() as $topLayer) {
-            if (count($topLayer->questions)) {
+            if ( count($topLayer->questions) ) {
                 $quizzes_count++;
             }
             foreach ($topLayer->children as $mid) {
-                if (count($mid->questions)) {
+                if ( count($mid->questions) ) {
                     $quizzes_count++;
                 }
                 foreach ($mid->children as $less) {
-                    if (count($less->questions)) {
+                    if ( count($less->questions) ) {
                         $quizzes_count++;
                     }
                 }
@@ -84,19 +84,19 @@ class Course extends Model
         $quizzes_count = 0;
         foreach ($this->topLayers() as $topLayer) {
             foreach ($user->layer_quiz_results as $r) {
-                if ($r->layer == $topLayer) {
+                if ( $r->layer == $topLayer ) {
                     $quizzes_count++;
                 }
             }
             foreach ($topLayer->children as $mid) {
                 foreach ($user->layer_quiz_results as $t) {
-                    if ($t->layer == $mid) {
+                    if ( $t->layer == $mid ) {
                         $quizzes_count++;
                     }
                 }
                 foreach ($mid->children as $less) {
                     foreach ($user->layer_quiz_results as $e) {
-                        if ($e->layer == $less) {
+                        if ( $e->layer == $less ) {
                             $quizzes_count++;
                         }
                     }

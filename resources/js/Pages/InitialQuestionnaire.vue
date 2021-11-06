@@ -60,8 +60,8 @@
                                         </div>
                                         <div class="col-3">
                                             <label for="check-box"></label>
-                                            <input id="check-box" type="checkbox"
-                                                   v-model="sat">
+                                            <input id="check-box" type="checkbox" :value="0"
+                                                   v-model="form.courses">
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +320,6 @@ export default {
 
         function next() {
             const toast = useToast();
-            toast.success(sat);
             if (form.currentstep === 2 && !form.courses.length) {
                 return toast.error('Course is required');
             }

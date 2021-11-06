@@ -6,7 +6,8 @@
 
             <div class=" row flex-column align-items-center p-4">
                 <h1 id="topic" ref="title">{{ video.title }}</h1>
-                <iframe id="youtube_id" :src="embed(video.url)"
+                <iframe id="youtube_id"
+                        :src="embed(video.url)"
                         style="max-width: 826px; width: 100%; height: 500px; margin: 50px 0; border: none">
                 </iframe>
             </div>
@@ -158,8 +159,7 @@ export default {
     },
     methods: {
         embed: function (str) {
-            let res = str.split("=");
-            let embeddedUrl = "https://www.youtube.com/embed/" + res[1];
+            let embeddedUrl = "https://player.vimeo.com/video/" + str + "?h=af48f9e87f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479";
             return embeddedUrl;
         },
         quiz: function (lesson_id) {

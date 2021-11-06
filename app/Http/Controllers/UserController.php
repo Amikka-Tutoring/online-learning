@@ -46,8 +46,15 @@ class UserController extends Controller
         try {
             $user->newSubscription('platform', env('PLAN_ID'))->trialDays(7)->add();
             foreach ($request->courses as $id) {
-                $course = Course::where('plan_id', $id)->first();
-                $user->newSubscription($course->slug, $id)->trialDays(7)->add();
+                if ( $id == 0 ) {
+                    $courses = Course::where('name', 'like', 'SAT%')->get();
+                    foreach ($courses as $course) {
+                        $user->newSubscription($course->slug, $course->plan_id)->trialDays(7)->add();
+                    }
+                } else {
+                    $course = Course::where('plan_id', $id)->first();
+                    $user->newSubscription($course->slug, $id)->trialDays(7)->add();
+                }
             }
         } catch (IncompletePayment $e) {
         }
