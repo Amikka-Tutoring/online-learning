@@ -38,7 +38,7 @@
                                          @click="hideTopRec(topLayer.id)">
                                         <div class="row">
                                             <div class="col-10">
-                                                <a :href="route('lesson',topLayer.id)">{{ topLayer.name }}</a>
+                                                <span>{{ topLayer.name }}</span>
                                             </div>
                                             <div class="col-2 text-right"
                                                  v-if="topLayer.children.length || topLayer.videos.length">
@@ -55,8 +55,7 @@
                                                 <div class="row">
                                                     <div
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                        <a :href="top_videos.url"
-                                                           target="_blank">
+                                                        <a :href="route('lesson',top_videos.id)">
                                                             <i class="fas fa-play-circle fa-2x"
                                                                style="color: #4C6ED7"></i>
                                                         </a>
@@ -78,9 +77,7 @@
                                                      @click="hideMidRec(midLayer.id)">
                                                     <div class="row">
                                                         <div class="col-10">
-                                                            <a :href="route('lesson',midLayer.id)">{{
-                                                                    midLayer.name
-                                                                }}</a>
+                                                            <span>{{ midLayer.name }}</span>
                                                         </div>
                                                         <div class="col-2 text-right"
                                                              v-if="midLayer.children.length || midLayer.videos.length">
@@ -96,8 +93,10 @@
                                                             <div class="row">
                                                                 <div
                                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <i class="fas fa-play-circle fa-2x"
-                                                                       style="color: #4C6ED7"></i>
+                                                                    <a :href="route('lesson',mid_videos.id)">
+                                                                        <i class="fas fa-play-circle fa-2x"
+                                                                           style="color: #4C6ED7"></i>
+                                                                    </a>
                                                                 </div>
                                                                 <div class="col-8 d-flex align-items-center">
                                                                     <h5>{{ mid_videos.title }}<span
@@ -117,8 +116,7 @@
                                                                      @click="hideLessRec(lesson.id)">
                                                                     <div class="row">
                                                                         <div class="col-10">
-                                                                            <a :href="route('lesson',lesson.id)">
-                                                                                {{ lesson.name }}</a>
+                                                                            <span>{{ lesson.name }}</span>
                                                                         </div>
                                                                         <div class="col-2 text-right"
                                                                              v-if="lesson.videos.length">
@@ -133,8 +131,10 @@
                                                                         <div class="row">
                                                                             <div
                                                                                 class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                                <i class="fas fa-play-circle fa-2x"
-                                                                                   style="color: #4C6ED7"></i>
+                                                                                <a :href="route('lesson',less_videos.id)">
+                                                                                    <i class="fas fa-play-circle fa-2x"
+                                                                                       style="color: #4C6ED7"></i>
+                                                                                </a>
                                                                             </div>
                                                                             <div
                                                                                 class="col-8 d-flex align-items-center">

@@ -12,7 +12,11 @@
                       d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
             </svg>
         </button>
-        <img src="/images/logo.png" alt="" style="height: 80%">
+
+        <a :href="route('dashboard')" style="height: 80%">
+            <img src="/images/logo.png" alt="" style="height: 100%">
+        </a>
+
         <div class="dropdown">
             <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,24 +38,28 @@
                 <h1><a :href="route('admin.dashboard')" style="color: black">Ammika Admin</a></h1>
             </ul>
             <ul class="list">
-                <li><a
-                    v-bind:class="route().current('admin.users') || route().current('admin.user') ? 'active' : ''"
-                    :href="route('admin.users')">Users</a>
-                </li>
-                <li><a
-                    v-bind:class="route().current('admin.courses') || route().current('admin.courses.create') ? 'active' : ''"
-                    :href="route('admin.courses')">Courses</a></li>
-                <li><a v-bind:class="route().current('admin.exams') ? 'active' : ''"
-                       :href="route('admin.exams')">Practice Exams</a></li>
-                <li><a
-                    v-bind:class="route().current('diagnostics', { slug: 'academic' }) || route().current('academic.diagnostics.create') ? 'active' : ''"
-                    :href="route('diagnostics','academic')">Academic Diagnostics</a></li>
-                <li><a
-                    v-bind:class="route().current('diagnostics', { slug: 'personality' }) || route().current('personality.diagnostics.create') ? 'active' : ''"
-                    :href="route('diagnostics','personality')">Personality Diagnostics</a></li>
-                <li><a
-                    v-bind:class="route().current('student.questions') ? 'active' : ''"
-                    :href="route('student.questions')">Student Questions</a></li>
+                <template v-if="user.is_admin">
+                    <li><a
+                        v-bind:class="route().current('admin.users') || route().current('admin.user') ? 'active' : ''"
+                        :href="route('admin.users')">Users</a>
+                    </li>
+                    <li><a
+                        v-bind:class="route().current('admin.courses') || route().current('admin.courses.create') ? 'active' : ''"
+                        :href="route('admin.courses')">Courses</a></li>
+                    <li><a v-bind:class="route().current('admin.exams') ? 'active' : ''"
+                           :href="route('admin.exams')">Practice Exams</a></li>
+                    <li><a
+                        v-bind:class="route().current('diagnostics', { slug: 'academic' }) || route().current('academic.diagnostics.create') ? 'active' : ''"
+                        :href="route('diagnostics','academic')">Academic Diagnostics</a></li>
+                    <li><a
+                        v-bind:class="route().current('diagnostics', { slug: 'personality' }) || route().current('personality.diagnostics.create') ? 'active' : ''"
+                        :href="route('diagnostics','personality')">Personality Diagnostics</a></li>
+                </template>
+                <template v-if="user.is_admin || user.is_tutor">
+                    <li><a
+                        v-bind:class="route().current('student.questions') ? 'active' : ''"
+                        :href="route('student.questions')">Student Questions</a></li>
+                </template>
                 <li><a @click="logout" style="color: red; cursor: pointer; text-decoration: underline;">Logout</a></li>
             </ul>
         </div>
@@ -87,6 +95,7 @@ export default {
             showingNavigationDropdown: false,
             isHidden: true,
             avatar: this.user.profile_photo_path,
+            user: this.user
         };
     },
 

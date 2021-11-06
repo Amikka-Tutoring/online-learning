@@ -190,7 +190,7 @@ export default {
                     this.toast.success(response.data.message);
                     this.toast.success(response.data.score);
                     // setTimeout(function () {
-                    window.location.href = "/lesson/" + this.form.layer_id;
+                    window.location.href = "/";
                     // }, 2000);
                 })
                 .catch(error => {

@@ -12,7 +12,10 @@
                       d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
             </svg>
         </button>
-        <img src="/images/logo.png" alt="" style="height: 80%">
+        <a :href="route('dashboard')" style="height: 80%">
+            <img src="/images/logo.png" alt="" style="height: 100%">
+        </a>
+
 
         <div class="dropdown">
             <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton"
@@ -22,6 +25,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" :href="route('admin.dashboard')" v-if="this.user.is_admin">Admin Panel</a>
+                <a class="dropdown-item" :href="route('student.questions')" v-if="this.user.is_tutor">Tutor Panel</a>
                 <a class="dropdown-item" v-on:click.prevent="logout()" href="">Logout</a>
             </div>
         </div>

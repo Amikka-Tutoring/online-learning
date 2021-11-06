@@ -148,7 +148,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('diagnostics/{id}', [DiagnosticController::class, 'deleteQuiz'])->name('diagnostics.delete');
     Route::get('diagnostics/academic/get', [DiagnosticController::class, 'getAcademicQuizzes'])->name('academics.get');
     Route::get('diagnostics/personality/get', [DiagnosticController::class, 'getPersonalityQuizzes'])->name('personalities.get');
+});
 
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('questions', [TutorController::class, 'studentQuestions'])->name('student.questions');
     Route::post('questions/response', [TutorController::class, 'storeResponse'])->name('store.response');
 });

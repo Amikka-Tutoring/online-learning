@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->is_admin();
     }
 
+    public function getIsTutorAttribute()
+    {
+        return $this->is_tutor();
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -94,6 +99,11 @@ class User extends Authenticatable
     public function is_admin()
     {
         return $this->check_role('admin');
+    }
+
+    public function is_tutor()
+    {
+        return $this->check_role('tutor');
     }
 
     public function profile()
