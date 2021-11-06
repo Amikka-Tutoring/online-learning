@@ -70,7 +70,10 @@
                                                     </div>
                                                     <div
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                        <h5>03:23</h5>
+                                                        <h5>{{
+                                                                moment.duration(top_videos.duration,
+                                                                    'seconds')
+                                                            }}</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,7 +113,10 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                    <h5>03:23</h5>
+                                                                    <h5>{{
+                                                                            moment.duration(mid_videos.duration,
+                                                                                'seconds').format("hh:mm:ss")
+                                                                        }}</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -152,7 +158,10 @@
                                                                             </div>
                                                                             <div
                                                                                 class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                                <h5>03:23</h5>
+                                                                                <h5>{{
+                                                                                        moment.duration(less_videos.duration,
+                                                                                            'seconds').format("hh:mm:ss")
+                                                                                    }}</h5>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -227,7 +236,10 @@
                                                 </div>
                                                 <div
                                                     class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                    <h5>03:23</h5>
+                                                    <h5>{{
+                                                            moment.duration(top_videos.duration,
+                                                                'seconds').format("hh:mm:ss")
+                                                        }}</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -267,7 +279,10 @@
                                                             </div>
                                                             <div
                                                                 class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                <h5>03:23</h5>
+                                                                <h5>{{
+                                                                        moment.duration(mid_videos.duration,
+                                                                            'seconds').format("hh:mm:ss")
+                                                                    }}</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -308,7 +323,10 @@
                                                                         </div>
                                                                         <div
                                                                             class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                            <h5>03:23</h5>
+                                                                            <h5>{{
+                                                                                    moment.duration(less_videos.duration,
+                                                                                        'seconds').format("hh:mm:ss")
+                                                                                }}</h5>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -333,6 +351,8 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import CollapseTransition from '@ivanv/vue-collapse-transition/src'
+import moment from "moment";
+import 'moment-duration-format';
 
 export default {
     components: {
@@ -390,6 +410,7 @@ export default {
 
     data() {
         return {
+            moment: moment,
             concision: true,
             redundancy: true,
             wordy_phrases: true,
