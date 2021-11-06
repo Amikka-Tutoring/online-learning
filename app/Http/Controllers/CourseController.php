@@ -80,7 +80,7 @@ class CourseController extends Controller
                 array_push($coursesArray, $course->name);
             }
             if ($row[1] != '') {
-                $top_layer = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[1])->first();
+                $top_layer = $course->layers->where('name', $row[1])->first();
                 if ($top_layer == null) {
                     //Top Layer
                     $top_layer = Layer::create([
@@ -154,7 +154,7 @@ class CourseController extends Controller
 
             //MidLayer
             if ($row[22] != '') {
-                $mid_layer = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[22])->where('parent_id', $top_layer->id)->first();
+                $mid_layer = $course->layers->where('name', $row[22])->where('parent_id', $top_layer->id)->first();
                 if ($mid_layer == null) {
                     //Top Layer
                     $mid_layer = Layer::create([
@@ -230,7 +230,7 @@ class CourseController extends Controller
                 }
                 //Lesson
                 if ($row[43] != '') {
-                    $lesson = Layer::withoutGlobalScope(LayerScope::class)->where('name', $row[43])->where('parent_id', $mid_layer->id)->first();
+                    $lesson = $course->layers->where('name', $row[43])->where('parent_id', $mid_layer->id)->first();
                     if ($lesson == null) {
                         //Top Layer
                         $lesson = Layer::create([

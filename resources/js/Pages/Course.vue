@@ -116,62 +116,21 @@
                         <p class="w-75">Still confused? Check out the student FAQ’s below with video responses. You can
                             even ask us a question and we’ll respond within 72 hrs.</p>
                     </div>
-                    <div class="recommended-box">
+                    <div class="recommended-box col-md-6 col-12">
                         <div class="recommended-title">Top Questions</div>
                         <div class="recommended-list">
-                            <div class="recommended-item">
-                                <div class="row">
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
+                            <div class="recommended-item" v-for="response in video.responses">
+                                <a :href="response.url" target="_blank" style="text-decoration: none">
+                                    <div class="row">
+                                        <div class="col-2 d-flex justify-content-center align-items-center text-center">
+                                            <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
+                                        </div>
+                                        <div class="col-10 d-flex align-items-center">
+                                            <h5>{{ response.title }}
+                                            </h5>
+                                        </div>
                                     </div>
-                                    <div class="col-8 d-flex align-items-center">
-                                        <h5>Lesson 1 <span class="ml-2 badges lightrose-badge">Medium</span></h5>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5>03:23</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="recommended-item">
-                                <div class="row">
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
-                                    </div>
-                                    <div class="col-8 d-flex align-items-center">
-                                        <h5>Concision<span class="ml-2 badges gray-badge">Strategy</span><span
-                                            class="ml-2 badges gray-badge">All</span></h5>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5>10:00</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="recommended-item">
-                                <div class="row">
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
-                                    </div>
-                                    <div class="col-8 d-flex align-items-center">
-                                        <h5>Intro<span class="ml-2 badges lightblue-badge">Easy</span><span
-                                            class="ml-2 badges lightrose-badge">Lesson</span></h5>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5>01:23</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="recommended-item">
-                                <div class="row">
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
-                                    </div>
-                                    <div class="col-8 d-flex align-items-center">
-                                        <h5>Lesson 1<span class="ml-2 badges lightrose-badge">Medium</span></h5>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <h5>03:23</h5>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>

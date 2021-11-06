@@ -35,7 +35,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::where('name', 'not like', 'SAT%')->get();
-        if ( Auth::user()->profile ) {
+        if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -50,9 +50,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ( $user_profile->tutor_match )
+        if ($user_profile->tutor_match)
             $tutor_match_done = true;
-        if ( $user_profile->learning_style )
+        if ($user_profile->learning_style)
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -66,7 +66,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ( $d['day'] > $date_now )
+            if ($d['day'] > $date_now)
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -83,7 +83,7 @@ class PageController extends Controller
         $next_lesson_day = '';
         $next_lesson_time = '';
         $next_lesson = '';
-        if ( $next != 0 ) {
+        if ($next != 0) {
             $next_lesson_day = $days[$next['day']];
             $next_lesson_time = $next['time'];
 
@@ -148,12 +148,12 @@ class PageController extends Controller
 
     public function lesson($video)
     {
-        $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions');
+        $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions', 'responses', 'responses');
         $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
         $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->take(3)->get();
         $user = Auth::user()->load('layer_quiz_results');
-        if ( !$user->subscribed($video->layer->course->slug) )
+        if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
         $notes = $video->notes->first();
 
@@ -164,7 +164,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
