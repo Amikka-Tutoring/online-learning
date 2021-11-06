@@ -37,6 +37,11 @@ class Video extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function responses()
+    {
+        return $this->hasMany(VideoResponse::class);
+    }
+
     public function setEasy()
     {
         $tag = Tag::where('name', 'Easy')->first();

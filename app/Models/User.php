@@ -132,7 +132,7 @@ class User extends Authenticatable
 
     public function getTag()
     {
-        if ( $this->tags->count() )
+        if ($this->tags->count())
             return $this->tags->last()->name;
     }
 

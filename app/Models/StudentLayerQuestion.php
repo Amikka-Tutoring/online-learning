@@ -21,8 +21,13 @@ class StudentLayerQuestion extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function layer()
+    public function video()
     {
-        return $this->belongsTo(Layer::class, 'layer_id')->withoutGlobalScope(LayerScope::class);
+        return $this->belongsTo(Video::class, 'video_id');
+    }
+
+    public function response()
+    {
+        return $this->hasOne(VideoResponse::class, 'question_id');
     }
 }

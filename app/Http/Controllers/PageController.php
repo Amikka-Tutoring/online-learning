@@ -151,7 +151,7 @@ class PageController extends Controller
         $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions');
         $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
-        $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->get();
+        $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->take(3)->get();
         $user = Auth::user()->load('layer_quiz_results');
         if ( !$user->subscribed($video->layer->course->slug) )
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');

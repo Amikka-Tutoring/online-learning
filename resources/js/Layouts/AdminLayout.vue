@@ -49,6 +49,9 @@
                 <li><a
                     v-bind:class="route().current('diagnostics', { slug: 'personality' }) || route().current('personality.diagnostics.create') ? 'active' : ''"
                     :href="route('diagnostics','personality')">Personality Diagnostics</a></li>
+                <li><a
+                    v-bind:class="route().current('student.questions') ? 'active' : ''"
+                    :href="route('student.questions')">Student Questions</a></li>
                 <li><a @click="logout" style="color: red; cursor: pointer; text-decoration: underline;">Logout</a></li>
             </ul>
         </div>

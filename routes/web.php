@@ -17,6 +17,7 @@ use App\Http\Controllers\UserExamVisitController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\UserPracticeExamDateController;
 use App\Http\Controllers\UserLessonDateController;
+use App\Http\Controllers\TutorController;
 
 
 /*
@@ -147,6 +148,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('diagnostics/{id}', [DiagnosticController::class, 'deleteQuiz'])->name('diagnostics.delete');
     Route::get('diagnostics/academic/get', [DiagnosticController::class, 'getAcademicQuizzes'])->name('academics.get');
     Route::get('diagnostics/personality/get', [DiagnosticController::class, 'getPersonalityQuizzes'])->name('personalities.get');
+
+    Route::get('questions', [TutorController::class, 'studentQuestions'])->name('student.questions');
+    Route::post('questions/response', [TutorController::class, 'storeResponse'])->name('store.response');
 });
 
 Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');

@@ -7,24 +7,26 @@
                 <li v-show="next">
                     <div class="next-lessons">
                         <div class="next-up">Next Up</div>
-                        <div v-for="video in videos" class="next-item">
-                            <div class="row">
-                                <div class="col-3 d-flex justify-content-center align-items-center text-center">
-                                    <i class="fas fa-play-circle" style="color: #4C6ED7; font-size: 1.8rem"></i>
-                                </div>
-                                <div class="col-9">
-                                    <div class="row">
-                                        <p>{{ video.title }}</p>
+                        <div v-for="video in videos" class="next-item" v-if="videos.length">
+                            <a :href="route('lesson',video)" style="text-decoration: none">
+                                <div class="row">
+                                    <div class="col-3 d-flex justify-content-center align-items-center text-center">
+                                        <i class="fas fa-play-circle" style="color: #4C6ED7; font-size: 1.8rem"></i>
                                     </div>
-                                    <div class="row">
+                                    <div class="col-9">
+                                        <div class="row">
+                                            <p>{{ video.title }}</p>
+                                        </div>
+                                        <div class="row">
                                         <span v-for="tag in video.tags"
                                               class="ml-2 badges lightblue-badge">{{ tag.name }}</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <!--                                <div class="col-3 d-flex justify-content-center align-items-center text-center">-->
-                                <!--                                    <p>03:23</p>-->
-                                <!--                                </div>-->
-                            </div>
+                            </a>
+                        </div>
+                        <div class="" v-else>
+                            No more videos for this lesson
                         </div>
                     </div>
                 </li>
