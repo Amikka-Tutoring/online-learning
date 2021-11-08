@@ -23,7 +23,8 @@ class Video extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new VideoScope);
+        if ( auth()->user()->is_student() )
+            static::addGlobalScope(new VideoScope);
     }
 
     public function layer()
@@ -75,9 +76,9 @@ class Video extends Model
         dd($video);
         $user = auth()->user()->load('profile', 'tags');
         $tags = ['Easy'];
-        if (!($user->getTag() == 'All')) {
+        if ( !($user->getTag() == 'All') ) {
             $video_tags = $video->tags->pluck('name');
-            if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
+            if ( !($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All']) ) {
                 return [];
             }
         }

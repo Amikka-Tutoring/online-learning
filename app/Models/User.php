@@ -106,6 +106,11 @@ class User extends Authenticatable
         return $this->check_role('tutor');
     }
 
+    public function is_student()
+    {
+        return $this->check_role('student');
+    }
+
     public function profile()
     {
         return $this->hasOne(UserProfile::class);
@@ -142,7 +147,7 @@ class User extends Authenticatable
 
     public function getTag()
     {
-        if ($this->tags->count())
+        if ( $this->tags->count() )
             return $this->tags->last()->name;
     }
 
