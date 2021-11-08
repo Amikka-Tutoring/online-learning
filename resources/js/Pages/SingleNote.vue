@@ -74,8 +74,7 @@ export default {
     },
     methods: {
         embed: function (str) {
-            let res = str.split("=");
-            let embeddedUrl = "https://www.youtube.com/embed/" + res[1];
+            let embeddedUrl = "https://player.vimeo.com/video/" + str + "?h=af48f9e87f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479";
             return embeddedUrl;
         },
         writtenNotesStore: function () {
