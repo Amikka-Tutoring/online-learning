@@ -65,7 +65,7 @@ class NotesController extends Controller
         $user = Auth::user();
         $notes = $user->notes()->latest()->with(['video.layer', 'video.layer.course', 'video.tags'])->whereHas('video.layer', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                if ($course == 'All')
+                if ( $course == 'All' )
                     $q->where('name', 'like', '%' . '' . '%');
                 else
                     $q->where('name', 'like', '%' . $course . '%');
@@ -78,7 +78,7 @@ class NotesController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->hasFile('audio_notes')) {
+        if ( $request->hasFile('audio_notes') ) {
             $fileName = time() . '_' . $request->audio_notes->getClientOriginalName() . '.mp3';
             $filePath = $request->file('audio_notes')->storeAs('uploads', $fileName, 'public');
             $fullPath = 'storage/' . $filePath;
@@ -105,7 +105,7 @@ class NotesController extends Controller
     {
         $request->validate([
             'question_text' => 'required',
-            'video_id' => 'required|exists:layers,id',
+            'video_id' => 'required|exists:videos,id',
         ]);
 
         StudentLayerQuestion::create([

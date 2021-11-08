@@ -72,7 +72,7 @@
                                                         class="col-2 d-flex justify-content-center align-items-center text-center">
                                                         <h5>{{
                                                                 moment.duration(top_videos.duration,
-                                                                    'seconds')
+                                                                    'seconds').format("hh:mm:ss")
                                                             }}</h5>
                                                     </div>
                                                 </div>
@@ -192,7 +192,7 @@
                             <div class="col-10">
                                 {{ course.name }}
                             </div>
-                            <div class="col-2 text-right" v-if="course.layers.lsength">
+                            <div class="col-2 text-right" v-if="course.layers.length">
                                 <i :class="'course-icon-'+course.id" class="fas fa-chevron-down text-white"></i>
                             </div>
                         </div>
