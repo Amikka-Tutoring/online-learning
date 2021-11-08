@@ -44,10 +44,10 @@ class CourseController extends Controller
         $importData_arr = [];
         $i = 0;
 
-        while ( ($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE ) {
+        while (($filedata = fgetcsv($file, 20000, ";", '"')) !== FALSE) {
             $num = count($filedata);
             //Skip first row(Remove below comment if you want to skip the first row)
-            if ( $i == 0 ) {
+            if ($i == 0) {
                 $i++;
                 continue;
             }
@@ -67,22 +67,22 @@ class CourseController extends Controller
         foreach ($importData_arr as $row) {
 
 
-            if ( count($row) != 64 ) {
+            if (count($row) != 64) {
                 return ['error' => 'Wrong format'];
             }
 
             //Course
             $course = Course::where('name', $row[0])->first();
-            if ( $course == null ) {
+            if ($course == null) {
                 $course = Course::create([
                     'name' => $row[0],
                     'slug' => Str::slug($row[0]),
                 ]);
                 array_push($coursesArray, $course->name);
             }
-            if ( $row[1] != '' ) {
+            if ($row[1] != '') {
                 $top_layer = $course->layers->where('name', $row[1])->first();
-                if ( $top_layer == null ) {
+                if ($top_layer == null) {
                     //Top Layer
                     $top_layer = Layer::create([
                         'name' => $row[1],
@@ -92,8 +92,8 @@ class CourseController extends Controller
                 }
 
                 //Top Layer Video
-                if ( $row[2] != '' ) {
-                    $client = new Vimeo("c23af4c046b1670febedb68569f2c315de8e9012", "7Uu9kys+8Mswir+ltgcss1KxjQFcrciQ6wkPblrVIznbqpiZR6YjKaqoMp3Al9TMYv2OerrtJ1A9K4wyF/Ak58mvf/aVINXkzHOt3kOcyoJ/m2VZZxsQ7XlM2cNeDYC4", "1022a3e17c841a426425a73b502d9018");
+                if ($row[2] != '') {
+                    $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
                     $response = $client->request('/videos/' . $row[3], [], 'GET');
                     $top_layer_video = Video::create([
                         'title' => $row[2],
@@ -107,7 +107,7 @@ class CourseController extends Controller
                     }
                 }
                 //Top Layer Question
-                if ( $row[6] != '' ) {
+                if ($row[6] != '') {
                     $top_layer_question = new Question;
                     $top_layer_question->title = $row[6];
 
@@ -120,7 +120,7 @@ class CourseController extends Controller
                     $top_layer->questions()->save($top_layer_question);
 
                     //Top Layer Question Answers
-                    if ( $row[11] != '' ) {
+                    if ($row[11] != '') {
                         Answer::create([
                             'title' => $row[10],
                             'explanation' => $row[11],
@@ -128,7 +128,7 @@ class CourseController extends Controller
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
-                    if ( $row[13] != '' ) {
+                    if ($row[13] != '') {
                         Answer::create([
                             'title' => $row[13],
                             'explanation' => $row[14],
@@ -136,7 +136,7 @@ class CourseController extends Controller
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
-                    if ( $row[16] != '' ) {
+                    if ($row[16] != '') {
                         Answer::create([
                             'title' => $row[16],
                             'explanation' => $row[17],
@@ -144,7 +144,7 @@ class CourseController extends Controller
                             'question_id' => $top_layer_question->id,
                         ]);
                     }
-                    if ( $row[19] != '' ) {
+                    if ($row[19] != '') {
                         Answer::create([
                             'title' => $row[19],
                             'explanation' => $row[20],
@@ -157,9 +157,9 @@ class CourseController extends Controller
 
 
             //MidLayer
-            if ( $row[22] != '' ) {
+            if ($row[22] != '') {
                 $mid_layer = $course->layers->where('name', $row[22])->where('parent_id', $top_layer->id)->first();
-                if ( $mid_layer == null ) {
+                if ($mid_layer == null) {
                     //Top Layer
                     $mid_layer = Layer::create([
                         'name' => $row[22],
@@ -171,19 +171,22 @@ class CourseController extends Controller
 
 
                 //Mid Layer Video
-                if ( $row[23] != '' ) {
+                if ($row[23] != '') {
+                    $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
+                    $response = $client->request('/videos/' . $row[24], [], 'GET');
                     $mid_layer_video = Video::create([
                         'title' => $row[23],
                         'url' => $row[24],
                         'description' => $row[25],
                         'layer_id' => $mid_layer->id,
+                        'duration' => $response['body']['duration']
                     ]);
                     foreach (explode(', ', $row[26]) as $tag) {
                         $mid_layer_video->setTag($tag);
                     }
                 }
 
-                if ( $row[27] != '' ) {
+                if ($row[27] != '') {
                     //Top Layer Question
                     $mid_layer_question = new Question;
                     $mid_layer_question->title = $row[27];
@@ -192,13 +195,13 @@ class CourseController extends Controller
                         $mid_layer_question->setTag($tag);
                     }
 
-                    if ( $row[29] != '' ) {
+                    if ($row[29] != '') {
                         $mid_layer_question->image = $row[29];
                         $mid_layer_question->explanation = $row[30];
                         $mid_layer->questions()->save($mid_layer_question);
 
                         //Top Layer Question Answers
-                        if ( $row[31] != '' ) {
+                        if ($row[31] != '') {
                             Answer::create([
                                 'title' => $row[31],
                                 'explanation' => $row[32],
@@ -206,7 +209,7 @@ class CourseController extends Controller
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
-                        if ( $row[34] != '' ) {
+                        if ($row[34] != '') {
                             Answer::create([
                                 'title' => $row[34],
                                 'explanation' => $row[35],
@@ -214,7 +217,7 @@ class CourseController extends Controller
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
-                        if ( $row[37] != '' ) {
+                        if ($row[37] != '') {
                             Answer::create([
                                 'title' => $row[37],
                                 'explanation' => $row[38],
@@ -222,7 +225,7 @@ class CourseController extends Controller
                                 'question_id' => $mid_layer_question->id,
                             ]);
                         }
-                        if ( $row[40] != '' ) {
+                        if ($row[40] != '') {
                             Answer::create([
                                 'title' => $row[40],
                                 'explanation' => $row[41],
@@ -233,9 +236,9 @@ class CourseController extends Controller
                     }
                 }
                 //Lesson
-                if ( $row[43] != '' ) {
+                if ($row[43] != '') {
                     $lesson = $course->layers->where('name', $row[43])->where('parent_id', $mid_layer->id)->first();
-                    if ( $lesson == null ) {
+                    if ($lesson == null) {
                         //Top Layer
                         $lesson = Layer::create([
                             'name' => $row[43],
@@ -246,19 +249,22 @@ class CourseController extends Controller
                     }
 
                     //Top Layer Video
-                    if ( $row[44] != '' ) {
+                    if ($row[44] != '') {
+                        $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
+                        $response = $client->request('/videos/' . $row[45], [], 'GET');
                         $lesson_video = Video::create([
                             'title' => $row[44],
                             'url' => $row[45],
                             'description' => $row[46],
                             'layer_id' => $lesson->id,
+                            'duration' => $response['body']['duration']
                         ]);
                         foreach (explode(', ', $row[47]) as $tag) {
                             $lesson_video->setTag($tag);
                         }
                     }
                     //Top Layer Question
-                    if ( $row[48] != '' ) {
+                    if ($row[48] != '') {
                         $lesson_question = new Question;
                         $lesson_question->title = $row[48];
 
@@ -270,7 +276,7 @@ class CourseController extends Controller
                         $lesson_question->explanation = $row[51];
                         $lesson->questions()->save($lesson_question);
                         //Top Layer Question Answers
-                        if ( $row[52] != '' ) {
+                        if ($row[52] != '') {
                             Answer::create([
                                 'title' => $row[52],
                                 'explanation' => $row[53],
@@ -278,7 +284,7 @@ class CourseController extends Controller
                                 'question_id' => $lesson_question->id,
                             ]);
                         }
-                        if ( $row[55] != '' ) {
+                        if ($row[55] != '') {
                             Answer::create([
                                 'title' => $row[55],
                                 'explanation' => $row[56],
@@ -286,7 +292,7 @@ class CourseController extends Controller
                                 'question_id' => $lesson_question->id,
                             ]);
                         }
-                        if ( $row[58] != '' ) {
+                        if ($row[58] != '') {
                             Answer::create([
                                 'title' => $row[58],
                                 'explanation' => $row[59],
@@ -294,7 +300,7 @@ class CourseController extends Controller
                                 'question_id' => $lesson_question->id,
                             ]);
                         }
-                        if ( $row[61] != '' ) {
+                        if ($row[61] != '') {
                             Answer::create([
                                 'title' => $row[61],
                                 'explanation' => $row[62],
