@@ -23,10 +23,7 @@ class Video extends Model
 
     protected static function booted()
     {
-        parent::boot();
-        static::retrieved(function ($model) {
-            self::getFiltered($model);
-        });
+        static::addGlobalScope(new VideoScope);
     }
 
     public function layer()
@@ -73,14 +70,15 @@ class Video extends Model
         $this->tags()->attach($tag);
     }
 
-    public static function getFiltered($video)
+    public static function getFiltered(Video $video)
     {
+        dd($video);
         $user = auth()->user()->load('profile', 'tags');
         $tags = ['Easy'];
         if (!($user->getTag() == 'All')) {
             $video_tags = $video->tags->pluck('name');
             if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
-                $video = [];
+                return [];
             }
         }
         return $video;

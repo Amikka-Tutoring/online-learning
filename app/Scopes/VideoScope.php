@@ -21,6 +21,20 @@ class VideoScope implements Scope
 
     public function apply(Builder $builder, Model $model)
     {
-        $model->getFiltered();
+        $user = auth()->user()->load('profile', 'tags');
+        $tags = ['Medium', 'Tactile'];
+
+        $builder->with('tags', function ($query) use ($tags) {
+            $query->whereIn('tags.name', $tags);
+        });
+//
+//
+//        if (!($user->getTag() == 'All')) {
+//            $video_tags = $video->tags->pluck('name');
+//            if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
+//                return [];
+//            }
+//        }
+//        return $video;
     }
 }

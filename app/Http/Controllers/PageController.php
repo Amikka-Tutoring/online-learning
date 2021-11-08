@@ -276,7 +276,7 @@ class PageController extends Controller
 
     public function test()
     {
-        return Video::find(100);
+        return Video::with('tags')->get();
 
 //        $user = Auth::user()->load('profile', 'tags');
 //        $tags = ['Medium', 'Auditory'];

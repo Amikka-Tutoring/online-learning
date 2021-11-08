@@ -21,8 +21,8 @@ class LayerScope implements Scope
 
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('tags', function ($query) {
-            $query->where('tags.name', Auth::user()->tags->pluck('name')->last());
-        });
+//        $builder->whereHas('tags', function ($query) {
+//            $query->where('tags.name', Auth::user()->tags->pluck('name')->last());
+//        });
     }
 }
