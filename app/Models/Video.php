@@ -23,7 +23,12 @@ class Video extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new VideoScope);
+//        static::addGlobalScope(new VideoScope);
+        static::retrieved(function ($model) {
+            // How to call slugGenerator() function here?
+            self::getFiltered($model);
+        });
+//        self::getFiltered($model);
     }
 
 
@@ -71,19 +76,19 @@ class Video extends Model
         $this->tags()->attach($tag);
     }
 
-    public static function getFiltered()
+    public static function getFiltered(Video $video)
     {
         $user = auth()->user()->load('profile', 'tags');
-        $tags = [$user->getTag(), $user->profile->learning_style, $user->profile->tutor_match];
-        $videos = Video::with('tags')->get();
+        $tags = ['Easy'];
+//        $videos = Video::with('tags')->get();
         if (!($user->getTag() == 'All')) {
-            $videos->each(function ($item, $key) use ($videos, $tags) {
-                $video_tags = $item->tags->pluck('name');
-                if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
-                    $videos->forget($key);
-                }
-            });
+//            $videos->each(function ($item, $key) use ($videos, $tags) {
+            $video_tags = $video->tags->pluck('name');
+            if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
+                return [];
+            }
+//            });
         }
-        return $videos;
+        return $video;
     }
 }
