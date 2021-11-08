@@ -22,19 +22,11 @@ class VideoScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         $user = auth()->user()->load('profile', 'tags');
-        $tags = ['Medium', 'Auditory', 'ISTJ'];
-
-        $builder->whereHas('tags', function ($query) use ($tags) {
-            $query->whereNotIn('tags.name', $tags);
-        }, '=', 0);
-//
-//
-//        if (!($user->getTag() == 'All')) {
-//            $video_tags = $video->tags->pluck('name');
-//            if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
-//                return [];
-//            }
-//        }
-//        return $video;
+        $tags = [$user->getTag(), $user->profile->learning_style, $user->profile->tutor_match];
+        if ( !($user->getTag() == 'All') ) {
+            $builder->whereHas('tags', function ($query) use ($tags) {
+                $query->whereNotIn('tags.name', $tags);
+            }, '=', 0);
+        }
     }
 }
