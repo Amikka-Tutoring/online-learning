@@ -99,7 +99,7 @@
                         </ol>
                     </div>
                     <div class="col-md-3 mt-5">
-                        <button class="w-100 p-2">Sign Up</button>
+                        <button class="w-100 p-2 mb-5">Sign Up</button>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
             <div class="container">
                 <h1 class="text-white text-center">Simple, Clear Pricing.</h1>
                 <div class="pricing-content">
-                    <div class="row" style="margin: 90px 0px">
+                    <div class="row" style="margin-bottom: 90px">
                         <div class="col-lg-4 col-md-6">
                             <div class="pricing-box">
                                 <h3>10 Hours</h3>
@@ -153,12 +153,21 @@
                         </div>
                     </div>
                     <div class="row justify-content-center text-white">
-                        <div class="col-md-6">
-                            <h4>Money Back Guarantee.</h4>
-                            <p>
-                                We are so confident that parents will notice a difference in their children, we offer a
-                                money-back guarantee at any point for the remaining hours on their account.
-                            </p>
+                        <div class="col-md-8">
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <img src="/images/badge.png" alt="">
+                                </div>
+                                <div class="col-md-9">
+                                    <h4>Money Back Guarantee.</h4>
+                                    <p>
+                                        We are so confident that parents will notice a difference in their children, we
+                                        offer a
+                                        money-back guarantee at any point for the remaining hours on their account.
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -168,10 +177,11 @@
             <div data-aos="fade-up" class="reach-out">
                 <div class="tutors-content">
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-md-5">
-                            <h1>We'd Love To Chat With You</h1>
-                            <span class="font-weight-bold">4.9</span>
-                            <span class="stars">
+                        <div class="col-md-6">
+                            <h1 style="font-size: 50px;">We'd Love To <br> Chat With You.</h1>
+                            <div class="stars-content">
+                                <span class="font-weight-bold">4.9</span>
+                                <span class="stars">
                                 <svg width="45" height="43" viewBox="0 0 45 43" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -203,7 +213,8 @@
                                         fill="#FDDA69" stroke="black" stroke-width="0.928994"/>
                                 </svg>
                             </span>
-                            <span>504 verified ratings</span>
+                                <span style="font-size: 17px">504 verified ratings</span>
+                            </div>
                         </div>
 
                         <div class="col-md-5">

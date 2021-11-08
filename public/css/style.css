@@ -1187,6 +1187,15 @@ a {
     width: 100%;
 }
 
+.tutors-content .stars-content svg {
+    margin-right: 15px;
+}
+
+.tutors-content .stars-content {
+    display: flex;
+    align-items: center;
+}
+
 .box-badge {
     position: absolute;
     background: #3261C8;
@@ -1314,7 +1323,7 @@ a {
     margin: 5px 0px;
     background: transparent;
     border: 1px solid black;
-    padding: 5px;
+    padding: 5px 15px;
 }
 
 .reach-out textarea {
@@ -2081,6 +2090,14 @@ input[type="radio"] {
 
     .reach-out .form {
         margin-top: 30px;
+    }
+
+    .tutors-content .stars-content {
+        display: block;
+    }
+
+    .tutors-content .stars-content svg {
+        width: 40px;
     }
 }
 
