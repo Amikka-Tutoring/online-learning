@@ -7,45 +7,45 @@
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap');
 
         * {
-            font-family : Lato;
-            font-weight : 400;
+            font-family: Lato;
+            font-weight: 400;
         }
 
         .wrap {
-            margin          : 80px 0;
-            justify-content : center;
-            align-items     : center;
-            border          : 1px solid gray;
-            border-radius   : 10px;
-            padding         : 40px;
+            margin: 80px 0;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid gray;
+            border-radius: 10px;
+            padding: 40px;
         }
 
         .row {
-            display         : flex;
-            justify-content : center;
-            align-items     : center;
-            flex-direction  : column;
-            width           : 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
         }
 
         .col {
-            width            : 100%;
-            background-color : white;
-            padding          : 10px;
-            margin-top       : 20px;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            margin-top: 20px;
         }
 
         .bold-text {
-            font-weight : 600;
+            font-weight: 600;
         }
 
         .link {
-            text-align : center;
-            margin-top : 20px;
+            text-align: center;
+            margin-top: 20px;
         }
 
         strong {
-            font-weight : bold;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -57,9 +57,9 @@
     </div>
     <div class="" style="width: 100%">
         <hr>
+        <p><strong>Email:</strong> {{$details['email']}}</p>
         <p><strong>Phone:</strong> {{$details['phone']}}</p>
-        <p><strong>Discuss:</strong> {{$details['discuss']}}</p>
-        <p><strong>Availability:</strong> {{$details['availability']}}</p>
+        <p><strong>Message:</strong> {{$details['message']}}</p>
         <hr>
         <div class="link">
             <a href="{{env('APP_URL')}}">Online Learning</a>

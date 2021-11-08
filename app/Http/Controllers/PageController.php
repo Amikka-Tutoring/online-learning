@@ -246,14 +246,14 @@ class PageController extends Controller
     public function oneToOneSubmit(Request $request)
     {
         $request->validate([
+            'email' => 'required',
             'phone' => 'required',
-            'discussion' => 'required',
-            'availability' => 'required',
+            'message' => 'required',
         ]);
         $details = [];
+        $details['email'] = $request->email;
         $details['phone'] = $request->phone;
-        $details['discuss'] = $request->discussion;
-        $details['availability'] = $request->availability;
+        $details['message'] = $request->message;
 
         try {
             Mail::to('Info@amikkatutoring.com')->send(new OneOnOne($details));

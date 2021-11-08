@@ -1,145 +1,225 @@
 <template>
     <app-layout>
+        <div class="tutors">
+            <div class="container">
+                <h1 class="blue-text text-center">Our Tutors.</h1>
+                <div class="tutors-content">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-5">
+                            <img src="/images/our_tutors.png" alt="">
+                        </div>
+                        <div class="col-md-7">
+                            <ul>
+                                <li>
+                                    Our tutors scored in the top 1% of every exam that they teach.
+                                </li>
+                                <li>
+                                    They have extensive experience helping our students get into their dream schools.
+                                </li>
+                                <li>
+                                    We have a small team in order to guarantee high score increases and student
+                                    satisfaction.
+                                </li>
+                                <li>
+                                    Before joining our team, our tutors go through an interview process in order to
+                                    ensure that they are capable of teaching at the amikka method level.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 mt-5">
+                            <button class="w-100 p-2">Sign Up</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <div class="container">
-            <div class="tutors">
-                <h1><span class="blue-text">Our </span>Tutors</h1>
-                <div class="tutors-content">
-                    <div class="row">
-                        <div class="col-lg-5 text-center">
-                            <img :src="'/images/laptop1.png'">
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="row" style="margin-left: 50px">
-                                <ol>
-                                    <li>
-                                        Scored in the top 1%.
-                                    </li>
-                                    <li>
-                                        Are from Ivy League schools.
-                                    </li>
-                                    <li>
-                                        Have hundreds of hours of experience.
-                                    </li>
-                                    <li>
-                                        Help our students improve on average over 200 points on the SAT.
-                                    </li>
-                                </ol>
-                            </div>
-                            <div class="row">
-                                <button class="blue-button">Contact Us</button>
-                            </div>
-                        </div>
+            <div class="process" data-aos="fade-up">
+                <h1 class="blue-text text-center">1-on-1 Tutoring Process.</h1>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-6">
+                        <img src="/images/process.png" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <ol>
+                            <li>
+                                Choose Your Package.
+                                <p>
+                                    After you decide whether you’d like 10, 20, or 30 hours of additional tutoring you
+                                    can sign up on this page. If you don’t end up using all of your hours don’t worry!
+                                    We have a money back guarantee policy.
+                                </p>
+                            </li>
+                            <li>
+                                Perfect Tutor Match.
+                                <p>
+                                    After you sign up we will match you with a tutor based on your personality type,
+                                    learning style, and current academic placement within 24 hours.
+                                </p>
+                            </li>
+                            <li>
+                                Fast Pick-Up.
+                                <p>
+                                    Your sessions will be held on our platform through video chat and your tutor will
+                                    have access to all of your progress so that you can pick up right where you left
+                                    off.
+                                </p>
+                            </li>
+                            <li>
+                                Immediate Support.
+                                <p>
+                                    Your tutor will help answer any questions that you’ve encountered during your self
+                                    paced course and give you an extra layer of support to help you succeed.
+                                </p>
+                            </li>
+                            <li>
+                                More Personalization.
+                                <p>
+                                    Our self paced personalization is industry leading but having a 1-on-1 tutor assess
+                                    you will add another layer of personalization to help you reach your goals faster.
+                                </p>
+                            </li>
+                            <li>
+                                Double Accountability.
+                                <p>
+                                    On top of getting email and SMS reminders for your upcoming lessons from the self
+                                    paced course, your 1-on-1 tutor will help ensure that you never miss a lesson or
+                                    practice exam.
+                                </p>
+                            </li>
+                            <li>
+                                Faster Success.
+                                <p>
+                                    Combining our self paced tutoring with 1-on-1 coaching yields the most success.
+                                    Our 1-on-1 tutors are the best in the nation. You can expect to improve 20% faster
+                                    with live coaching.
+                                </p>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-md-3 mt-5">
+                        <button class="w-100 p-2">Sign Up</button>
                     </div>
                 </div>
             </div>
-            <div data-aos="fade-up" class="pricing">
-                <h1><span class="blue-text">Our </span>Pricing</h1>
+        </div>
+        <div data-aos="fade-up" class="pricing">
+            <div class="container">
+                <h1 class="text-white text-center">Simple, Clear Pricing.</h1>
                 <div class="pricing-content">
-                    <div class="row">
+                    <div class="row" style="margin: 90px 0px">
                         <div class="col-lg-4 col-md-6">
-                            <div class="price-box">
-                                <div class="hours">
-                                    20 Hours
-                                </div>
-                                <div class="content">
-                                    <div class="row justify-content-center">
-                                        <p class="align-self-end"><span
-                                            style="font-size: 50px">60$ </span>/ HOUR</p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="text-center">
-                                            This option typically yields 100+ SAT improvement over a 5 week period.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="features">
-                                    <i class="fas fa-plus mr-2"></i>Click To See Features
-                                </div>
-                                <div class="price-box-button text-center">
-                                    <button>Contact Us</button>
+                            <div class="pricing-box">
+                                <h3>10 Hours</h3>
+                                <h2>$75<span>/ HOUR</span></h2>
+                                <p>
+                                    Best for students who need comprehensive support, a personalized plan, and large
+                                    score improvements.
+                                </p>
+                                <div class="row justify-content-center">
+                                    <button>Choose Plan</button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
-                            <div class="price-box">
-                                <div class="hours">
-                                    30 Hours
+                            <div class="pricing-box">
+                                <div class="box-badge">
+                                    <span>Most Popular</span>
                                 </div>
-                                <div class="content">
-                                    <div class="row justify-content-center">
-                                        <p class="align-self-end"><span
-                                            style="font-size: 50px">65$ </span>/ HOUR</p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="text-center">
-                                            This option typically yields 200+ SAT improvement over a 8 week period.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="features">
-                                    <i class="fas fa-plus mr-2"></i>Click To See Features
-                                </div>
-                                <div class="price-box-button text-center">
-                                    <button>Contact Us</button>
+                                <h3>20 Hours</h3>
+                                <h2>$70<span>/ HOUR</span></h2>
+                                <p>
+                                    Best for students who need comprehensive support, a personalized plan, and large
+                                    score improvements.
+                                </p>
+                                <div class="row justify-content-center">
+                                    <button>Choose Plan</button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
-                            <div class="price-box">
-                                <div class="hours">
-                                    40 Hours
-                                </div>
-                                <div class="content">
-                                    <div class="row justify-content-center">
-                                        <p class="align-self-end"><span
-                                            style="font-size: 50px">70$ </span>/ HOUR</p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="text-center">
-                                            This option typically yields 250+ SAT improvement over a 10 week period.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="features">
-                                    <i class="fas fa-plus mr-2"></i>Click To See Features
-                                </div>
-                                <div class="price-box-button text-center">
-                                    <button>Contact Us</button>
+                            <div class="pricing-box">
+                                <h3>30 Hours</h3>
+                                <h2>$65<span>/ HOUR</span></h2>
+                                <p>
+                                    Best for students who need comprehensive support, a personalized plan, and large
+                                    score improvements.
+                                </p>
+                                <div class="row justify-content-center">
+                                    <button>Choose Plan</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center text-white">
+                        <div class="col-md-6">
+                            <h4>Money Back Guarantee.</h4>
+                            <p>
+                                We are so confident that parents will notice a difference in their children, we offer a
+                                money-back guarantee at any point for the remaining hours on their account.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="container">
             <div data-aos="fade-up" class="reach-out">
-                <h1><span class="blue-text">Reach </span>Out</h1>
                 <div class="tutors-content">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5 col-12">
-                            <div class="reach-form">
-                                <form @submit.prevent>
-                                    <div class="form-group">
-                                        <i class="fas fa-envelope icon fa-2x"></i>
-                                        <input type="text" placeholder="Enter your phone number" name="phone"
-                                               v-model="form.phone" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <i class="fas fa-envelope icon fa-2x"></i>
-                                        <textarea name="discuss" id="" cols="30" rows="10" v-model="form.discussion"
-                                                  required
-                                                  placeholder="Describe what you’d like to discuss over the phone. If you know which package you’d like just let us know here. "></textarea>
-                                    </div>
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-md-5">
+                            <h1>We'd Love To Chat With You</h1>
+                            <span class="font-weight-bold">4.9</span>
+                            <span class="stars">
+                                <svg width="45" height="43" viewBox="0 0 45 43" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M22.8362 1.50314L27.6087 16.1915L27.713 16.5125H28.0505H43.4948L31.0001 25.5904L30.7271 25.7888L30.8313 26.1097L35.6039 40.7981L23.1092 31.7202L22.8362 31.5218L22.5632 31.7202L10.0685 40.7981L14.841 26.1097L14.9453 25.7888L14.6723 25.5904L2.17761 16.5125H17.6219H17.9594L18.0636 16.1915L22.8362 1.50314Z"
+                                        fill="#FDDA69" stroke="black" stroke-width="0.928994"/>
+                                </svg>
+                                <svg width="45" height="43" viewBox="0 0 45 43" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M22.8362 1.50314L27.6087 16.1915L27.713 16.5125H28.0505H43.4948L31.0001 25.5904L30.7271 25.7888L30.8313 26.1097L35.6039 40.7981L23.1092 31.7202L22.8362 31.5218L22.5632 31.7202L10.0685 40.7981L14.841 26.1097L14.9453 25.7888L14.6723 25.5904L2.17761 16.5125H17.6219H17.9594L18.0636 16.1915L22.8362 1.50314Z"
+                                        fill="#FDDA69" stroke="black" stroke-width="0.928994"/>
+                                </svg>
+                                <svg width="45" height="43" viewBox="0 0 45 43" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M22.8362 1.50314L27.6087 16.1915L27.713 16.5125H28.0505H43.4948L31.0001 25.5904L30.7271 25.7888L30.8313 26.1097L35.6039 40.7981L23.1092 31.7202L22.8362 31.5218L22.5632 31.7202L10.0685 40.7981L14.841 26.1097L14.9453 25.7888L14.6723 25.5904L2.17761 16.5125H17.6219H17.9594L18.0636 16.1915L22.8362 1.50314Z"
+                                        fill="#FDDA69" stroke="black" stroke-width="0.928994"/>
+                                </svg>
+                                <svg width="45" height="43" viewBox="0 0 45 43" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M22.8362 1.50314L27.6087 16.1915L27.713 16.5125H28.0505H43.4948L31.0001 25.5904L30.7271 25.7888L30.8313 26.1097L35.6039 40.7981L23.1092 31.7202L22.8362 31.5218L22.5632 31.7202L10.0685 40.7981L14.841 26.1097L14.9453 25.7888L14.6723 25.5904L2.17761 16.5125H17.6219H17.9594L18.0636 16.1915L22.8362 1.50314Z"
+                                        fill="#FDDA69" stroke="black" stroke-width="0.928994"/>
+                                </svg>
+                                <svg width="45" height="43" viewBox="0 0 45 43" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M22.8362 1.50314L27.6087 16.1915L27.713 16.5125H28.0505H43.4948L31.0001 25.5904L30.7271 25.7888L30.8313 26.1097L35.6039 40.7981L23.1092 31.7202L22.8362 31.5218L22.5632 31.7202L10.0685 40.7981L14.841 26.1097L14.9453 25.7888L14.6723 25.5904L2.17761 16.5125H17.6219H17.9594L18.0636 16.1915L22.8362 1.50314Z"
+                                        fill="#FDDA69" stroke="black" stroke-width="0.928994"/>
+                                </svg>
+                            </span>
+                            <span>504 verified ratings</span>
+                        </div>
 
-                                    <i class="fas fa-envelope icon fa-2x"></i>
-                                    <input type="text" placeholder="What is your availability?" name="availability"
-                                           v-model="form.availability" required>
-                                    <button :disabled=disabled class="blue-button w-100" @click="submitForm">Submit
-                                    </button>
-                                </form>
+                        <div class="col-md-5">
+                            <div class="form">
+                                <h2>Do you have any questions?</h2>
+                                <p>We'd love to answer them!</p>
+
+
+                                <input type="email" placeholder="Email" v-model="form.email">
+                                <input type="text" placeholder="Phone Number" v-model="form.phone">
+                                <textarea cols="30" rows="10" placeholder="Message"
+                                          v-model="form.message"></textarea>
+                                <input :disabled="disabled" type="submit" v-on:click="submitForm" value="Submit">
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -156,17 +236,18 @@ export default {
     },
     methods: {
         submitForm: function () {
+            this.disabled = true
             axios.post(route('submit-one-to-one'), this.form)
                 .then(response => {
                     console.log(response.data)
                     this.toast.success(response.data.message)
                     this.form.phone = null;
-                    this.form.discussion = null;
-                    this.form.availability = null;
-                    this.disabled = false
+                    this.form.email = null;
+                    this.form.message = null;
                 }).catch(error => {
-                console.log(error)
                 Object.values(error).flat().forEach(element => this.toast.error(element))
+            }).finally(() => {
+                this.disabled = false
             });
 
         }
@@ -184,3 +265,8 @@ export default {
     },
 }
 </script>
+<style>
+.banner-img {
+    margin-bottom: 25px !important;
+}
+</style>

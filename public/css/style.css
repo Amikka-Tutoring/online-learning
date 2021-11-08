@@ -1171,103 +1171,164 @@ a {
     /*margin: 80px 0;*/
 }
 
-.tutors-content ol {
-    counter-reset: my-awesome-counter;
-    list-style: none;
-    padding-left: 0;
-    /*padding-left: 0;*/
+.tutors {
+    background: rgba(216, 216, 216, 0.15);
+    margin: 25px;
+    padding: 20px 0px;
 }
 
-.tutors-content ol li {
-    counter-increment: my-awesome-counter;
-    padding-left: 80px;
-    position: relative;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 57px;
-}
-
-.tutors-content ol li::before {
-    content: counter(my-awesome-counter);
-    background: rgba(76, 110, 215, 0.9);
-    color: white;
-    position: absolute;
-    --size: 40px;
-    left: calc(-1 * var(--size) - 10px);
-    line-height: var(--size);
-    width: var(--size);
-    height: var(--size);
-    top: 0;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 18px;
-}
-
-.tutors-content {
-    margin: 100px 0;
+.tutors h1, .process h1, .pricing h1 {
+    font-weight: 700;
+    font-size: 40px;
+    padding: 60px 0px;
 }
 
 .tutors-content img {
-    margin-bottom: 50px;
+    width: 100%;
 }
 
-.pricing-content {
-    padding-left: 100px;
-    margin: 100px 0;
+.box-badge {
+    position: absolute;
+    background: #3261C8;
+    color: white;
+    top: 0;
+    left: 17px;
+    padding: 10px 40px;
 }
 
-.pricing-content .price-box {
-    border: 2px solid rgba(14, 111, 255, 0.5);
-    border-radius: 11px;
+.tutors-content button, .process button {
+    border: 2px solid #3261C8;
+    border-radius: 6px;
+    color: #4c6ed7;
+    background: white;
 }
 
-.pricing-content .price-box .hours {
-    height: 100px;
-    display: flex;
-    align-items: center;
+.tutors-content button:hover, .process button:hover {
+    color: white;
+    background: #4c6ed7;
+}
+
+.tutors-content ul {
+    list-style: none;
+}
+
+.tutors-content ul li {
+    padding: 10px 0px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+.tutors-content {
+    margin: 70px 0;
+}
+
+
+.process img {
+    width: 100%;
+}
+
+.process ol li {
+    color: #4C6ED7;
+    font-weight: 600;
+    font-size: 20px;
+    padding-left: 40px;
+}
+
+.process ol li p {
+    color: black;
+    font-size: 18px;
+    margin: 25px 0px;
+}
+
+
+.pricing {
     background: rgba(14, 111, 255, 0.3);
-    border-radius: 11px;
-    color: white;
-    justify-content: center;
-    font-size: 30px;
+    margin: 25px;
+    padding: 20px 0px;
 }
 
-.pricing-content .price-box .content {
-    font-size: 14px;
-    color: #646464;
-    padding: 20px;
+.pricing .pricing-box {
+    background: white;
+    border: 5px solid #3261C8;
+    padding: 35px;
 }
 
-.pricing-content .price-box .content span {
-    color: rgba(14, 111, 255, 0.5);
-}
-
-.pricing-content .price-box .features {
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 2px solid #f2f2f2;
-    border-bottom: 2px solid #f2f2f2;
-    padding: 10px 0;
-    font-size: 14px;
-    line-height: 24px;
-    color: #646464;
-}
-
-.pricing-content .price-box .price-box-button {
-}
-
-.pricing-content .price-box .price-box-button button {
-    background: rgba(14, 111, 255, 0.5);
-    border-radius: 11px;
-    color: white;
+.pricing .pricing-box h3 {
     text-align: center;
-    width: 150px;
-    height: 50px;
-    border: none;
-    margin: 20px 0;
+    font-weight: 600;
+    font-size: 30px;
+    color: #3261C8;
+    margin: 30px 0px;
 }
+
+.pricing .pricing-box h2 {
+    text-align: center;
+    color: #3261C8;
+    font-size: 35px;
+    margin-top: 60px;
+}
+
+.pricing .pricing-box h2 span {
+    color: #969696;
+    font-size: 14px;
+}
+
+.pricing .pricing-box p {
+    font-size: 14px;
+    color: #646464;
+    margin: 40px 0px;
+}
+
+.pricing .pricing-box button {
+    background: #3261C8;
+    border-radius: 12px;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+}
+
+.reach-out h1 {
+    font-weight: bold;
+    font-size: 40px;
+    color: #3261C8;
+    margin-bottom: 30px;
+}
+
+.reach-out span {
+    padding: 0px 10px;
+}
+
+.reach-out .form {
+    background: rgba(14, 111, 255, 0.1);
+    padding: 30px;
+}
+
+.reach-out .form p {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.reach-out .form input, .reach-out textarea {
+    width: 100%;
+    margin: 5px 0px;
+    background: transparent;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.reach-out textarea {
+    border-radius: 0;
+    border: 1px solid black;
+}
+
+.reach-out .form input[type='submit'] {
+    background: #3261C8;
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+
 
 .reach-out .reach-form form input,
 textarea {
@@ -1992,6 +2053,34 @@ input[type="radio"] {
 
     .header-menu .step-one {
         margin-bottom: 100px !important;
+    }
+
+    .tutors-content img {
+        margin-bottom: 20px;
+    }
+
+    .tutors h1, .process h1, .pricing h1 {
+        padding: 20px 0px;
+    }
+
+    .pricing-content .row {
+        margin: 0 !important;
+    }
+
+    .pricing-content .row .col-lg-4 {
+        padding: 0 !important;
+    }
+
+    .pricing-content .pricing-box {
+        margin-bottom: 20px;
+    }
+
+    .pricing-box .box-badge {
+        left: 0;
+    }
+
+    .reach-out .form {
+        margin-top: 30px;
     }
 }
 
