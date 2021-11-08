@@ -276,17 +276,18 @@ class PageController extends Controller
 
     public function test()
     {
-        $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
-        $response = $client->request('/videos/643018028', [], 'GET');
-        dd($response['body']['duration']);
-        $user = Auth::user()->load('profile', 'tags');
-        dd($user->profile);
-        $video = ['Easy', 'Tactile', 'ENFP', 'ALL'];
-        $tags = [$user->tags->last()->name, $user->profile->learning_style, $user->profile->tutor_match];
+        return Video::getFiltered();
 
-        return Video::with(['tags.videos' => function ($query) use ($tags) {
-            dd($query->get());
-        }])->get();
+        $user = Auth::user()->load('profile', 'tags');
+        $tags = ['Medium', $user->profile->learning_style, 'ESPJ'];
+
+        $videos = Video::with('tags')->get();
+        $videos->each(function ($item, $key) use ($videos, $tags) {
+            if ( !($item->tags->pluck('name')->diff($tags)->isEmpty()) ) {
+                $videos->forget($key);
+            }
+        });
+        return $videos->pluck('description');
 //        return Video::with('tags')->whereHas('tags', function ($query) use ($tags) {
 //            $query->whereIn('name', $tags);
 //        })->get();
@@ -294,7 +295,7 @@ class PageController extends Controller
 //        $user = Auth::user();
 
 //        dd($user->tags);
-        return Video::withoutGlobalScopes()->with('tags')->get();
+//        return Video::withoutGlobalScopes()->with('tags')->get();
 
 
 //
@@ -302,18 +303,18 @@ class PageController extends Controller
 //        $user->tags()->detach($tag);
 ////        $tag = Tag::where('name', 'Easy')->first();
 //        $user->tags()->attach($tag);
-        dd($user->tags);
-
-        return Video::with('tags')->get();
-
-        $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) {
-            $query->whereHas('course', function ($q) {
-                $q->where('name', 'like', ' % ' . '' . ' % ');
-            });
-        })->paginate(12)->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('m / d');
-        });
-        return ['notes' => $notes];
+//        dd($user->tags);
+//
+//        return Video::with('tags')->get();
+//
+//        $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) {
+//            $query->whereHas('course', function ($q) {
+//                $q->where('name', 'like', ' % ' . '' . ' % ');
+//            });
+//        })->paginate(12)->groupBy(function ($val) {
+//            return Carbon::parse($val->created_at)->format('m / d');
+//        });
+//        return ['notes' => $notes];
     }
 
     public function changeTag(Request $request)

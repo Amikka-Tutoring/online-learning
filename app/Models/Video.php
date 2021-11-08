@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Scopes\TagScope;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
     use HasFactory;
+
 
     protected $fillable = [
         'title',
@@ -18,10 +20,6 @@ class Video extends Model
         'duration'
     ];
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new TagScope);
-    }
 
     public function layer()
     {
@@ -67,4 +65,19 @@ class Video extends Model
         $this->tags()->attach($tag);
     }
 
+    public static function getFiltered()
+    {
+        $user = auth()->user()->load('profile', 'tags');
+        $tags = [$user->getTag(), $user->profile->learning_style, $user->profile->tutor_match];
+        $videos = Video::with('tags')->get();
+        if ( !($user->getTag() == 'All') ) {
+            $videos->each(function ($item, $key) use ($videos, $tags) {
+                $video_tags = $item->tags->pluck('name');
+                if ( !($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All']) ) {
+                    $videos->forget($key);
+                }
+            });
+        }
+        return $videos;
+    }
 }

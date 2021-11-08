@@ -119,9 +119,7 @@ class DiagnosticController extends Controller
 
             return Inertia::render('DiagnosticResults', ['results' => $results, 'learned' => $learned, 'plan' => $plan, 'tips' => $tips]);
         } else if ( $request->all()['diagnostic_name'] == 'mathematics' ) {
-            $sum = count($answers);
             $points = 0;
-            $correct = 0;
             foreach ($answers as $answer) {
                 $points += $answer['is_correct'];
             }
@@ -161,30 +159,111 @@ class DiagnosticController extends Controller
             }
 
             $user->profile->math_score = $score;
-            $user->profile->save();
-            $user->profile->total_score += $user->profile->math_score;
+            $user->profile->total_score += $score;
             $user->profile->save();
             return redirect()->route('main');
         } else if ( $request->all()['diagnostic_name'] == 'grammar' ) {
-            $sum = count($answers);
             $points = 0;
-            $correct = 0;
             foreach ($answers as $answer) {
                 $points += $answer['is_correct'];
             }
-            $score = $points / $sum * 100;
-            $user->profile->grammar_score = number_format($score, 2);
+            $score = 0;
+            switch ( $points ) {
+                case 4:
+                case 3:
+                case 2:
+                case 1:
+                    $score = 300;
+                    break;
+                case 5:
+                    $score = 350;
+                    break;
+                case 6:
+                    $score = 400;
+                    break;
+                case 7:
+                    $score = 450;
+                    break;
+                case 8:
+                    $score = 500;
+                    break;
+                case 9:
+                    $score = 550;
+                    break;
+                case 10:
+                    $score = 600;
+                    break;
+                case 11:
+                    $score = 650;
+                    break;
+                case 12:
+                    $score = 700;
+                    break;
+                case 13:
+                    $score = 750;
+                    break;
+                case 18:
+                case 17:
+                case 16:
+                case 15:
+                case 14:
+                    $score = 800;
+                    break;
+            }
+            $user->profile->grammar_score = $score;
+            $user->profile->total_score += $score;
             $user->profile->save();
             return redirect()->route('main');
         } else if ( $request->all()['diagnostic_name'] == 'reading' ) {
-            $sum = count($answers);
             $points = 0;
-            $correct = 0;
             foreach ($answers as $answer) {
                 $points += $answer['is_correct'];
             }
-            $score = $points / $sum * 100;
-            $user->profile->reading_score = number_format($score, 2);
+            $score = 0;
+            switch ( $points ) {
+                case 4:
+                case 3:
+                case 2:
+                case 1:
+                    $score = 300;
+                    break;
+                case 5:
+                    $score = 350;
+                    break;
+                case 6:
+                    $score = 400;
+                    break;
+                case 7:
+                    $score = 450;
+                    break;
+                case 8:
+                    $score = 500;
+                    break;
+                case 9:
+                    $score = 550;
+                    break;
+                case 10:
+                    $score = 600;
+                    break;
+                case 11:
+                    $score = 650;
+                    break;
+                case 12:
+                    $score = 700;
+                    break;
+                case 13:
+                    $score = 750;
+                    break;
+                case 18:
+                case 17:
+                case 16:
+                case 15:
+                case 14:
+                    $score = 800;
+                    break;
+            }
+            $user->profile->reading_score = $score;
+            $user->profile->total_score += $score;
             $user->profile->save();
             return redirect()->route('main');
         }
