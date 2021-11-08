@@ -7,11 +7,11 @@ use App\Scopes\VideoScope;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Video extends Model
 {
     use HasFactory;
-
 
     protected $fillable = [
         'title',
@@ -23,14 +23,11 @@ class Video extends Model
 
     protected static function booted()
     {
-//        static::addGlobalScope(new VideoScope);
+        parent::boot();
         static::retrieved(function ($model) {
-            // How to call slugGenerator() function here?
-            self::getFiltered($model);
+            return $model->id;
         });
-//        self::getFiltered($model);
     }
-
 
     public function layer()
     {
@@ -76,19 +73,16 @@ class Video extends Model
         $this->tags()->attach($tag);
     }
 
-    public static function getFiltered(Video $video)
+    public function getFiltered()
     {
         $user = auth()->user()->load('profile', 'tags');
         $tags = ['Easy'];
-//        $videos = Video::with('tags')->get();
-        if (!($user->getTag() == 'All')) {
-//            $videos->each(function ($item, $key) use ($videos, $tags) {
-            $video_tags = $video->tags->pluck('name');
-            if (!($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All'])) {
-                return [];
+        if ( !($user->getTag() == 'All') ) {
+            $video_tags = $this->tags->pluck('name');
+            if ( !($video_tags->diff($tags)->isEmpty()) && !in_array($video_tags, ['All']) ) {
+                return false;
             }
-//            });
         }
-        return $video;
+        return true;
     }
 }
