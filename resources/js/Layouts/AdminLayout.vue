@@ -24,7 +24,7 @@
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" :href="route('dashboard')">Homepage</a>
+                <!--                <a class="dropdown-item" :href="route('dashboard')">Homepage</a>-->
                 <a class="dropdown-item" v-on:click.prevent="logout()" href="">Logout</a>
             </div>
         </div>

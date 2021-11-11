@@ -41,11 +41,12 @@ Route::get('test2', [PageController::class, 'test2'])->name('test2');
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
 
-Route::middleware(['auth',])->group(function () {
+Route::get('/', [PageController::class, 'checkRoutes'])->name('main')->middleware('auth');
+
+Route::middleware(['auth', 'student'])->group(function () {
     Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method');
     Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method');
     Route::middleware(['has.payment.method', 'initial'])->group(function () {
-        Route::get('/', [PageController::class, 'checkRoutes'])->name('main');
         Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
         Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
         Route::post('quiz/result', [DiagnosticController::class, 'result'])->name('quiz.result');

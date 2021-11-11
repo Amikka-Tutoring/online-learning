@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ApiMiddleware;
 use App\Http\Middleware\InitialQuestionnaire;
+use App\Http\Middleware\StudentMiddleware;
 use App\Http\Middleware\UserAcademicDiagnosticMiddleware;
 use App\Http\Middleware\UserPersonalityDiagnosticMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -68,11 +69,13 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'admin' => AdminMiddleware::class,
+        'student' => StudentMiddleware::class,
         'has.payment.method' => \App\Http\Middleware\HasPaymentMethod::class,
         'subscribed' => \App\Http\Middleware\SubscribedMiddleware::class,
         'initial' => \App\Http\Middleware\InitialQuestionnaire::class,
         'token' => ApiMiddleware::class,
-        'admin' => AdminMiddleware::class,
+
         'personality' => UserPersonalityDiagnosticMiddleware::class,
         'academic' => UserAcademicDiagnosticMiddleware::class
     ];

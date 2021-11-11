@@ -24,8 +24,8 @@
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" :href="route('admin.dashboard')" v-if="this.user.is_admin">Admin Panel</a>
-                <a class="dropdown-item" :href="route('student.questions')" v-if="this.user.is_tutor">Tutor Panel</a>
+                <!--                <a class="dropdown-item" :href="route('admin.dashboard')" v-if="this.user.is_admin">Admin Panel</a>-->
+                <!--                <a class="dropdown-item" :href="route('student.questions')" v-if="this.user.is_tutor">Tutor Panel</a>-->
                 <a class="dropdown-item" v-on:click.prevent="logout()" href="">Logout</a>
             </div>
         </div>
