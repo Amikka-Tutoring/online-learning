@@ -23,7 +23,8 @@ class Video extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new VideoScope);
+        if (auth()->user()->is_student())
+            static::addGlobalScope(new VideoScope);
     }
 
     public function layer()
@@ -69,5 +70,4 @@ class Video extends Model
         $tag = Tag::where('name', ucfirst($tag_data))->first();
         $this->tags()->attach($tag);
     }
-
 }
