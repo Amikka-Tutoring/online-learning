@@ -230,13 +230,13 @@
                         </div>
                     </transition>
                     <div class="row">
-                        <div v-for="user_course in user_courses.enrollments"
+                        <div v-if="user_courses.enrollments.length" v-for="user_course in user_courses.enrollments"
                              class="col-lg-3 col-md-6 col-12" data-aos="fade-up"
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a :href="route('recommended')+'#'+user_course.course.name"><h4>{{
-                                    user_course.course.name
+                                        user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -254,7 +254,7 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{ user_course.course.quizzes_attempted }}/{{
-                                            user_course.course.quizzes_count
+                                                user_course.course.quizzes_count
                                             }}
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@
                                     <p class="blue-text font-weight-bold m-0">Next Practice Exam: 🚀</p>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                        next_practice_exam_time
+                                            next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>

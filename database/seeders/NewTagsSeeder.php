@@ -15,6 +15,9 @@ class NewTagsSeeder extends Seeder
     public function run()
     {
         Tag::create([
+            'name' => 'Expert'
+        ]);
+        Tag::create([
             'name' => 'Auditory'
         ]);
         Tag::create([

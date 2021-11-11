@@ -42,6 +42,17 @@ class PageController extends Controller
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
     }
 
+    public function checkRoutes()
+    {
+        if (auth()->user()->is_tutor()) {
+            return redirect()->route('student.questions');
+        } else if (auth()->user()->is_admin()) {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('dashboard');
+        }
+    }
+
     public function dashboard()
     {
         $user_courses = Auth::user()->load(['enrollments', 'enrollments.course', 'layer_quiz_results']);
@@ -103,10 +114,12 @@ class PageController extends Controller
                 'daysOfWeek' => date('N', strtotime($item['day'])),
             ];
         });
+//            dd($user_courses);
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'next_practice_exam' => $next_practice_exam,
             'user_courses' => $user_courses, 'profile' => $user_profile,
             'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag
             , 'calendar_exams' => $calendar_exams, 'calendar_lessons' => $calendar_lessons]);
+
     }
 
     public function profile()
@@ -276,7 +289,7 @@ class PageController extends Controller
 
     public function test()
     {
-        return Video::with('tags')->get();
+        return Video::with('tags')->latest()->get();
 
 //        $user = Auth::user()->load('profile', 'tags');
 //        $tags = ['Medium', 'Auditory'];

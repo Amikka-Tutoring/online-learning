@@ -101,6 +101,11 @@ class User extends Authenticatable
         return $this->check_role('admin');
     }
 
+    public function is_student()
+    {
+        return $this->check_role('student');
+    }
+
     public function is_tutor()
     {
         return $this->check_role('tutor');

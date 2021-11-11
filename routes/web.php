@@ -45,7 +45,7 @@ Route::middleware(['auth',])->group(function () {
     Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method');
     Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method');
     Route::middleware(['has.payment.method', 'initial'])->group(function () {
-        Route::get('/', [PageController::class, 'dashboard'])->name('main');
+        Route::get('/', [PageController::class, 'checkRoutes'])->name('main');
         Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
         Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
         Route::post('quiz/result', [DiagnosticController::class, 'result'])->name('quiz.result');
@@ -100,7 +100,7 @@ Route::middleware(['auth',])->group(function () {
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.main');
+    Route::get('/', [PageController::class, 'checkRoutes'])->name('admin.main');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('admin.users');
     Route::get('users/{id}', [UserController::class, 'show'])->name('admin.user');

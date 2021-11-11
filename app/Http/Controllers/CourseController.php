@@ -66,7 +66,6 @@ class CourseController extends Controller
         $lessLayersArray = [];
         foreach ($importData_arr as $row) {
 
-
             if (count($row) != 64) {
                 return ['error' => 'Wrong format'];
             }
@@ -252,6 +251,8 @@ class CourseController extends Controller
                     if ($row[44] != '') {
                         $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
                         $response = $client->request('/videos/' . $row[45], [], 'GET');
+//                        print_r($response);
+//                        print_r('<br>');
                         $lesson_video = Video::create([
                             'title' => $row[44],
                             'url' => $row[45],

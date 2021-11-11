@@ -23,9 +23,9 @@ class VideoScope implements Scope
     {
         $user = auth()->user()->load('profile', 'tags');
         $tags = [$user->getTag(), $user->profile->learning_style, $user->profile->tutor_match];
-        if ( !($user->getTag() == 'All') ) {
+        if (!($user->getTag() == 'All')) {
             $builder->whereHas('tags', function ($query) use ($tags) {
-                $query->whereNotIn('tags.name', $tags);
+                $query->whereNotIn('tags.name', $tags)->whereNotIn('tags.name', ['All']);
             }, '=', 0);
         }
     }
