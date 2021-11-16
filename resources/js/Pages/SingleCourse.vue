@@ -60,8 +60,7 @@
                                                                style="color: #4C6ED7"></i>
                                                         </a>
                                                     </div>
-                                                    <div
-                                                        class="col-8 d-flex align-items-center justify-content-between">
+                                                    <div class="col-8 d-flex align-items-center">
                                                         <h5>{{ top_videos.title }}</h5>
                                                         <div><span v-for="tag in top_videos.tags"
                                                                    class="ml-2 badges lightblue-badge">{{
@@ -104,8 +103,7 @@
                                                                            style="color: #4C6ED7"></i>
                                                                     </a>
                                                                 </div>
-                                                                <div
-                                                                    class="col-8 d-flex align-items-center justify-content-between">
+                                                                <div class="col-8 d-flex align-items-center">
                                                                     <h5>{{ mid_videos.title }}</h5>
                                                                     <div><span v-for="tag in mid_videos.tags"
                                                                                class="ml-2 badges lightblue-badge">{{
@@ -149,10 +147,10 @@
                                                                                 </a>
                                                                             </div>
                                                                             <div
-                                                                                class="col-8 d-flex align-items-center justify-content-between">
+                                                                                class="col-8 d-flex align-items-center">
                                                                                 <h5>{{ less_videos.title }}</h5>
                                                                                 <div><span
-                                                                                    v-for="tag in less_videos.tags"
+                                                                                    v-for="tag in less_videos .tags"
                                                                                     class="ml-2 badges lightblue-badge">{{
                                                                                         tag.name
                                                                                     }}</span>
@@ -271,8 +269,7 @@
                                                                        style="color: #4C6ED7"></i>
                                                                 </a>
                                                             </div>
-                                                            <div
-                                                                class="col-8 d-flex align-items-center justify-content-between">
+                                                            <div class="col-8 d-flex align-items-center">
                                                                 <h5>{{ mid_videos.title }}</h5>
                                                                 <div><span v-for="tag in mid_videos.tags"
                                                                            class="ml-2 badges lightblue-badge">{{
@@ -316,7 +313,7 @@
                                                                             </a>
                                                                         </div>
                                                                         <div
-                                                                            class="col-8 d-flex align-items-center justify-content-between">
+                                                                            class="col-8 d-flex align-items-center">
                                                                             <h5>{{ less_videos.title }}</h5>
                                                                             <div><span v-for="tag in less_videos.tags"
                                                                                        class="ml-2 badges lightblue-badge">{{

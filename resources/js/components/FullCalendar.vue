@@ -8,7 +8,7 @@ export default {
     components: {
         FullCalendar
     },
-    props: ['exams', 'lessons'],
+    props: ['exams', 'lessons', 'editable'],
     data() {
         return {
             calendarOptions: {
@@ -17,8 +17,15 @@ export default {
                 dayHeaderContent: (args) => {
                     return moment(args.date).format('dd')
                 },
+                dateClick: this.handleDateClick,
                 events: this.lessons.concat(this.exams),
             },
+            form: {
+                time: null,
+                type: null,
+                exam: null
+            },
+            exams: null
         }
     },
     created() {
@@ -30,8 +37,23 @@ export default {
             $('.fc-daygrid-day:has(.fc-daygrid-block-event)').addClass('rocket-bg');
             $('.fc-daygrid-day:has(.fc-daygrid-dot-event)').addClass('time-bg');
         });
+        axios.get(route('exams.api')).then(response => {
+            this.exams = response.data
+        })
     },
     methods: {
+        submit: function (form) {
+            axios.post(route('set.date'), form).then(response => {
+                this.toast.success(response.data.message);
+                window.location.reload()
+            }).catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                }
+            );
+        },
+        handleDateClick: function (arg) {
+            this.form.time = arg.dateStr + 'T00:00'
+        },
         getExams: function () {
             axios.get(route('user.exams.api'))
                 .then(response => {
@@ -69,5 +91,18 @@ export default {
 <template>
     <div>
         <FullCalendar :options="calendarOptions"/>
+        <div v-if="editable" class="row justify-content-center my-2">
+            <div class="d-flex flex-mobile">
+                <input type="datetime-local" v-model="form.time" class="form-control">
+                <select name="" v-model="form.type" class="form-control mx-2">
+                    <option value="exam">🚀</option>
+                    <option value="lesson">⌛</option>
+                </select>
+                <select name="" v-model="form.exam" v-if="form.type=='exam'" class="form-control mr-2">
+                    <option v-for="exam in exams" :value="exam.id">{{ exam.title }}</option>
+                </select>
+                <button v-on:click="submit(form)" class="btn btn-primary"><i class="bi bi-check2-circle"></i></button>
+            </div>
+        </div>
     </div>
 </template>

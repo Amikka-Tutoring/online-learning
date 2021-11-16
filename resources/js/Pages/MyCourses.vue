@@ -27,7 +27,7 @@
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <div class="row">
                                     <div class="col-7">
-                                        <a :href="route('recommended')+'#'+user_course.course.name"><h4>{{
+                                        <a :href="route('course',user_course.course.slug)"><h4>{{
                                                 user_course.course.name
                                             }}</h4></a>
                                     </div>
@@ -59,8 +59,11 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                                user_course.course.quizzes_attempted
-                                            }}/{{ user_course.course.quizzes_count }}
+                                                parseFloat(user_course.course.quizzes_attempted /
+                                                    (user_course.course.quizzes_count === 0 ? 1 :
+                                                        user_course.course.quizzes_count) *
+                                                    100).toFixed(0)
+                                            }} %
                                         </div>
                                     </div>
                                 </div>

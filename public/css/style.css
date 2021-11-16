@@ -121,6 +121,7 @@ a {
 
 .first-step h1 {
     margin-bottom: 75px;
+    font-size: 24px;
 }
 
 .first-step ol {
@@ -129,14 +130,14 @@ a {
 }
 
 .first-step ol li {
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 18px;
+    line-height: 20px;
     margin-bottom: 57px;
-    padding-left: 80px;
+    padding-left: 50px;
 }
 
 .first-step ol li::marker {
-    color: #4c6ed7;
+    color: black;
 }
 
 .first-step ol li:last-child::marker {
@@ -552,7 +553,7 @@ a {
 /*Exams*/
 
 .practice-exams-content {
-    padding-left: 200px;
+    /*padding-left: 200px;*/
 }
 
 .practice-exams-content .question-box {
@@ -565,7 +566,7 @@ a {
 }
 
 .video-exams-content {
-    padding-left: 200px;
+    /*padding-left: 200px;*/
 }
 
 .video-exams-content .question-box {
@@ -1173,14 +1174,14 @@ a {
 
 .tutors {
     background: rgba(216, 216, 216, 0.15);
-    margin: 25px;
-    padding: 20px 0px;
+    margin: 0px 25px;
+    padding-bottom: 30px;
 }
 
 .tutors h1, .process h1, .pricing h1 {
     font-weight: 700;
     font-size: 40px;
-    padding: 60px 0px;
+    padding: 50px 0px;
 }
 
 .tutors-content img {
@@ -1225,11 +1226,6 @@ a {
     padding: 10px 0px;
     font-size: 18px;
     font-weight: 500;
-}
-
-
-.tutors-content {
-    margin: 70px 0;
 }
 
 
@@ -1427,7 +1423,7 @@ input[type="radio"] {
 }
 
 .wrapper .option span {
-    font-size: 20px;
+    font-size: 14px;
     color: #808080;
 }
 
@@ -1696,6 +1692,17 @@ input[type="radio"] {
     height: 500px;
     margin: 80px 0;
     border: none
+}
+
+@media (max-width: 767.98px) {
+    .flex-mobile {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .flex-mobile select {
+        margin: 5px 0px !important;
+    }
 }
 
 

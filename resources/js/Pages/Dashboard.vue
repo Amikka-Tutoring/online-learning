@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left: 0;">
-                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(1) }}/10
+                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(0) }}/10
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.reading_score / 10).toFixed(1) }}/10
+                                            {{ parseFloat(profile.reading_score / 10).toFixed(0) }}/10
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.grammar_score / 10).toFixed(1) }}/10
+                                            {{ parseFloat(profile.grammar_score / 10).toFixed(0) }}/10
                                         </div>
                                     </div>
                                 </div>
@@ -235,7 +235,7 @@
                              data-aos-delay="50" data-aos-once="true">
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
-                                <a :href="route('recommended')+'#'+user_course.course.name"><h4>{{
+                                <a :href="route('course',user_course.course.slug)"><h4>{{
                                         user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
@@ -253,9 +253,12 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">
-                                            {{ user_course.course.quizzes_attempted }}/{{
-                                                user_course.course.quizzes_count
-                                            }}
+                                            {{
+                                                parseFloat(user_course.course.quizzes_attempted /
+                                                    (user_course.course.quizzes_count === 0 ? 1 :
+                                                        user_course.course.quizzes_count) *
+                                                    100).toFixed(0)
+                                            }} %
                                         </div>
                                     </div>
                                 </div>
@@ -307,7 +310,7 @@
 
                         </div>
                         <div class="col-lg-5">
-                            <full-calendar :exams="calendar_exams" :lessons="calendar_lessons"/>
+                            <full-calendar :editable="false" :exams="calendar_exams" :lessons="calendar_lessons"/>
                             <a type="button" class="blue-text font-weight-bold pt-4 pl-2" :href="route('set-calendar')">
                                 Edit Schedule
                             </a>
@@ -364,7 +367,7 @@
                             <div class="notes-box">
                                 <h1>{{ moment(value).format("MM/DD") }}</h1>
                                 <div class="row">
-                                    <span class="pink-badge badges">{{ user_tag }}</span>
+                                    <span class="lightblue-badge badges" style="padding:5px 30px;">{{ user_tag }}</span>
                                 </div>
                                 <h5>Lessons</h5>
                                 <p><span
@@ -416,7 +419,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left:0">
-                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(1) }}/10
+                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(0) }}/10
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +444,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.reading_score / 10).toFixed(1) }}/10
+                                            {{ parseFloat(profile.reading_score / 10).toFixed(0) }}/10
                                         </div>
                                     </div>
                                 </div>
@@ -466,7 +469,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.grammar_score / 10).toFixed(1) }}/10
+                                            {{ parseFloat(profile.grammar_score / 10).toFixed(0) }}/10
                                         </div>
                                     </div>
                                 </div>

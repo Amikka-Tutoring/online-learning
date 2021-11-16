@@ -38,6 +38,9 @@ class Course extends Model
             $model->plan_id = $plan->id;
             $model->save();
         });
+        self::deleting(function ($model) {
+            \App\Models\Subscription::where('stripe_price', $model->plan_id)->delete();
+        });
     }
 
 
@@ -61,15 +64,15 @@ class Course extends Model
     {
         $quizzes_count = 0;
         foreach ($this->topLayers() as $topLayer) {
-            if ( count($topLayer->questions) ) {
+            if (count($topLayer->questions)) {
                 $quizzes_count++;
             }
             foreach ($topLayer->children as $mid) {
-                if ( count($mid->questions) ) {
+                if (count($mid->questions)) {
                     $quizzes_count++;
                 }
                 foreach ($mid->children as $less) {
-                    if ( count($less->questions) ) {
+                    if (count($less->questions)) {
                         $quizzes_count++;
                     }
                 }
@@ -84,19 +87,19 @@ class Course extends Model
         $quizzes_count = 0;
         foreach ($this->topLayers() as $topLayer) {
             foreach ($user->layer_quiz_results as $r) {
-                if ( $r->layer == $topLayer ) {
+                if ($r->layer == $topLayer) {
                     $quizzes_count++;
                 }
             }
             foreach ($topLayer->children as $mid) {
                 foreach ($user->layer_quiz_results as $t) {
-                    if ( $t->layer == $mid ) {
+                    if ($t->layer == $mid) {
                         $quizzes_count++;
                     }
                 }
                 foreach ($mid->children as $less) {
                     foreach ($user->layer_quiz_results as $e) {
-                        if ( $e->layer == $less ) {
+                        if ($e->layer == $less) {
                             $quizzes_count++;
                         }
                     }

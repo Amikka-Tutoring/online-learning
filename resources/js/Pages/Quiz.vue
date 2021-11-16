@@ -27,30 +27,21 @@
                 <form class="form" method="POST">
                     <div v-if="form.currentstep === 1" class="first-step">
                         <h1>
-                            <span class="blue-text">{{ layer.name }}</span>
-                            Quiz
+                            {{ layer.name }} Quiz
                         </h1>
                         <div class="step-one" style="margin-left: 100px">
                             <div class="row" style="">
                                 <ol>
-                                    <li>The <span class="blue-text">{{ layer.name }}</span> Quiz
-
+                                    <li>The {{ layer.name }} Quiz
                                     </li>
                                     <li>
-                                        Based on your
-                                        <span class="blue-text"
-                                        >performance</span
-                                        >
-                                        we build you a personalized course that
+                                        Based on your performance we build you a personalized course that
                                         teaches you exactly what you need to
                                         know.
                                     </li>
                                     <li>
                                         Please answer the next ten questions to
-                                        the
-                                        <span class="blue-text"
-                                        >best of your ability.</span
-                                        >
+                                        the best of your ability.
                                     </li>
                                     <li>
                                         <button
@@ -73,7 +64,6 @@
                             </div>
 
                             <div class="col-lg-6 col-12">
-
                                 <div class="image-box text-center">
                                     <img class="w-100" :src="question.image">
                                 </div>
@@ -82,11 +72,11 @@
                                  v-bind:class="[question.image ? 'col-md-6':'col-12']">
                                 <div class="row w-100">
                                     <div class="wrapper d-flex flex-column">
-                                        <div class="row w-100">
+                                        <div class="row w-100 justify-content-center">
                                             <div v-for="(answer, index) in question.answers"
                                                  :key="answer"
                                                  :index="question.key"
-                                                 class="col-12 p-0"
+                                                 class="col-md-7 p-0"
                                             >
                                                 <div class="options">
                                                     <input :id="'option-' +answer.id"
@@ -109,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center my-4">
                         <div class="col-md-3 col-4">
                             <button
                                 v-if="form.currentstep > 1"

@@ -165,7 +165,7 @@ class PageController extends Controller
         $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions', 'responses', 'responses');
         $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
-        $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->take(3)->get();
+        $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->take(5)->get();
         $user = Auth::user()->load('layer_quiz_results');
         if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
@@ -195,8 +195,31 @@ class PageController extends Controller
         }])->get()->pluck('course');
 
         $recommended_courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
-            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
-                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'children.videos', 'children' => function ($query_children_children) use ($completed_layers) {
+            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'videos.tags', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
+                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children' => function ($query_children_children) use ($completed_layers) {
+                    $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
+                }]);
+            }]);
+        }
+        ])->get()->pluck('course');
+        return Inertia::render('Recommended', ['courses' => $courses, 'recommended_courses' => $recommended_courses]);
+    }
+
+    public function singleCourse($course)
+    {
+        $course = Course::where('slug', $course)->firstOrFail();
+        $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
+        $completed_layers = $user->layer_quiz_results()->get()->pluck('layer_id');
+
+
+        $courses = $user->enrollments()->where('stripe_price', $course->plan_id)->with(['course', 'course.layers' => function ($query) {
+            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children.children.videos', 'children.children.videos.tags']);
+        }])->get()->pluck('course');
+
+
+        $recommended_courses = $user->enrollments()->where('stripe_price', $course->plan_id)->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
+            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'videos.tags', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
+                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children' => function ($query_children_children) use ($completed_layers) {
                     $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
                 }]);
             }]);

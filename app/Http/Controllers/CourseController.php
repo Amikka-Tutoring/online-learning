@@ -64,259 +64,276 @@ class CourseController extends Controller
         $topLayersArray = [];
         $midLayersArray = [];
         $lessLayersArray = [];
+        $videosArray = [];
+        $questionsArray = [];
         foreach ($importData_arr as $row) {
 
-            if (count($row) != 64) {
-                return ['error' => 'Wrong format'];
-            }
+            try {
 
-            //Course
-            $course = Course::where('name', $row[0])->first();
-            if ($course == null) {
-                $course = Course::create([
-                    'name' => $row[0],
-                    'slug' => Str::slug($row[0]),
-                ]);
-                array_push($coursesArray, $course->name);
-            }
-            if ($row[1] != '') {
-                $top_layer = $course->layers->where('name', $row[1])->first();
-                if ($top_layer == null) {
-                    //Top Layer
-                    $top_layer = Layer::create([
-                        'name' => $row[1],
-                        'course_id' => $course->id,
-                    ]);
-                    array_push($topLayersArray, $top_layer->course->name . ' / ' . $top_layer->name);
+                if (count($row) != 64) {
+                    return ['error' => 'Wrong format'];
                 }
 
-                //Top Layer Video
-                if ($row[2] != '') {
-                    $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
-                    $response = $client->request('/videos/' . $row[3], [], 'GET');
-                    $top_layer_video = Video::create([
-                        'title' => $row[2],
-                        'url' => $row[3],
-                        'description' => $row[4],
-                        'layer_id' => $top_layer->id,
-                        'duration' => $response['body']['duration']
-                    ]);
-                    foreach (explode(', ', $row[5]) as $tag) {
-                        $top_layer_video->setTag($tag);
-                    }
-                }
-                //Top Layer Question
-                if ($row[6] != '') {
-                    $top_layer_question = new Question;
-                    $top_layer_question->title = $row[6];
-
-                    foreach (explode(', ', $row[7]) as $tag) {
-                        $top_layer_question->setTag($tag);
-                    }
-
-                    $top_layer_question->image = $row[8];
-                    $top_layer_question->explanation = $row[9];
-                    $top_layer->questions()->save($top_layer_question);
-
-                    //Top Layer Question Answers
-                    if ($row[11] != '') {
-                        Answer::create([
-                            'title' => $row[10],
-                            'explanation' => $row[11],
-                            'is_correct' => $row[12],
-                            'question_id' => $top_layer_question->id,
+                //Course
+                if ($row[0] != '') {
+                    $course = Course::where('name', $row[0])->first();
+                    if ($course == null) {
+                        $course = Course::create([
+                            'name' => $row[0],
+                            'slug' => Str::slug($row[0]),
                         ]);
+                        array_push($coursesArray, $course->name);
                     }
-                    if ($row[13] != '') {
-                        Answer::create([
-                            'title' => $row[13],
-                            'explanation' => $row[14],
-                            'is_correct' => $row[15],
-                            'question_id' => $top_layer_question->id,
-                        ]);
+                    if ($row[1] != '') {
+                        $top_layer = $course->layers->where('name', $row[1])->first();
+                        if ($top_layer == null) {
+                            //Top Layer
+                            $top_layer = Layer::create([
+                                'name' => $row[1],
+                                'course_id' => $course->id,
+                            ]);
+                            array_push($topLayersArray, $top_layer->course->name . ' / ' . $top_layer->name);
+                        }
+
+                        //Top Layer Video
+                        if ($row[2] != '') {
+                            $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
+                            $response = $client->request('/videos/' . $row[3], [], 'GET');
+                            $top_layer_video = Video::create([
+                                'title' => $row[2],
+                                'url' => $row[3],
+                                'description' => $row[4],
+                                'layer_id' => $top_layer->id,
+                                'duration' => $response['body']['duration']
+                            ]);
+                            array_push($videosArray, $top_layer_video->title);
+                            foreach (explode(', ', $row[5]) as $tag) {
+                                $top_layer_video->setTag($tag);
+                            }
+                        }
+                        //Top Layer Question
+                        if ($row[6] != '') {
+                            $top_layer_question = new Question;
+                            $top_layer_question->title = $row[6];
+
+
+                            foreach (explode(', ', $row[7]) as $tag) {
+                                $top_layer_question->setTag($tag);
+                            }
+
+                            $top_layer_question->image = $row[8];
+                            $top_layer_question->explanation = $row[9];
+                            $top_layer->questions()->save($top_layer_question);
+                            array_push($questionsArray, $top_layer_question->title);
+
+                            //Top Layer Question Answers
+                            if ($row[11] != '') {
+                                Answer::create([
+                                    'title' => $row[10],
+                                    'explanation' => $row[11],
+                                    'is_correct' => $row[12],
+                                    'question_id' => $top_layer_question->id,
+                                ]);
+                            }
+                            if ($row[13] != '') {
+                                Answer::create([
+                                    'title' => $row[13],
+                                    'explanation' => $row[14],
+                                    'is_correct' => $row[15],
+                                    'question_id' => $top_layer_question->id,
+                                ]);
+                            }
+                            if ($row[16] != '') {
+                                Answer::create([
+                                    'title' => $row[16],
+                                    'explanation' => $row[17],
+                                    'is_correct' => $row[18],
+                                    'question_id' => $top_layer_question->id,
+                                ]);
+                            }
+                            if ($row[19] != '') {
+                                Answer::create([
+                                    'title' => $row[19],
+                                    'explanation' => $row[20],
+                                    'is_correct' => $row[21],
+                                    'question_id' => $top_layer_question->id,
+                                ]);
+                            }
+                        }
                     }
-                    if ($row[16] != '') {
-                        Answer::create([
-                            'title' => $row[16],
-                            'explanation' => $row[17],
-                            'is_correct' => $row[18],
-                            'question_id' => $top_layer_question->id,
-                        ]);
-                    }
-                    if ($row[19] != '') {
-                        Answer::create([
-                            'title' => $row[19],
-                            'explanation' => $row[20],
-                            'is_correct' => $row[21],
-                            'question_id' => $top_layer_question->id,
-                        ]);
+
+
+                    //MidLayer
+                    if ($row[22] != '') {
+                        $mid_layer = $course->layers->where('name', $row[22])->where('parent_id', $top_layer->id)->first();
+                        if ($mid_layer == null) {
+                            //Top Layer
+                            $mid_layer = Layer::create([
+                                'name' => $row[22],
+                                'course_id' => $course->id,
+                                'parent_id' => $top_layer->id,
+                            ]);
+                            array_push($midLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name);
+                        }
+
+
+                        //Mid Layer Video
+                        if ($row[23] != '') {
+                            $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
+                            $response = $client->request('/videos/' . $row[24], [], 'GET');
+                            $mid_layer_video = Video::create([
+                                'title' => $row[23],
+                                'url' => $row[24],
+                                'description' => $row[25],
+                                'layer_id' => $mid_layer->id,
+                                'duration' => $response['body']['duration']
+                            ]);
+                            array_push($videosArray, $mid_layer_video->title);
+                            foreach (explode(', ', $row[26]) as $tag) {
+                                $mid_layer_video->setTag($tag);
+                            }
+                        }
+
+                        if ($row[27] != '') {
+                            //Top Layer Question
+                            $mid_layer_question = new Question;
+                            $mid_layer_question->title = $row[27];
+
+
+                            foreach (explode(', ', $row[28]) as $tag) {
+                                $mid_layer_question->setTag($tag);
+                            }
+
+                            if ($row[29] != '') {
+                                $mid_layer_question->image = $row[29];
+                                $mid_layer_question->explanation = $row[30];
+                                $mid_layer->questions()->save($mid_layer_question);
+                                array_push($questionsArray, $mid_layer_question->title);
+
+                                //Top Layer Question Answers
+                                if ($row[31] != '') {
+                                    Answer::create([
+                                        'title' => $row[31],
+                                        'explanation' => $row[32],
+                                        'is_correct' => $row[33],
+                                        'question_id' => $mid_layer_question->id,
+                                    ]);
+                                }
+                                if ($row[34] != '') {
+                                    Answer::create([
+                                        'title' => $row[34],
+                                        'explanation' => $row[35],
+                                        'is_correct' => $row[36],
+                                        'question_id' => $mid_layer_question->id,
+                                    ]);
+                                }
+                                if ($row[37] != '') {
+                                    Answer::create([
+                                        'title' => $row[37],
+                                        'explanation' => $row[38],
+                                        'is_correct' => $row[39],
+                                        'question_id' => $mid_layer_question->id,
+                                    ]);
+                                }
+                                if ($row[40] != '') {
+                                    Answer::create([
+                                        'title' => $row[40],
+                                        'explanation' => $row[41],
+                                        'is_correct' => $row[42],
+                                        'question_id' => $mid_layer_question->id,
+                                    ]);
+                                }
+                            }
+                        }
+                        //Lesson
+                        if ($row[43] != '') {
+                            $lesson = $course->layers->where('name', $row[43])->where('parent_id', $mid_layer->id)->first();
+                            if ($lesson == null) {
+                                //Top Layer
+                                $lesson = Layer::create([
+                                    'name' => $row[43],
+                                    'course_id' => $course->id,
+                                    'parent_id' => $mid_layer->id,
+                                ]);
+                                array_push($lessLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name . ' / ' . $lesson->name);
+                            }
+
+                            //Top Layer Video
+                            if ($row[44] != '') {
+                                $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
+                                $response = $client->request('/videos/' . $row[45], [], 'GET');
+                                $lesson_video = Video::create([
+                                    'title' => $row[44],
+                                    'url' => $row[45],
+                                    'description' => $row[46],
+                                    'layer_id' => $lesson->id,
+                                    'duration' => $response['body']['duration']
+                                ]);
+                                array_push($videosArray, $lesson_video->title);
+                                foreach (explode(', ', $row[47]) as $tag) {
+                                    $lesson_video->setTag($tag);
+                                }
+                            }
+                            //Top Layer Question
+                            if ($row[48] != '') {
+                                $lesson_question = new Question;
+                                $lesson_question->title = $row[48];
+
+                                foreach (explode(', ', $row[49]) as $tag) {
+                                    $lesson_question->setTag($tag);
+                                }
+
+                                $lesson_question->image = $row[50];
+                                $lesson_question->explanation = $row[51];
+                                $lesson->questions()->save($lesson_question);
+                                array_push($questionsArray, $lesson_question->title);
+                                //Top Layer Question Answers
+                                if ($row[52] != '') {
+                                    Answer::create([
+                                        'title' => $row[52],
+                                        'explanation' => $row[53],
+                                        'is_correct' => $row[54],
+                                        'question_id' => $lesson_question->id,
+                                    ]);
+                                }
+                                if ($row[55] != '') {
+                                    Answer::create([
+                                        'title' => $row[55],
+                                        'explanation' => $row[56],
+                                        'is_correct' => $row[57],
+                                        'question_id' => $lesson_question->id,
+                                    ]);
+                                }
+                                if ($row[58] != '') {
+                                    Answer::create([
+                                        'title' => $row[58],
+                                        'explanation' => $row[59],
+                                        'is_correct' => $row[60],
+                                        'question_id' => $lesson_question->id,
+                                    ]);
+                                }
+                                if ($row[61] != '') {
+                                    Answer::create([
+                                        'title' => $row[61],
+                                        'explanation' => $row[62],
+                                        'is_correct' => $row[63],
+                                        'question_id' => $lesson_question->id,
+                                    ]);
+                                }
+                            }
+                        }
                     }
                 }
-            }
-
-
-            //MidLayer
-            if ($row[22] != '') {
-                $mid_layer = $course->layers->where('name', $row[22])->where('parent_id', $top_layer->id)->first();
-                if ($mid_layer == null) {
-                    //Top Layer
-                    $mid_layer = Layer::create([
-                        'name' => $row[22],
-                        'course_id' => $course->id,
-                        'parent_id' => $top_layer->id,
-                    ]);
-                    array_push($midLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name);
-                }
-
-
-                //Mid Layer Video
-                if ($row[23] != '') {
-                    $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
-                    $response = $client->request('/videos/' . $row[24], [], 'GET');
-                    $mid_layer_video = Video::create([
-                        'title' => $row[23],
-                        'url' => $row[24],
-                        'description' => $row[25],
-                        'layer_id' => $mid_layer->id,
-                        'duration' => $response['body']['duration']
-                    ]);
-                    foreach (explode(', ', $row[26]) as $tag) {
-                        $mid_layer_video->setTag($tag);
-                    }
-                }
-
-                if ($row[27] != '') {
-                    //Top Layer Question
-                    $mid_layer_question = new Question;
-                    $mid_layer_question->title = $row[27];
-
-                    foreach (explode(', ', $row[28]) as $tag) {
-                        $mid_layer_question->setTag($tag);
-                    }
-
-                    if ($row[29] != '') {
-                        $mid_layer_question->image = $row[29];
-                        $mid_layer_question->explanation = $row[30];
-                        $mid_layer->questions()->save($mid_layer_question);
-
-                        //Top Layer Question Answers
-                        if ($row[31] != '') {
-                            Answer::create([
-                                'title' => $row[31],
-                                'explanation' => $row[32],
-                                'is_correct' => $row[33],
-                                'question_id' => $mid_layer_question->id,
-                            ]);
-                        }
-                        if ($row[34] != '') {
-                            Answer::create([
-                                'title' => $row[34],
-                                'explanation' => $row[35],
-                                'is_correct' => $row[36],
-                                'question_id' => $mid_layer_question->id,
-                            ]);
-                        }
-                        if ($row[37] != '') {
-                            Answer::create([
-                                'title' => $row[37],
-                                'explanation' => $row[38],
-                                'is_correct' => $row[39],
-                                'question_id' => $mid_layer_question->id,
-                            ]);
-                        }
-                        if ($row[40] != '') {
-                            Answer::create([
-                                'title' => $row[40],
-                                'explanation' => $row[41],
-                                'is_correct' => $row[42],
-                                'question_id' => $mid_layer_question->id,
-                            ]);
-                        }
-                    }
-                }
-                //Lesson
-                if ($row[43] != '') {
-                    $lesson = $course->layers->where('name', $row[43])->where('parent_id', $mid_layer->id)->first();
-                    if ($lesson == null) {
-                        //Top Layer
-                        $lesson = Layer::create([
-                            'name' => $row[43],
-                            'course_id' => $course->id,
-                            'parent_id' => $mid_layer->id,
-                        ]);
-                        array_push($lessLayersArray, $course->name . ' / ' . $top_layer->name . ' / ' . $mid_layer->name . ' / ' . $lesson->name);
-                    }
-
-                    //Top Layer Video
-                    if ($row[44] != '') {
-                        $client = new Vimeo(env('VIMEO_CLIENT_ID'), env('VIMEO_CLIENT_SECRET'), env('VIMEO_ACCESS_TOKEN'));
-                        $response = $client->request('/videos/' . $row[45], [], 'GET');
-//                        print_r($response);
-//                        print_r('<br>');
-                        $lesson_video = Video::create([
-                            'title' => $row[44],
-                            'url' => $row[45],
-                            'description' => $row[46],
-                            'layer_id' => $lesson->id,
-                            'duration' => $response['body']['duration']
-                        ]);
-                        foreach (explode(', ', $row[47]) as $tag) {
-                            $lesson_video->setTag($tag);
-                        }
-                    }
-                    //Top Layer Question
-                    if ($row[48] != '') {
-                        $lesson_question = new Question;
-                        $lesson_question->title = $row[48];
-
-                        foreach (explode(', ', $row[49]) as $tag) {
-                            $lesson_question->setTag($tag);
-                        }
-
-                        $lesson_question->image = $row[50];
-                        $lesson_question->explanation = $row[51];
-                        $lesson->questions()->save($lesson_question);
-                        //Top Layer Question Answers
-                        if ($row[52] != '') {
-                            Answer::create([
-                                'title' => $row[52],
-                                'explanation' => $row[53],
-                                'is_correct' => $row[54],
-                                'question_id' => $lesson_question->id,
-                            ]);
-                        }
-                        if ($row[55] != '') {
-                            Answer::create([
-                                'title' => $row[55],
-                                'explanation' => $row[56],
-                                'is_correct' => $row[57],
-                                'question_id' => $lesson_question->id,
-                            ]);
-                        }
-                        if ($row[58] != '') {
-                            Answer::create([
-                                'title' => $row[58],
-                                'explanation' => $row[59],
-                                'is_correct' => $row[60],
-                                'question_id' => $lesson_question->id,
-                            ]);
-                        }
-                        if ($row[61] != '') {
-                            Answer::create([
-                                'title' => $row[61],
-                                'explanation' => $row[62],
-                                'is_correct' => $row[63],
-                                'question_id' => $lesson_question->id,
-                            ]);
-                        }
-                    }
-                }
+            } catch
+            (\Throwable $th) {
+                return response()->json(['courses' => $coursesArray, 'top_layers' => $topLayersArray, 'mid_layers' => $midLayersArray, 'less_layers' => $lessLayersArray, 'videos' => $videosArray, 'questions' => $questionsArray, 'message' => 'Process stopped!'], 400);
             }
         }
-        return ['courses' => $coursesArray, 'top_layers' => $topLayersArray, 'mid_layers' => $midLayersArray, 'less_layers' => $lessLayersArray, 'message' => 'Uploaded Successfully'];
+        return ['courses' => $coursesArray, 'top_layers' => $topLayersArray, 'videos' => $videosArray, 'questions' => $questionsArray, 'mid_layers' => $midLayersArray, 'less_layers' => $lessLayersArray, 'message' => 'Uploaded Successfully'];
     }
 
-    public function updateCourse(Request $request, $id)
+    public
+    function updateCourse(Request $request, $id)
     {
         $request->validate([
             'name' => 'required'
@@ -328,12 +345,14 @@ class CourseController extends Controller
         return ['message' => 'Updated Successfully'];
     }
 
-    public function getCourses()
+    public
+    function getCourses()
     {
         return Course::all();
     }
 
-    public function deleteCourse($id)
+    public
+    function deleteCourse($id)
     {
         Course::findOrFail($id)->delete();
         return ['message' => 'Deleted successfully'];

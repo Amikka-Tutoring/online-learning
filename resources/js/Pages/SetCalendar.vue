@@ -23,7 +23,7 @@
                     <div class="row justify-content-center my-4">
                         <div class="col-lg-6">
                             <div class="my-4">
-                                <full-calendar :exams="calendar_exams" :lessons="calendar_lessons"/>
+                                <full-calendar :editable="true" :exams="calendar_exams" :lessons="calendar_lessons"/>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\PracticeExam;
 use App\Models\User;
+use App\Models\UserLessonDate;
+use App\Models\UserPracticeExamDate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +23,7 @@ class ApiController extends Controller
     public function course($slug)
     {
         $course = Course::where('slug', $slug)->first();
-        if ( $course ) {
+        if ($course) {
             return response()->json($course)->header('token', '123');
         }
         return response()->json('Course not found');
@@ -80,12 +82,41 @@ class ApiController extends Controller
 
     public function set_lesson_length($length)
     {
-        if ( is_numeric($length) ) {
+        if (is_numeric($length)) {
             $profile = Auth::user()->profile;
             $profile->lesson_length = $length;
             $profile->save();
             return ['message' => 'Lesson Length has been updated'];
         }
+    }
+
+    public function setDate(Request $request)
+    {
+        $request->validate([
+            'type' => 'required',
+            'time' => 'required',
+            'exam' => 'required_if:type,=,exam'
+        ]);
+        if ($request->type == 'lesson') {
+            UserLessonDate::updateOrCreate([
+                'day' => Carbon::parse($request->time)->format('l'),
+                'user_id' => auth()->user()->id
+            ], [
+                'day' => Carbon::parse($request->time)->format('l'),
+                'user_id' => auth()->user()->id,
+                'time' => Carbon::parse($request->time)->format('H:i'),
+            ]);
+        } else {
+            UserPracticeExamDate::updateOrCreate([
+                'user_id' => auth()->user()->id,
+                'exam_id' => $request->exam
+            ], [
+                'user_id' => auth()->user()->id,
+                'exam_id' => $request->exam,
+                'date_time' => Carbon::parse($request->time)
+            ]);
+        }
+        return ['message' => 'Saved Successfully', 'type' => $request->type];
     }
 
 }

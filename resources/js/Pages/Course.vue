@@ -5,14 +5,14 @@
         <div class="container" style="margin-top: -50px">
 
             <div class=" row flex-column align-items-center p-4">
-                <h1 id="topic" ref="title">{{ video.title }}</h1>
-                <iframe id="youtube_id"
+                <h3 id="topic" ref="title">{{ video.title }}</h3>
+                <iframe id="youtube_id" allowfullscreen
                         :src="embed(video.url)"
                         style="max-width: 826px; width: 100%; height: 500px; margin: 50px 0; border: none">
                 </iframe>
             </div>
             <div class="row justify-content-center mb-5"
-                 style="font-size: 25px;font-weight: 400;font-style: italic;text-decoration: underline;">
+                 style="font-size: 20px;font-weight: 400;font-style: italic;text-decoration: underline;">
                 <div class="col-md-2 col-6 text-center" v-if="prev_link">
                     <div class="blue-link">
                         <a :href="route('lesson',prev_link)">Prev Video</a>

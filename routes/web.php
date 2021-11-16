@@ -61,7 +61,7 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::post('math-diagnostic', [PageController::class, 'postMathDiagnostic'])->name('math-diagnostic-post');
             Route::get('exams', [PageController::class, 'exams'])->name('exams');
             Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
-            Route::get('my-courses/course', [PageController::class, 'course'])->name('course');
+            Route::get('my-courses/{course}', [PageController::class, 'singleCourse'])->name('course');
             Route::get('videos/{video}', [PageController::class, 'lesson'])->name('lesson');
             Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
@@ -87,6 +87,7 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::post('lesson/notes/questions', [NotesController::class, 'storeQuestion'])->name('notes.store.question');
 
             Route::put('set-calendar/update-schedule', [ApiController::class, 'updateSchedule'])->name('change.schedule');
+            Route::post('set-date', [ApiController::class, 'setDate'])->name('set.date');
 
             Route::post('schedule/practice-exam/{id}', [UserPracticeExamDateController::class, 'store'])->name('schedule.practice.exam');
             Route::put('update/lesson-dates', [UserLessonDateController::class, 'update'])->name('update.lesson.dates');
@@ -134,7 +135,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
-    Route::get('exams/get', [ApiController::class, 'getPracticeExams'])->name('exams.api');
+
 
     Route::post('exams', [PracticeExamController::class, 'store'])->name('exams.store');
     Route::post('visit/exam/{id}', [UserExamVisitController::class, 'store'])->name('exams.visit');
@@ -155,7 +156,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('questions', [TutorController::class, 'studentQuestions'])->name('student.questions');
     Route::post('questions/response', [TutorController::class, 'storeResponse'])->name('store.response');
 });
-
+Route::get('exams/get', [ApiController::class, 'getPracticeExams'])->name('exams.api')->middleware('auth');
 Route::get('layers', [LayerController::class, 'testLayers'])->name('layers');
 //Route::get('subscription', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('subscription/get', [\App\Http\Controllers\SubscriptionController::class, 'getSubscriptions'])->name('get.subscriptions');
