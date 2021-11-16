@@ -221,13 +221,13 @@
                             <div class="form">
                                 <h2>Do you have any questions?</h2>
                                 <p>We'd love to answer them!</p>
-
-
-                                <input type="email" placeholder="Email" v-model="form.email">
-                                <input type="text" placeholder="Phone Number" v-model="form.phone">
-                                <textarea cols="30" rows="10" placeholder="Message"
-                                          v-model="form.message"></textarea>
-                                <input :disabled="disabled" type="submit" v-on:click="submitForm" value="Submit">
+                                <form v-on:submit="submitForm">
+                                    <input type="email" placeholder="Email" v-model="form.email" required>
+                                    <input type="text" placeholder="Phone Number" v-model="form.phone" required>
+                                    <textarea cols="30" rows="10" placeholder="Message" required
+                                              v-model="form.message"></textarea>
+                                    <input :disabled="disabled" type="submit" value="Submit">
+                                </form>
                             </div>
                         </div>
                     </div>

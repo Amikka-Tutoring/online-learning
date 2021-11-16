@@ -292,7 +292,7 @@ class PageController extends Controller
         $details['message'] = $request->message;
 
         try {
-            Mail::to('Info@amikkatutoring.com')->send(new OneOnOne($details));
+            Mail::to('info@amikkatutoring.com')->send(new OneOnOne($details));
         } catch (\Throwable $th) {
             return $th;
             \Log::log(1, $th);
