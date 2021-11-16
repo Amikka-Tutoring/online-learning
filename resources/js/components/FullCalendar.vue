@@ -91,7 +91,7 @@ export default {
 <template>
     <div>
         <FullCalendar :options="calendarOptions"/>
-        <div v-if="editable" class="row justify-content-center my-2">
+        <div v-if="editable" class="row justify-content-center my-4">
             <div class="d-flex flex-mobile">
                 <input type="datetime-local" v-model="form.time" class="form-control">
                 <select name="" v-model="form.type" class="form-control mx-2">

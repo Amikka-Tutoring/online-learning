@@ -1694,6 +1694,10 @@ input[type="radio"] {
     border: none
 }
 
+.flex-mobile input, .flex-mobile select {
+    border: 1px solid #4C6ED8;
+}
+
 @media (max-width: 767.98px) {
     .flex-mobile {
         flex-direction: column;
@@ -2147,7 +2151,7 @@ input[type="radio"] {
 .fc .fc-scrollgrid-liquid {
     padding: 40px 20px;
     border: 1px solid #4c6ed7 !important;
-    box-shadow: 0 3px 65px rgb(0 0 0 / 8%);
+    box-shadow: 0 -3px 15px rgb(0 0 0 / 8%);
     border-radius: 67px 67px 67px 0;
 }
 
