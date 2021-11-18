@@ -580,6 +580,10 @@ a {
     padding-bottom: 40px;
 }
 
+.tools-menu ul::-webkit-scrollbar {
+    display: none;
+}
+
 .results-wrapper {
     background: rgba(210, 225, 245, 0.3);
     margin: 35px;
