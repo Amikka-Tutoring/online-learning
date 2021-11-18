@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Diagnostic;
 use App\Models\Layer;
 use App\Models\LayerQuizResult;
+use App\Models\Note;
 use App\Models\PracticeExam;
 use App\Models\Tag;
 use App\Models\User;
@@ -171,7 +172,7 @@ class PageController extends Controller
         $user = Auth::user()->load('layer_quiz_results');
         if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
-        $notes = $video->notes->first();
+        $notes = Note::where('video_id', $video)->where('user_id', auth()->user()->id)->first();
 
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $video->layer->id));
         return Inertia::render('Course', ['video' => $video, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt, 'next_link' => $next_link, 'prev_link' => $prev_link, 'next_videos' => $next_videos]);
