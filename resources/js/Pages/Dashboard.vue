@@ -32,13 +32,15 @@
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;" class="progress-bar"
-                                                 :style="{width:profile.math_score +'%'}"
+                                                 :style="{width:profile.math_score/800*100 +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left: 0;">
-                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(0) }}/10
+                                        <div class="blue-text">{{
+                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                            }} %
                                         </div>
                                     </div>
                                 </div>
@@ -56,14 +58,14 @@
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;" class="progress-bar"
-                                                 :style="{width:profile.reading_score +'%'}"
+                                                 :style="{width:profile.reading_score/800*100 +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.reading_score / 10).toFixed(0) }}/10
+                                            {{ parseFloat(profile.reading_score / 800 * 100).toFixed(0) }} %
                                         </div>
                                     </div>
                                 </div>
@@ -81,14 +83,14 @@
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;" class="progress-bar"
-                                                 :style="{width:profile.grammar_score +'%'}"
+                                                 :style="{width:profile.grammar_score/800*100 +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.grammar_score / 10).toFixed(0) }}/10
+                                            {{ parseFloat(profile.grammar_score / 800 * 100).toFixed(0) }} %
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +112,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="blue-text">10/10</div>
+                                        <div class="blue-text">100 %</div>
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +238,7 @@
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a :href="route('course',user_course.course.slug)"><h4>{{
-                                        user_course.course.name
+                                    user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -254,10 +256,10 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                                parseFloat(user_course.course.quizzes_attempted /
-                                                    (user_course.course.quizzes_count === 0 ? 1 :
-                                                        user_course.course.quizzes_count) *
-                                                    100).toFixed(0)
+                                            parseFloat(user_course.course.quizzes_attempted /
+                                            (user_course.course.quizzes_count === 0 ? 1 :
+                                            user_course.course.quizzes_count) *
+                                            100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -302,7 +304,7 @@
                                     <p class="blue-text font-weight-bold m-0">Next Practice Exam: 🚀</p>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                            next_practice_exam_time
+                                        next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>
@@ -413,13 +415,15 @@
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;" class="progress-bar"
-                                                 :style="{width:profile.math_score +'%'}"
+                                                 :style="{width:profile.math_score/800*100 +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left:0">
-                                        <div class="blue-text">{{ parseFloat(profile.math_score / 10).toFixed(0) }}/10
+                                        <div class="blue-text">{{
+                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                            }} %
                                         </div>
                                     </div>
                                 </div>
@@ -437,14 +441,14 @@
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;" class="progress-bar"
-                                                 :style="{width:profile.reading_score +'%'}"
+                                                 :style="{width:profile.reading_score/800*100 +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.reading_score / 10).toFixed(0) }}/10
+                                            {{ parseFloat(profile.reading_score / 800 * 100).toFixed(0) }} %
                                         </div>
                                     </div>
                                 </div>
@@ -462,14 +466,14 @@
                                     <div class="col-9">
                                         <div class="progress" style="height: 5px; margin-left: 20px">
                                             <div style="background: #4C6ED7;" class="progress-bar"
-                                                 :style="{width:profile.grammar_score +'%'}"
+                                                 :style="{width:profile.grammar_score/800*100 +'%'}"
                                                  role="progressbar" aria-valuenow="50" aria-valuemin="0"
                                                  aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">
-                                            {{ parseFloat(profile.grammar_score / 10).toFixed(0) }}/10
+                                            {{ parseFloat(profile.grammar_score / 800 * 100).toFixed(0) }} %
                                         </div>
                                     </div>
                                 </div>
@@ -491,7 +495,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3" style="padding-left:0">
-                                        <div class="blue-text">10/10</div>
+                                        <div class="blue-text">100 %</div>
                                     </div>
                                 </div>
                             </div>

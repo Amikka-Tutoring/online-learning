@@ -26,7 +26,6 @@ class TutorController extends Controller
         if (Auth::user()->is_tutor() || Auth::user()->is_admin()) {
             $request->validate([
                 'title' => 'required',
-                'url' => 'required',
                 'message' => 'required',
                 'video_id' => 'required|exists:videos,id',
                 'question_id' => 'required|exists:student_layer_questions,id',

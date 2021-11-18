@@ -32,7 +32,7 @@
                         <div class="step-one" style="margin-left: 100px">
                             <div class="row" style="">
                                 <ol>
-                                    <li>The {{ layer.name }} Quiz
+                                    <li>The <strong>{{ layer.name }}</strong> Quiz
                                     </li>
                                     <li>
                                         Based on your performance we build you a personalized course that
@@ -40,7 +40,7 @@
                                         know.
                                     </li>
                                     <li>
-                                        Please answer the next ten questions to
+                                        Please answer the next questions to
                                         the best of your ability.
                                     </li>
                                     <li>

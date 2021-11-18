@@ -92,6 +92,96 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="days_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" style="align-items: center; background: center; border: none">
+                        <div class="days-box work-times">
+                            <div class="row" v-for="l_dates in lesson_dates">
+                                <div class="col-6">
+                                    <label>{{ l_dates.day }}</label>
+                                </div>
+                                <div class="col-6 d-flex">
+                                    <input type="time" name="start_time" v-model="l_dates.time"
+                                           @change="updateLessonDates(l_dates)">
+                                    <input type="submit" @click="deleteLesson(l_dates)" value=" - "
+                                           class="ml-3">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <select name="" id="" class="form-control" v-model="new_form.day">
+                                        <option value="Monday" v-if="!lesson_dates_busy.includes('Monday')">Monday
+                                        </option>
+                                        <option value="Tuesday" v-if="!lesson_dates_busy.includes('Tuesday')">Tuesday
+                                        </option>
+                                        <option value="Wednesday" v-if="!lesson_dates_busy.includes('Wednesday')">
+                                            Wednesday
+                                        </option>
+                                        <option value="Thursday" v-if="!lesson_dates_busy.includes('Thursday')">Thursday
+                                        </option>
+                                        <option value="Friday" v-if="!lesson_dates_busy.includes('Friday')">Friday
+                                        </option>
+                                        <option value="Saturday" v-if="!lesson_dates_busy.includes('Saturday')">Saturday
+                                        </option>
+                                        <option value="Sunday" v-if="!lesson_dates_busy.includes('Sunday')">Sunday
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-6 d-flex">
+                                    <input type="time" v-model="new_form.time">
+                                    <input type="submit" @click="newLessonDate()" value=" + "
+                                           class="ml-3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="times_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" style="align-items: center; background: center; border: none">
+                        <div class="days-box work-times">
+                            <div class="row mb-4">
+                                <div class="col-9">
+                                    <label><span class="blue-text font-weight-bold">Current </span><br><br>2 sessions
+                                        per week <br>90
+                                        min/session</label>
+                                </div>
+                                <div class="col-3 d-flex">
+                                    <input v-on:change="check($event)" type="radio" class="d-block form-control"
+                                           v-model="lesson_length"
+                                           value="60"/>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-9">
+                                    <label><span class="blue-text font-weight-bold">Fast Track </span><br><br>3 sessions
+                                        per week <br>90 min/session</label>
+                                </div>
+                                <div class="col-3 d-flex">
+                                    <input v-on:change="check($event)" type="radio" class="d-block form-control"
+                                           v-model="lesson_length"
+                                           value="90"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-9">
+                                    <label><span class="blue-text font-weight-bold">Sprint </span><br><br>4
+                                        sessions per week <br>90 min/session</label>
+                                </div>
+                                <div class="col-3 d-flex">
+                                    <input v-on:change="check($event)" type="radio" class="d-block form-control"
+                                           v-model="lesson_length"
+                                           value="120"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="practice-exams" data-aos="fade-up" data-aos-once="true">
                 <h1 class="blue-text">Practice Exams</h1>
@@ -192,7 +282,8 @@
                                     <div class="col-8 d-flex align-items-center exam-name">
                                         Which Recommendation Do You Want?
                                     </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
+                                    <div data-toggle="modal" data-target="#times_modal"
+                                         class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <i class="fas fa-plus fa-2x" style="color: #4C6ED7"></i>
                                     </div>
                                 </div>
@@ -203,7 +294,8 @@
                                     <div class="col-8 d-flex align-items-center exam-name">
                                         What Other Days Can You Practice?
                                     </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
+                                    <div data-toggle="modal" data-target="#days_modal"
+                                         class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <i class="fas fa-plus fa-2x" style="color: #4C6ED7"></i>
                                     </div>
                                 </div>
@@ -214,7 +306,8 @@
                                     <div class="col-8 d-flex align-items-center exam-name">
                                         What Times Work For You?
                                     </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center text-center">
+                                    <div data-toggle="modal" data-target="#days_modal"
+                                         class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <i class="fas fa-plus fa-2x" style="color: #4C6ED7"></i>
                                     </div>
                                 </div>
@@ -227,7 +320,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                            moment(user.profile.exam_date).format("MM/DD")
+                                                moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -347,7 +440,20 @@ export default {
         disableNotification(attribute) {
             localStorage.setItem(attribute, false);
         },
+        check(event) {
+            axios.post(route('change.lesson.length', event.target.value))
+                .then(response => {
+                    this.toast.success(response.data.message);
+                    this.lesson_length = event.target.value
+                })
+                .catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                }).finally(() => {
+                $('#times_modal').modal('hide');
+            });
+        }
     },
+
     setup() {
         let saved = localStorage.getItem('set_calendar') === null;
         if (saved) {
@@ -357,6 +463,10 @@ export default {
             localStorage.setItem('videos', true)
             localStorage.setItem('set_calendar', true)
         }
+    },
+    mounted() {
+        console.log(123)
+        console.log(this.practice_exams)
     },
 
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy', 'calendar_lessons', 'calendar_exams'],
@@ -371,6 +481,7 @@ export default {
             practice_exams: this.practice_exams,
             lesson_dates: this.lesson_dates,
             lesson_dates_busy: this.lesson_dates_busy,
+            lesson_length: this.user.profile.lesson_length,
             form: {
                 date_time: null,
                 exam_id: null,
@@ -385,4 +496,17 @@ export default {
     }
 }
 </script>
+<style scoped>
+input[type='radio'] {
+    box-sizing: border-box;
+    appearance: none;
+    background: lightgray;
+    width: 30px;
+    height: 30px;
+}
 
+input[type='radio']:checked {
+    background-image: url('/images/checkmark.png');
+    background-size: contain;
+}
+</style>

@@ -16,7 +16,7 @@ class CreateVideoResponsesTable extends Migration
         Schema::create('video_responses', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('url');
+            $table->text('url')->nullable();
             $table->text('message')->nullable();
             $table->foreignId('video_id')->constrained('videos')->cascadeOnDelete();
             $table->timestamps();

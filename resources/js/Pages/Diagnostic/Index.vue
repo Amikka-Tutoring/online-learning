@@ -49,7 +49,7 @@
                                         know.
                                     </li>
                                     <li>
-                                        Please answer the next ten questions to
+                                        Please answer the next questions to
                                         the best of your ability.
                                     </li>
                                     <li>

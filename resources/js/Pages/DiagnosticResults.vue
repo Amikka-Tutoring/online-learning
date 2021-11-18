@@ -8,7 +8,7 @@
                             <h1 class="blue-text" style="margin-top: 0">Results</h1>
                             <p>{{ this.results.summary }}</p>
                             <a :href="route('dashboard')"
-                               style="font-size: 1.5rem; color: #3490dc; text-decoration: underline">Next</a>
+                               style="font-size: 1rem; color: white; padding: 5px 40px; background: #4c6ed7; border-radius: 5px">Next</a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -19,34 +19,10 @@
             </div>
             <div class="strengths-weakness result d-flex align-items-center" style="height: 650px">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4 class="title-mb">Strengths</h4>
-                                    <ol>
-                                        <li>Plug-in problems</li>
-                                        <li>Word problems</li>
-                                        <li>Time management</li>
-                                        <li>Content</li>
-                                        <li>Geometry</li>
-                                    </ol>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4 class="title-mb">Weaknesses</h4>
-                                    <ol>
-                                        <li>Time management</li>
-                                        <li>Calculus</li>
-                                        <li>Time management</li>
-                                        <li>Algebra 2</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-
-                        </div>
-                    </div>
+                    <h1 class="blue-text">What We've Learned</h1>
+                    <ol>
+                        <li v-for="l in learned">{{ l }}</li>
+                    </ol>
                 </div>
             </div>
             <div class="plan position-relative">
@@ -54,12 +30,23 @@
                     <h1 class="blue-text">Our Plan For You</h1>
                     <ol>
                         <li v-for="p in this.plan">{{ p }}</li>
-                        <a :href="route('dashboard')"
-                           style="position: absolute; font-size: 1.5rem; right: 10px; bottom:10px; color: #3490dc; text-decoration: underline">Next</a>
                     </ol>
                 </div>
             </div>
-
+            <div v-if="tips" class="strengths-weakness result d-flex align-items-center" style="height: 650px">
+                <div class="container">
+                    <h1 class="blue-text">Tips To Learn Better</h1>
+                    <ol>
+                        <li v-for="t in tips">{{ t }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center" style="margin:0px">
+            <div class="col-md-3 d-flex">
+                <a :href="route('dashboard')"
+                   style="font-size: 1rem; color: white; padding: 5px 20px; background: #4c6ed7; border-radius: 5px; width: 100%; text-align: center">Next</a>
+            </div>
         </div>
     </app-layout>
 </template>
@@ -72,7 +59,7 @@ export default {
         AppLayout,
     },
     methods: {},
-    props: ['results', 'plan', 'learned'],
+    props: ['results', 'plan', 'learned', 'tips'],
 
     data() {
         return {

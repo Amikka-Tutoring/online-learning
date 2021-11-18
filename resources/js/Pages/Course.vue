@@ -1,12 +1,12 @@
 <template>
     <app-layout>
-        <tools-menu :form="this.form" :question_form="this.questionForm" :videos="next_videos"/>
+        <tools-menu :form="this.form" :question_form="this.questionForm" :videos="next_videos" :video="video"/>
 
         <div class="container" style="margin-top: -50px">
 
             <div class=" row flex-column align-items-center p-4">
-                <h3 id="topic" ref="title">{{ video.title }}</h3>
-                <iframe id="youtube_id" allowfullscreen
+                <h3 id="topic" ref="title" class="text-center">{{ video.title }}</h3>
+                <iframe class="video-frame" id="youtube_id" allowfullscreen
                         :src="embed(video.url)"
                         style="max-width: 826px; width: 100%; height: 500px; margin: 50px 0; border: none">
                 </iframe>
@@ -60,21 +60,23 @@
                     <div class="notes-box row w-75">
                         <div class="col-lg-2 col-12">
                             <div class="row">
-                                <div class="notes-circle rounded-circle"
+                                <div class="notes-circle rounded-circle" title="Voice Notes"
                                      @click="audio = true; questions = false; written= false"><i
                                     class="fas fa-microphone-alt"></i>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="notes-circle rounded-circle"><i class="fas fa-flag"></i></div>
+                                <div v-on:click="flag(video)" class="notes-circle rounded-circle"
+                                     title="Save for later"><i
+                                    class="fas fa-flag"></i></div>
                             </div>
                             <div class="row">
-                                <div class="notes-circle rounded-circle"
+                                <div class="notes-circle rounded-circle" title="Write Notes"
                                      @click="questions = false; written = true; audio= false"><i class="fas fa-pen"></i>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="notes-circle rounded-circle"
+                                <div class="notes-circle rounded-circle" title="Ask a Question"
                                      @click="questions = true; written = false; audio = false">
                                     <i class="fas fa-question"></i></div>
                             </div>
@@ -131,8 +133,7 @@
                             <div v-if="faq_section" class="question-box text-left">
                                 <div class="row">
                                     <div class="col-lg-11 col-10">
-                                        Still confused? Check out the student FAQ’s below with video responses. You can
-                                        even ask us a question and we’ll respond within 72 hrs.
+                                        Still confused? Check out the student FAQ’s below with video responses.
                                     </div>
                                     <div class="col-lg-1 col-2 d-flex align-items-center">
                                         <i v-on:click="faq_section = disableNotification('faq_section')"
@@ -146,7 +147,8 @@
                         <div class="recommended-title">Top Questions</div>
                         <div class="recommended-list">
                             <div class="recommended-item" v-for="response in video.responses">
-                                <a :href="response.url" target="_blank" style="text-decoration: none">
+                                <a :href="route('video.response',{video:this.video, response:response})"
+                                   style="text-decoration: none">
                                     <div class="row">
                                         <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                             <i class="fas fa-play-circle fa-2x" style="color: #4C6ED7"></i>
@@ -192,6 +194,13 @@ export default {
         },
         quiz: function (lesson_id) {
             Inertia.get(route('lesson.quiz', lesson_id))
+        },
+        flag: function (video) {
+            axios.post(route('flag.video', video)).then(response => {
+                this.toast.success(response.data.message)
+            }).catch(error => {
+                Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+            });
         },
         submit: function () {
             axios.post(route('notes.store'), this.form)

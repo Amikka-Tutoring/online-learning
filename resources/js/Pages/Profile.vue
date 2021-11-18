@@ -2,11 +2,6 @@
     <app-layout>
         <div class="container">
             <div class="profile-wrapper" data-aos="fade-up">
-                <div class="row">
-                    <img class="rounded-circle" style="width: 120px" :src="avatar">
-                </div>
-                <h1>{{ user.name }}</h1>
-                <p>{{ user.email }}</p>
                 <div class="btn-group">
                     <button @click="tab = changeTab('specific')"
                             v-bind:class="[tab==='specific' ? 'active-button' : 'passive-button']">Course Specific

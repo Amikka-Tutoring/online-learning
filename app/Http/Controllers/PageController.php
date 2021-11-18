@@ -11,7 +11,9 @@ use App\Models\LayerQuizResult;
 use App\Models\PracticeExam;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\UserVideoToReview;
 use App\Models\Video;
+use App\Models\VideoResponse;
 use App\Scopes\LayerScope;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -165,7 +167,7 @@ class PageController extends Controller
         $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions', 'responses', 'responses');
         $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
-        $next_videos = $video->layer->videos()->where('id', '>', $video->id)->with('tags')->take(5)->get();
+        $next_videos = Video::where('id', '>', $video->id)->with('tags')->take(5)->get();
         $user = Auth::user()->load('layer_quiz_results');
         if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
@@ -303,11 +305,8 @@ class PageController extends Controller
     public function review()
     {
         $user = Auth::user()->load('enrollments', 'enrollments.course', 'layer_quiz_results');
-        $completed_layers = $user->layer_quiz_results()->where('score', ' < ', '50')->get()->pluck('layer_id');
-        $courses_to_review = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
-            $query->whereIn('id', $completed_layers)->with('videos', 'videos.tags');
-        }])->get()->pluck('course');
-        return Inertia::render('Review', ['courses_to_review' => $courses_to_review]);
+        $videos = $user->videos_to_review()->with('tags')->get();
+        return Inertia::render('Review', ['videos' => $videos]);
     }
 
     public function test()
@@ -361,5 +360,23 @@ class PageController extends Controller
         $user->tags()->sync($tag);
         $message = 'Course level is set to: ' . $request_tag;
         return ['tag' => $request_tag, 'message' => $message];
+    }
+
+    public function videoResponse(Video $video, VideoResponse $response)
+    {
+        $video = $response->load('video', 'video.layer');
+        return Inertia::render('VideoResponse', ['video' => $video, 'lesson' => $video->video->layer]);
+    }
+
+    public function flagVideo(Video $video)
+    {
+        UserVideoToReview::updateOrCreate([
+            'user_id' => auth()->user()->id,
+            'video_id' => $video->id
+        ], [
+            'user_id' => auth()->user()->id,
+            'video_id' => $video->id
+        ]);
+        return ['message' => 'Video added to review'];
     }
 }

@@ -386,7 +386,10 @@ a {
     border: none;
     width: 260px;
     height: 50px;
-    margin-top: 120px;
+}
+
+.next-lessons .next-item {
+    font-size: 16px !important;
 }
 
 .profile-wrapper .passive-button {
@@ -396,7 +399,6 @@ a {
     border: none;
     width: 260px;
     height: 50px;
-    margin-top: 120px;
 }
 
 .profile-wrapper .profile-course-listing {
@@ -559,7 +561,7 @@ a {
 .practice-exams-content .question-box {
     margin-top: 45px;
     margin-bottom: 100px;
-    color: #888888;
+    color: black;
     text-align: left;
     padding-top: 40px;
     padding-bottom: 40px;
@@ -572,7 +574,7 @@ a {
 .video-exams-content .question-box {
     margin-top: 45px;
     margin-bottom: 100px;
-    color: #888888;
+    color: black;
     text-align: left;
     padding-top: 40px;
     padding-bottom: 40px;
@@ -599,9 +601,14 @@ a {
 
 .results-wrapper h1 {
     font-weight: 600;
-    margin-top: 137px;
+    margin-top: 20px;
     margin-bottom: 50px;
 }
+
+.strengths-weakness ol {
+    width: 75%;
+}
+
 
 .results-wrapper .strengths-weakness {
     background: rgba(122, 171, 220, 0.2);
@@ -1707,6 +1714,10 @@ input[type="radio"] {
     .flex-mobile select {
         margin: 5px 0px !important;
     }
+
+    .strengths-weakness ol {
+        width: 100% !important;
+    }
 }
 
 
@@ -1793,7 +1804,19 @@ input[type="radio"] {
 
     .tools-menu {
         width: 100% !important;
-        position: absolute;
+        position: fixed;
+    }
+
+    .video-frame {
+        height: 100% !important;
+    }
+
+    .notes-section .notes-section-content .notes-box textarea {
+        height: 15px !important;
+    }
+
+    .faq {
+        padding: 50px 0 !important;
     }
 
     .tools-menu ul {

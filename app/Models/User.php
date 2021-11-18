@@ -91,6 +91,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function videos_to_review()
+    {
+        return $this->belongsToMany(Video::class, 'user_videos_to_reviews');
+    }
+
     public function check_role($slug)
     {
         return $this->role->slug == $slug;

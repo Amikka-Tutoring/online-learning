@@ -55,8 +55,8 @@
                         <input type="text" name="title" id="title" class="form-control" v-model="form.title">
                     </div>
                     <div class="form-group">
-                        <label for="url">URL:</label>
-                        <input type="url" name="url" id="url" class="form-control" v-model="form.url">
+                        <label for="url">Vimeo ID:</label>
+                        <input type="text" name="url" id="url" class="form-control" v-model="form.url">
                     </div>
                     <div class="form-group">
                         <label for="message">Message:</label>
@@ -144,6 +144,7 @@ export default {
             this.reset();
         },
         save: function (data) {
+            console.log(data)
             axios.post(route('store.response'), data)
                 .then(response => {
                     this.toast.success(response.data.message)

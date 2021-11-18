@@ -63,6 +63,8 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
             Route::get('my-courses/{course}', [PageController::class, 'singleCourse'])->name('course');
             Route::get('videos/{video}', [PageController::class, 'lesson'])->name('lesson');
+            Route::post('videos/{video}/flag', [PageController::class, 'flagVideo'])->name('flag.video');
+            Route::get('videos/{video}/responses/{response}', [PageController::class, 'videoResponse'])->name('video.response');
             Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
             Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');

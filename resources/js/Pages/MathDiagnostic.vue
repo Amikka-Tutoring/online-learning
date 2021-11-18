@@ -30,7 +30,7 @@
                                         course that teaches you exactly what you need to know.
                                     </li>
                                     <li>
-                                        Please answer the next ten questions to the <span class="blue-text">best of your ability.</span>
+                                        Please answer the next questions to the <span class="blue-text">best of your ability.</span>
                                     </li>
                                     <li>
                                         <button v-if="form.currentstep === 1" @click.prevent="next()"
