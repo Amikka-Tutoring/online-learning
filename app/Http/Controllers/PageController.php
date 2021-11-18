@@ -151,10 +151,12 @@ class PageController extends Controller
         $user = Auth::user();
         $date = Carbon::parse($user->profile->exam_date);
         $date_diff = $date->diffForHumans();
+        $lesson_dates = $user->lesson_dates;
+        $lesson_dates_busy = $user->lesson_dates->pluck('day');
 //        $visited = $user->exams_visited()->where('visited', 1)->pluck('exam_id');
         $scheduled = $user->practice_exam_dates->pluck('exam_id');
         $exams = PracticeExam::whereNotIn('id', $scheduled)->get();
-        return Inertia::render('Exams', ['practice_exams' => $exams, 'date_diff' => $date_diff]);
+        return Inertia::render('Exams', ['practice_exams' => $exams, 'date_diff' => $date_diff, 'lesson_dates' => $lesson_dates, 'lesson_dates_busy' => $lesson_dates_busy]);
     }
 
     public function myCourses()

@@ -465,8 +465,6 @@ export default {
         }
     },
     mounted() {
-        console.log(123)
-        console.log(this.practice_exams)
     },
 
     props: ['date_diff', 'practice_exams', 'user', 'lesson_dates', 'lesson_dates_busy', 'calendar_lessons', 'calendar_exams'],
