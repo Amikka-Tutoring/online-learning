@@ -2,7 +2,7 @@
     <app-layout>
         <div class="container">
             <h1 class="blue-text">Notes</h1>
-            <div class="notes-container" v-if="notes.length">
+            <div class="notes-container" v-if="Object.keys(this.notes).length">
                 <div class="notes-buttons">
                     <div class="row">
                         <div class="col-lg-6 col-12 text-right buttons">
@@ -21,7 +21,6 @@
                         </div>
                     </div>
                 </div>
-                <hr class="blue-divider">
                 <div class="notes-table">
                     <table>
                         <thead>
@@ -33,21 +32,22 @@
                             </th>
                             <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Topics
                             </th>
-                            <th style="width: 30%"><i class="fas fa-tags blue-text mr-2"></i>Tags</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(note,index) in s_notes">
-                            <td>{{ moment(note.created_at).format("MM/DD") }}</td>
-                            <td>{{ note.video.layer.name }}</td>
-                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>
-                            <td>
-                                <span v-for="tag in note.video.tags" class="lightblue-badge badges">{{
-                                        tag.name
-                                    }}</span>
+                        <tr v-for="(note,itemObjKey) in s_notes">
+                            <td>{{ itemObjKey }}</td>
+                            <td><span v-for="(n,index) in note"><span
+                                v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
                             </td>
+                            <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
+                                <a :href="route('notes-show',n)">{{
+                                    n.video.layer.name
+                                }}</a></span>
+                            </td>
+                            <!--                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>-->
                         </tr>
-                        <p v-if="!s_notes.length">No rows found</p>
+                        <p v-if="!Object.keys(this.s_notes).length">No rows found</p>
                         </tbody>
                     </table>
                 </div>
@@ -116,7 +116,9 @@ export default {
         if (saved) {
             localStorage.setItem('no_notes', true)
         }
+    },
+    mounted() {
+        console.log(this.s_notes)
     }
-    ,
 }
 </script>

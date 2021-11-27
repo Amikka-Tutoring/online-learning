@@ -300,7 +300,7 @@ a {
 
 .lightblue-badge {
     background: rgba(14, 111, 255, 0.2);
-    padding: 10px 30px;
+    padding: 5px 30px;
 }
 
 .next-item .lightblue-badge {
@@ -779,7 +779,11 @@ a {
 .recommended-item {
     border: 1px solid rgba(14, 111, 255, 0.75);
     border-radius: 9px;
-    padding: 15px;
+    padding: 10px;
+}
+
+.recommended-item h5 {
+    margin: 0;
 }
 
 .recommended-list {
@@ -1742,7 +1746,7 @@ input[type="radio"] {
     }
 
     .question-box {
-        font-size: 16px !important;
+        font-size: 13px !important;
     }
 
     h1 {

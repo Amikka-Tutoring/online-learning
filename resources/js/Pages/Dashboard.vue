@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left: 0;">
                                         <div class="blue-text">{{
-                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a :href="route('course',user_course.course.slug)"><h4>{{
-                                    user_course.course.name
+                                        user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -256,10 +256,10 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                            parseFloat(user_course.course.quizzes_attempted /
-                                            (user_course.course.quizzes_count === 0 ? 1 :
-                                            user_course.course.quizzes_count) *
-                                            100).toFixed(0)
+                                                parseFloat(user_course.course.quizzes_attempted /
+                                                    (user_course.course.quizzes_count === 0 ? 1 :
+                                                        user_course.course.quizzes_count) *
+                                                    100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -295,16 +295,18 @@
                         <div class="col-lg-3 col-md-5 col-12">
                             <div class="calendar-box">
                                 <div class="row">
-                                    <p class="blue-text font-weight-bold m-0">Next Lesson: ⏳</p>
+                                    <span class="blue-text font-weight-bold m-0">Next Lesson: </span> ⏳
                                     <p v-if="next_lesson_day">{{ next_lesson_day }}, {{ next_lesson }} at
                                         {{ next_lesson_time }}</p>
                                     <p v-else>N/A</p>
                                 </div>
                                 <div class="row flex-column">
-                                    <p class="blue-text font-weight-bold m-0">Next Practice Exam: 🚀</p>
+                                    <div>
+                                        <span class="blue-text font-weight-bold m-0">Next Practice Exam: </span>🚀
+                                    </div>
                                     <p v-if="next_practice_exam">{{ next_practice_exam_day }},
                                         {{ next_practice_exam_date }} at {{
-                                        next_practice_exam_time
+                                            next_practice_exam_time
                                         }}</p>
                                     <p v-else>N/A</p>
                                 </div>
@@ -422,7 +424,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">{{
-                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>

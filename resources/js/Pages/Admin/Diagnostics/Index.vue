@@ -106,7 +106,7 @@ export default {
             axios.put(route('diagnostics.update', data.id), data)
                 .then(response => {
                     this.getQuizzes();
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.loading = false
                     this.closeModal();
                     this.reset();
@@ -123,7 +123,7 @@ export default {
             axios.delete(route('diagnostics.delete', data.id))
                 .then(response => {
                     this.getQuizzes();
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.deleteLoader = false
                     this.closeModal();
                     this.reset();

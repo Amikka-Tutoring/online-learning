@@ -116,7 +116,7 @@ export default {
                 return
             }
             form.answer_list.push(form.answers);
-            toast.success('Submitted')
+            toast.info('Submitted')
             Inertia.post(route('diagnostic.result'), form);
         }
 

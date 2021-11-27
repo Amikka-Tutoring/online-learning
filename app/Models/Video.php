@@ -21,6 +21,8 @@ class Video extends Model
         'duration'
     ];
 
+    protected $appends = ['viewed'];
+
     protected static function booted()
     {
         if (auth()->user()->is_student())
@@ -31,6 +33,19 @@ class Video extends Model
     {
         return $this->belongsTo(Layer::class);
     }
+
+    public function user_viewed_videos()
+    {
+        return $this->belongsToMany(User::class, 'user_viewed_videos')->where('user_id', auth()->user()->id);
+    }
+
+    public function getViewedAttribute()
+    {
+        if ($this->user_viewed_videos->count())
+            return true;
+        return false;
+    }
+
 
     public function notes()
     {

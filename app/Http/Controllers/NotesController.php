@@ -16,8 +16,15 @@ class NotesController extends Controller
 {
     public function show(Note $note)
     {
-//        dd($note);
-        return Inertia::render('SingleNote', ['note' => $note->load('video.layer', 'video.tags')]);
+        $notes = auth()->user()->notes()->whereMonth('created_at', Carbon::parse($note->created_at)->format('m'))->whereDay('created_at', Carbon::parse($note->created_at)->format('d'))->with('video.layer', 'video.tags')->get();
+        $notes_exclude = auth()->user()->notes()->whereMonth('created_at', Carbon::parse($note->created_at)->format('m'))->whereDay('created_at', Carbon::parse($note->created_at)->format('d'))->with('video.layer', 'video.tags')->pluck('id');
+
+        $date = Carbon::parse($note->created_at)->format('m/d');
+
+        $next_date = auth()->user()->notes()->where('created_at', '>', $note->created_at)->whereNotIn('id', $notes_exclude)->first();
+        $prev_date = auth()->user()->notes()->where('created_at', '<', $note->created_at)->whereNotIn('id', $notes_exclude)->latest()->first();
+
+        return Inertia::render('SingleNote', ['notes' => $notes, 'date' => $date, 'next_date' => $next_date, 'prev_date' => $prev_date]);
     }
 
     public function getNote(Note $note)
@@ -33,7 +40,9 @@ class NotesController extends Controller
         $input = request()->get('input');
         $notes = $user->notes()->whereHas('video.layer.course', function ($query) use ($course) {
             $query->where('name', 'like', '%' . $course . '%');
-        })->where('written_notes', 'like', '%' . $input . '%')->with('video.layer', 'video.layer.course', 'video.layer.tags')->get();
+        })->where('written_notes', 'like', '%' . $input . '%')->with('video.layer', 'video.layer.course', 'video.layer.tags')->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m/d');
+        });
         return ['s_notes' => $notes, 'user' => $user, 'course' => $course, 'input' => $input];
     }
 
@@ -45,9 +54,10 @@ class NotesController extends Controller
         $input = '';
         $notes = $user->notes()->whereHas('video.layer.course', function ($query) use ($course) {
             $query->where('name', 'like', '%' . $course . '%');
-        })->where('written_notes', 'like', '%' . $input . '%')->with('video.layer', 'video.layer.course', 'video.layer.tags')->get();
-
-
+        })->where('written_notes', 'like', '%' . $input . '%')->with('video.layer', 'video.layer.course', 'video.layer.tags')->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m/d');
+        });
+//        return $notes;
         return Inertia::render('NotesList', ['notes' => $notes]);
     }
 
@@ -65,7 +75,7 @@ class NotesController extends Controller
         $user = Auth::user();
         $notes = $user->notes()->latest()->with(['video.layer', 'video.layer.course', 'video.tags'])->whereHas('video.layer', function ($query) use ($course) {
             $query->whereHas('course', function ($q) use ($course) {
-                if ( $course == 'All' )
+                if ($course == 'All')
                     $q->where('name', 'like', '%' . '' . '%');
                 else
                     $q->where('name', 'like', '%' . $course . '%');
@@ -78,7 +88,7 @@ class NotesController extends Controller
 
     public function store(Request $request)
     {
-        if ( $request->hasFile('audio_notes') ) {
+        if ($request->hasFile('audio_notes')) {
             $fileName = time() . '_' . $request->audio_notes->getClientOriginalName() . '.mp3';
             $filePath = $request->file('audio_notes')->storeAs('uploads', $fileName, 'public');
             $fullPath = 'storage/' . $filePath;

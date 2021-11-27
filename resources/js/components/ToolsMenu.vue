@@ -28,7 +28,7 @@
                             </a>
                         </div>
                         <div class="" v-else>
-                            No more videos for this lesson
+                            No more videos
                         </div>
                     </div>
                 </li>
@@ -117,7 +117,7 @@ export default {
         submit: function () {
             axios.post(route('notes.store'), this.form)
                 .then(response => {
-                    this.toast.success(response.data.message)
+                    this.toast.info(response.data.message)
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -126,7 +126,7 @@ export default {
         submitQuestion: function () {
             axios.post(route('notes.store.question'), this.question_form)
                 .then(response => {
-                    this.toast.success(response.data)
+                    this.toast.info(response.data)
                     this.question_form.question_text = null
                 })
                 .catch(error => {
@@ -135,7 +135,7 @@ export default {
         },
         flag: function (video) {
             axios.post(route('flag.video', video)).then(response => {
-                this.toast.success(response.data.message)
+                this.toast.info(response.data.message)
             }).catch(error => {
                 Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
             });
@@ -188,7 +188,7 @@ export default {
                                     'Content-Type': 'multipart/form-data'
                                 }
                             }).then(response => {
-                                parentThis.toast.success(response.data.message);
+                                parentThis.toast.info(response.data.message);
                             });
                             playAudio.src = audioSrc;
                         }

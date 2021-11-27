@@ -18,6 +18,7 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\UserPracticeExamDateController;
 use App\Http\Controllers\UserLessonDateController;
 use App\Http\Controllers\TutorController;
+use App\Http\Controllers\VideoController;
 
 
 /*
@@ -63,6 +64,7 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::get('my-courses', [PageController::class, 'myCourses'])->name('my-courses');
             Route::get('my-courses/{course}', [PageController::class, 'singleCourse'])->name('course');
             Route::get('videos/{video}', [PageController::class, 'lesson'])->name('lesson');
+            Route::post('videos/{video}/view', [VideoController::class, 'view'])->name('view.video');
             Route::post('videos/{video}/flag', [PageController::class, 'flagVideo'])->name('flag.video');
             Route::get('videos/{video}/responses/{response}', [PageController::class, 'videoResponse'])->name('video.response');
             Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');

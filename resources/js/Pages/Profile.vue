@@ -357,7 +357,7 @@ export default {
         onChange(event, props) {
             axios.post(route('change.tag'), event.target.value)
                 .then(response => {
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.user_tag = response.data.tag;
                 })
                 .catch(error => {
@@ -375,7 +375,7 @@ export default {
         set_lesson_length(event) {
             axios.post(route('change.lesson.length', event.target.value))
                 .then(response => {
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.user.profile.lesson_length = event.target.value
                 })
                 .catch(error => {
@@ -396,14 +396,14 @@ export default {
         },
         changeExamDate: function () {
             axios.post(route('change.exam.date', this.user_data.profile.exam_date)).then((response) => {
-                this.toast.success(response.data.message)
+                this.toast.info(response.data.message)
             }).catch(() => {
                 console.log('error')
             });
         },
         changeScoreGoal: function () {
             axios.post(route('change.score.goal', this.user.profile.desire_score)).then((response) => {
-                this.toast.success(response.data.message)
+                this.toast.info(response.data.message)
             }).catch(() => {
                 console.log('error')
             });
@@ -414,7 +414,7 @@ export default {
                 courses: this.plans
             }))
                 .then(response => {
-                    this.toast.success('Enrolled Successfully')
+                    this.toast.info('Enrolled Successfully')
                     this.available_courses = response.data.available_courses
                 })
                 .catch(error => {

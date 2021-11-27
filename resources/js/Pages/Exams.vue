@@ -285,7 +285,7 @@ export default {
         updateLessonDates: function (lesson_date) {
             axios.put(route('update.lesson.dates'), lesson_date)
                 .then(response => {
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -294,7 +294,7 @@ export default {
         newLessonDate: function () {
             axios.post(route('store.lesson.dates'), this.new_form)
                 .then(response => {
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.getLessonDates()
                     this.new_form.day = null
                     this.new_form.time = null
@@ -308,7 +308,7 @@ export default {
             axios.delete(route('delete.lesson.dates', lesson))
                 .then(response => {
                     this.getLessonDates()
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                 });
         },
         getLessonDates: function () {
@@ -326,7 +326,7 @@ export default {
         visitExam: function (exam) {
             axios.post(route('exams.visit', exam.id))
                 .then(response => {
-                    // this.toast.success(response.data.message);
+                    // this.toast.info(response.data.message);
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -340,7 +340,7 @@ export default {
         save: function () {
             axios.post(route('schedule.practice.exam', this.form.exam_id), this.form)
                 .then(response => {
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.practice_exams = response.data.exams
                 })
                 .catch(error => {
@@ -354,7 +354,7 @@ export default {
         check(event) {
             axios.post(route('change.lesson.length', event.target.value))
                 .then(response => {
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.lesson_length = event.target.value
                 })
                 .catch(error => {

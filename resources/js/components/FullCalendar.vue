@@ -44,7 +44,7 @@ export default {
     methods: {
         submit: function (form) {
             axios.post(route('set.date'), form).then(response => {
-                this.toast.success(response.data.message);
+                this.toast.info(response.data.message);
                 window.location.reload()
             }).catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -95,13 +95,14 @@ export default {
             <div class="d-flex flex-mobile">
                 <input type="datetime-local" v-model="form.time" class="form-control">
                 <select name="" v-model="form.type" class="form-control mx-2">
-                    <option value="exam">🚀</option>
-                    <option value="lesson">⌛</option>
+                    <option value="exam">Next Practice Exam: 🚀</option>
+                    <option value="lesson">Next Lesson: ⌛</option>
                 </select>
                 <select name="" v-model="form.exam" v-if="form.type=='exam'" class="form-control mr-2">
                     <option v-for="exam in exams" :value="exam.id">{{ exam.title }}</option>
                 </select>
-                <button v-on:click="submit(form)" class="btn btn-primary"><i class="bi bi-check2-circle"></i></button>
+                <button v-on:click="submit(form)" class="btn btn-primary">Schedule
+                </button>
             </div>
         </div>
     </div>

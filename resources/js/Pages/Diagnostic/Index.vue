@@ -22,7 +22,7 @@
                             style="background: #56c880"
                         ></div>
                     </div>
-                    <div class="blue-text">Skip</div>
+                    <!--                    <div class="blue-text">Skip</div>-->
 
                 </div>
                 <reading-diagnostic v-if="diagnostic.name=='Reading'"/>
@@ -67,29 +67,23 @@
                     </div>
                     <div v-for="(question, index) in diagnostic.questions">
                         <div v-if="form.currentstep === index + 2"
-                             class="row w-100">
+                             class="row w-100 m-0 justify-content-center flex-column align-items-center">
                             <div class="col-12">
                                 <p class="quiz-question-box">{{ question.title }}</p>
                             </div>
-                            <div class="col-lg-6 col-12">
+                            <div class="col-md-5">
                                 <div class="image-box text-center">
                                     <img class="w-100" :src="question.image">
                                 </div>
-                                <!--                                <p class="quiz-question-box text-left">-->
-                                <!--                                <ol style="list-style-type: upper-latin">-->
-                                <!--                                    <li v-for=" (answer, index) in question.answers">{{ answer.title }}</li>-->
-                                <!--                                </ol>-->
-                                <!--                                </p>-->
                             </div>
-                            <div class="d-flex align-items-center justify-content-center my-4"
-                                 v-bind:class="[question.image ? 'col-md-6':'col-12']">
+                            <div class="col-md-5 d-flex align-items-center justify-content-center">
                                 <div class="row w-100">
                                     <div class="wrapper d-flex flex-column">
                                         <div class="row w-100 justify-content-center">
                                             <div v-for="(answer, index) in question.answers"
                                                  :key="answer"
                                                  :index="question.key"
-                                                 class="col-md-7 p-0"
+                                                 class="col-md-12 p-0"
                                             >
                                                 <div class="options">
                                                     <input :id="'option-' +answer.id"
@@ -114,7 +108,7 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-3 col-4">
+                        <div class="col-md-2 col-5">
                             <button
                                 v-if="form.currentstep > 1"
                                 class="blue-button w-100"
@@ -124,7 +118,7 @@
                                 <i class="bi bi-arrow-left-circle"></i>
                             </button>
                         </div>
-                        <div class="col-md-3 col-4">
+                        <div class="col-md-2 col-5">
                             <button
                                 v-if="
                                 form.currentstep !==
@@ -214,7 +208,7 @@ export default {
                 return
             }
             form.answer_list.push(form.answers);
-            toast.success('Submitted')
+            toast.info('Submitted')
             console.log(form)
             Inertia.post(route('quiz.result'), form);
         }

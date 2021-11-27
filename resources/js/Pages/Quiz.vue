@@ -58,25 +58,24 @@
                     </div>
                     <div v-for="(question, index) in layer.questions">
                         <div v-if="form.currentstep === index + 2"
-                             class="row w-100 m-0">
+                             class="row w-100 m-0 justify-content-center flex-column align-items-center">
                             <div class="col-12">
                                 <p class="quiz-question-box">{{ question.title }}</p>
                             </div>
 
-                            <div class="col-lg-6 col-12">
+                            <div class="col-md-5">
                                 <div class="image-box text-center">
                                     <img class="w-100" :src="question.image">
                                 </div>
                             </div>
-                            <div class="col-12 d-flex align-items-center justify-content-center"
-                                 v-bind:class="[question.image ? 'col-md-6':'col-12']">
+                            <div class="col-md-5 d-flex align-items-center justify-content-center">
                                 <div class="row w-100">
                                     <div class="wrapper d-flex flex-column">
                                         <div class="row w-100 justify-content-center">
                                             <div v-for="(answer, index) in question.answers"
                                                  :key="answer"
                                                  :index="question.key"
-                                                 class="col-md-7 p-0"
+                                                 class="col-md-12 p-0"
                                             >
                                                 <div class="options">
                                                     <input :id="'option-' +answer.id"
@@ -100,7 +99,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center my-4">
-                        <div class="col-md-3 col-4">
+                        <div class="col-md-2 col-5">
                             <button
                                 v-if="form.currentstep > 1"
                                 class="blue-button w-100"
@@ -110,7 +109,7 @@
                                 <i class="bi bi-arrow-left-circle"></i>
                             </button>
                         </div>
-                        <div class="col-md-3 col-4">
+                        <div class="col-md-2 col-5">
                             <button
                                 v-if="
                                 form.currentstep !==
@@ -177,8 +176,8 @@ export default {
             this.form.answer_list.push(this.form.answers);
             axios.post(route('lesson.quiz.store', this.form.layer_id), this.form.answer_list[0])
                 .then(response => {
-                    this.toast.success(response.data.message);
-                    this.toast.success(response.data.score);
+                    this.toast.info(response.data.message);
+                    this.toast.info(response.data.score);
                     // setTimeout(function () {
                     window.location.href = "/";
                     // }, 2000);

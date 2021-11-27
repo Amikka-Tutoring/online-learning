@@ -128,7 +128,7 @@ export default {
             axios.put(route('course.update', data.id), data)
                 .then(response => {
                     this.getCourses();
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.loading = false
                     this.closeModal();
                     this.reset();
@@ -144,7 +144,7 @@ export default {
             axios.delete(route('course.delete', data.id))
                 .then(response => {
                     this.getCourses();
-                    this.toast.success(response.data.message);
+                    this.toast.info(response.data.message);
                     this.deleteLoader = false
                     this.closeModal();
                     this.reset();

@@ -14,7 +14,12 @@
                         <p class="text-justify">{{ this.video.message }}</p>
                     </div>
                 </div>
-
+            </div>
+            <div class="row justify-content-center" style="margin:0px">
+                <div class="col-md-3 d-flex">
+                    <a v-on:click="back"
+                       style="font-size: 1rem; color: white; padding: 5px 20px; background: #4c6ed7; border-radius: 5px; width: 100%; text-align: center">Back</a>
+                </div>
             </div>
         </div>
     </app-layout>
@@ -34,6 +39,9 @@ export default {
         AppLayout,
     },
     methods: {
+        back: function () {
+            window.history.back();
+        },
         disableNotification(attribute) {
             localStorage.setItem(attribute, false);
         },

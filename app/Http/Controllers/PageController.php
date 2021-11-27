@@ -199,15 +199,13 @@ class PageController extends Controller
             $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children.children.videos', 'children.children.videos.tags']);
         }])->get()->pluck('course');
 
-        $recommended_courses = $user->enrollments()->with(['course', 'course.layers' => function ($query) use ($completed_layers) {
-            $query->whereNull('layers.parent_id')->whereNotIn('layers.id', $completed_layers)->with(['videos', 'videos.tags', 'children.videos', 'children' => function ($query_children) use ($completed_layers) {
-                $query_children->whereNotIn('id', $completed_layers)->with(['videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children' => function ($query_children_children) use ($completed_layers) {
-                    $query_children_children->whereNotIn('id', $completed_layers)->with('videos');
-                }]);
-            }]);
-        }
-        ])->get()->pluck('course');
-        return Inertia::render('Recommended', ['courses' => $courses, 'recommended_courses' => $recommended_courses]);
+        $enrolled_courses = $user->enrollments->pluck('course.id');
+
+        $recommended_courses = Video::whereNotIn('layer_id', $completed_layers)->whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->with('tags')->latest()->take(10)->get();
+
+        return Inertia::render('Recommended', ['courses' => $courses, 'videos' => $recommended_courses]);
     }
 
     public function singleCourse($course)
@@ -314,6 +312,8 @@ class PageController extends Controller
 
     public function test()
     {
+        return $video = Video::find(1266);
+        return $video->user_viewed_videos;
         return Video::with('tags')->latest()->get();
 
 //        $user = Auth::user()->load('profile', 'tags');

@@ -168,7 +168,6 @@
     </app-layout>
 </template>
 
-
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import Button from "@/Jetstream/Button";
@@ -197,7 +196,7 @@ export default {
         },
         flag: function (video) {
             axios.post(route('flag.video', video)).then(response => {
-                this.toast.success(response.data.message)
+                this.toast.info(response.data.message)
             }).catch(error => {
                 Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
             });
@@ -205,7 +204,7 @@ export default {
         submit: function () {
             axios.post(route('notes.store'), this.form)
                 .then(response => {
-                    this.toast.success(response.data.message)
+                    this.toast.info(response.data.message)
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -214,7 +213,7 @@ export default {
         submitQuestion: function () {
             axios.post(route('notes.store.question'), this.questionForm)
                 .then(response => {
-                    this.toast.success(response.data)
+                    this.toast.info(response.data)
                     this.questionForm.question_text = null
                 })
                 .catch(error => {
@@ -269,7 +268,7 @@ export default {
                                     'Content-Type': 'multipart/form-data'
                                 }
                             }).then(response => {
-                                parentThis.toast.success(response.data.message);
+                                parentThis.toast.info(response.data.message);
                             });
                             playAudio.src = audioSrc;
                         }
@@ -310,7 +309,23 @@ export default {
             localStorage.setItem('video_page', true)
         }
     },
+    view: function () {
+        console.log('in method')
+
+    },
     mounted() {
+        const iframe = document.querySelector('iframe');
+        const player = new Vimeo.Player(iframe);
+        const parent = this
+        player.on('play', function () {
+            axios.post(route('view.video', parent.video)).then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log(error.response)
+            })
+        });
     }
 }
 </script>
+
+

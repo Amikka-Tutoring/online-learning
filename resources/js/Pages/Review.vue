@@ -28,7 +28,11 @@
                                 <div
                                     class="col-2 d-flex justify-content-center align-items-center text-center">
                                     <a :href="route('lesson',top_videos.id)">
-                                        <i class="fas fa-play-circle fa-2x"
+                                        <i v-if="top_videos.viewed"
+                                           class="fas fa-play-circle fa-2x"
+                                           style="color: #4C6ED7"></i>
+                                        <i v-else
+                                           class="far fa-circle fa-2x"
                                            style="color: #4C6ED7"></i>
                                     </a>
                                 </div>
@@ -44,8 +48,8 @@
                                 <div
                                     class="col-2 d-flex justify-content-center align-items-center text-center">
                                     <h5>{{
-                                        moment.duration(top_videos.duration,
-                                        'seconds').format("hh:mm:ss")
+                                            moment.duration(top_videos.duration,
+                                                'seconds').format("hh:mm:ss")
                                         }}</h5>
                                 </div>
                             </div>
