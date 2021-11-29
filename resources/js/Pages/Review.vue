@@ -29,7 +29,7 @@
                                     class="col-2 d-flex justify-content-center align-items-center text-center">
                                     <a :href="route('lesson',top_videos.id)">
                                         <i v-if="top_videos.viewed"
-                                           class="fas fa-play-circle fa-2x"
+                                           class="bi bi-check-circle-fill fa-2x"
                                            style="color: #4C6ED7"></i>
                                         <i v-else
                                            class="far fa-circle fa-2x"

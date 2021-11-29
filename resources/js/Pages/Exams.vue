@@ -399,3 +399,17 @@ export default {
     }
 }
 </script>
+<style scoped>
+input[type='radio'] {
+    box-sizing: border-box;
+    appearance: none;
+    background: lightgray;
+    width: 30px;
+    height: 30px;
+}
+
+input[type='radio']:checked {
+    background-image: url('/images/checkmark.png');
+    background-size: contain;
+}
+</style>

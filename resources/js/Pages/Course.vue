@@ -26,7 +26,8 @@
             </div>
 
 
-            <div v-if="video.layer.questions.length" class="row justify-content-center" style="margin-bottom: 100px">
+            <div v-if="video.layer.questions.length" class="video-quiz-btn row justify-content-center"
+                 style="margin-bottom: 100px">
                 <button class="blue-button" @click="quiz(video.layer.id)" v-if="user_attempt === 0">Quiz
                 </button>
                 <button class="blue-button" v-if="user_attempt !== 0"
@@ -85,7 +86,7 @@
                             <div v-if="written" class="written_notes">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
-                                    <textarea required v-model="form.written_notes" id="" cols="80" rows="40"
+                                    <textarea required v-model="form.written_notes" id="" cols="80" rows="20"
                                               name="written_notes"
                                               placeholder="Notes..."></textarea>
                                     <button class="light-button">Submit</button>
@@ -94,7 +95,7 @@
                             <div v-if="questions" class="questions">
                                 <form action="" @submit.prevent="submitQuestion">
                                     <h1 class="blue-text">Questions</h1>
-                                    <textarea required v-model="questionForm.question_text" cols="80" rows="40"
+                                    <textarea required v-model="questionForm.question_text" cols="80" rows="20"
                                               name="question_text"
                                               placeholder="Question..."></textarea>
                                     <button class="light-button">Submit</button>
@@ -281,7 +282,7 @@ export default {
     },
     data() {
         return {
-            written: true,
+            written: false,
             questions: false,
             audio: false,
             stopped: true,

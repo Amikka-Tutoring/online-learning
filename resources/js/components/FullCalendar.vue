@@ -1,3 +1,23 @@
+<template>
+    <div>
+        <FullCalendar :options="calendarOptions"/>
+        <div v-if="editable" class="row justify-content-center my-4 p-3">
+            <div class="d-flex flex-mobile">
+                <input type="datetime-local" v-model="form.time" class="form-control">
+                <select name="" v-model="form.type" class="form-control mx-2">
+                    <option value="exam">Next Practice Exam: 🚀</option>
+                    <option value="lesson">Next Lesson: ⌛</option>
+                </select>
+                <select name="" v-model="form.exam" v-if="form.type=='exam'" class="form-control mr-2">
+                    <option v-for="exam in exams" :value="exam.id">{{ exam.title }}</option>
+                </select>
+                <button v-on:click="submit(form)" class="btn btn-primary">Schedule
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
 <script>
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue3'
@@ -88,22 +108,4 @@ export default {
     },
 }
 </script>
-<template>
-    <div>
-        <FullCalendar :options="calendarOptions"/>
-        <div v-if="editable" class="row justify-content-center my-4">
-            <div class="d-flex flex-mobile">
-                <input type="datetime-local" v-model="form.time" class="form-control">
-                <select name="" v-model="form.type" class="form-control mx-2">
-                    <option value="exam">Next Practice Exam: 🚀</option>
-                    <option value="lesson">Next Lesson: ⌛</option>
-                </select>
-                <select name="" v-model="form.exam" v-if="form.type=='exam'" class="form-control mr-2">
-                    <option v-for="exam in exams" :value="exam.id">{{ exam.title }}</option>
-                </select>
-                <button v-on:click="submit(form)" class="btn btn-primary">Schedule
-                </button>
-            </div>
-        </div>
-    </div>
-</template>
+

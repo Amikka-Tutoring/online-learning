@@ -291,33 +291,11 @@
                             </div>
                         </div>
                     </transition>
-                    <div class="row justify-content-md-center">
-                        <div class="col-lg-3 col-md-5 col-12">
-                            <div class="calendar-box">
-                                <div class="row">
-                                    <span class="blue-text font-weight-bold m-0">Next Lesson: </span> ⏳
-                                    <p v-if="next_lesson_day">{{ next_lesson_day }}, {{ next_lesson }} at
-                                        {{ next_lesson_time }}</p>
-                                    <p v-else>N/A</p>
-                                </div>
-                                <div class="row flex-column">
-                                    <div>
-                                        <span class="blue-text font-weight-bold m-0">Next Practice Exam: </span>🚀
-                                    </div>
-                                    <p v-if="next_practice_exam">{{ next_practice_exam_day }},
-                                        {{ next_practice_exam_date }} at {{
-                                            next_practice_exam_time
-                                        }}</p>
-                                    <p v-else>N/A</p>
-                                </div>
+                    <div class="row justify-content-center my-4">
+                        <div class="col-lg-6">
+                            <div class="my-4">
+                                <full-calendar :editable="true" :exams="calendar_exams" :lessons="calendar_lessons"/>
                             </div>
-
-                        </div>
-                        <div class="col-lg-5">
-                            <full-calendar :editable="false" :exams="calendar_exams" :lessons="calendar_lessons"/>
-                            <a type="button" class="blue-text font-weight-bold pt-4 pl-2" :href="route('set-calendar')">
-                                Edit Schedule
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -334,7 +312,7 @@
                     <option v-for="user_course in user_courses.enrollments">{{ user_course.course.name }}
                     </option>
                 </select>
-                <div class="notes-content pl-5" style="margin-top: 90px;position: relative">
+                <div class="notes-content pl-5" style="position: relative">
                     <transition name="list">
                         <div v-if="notes" class="question-box text-left">
                             <div class="row">
@@ -352,35 +330,45 @@
                         </div>
                     </transition>
                     <div class="row">
-                        <div class="spinner-container"
+                        <div class="spinner-container" v-if="loading"
                              style="position: absolute;width:100%;height: 253px;z-index: 1;">
-                            <div class="spinner-border" role="status" v-if="loading"
+                            <div class="spinner-border" role="status"
                                  style="top: 40%;position: absolute;left: 48%; width: 4rem !important; height: 4rem !important;">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
                     </div>
-                    <div class="row w-100"
+                    <div class="w-100"
                          :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
-                        <div class="col-lg-4 col-12 my-4"
-                             v-for="(key,value) in notesByCourse">
-                            <p><span
-                                v-for="(date,index) in key"><span
-                                class="badges orange-badge">{{ date.video.layer.course.name }} </span></span>
-                            </p>
-                            <div class="notes-box">
-                                <h1>{{ moment(value).format("MM/DD") }}</h1>
-                                <div class="row">
-                                    <span class="lightblue-badge badges" style="padding:5px 30px;">{{ user_tag }}</span>
-                                </div>
-                                <h5>Lessons</h5>
-                                <p><span
-                                    v-for="(date,index) in key"><span
-                                    v-if="index !== 0">, </span>{{ date.video.layer?.name }} </span>
-                                </p>
-                            </div>
-                            <p class="my-4" v-if="this.notesByCourse == null">No notes
-                                found.</p>
+                        <div class="notes-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th style="width: 25%"><i
+                                        class="fas fa-calendar-day blue-text mr-2"></i>Dates
+                                    </th>
+                                    <th style=" width: 15%"><i class="fas fa-book-open blue-text mr-2"></i>Class
+                                    </th>
+                                    <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Topics
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(note,itemObjKey) in notesByCourse">
+                                    <td>{{ itemObjKey }}</td>
+                                    <td><span v-for="(n,index) in note"><span
+                                        v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
+                                    </td>
+                                    <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
+                                                                                                <a :href="route('notes-show',n)">{{
+                                                                                                        n.video.layer.name
+                                                                                                    }}</a></span>
+                                    </td>
+                                    <!--                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>-->
+                                </tr>
+                                <p v-if="!Object.keys(this.notesByCourse).length">No rows found</p>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

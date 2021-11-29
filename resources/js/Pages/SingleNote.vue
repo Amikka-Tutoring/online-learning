@@ -8,13 +8,13 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6 col-12">
                                 <div class="row text-center justify-content-center topics-title mb-2">
-                                    {{ note.video.layer.name }}
+                                    Lesson Name: {{ note.video.layer.name }}
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-center my-4">
                             <div class="col-md-8">
-                                <iframe id="youtube_id" :src="embed(note.video.url)"
+                                <iframe class="notes-video" id="youtube_id" :src="embed(note.video.url)"
                                         style="max-width: 826px; width: 100%; height: 500px; margin: 10px 0; border: none">
                                 </iframe>
                             </div>
@@ -27,7 +27,7 @@
                                     <a class="blue-text position-absolute"
                                        style="bottom: 10px; right: 50px"
                                        @click="writtenNotesStore(index)">Edit</a>
-                                    <textarea class="h-auto" name="" id="" cols="30" rows="7"
+                                    <textarea class="text-box" name="" id="" cols="30" rows="7"
                                               v-model="form.written_notes[index]"></textarea>
                                 </div>
                             </div>
@@ -58,21 +58,21 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-3 text-right">
+                <div class="col-3 text-right align-self-center">
                     <a v-if="prev_date" :href="route('notes-show',prev_date.id)" class="blue-text"
                        style="font-size: 50px">
                         <i class="bi bi-arrow-left-short"></i>
                     </a>
-                    <p v-else style="font-size: 50px">
+                    <p v-else style="font-size: 50px" class="m-0 p-0">
                         <i class="bi bi-arrow-left-short"></i>
                     </p>
                 </div>
-                <div class="col-3">
+                <div class="col-3 align-self-center">
                     <a v-if="next_date" :href="route('notes-show',next_date.id)" class="blue-text"
                        style="font-size: 50px">
                         <i class="bi bi-arrow-right-short"></i>
                     </a>
-                    <p v-else style="font-size: 50px">
+                    <p v-else style="font-size: 50px" class="p-0 m-0">
                         <i class="bi bi-arrow-right-short"></i>
                     </p>
                 </div>

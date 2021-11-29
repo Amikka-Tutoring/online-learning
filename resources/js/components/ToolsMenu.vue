@@ -9,16 +9,16 @@
                         <div class="next-up">Next Up</div>
                         <div v-for="video in videos" class="next-item" v-if="videos.length">
                             <a :href="route('lesson',video)" style="text-decoration: none">
-                                <div class="row m-0" style="overflow: hidden">
+                                <div class="row m-0 py-2" style="overflow: hidden">
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-play-circle" style="color: #4C6ED7; font-size: 1.8rem"></i>
+                                        <i class="fas fa-play-circle" style="color: #4C6ED7; font-size: 1.5rem"></i>
                                     </div>
                                     <div class="col-5 align-self-center">
                                         <div class="row">
-                                            <p class="text-left">{{ video.title }}</p>
+                                            <p class="text-left m-0">{{ video.title }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-5 align-self-center">
                                         <div class="row">
                                         <span style="width: 100%" v-for="tag in video.tags"
                                               class="ml-2 mb-1 badges lightblue-badge">{{ tag.name }}</span>
@@ -33,8 +33,9 @@
                     </div>
                 </li>
             </collapse-transition>
-            <li @click="tools = !tools">Tools <i class="pl-2 blue-text fas"
-                                                 v-bind:class="tools ? 'fa-arrow-up' : 'fa-arrow-down'"></i></li>
+            <li @click="tools = !tools" title="Click tools to learn more">Tools <i class="pl-2 blue-text fas"
+                                                                                   v-bind:class="tools ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+            </li>
             <collapse-transition>
                 <li v-if="tools" class="p-0">
                     <div class="tools">

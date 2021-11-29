@@ -42,8 +42,8 @@
                             </td>
                             <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
                                 <a :href="route('notes-show',n)">{{
-                                    n.video.layer.name
-                                }}</a></span>
+                                        n.video.layer.name
+                                    }}</a></span>
                             </td>
                             <!--                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>-->
                         </tr>
@@ -57,7 +57,8 @@
                     <div class="question-box text-left my-4" v-if="no_notes">
                         <div class="row">
                             <div class="col-lg-11 col-10">
-                                When you take written or audio notes during your lessons they will be saved here. Good
+                                When you take written or audio notes during your lessons they will be saved here.
+                                Good
                                 luck!
                             </div>
                             <div class="col-lg-1 col-2 d-flex align-items-center">
@@ -84,6 +85,7 @@ export default {
     props: ['notes', 'user'],
     data() {
         return {
+            formula: '$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
             query: '',
             calendar: false,
             moment: moment,

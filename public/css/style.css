@@ -860,7 +860,7 @@ a {
 }
 
 .notes-section {
-    padding: 100px 0;
+    padding: 20px 0;
 }
 
 .notes-section .notes-section-content {
@@ -1726,10 +1726,116 @@ input[type="radio"] {
     .strengths-weakness ol {
         width: 100% !important;
     }
+
+    .notes-buttons {
+        margin: 30px 0;
+    }
+
+    .notes-table {
+        margin: 0;
+    }
+
+    .notes-video {
+        height: 100% !important;
+    }
+
+    .exam-box .exam-box-tile h1 {
+        font-size: 14px !important;
+    }
+
+    .exam-box .exam-box-list {
+        font-size: 10px;
+    }
+
+    .exam-box .exam-name {
+        font-size: 12px;
+    }
+
+    .exam-box {
+        margin-bottom: 30px !important;
+    }
+
+    .video-exams-content .question-box, .practice-exams-content .question-box {
+        margin: 0 !important;
+    }
+
+    .days-box, .days-box label {
+        font-size: 12px;
+    }
+
+    .tutors-content {
+        margin: 0 !important;
+    }
+
+    .tutors-content ul li {
+        font-size: 12px !important;
+    }
+
+    .tutors-content button, .process button {
+        font-size: 12px !important;
+    }
+
+    .process ol li p {
+        font-size: 12px !important;
+    }
+
+    .process ol li {
+        font-size: 14px !important;
+        padding-left: 20px !important;
+    }
+
+    .pricing .pricing-box button {
+        padding: 7px 30px !important;
+        font-size: 12px !important;
+    }
+
+    .pricing .pricing-box h3, .pricing .pricing-box h2 {
+        margin: 15px 0 !important;
+    }
+
+    .pricing .pricing-box p {
+        margin: 10px 0 !important;
+    }
+
+    .pricing .pricing-box p {
+        font-size: 12px !important;
+    }
+
+    .money-back-section {
+        font-size: 12px !important;
+    }
+
+    .reach-out h1 {
+        font-size: 20px !important;
+    }
+
+    .reach-out span {
+        font-size: 12px !important;
+    }
+
+    .audio.h-100 {
+        margin: 0 !important;
+    }
+
+    #adioPlay {
+        height: 30px !important;
+    }
 }
 
+@media (min-width: 991.98px) {
+    .text-box {
+        height: auto;
+    }
+
+    .next-prev-buttons {
+        font-size: 50px;
+    }
+}
 
 @media (max-width: 767.98px), (max-width: 991.98px) {
+    .next-prev-buttons {
+        font-size: 20px;
+    }
 
     .header-menu ul:last-child {
         width: 100% !important;
@@ -1812,7 +1918,7 @@ input[type="radio"] {
 
     .tools-menu {
         width: 100% !important;
-        position: fixed;
+        position: sticky;
     }
 
     .video-frame {
@@ -1820,7 +1926,7 @@ input[type="radio"] {
     }
 
     .notes-section .notes-section-content .notes-box textarea {
-        height: 15px !important;
+        height: 80px !important;
     }
 
     .faq {
@@ -2139,7 +2245,58 @@ input[type="radio"] {
     }
 
     .tutors-content .stars-content svg {
-        width: 40px;
+        width: 20px;
+        margin-right: 5px !important;
+    }
+
+    .question-box {
+        margin-bottom: 20px !important;
+    }
+
+    .input-cards h4 {
+        font-size: 12px !important;
+    }
+
+    .input-cards .justify-content-center {
+        margin-top: 30px !important;
+    }
+
+    .blue-link a {
+        font-size: 12px !important;
+    }
+
+    .video-quiz-btn {
+        margin: 0 !important;
+    }
+
+    .video-frame {
+        margin: 30px 0 !important;
+    }
+
+    .faq {
+        padding: 0 !important;
+    }
+
+    .video-quiz-btn button {
+        font-size: 12px !important;
+        height: 40px !important;
+    }
+
+    .notes-section .notes-section-content .notes-box .rounded-circle {
+        width: 30px;
+        height: 30px;
+    }
+
+    .notes-section .notes-section-content .notes-box .row {
+        padding: 15px;
+    }
+
+    .notes-box h1 {
+        font-size: 14px !important;
+    }
+
+    .notes-section .notes-section-content .notes-box textarea {
+        height: 100%;
     }
 }
 

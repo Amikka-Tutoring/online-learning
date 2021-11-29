@@ -73,14 +73,12 @@ class NotesController extends Controller
     public function dashboardNotesByCourse($course)
     {
         $user = Auth::user();
-        $notes = $user->notes()->latest()->with(['video.layer', 'video.layer.course', 'video.tags'])->whereHas('video.layer', function ($query) use ($course) {
-            $query->whereHas('course', function ($q) use ($course) {
-                if ($course == 'All')
-                    $q->where('name', 'like', '%' . '' . '%');
-                else
-                    $q->where('name', 'like', '%' . $course . '%');
-            });
-        })->paginate(12)->groupBy(function ($val) {
+        $notes = $user->notes()->whereHas('video.layer.course', function ($query) use ($course) {
+            if ($course == 'All')
+                $query->where('name', 'like', '%' . '' . '%');
+            else
+                $query->where('name', 'like', '%' . $course . '%');
+        })->with('video.layer', 'video.layer.course', 'video.layer.tags')->get()->groupBy(function ($val) {
             return Carbon::parse($val->created_at)->format('m/d');
         });
         return ['notes' => $notes];
