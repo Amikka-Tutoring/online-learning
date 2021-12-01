@@ -19,6 +19,8 @@ use App\Http\Controllers\UserPracticeExamDateController;
 use App\Http\Controllers\UserLessonDateController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\OneToOneController;
+use App\Http\Controllers\LayerContentController;
 
 
 /*
@@ -47,6 +49,7 @@ Route::get('/', [PageController::class, 'checkRoutes'])->name('main')->middlewar
 Route::middleware(['auth', 'student'])->group(function () {
     Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method');
     Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method');
+    Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
     Route::middleware(['has.payment.method', 'initial'])->group(function () {
         Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
         Route::get('diagnostics/{slug}', [DiagnosticController::class, 'show'])->name('diagnostic.show');
@@ -67,19 +70,20 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::post('videos/{video}/view', [VideoController::class, 'view'])->name('view.video');
             Route::post('videos/{video}/flag', [PageController::class, 'flagVideo'])->name('flag.video');
             Route::get('videos/{video}/responses/{response}', [PageController::class, 'videoResponse'])->name('video.response');
-            Route::get('recommended', [PageController::class, 'recommended'])->name('recommended');
+            Route::get('recommended', [PageController::class, 'recommended'])->name('recommended')->middleware('tag_level');
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
             Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
 
             Route::get('notes', [NotesController::class, 'notesList'])->name('notes-list');
             Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');
-            Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
+
             Route::get('notes/search', [NotesController::class, 'getNotes'])->name('notes-search');
             Route::get('notes/{note}', [NotesController::class, 'show'])->name('notes-show');
             Route::get('notes/{note}/get', [NotesController::class, 'getNote'])->name('get.note');
 
             Route::get('one-to-one', [PageController::class, 'oneToOne'])->name('one-to-one');
             Route::post('one-to-one', [PageController::class, 'oneToOneSubmit'])->name('submit-one-to-one');
+            Route::post('pay/one-to-one', [OneToOneController::class, 'pay'])->name('pay.one-to-one');
             Route::get('review', [PageController::class, 'review'])->name('review');
 
 
@@ -139,6 +143,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
+
+    Route::get('quiz/contents', [LayerContentController::class, 'index'])->name('quiz.content');
+    Route::put('quiz/contents/{content}', [LayerContentController::class, 'store'])->name('store.quiz.content');
+    Route::delete('quiz/contents/{content}/delete', [LayerContentController::class, 'destroy'])->name('delete.quiz.content');
 
 
     Route::post('exams', [PracticeExamController::class, 'store'])->name('exams.store');

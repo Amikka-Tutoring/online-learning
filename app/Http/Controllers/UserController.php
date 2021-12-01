@@ -40,13 +40,30 @@ class UserController extends Controller
             'desire_score' => 'required',
             'exam_date' => 'required',
             'tel' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:user_profile,reminder_email',
         ]);
+        if ($request->plan == null) {
+            return back();
+        }
         $user = Auth::user();
+        $plan = '';
+        switch ($request->plan) {
+            case 'basic':
+                $plan = env('STRIPE_BASIC');
+                break;
+            case 'support':
+                $plan = env('STRIPE_SUPPORT');
+                break;
+            case 'support+':
+                $plan = env('STRIPE_SUPPORT_PLUS');
+                break;
+            default:
+                $plan = env('STRIPE_BASIC');
+        }
         try {
-            $user->newSubscription('platform', env('PLAN_ID'))->trialDays(7)->add();
+            $user->newSubscription($request->plan, $plan)->trialDays(7)->add();
             foreach ($request->courses as $id) {
-                if ( $id == 0 ) {
+                if ($id == 0) {
                     $courses = Course::where('name', 'like', 'SAT%')->get();
                     foreach ($courses as $course) {
                         $user->newSubscription($course->slug, $course->plan_id)->trialDays(7)->add();
@@ -81,7 +98,7 @@ class UserController extends Controller
             'user_id' => Auth::id(),
 //            'reminder_email' => $request->email,
         ]);
-        return redirect()->route('dashboard');
+//        return redirect()->route('dashboard');
     }
 
     public function setPaymentMethod(Request $request)

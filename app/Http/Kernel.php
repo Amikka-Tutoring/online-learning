@@ -6,6 +6,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ApiMiddleware;
 use App\Http\Middleware\InitialQuestionnaire;
 use App\Http\Middleware\StudentMiddleware;
+use App\Http\Middleware\TagLevelMiddleware;
 use App\Http\Middleware\UserAcademicDiagnosticMiddleware;
 use App\Http\Middleware\UserPersonalityDiagnosticMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -75,8 +76,8 @@ class Kernel extends HttpKernel
         'subscribed' => \App\Http\Middleware\SubscribedMiddleware::class,
         'initial' => \App\Http\Middleware\InitialQuestionnaire::class,
         'token' => ApiMiddleware::class,
-
         'personality' => UserPersonalityDiagnosticMiddleware::class,
-        'academic' => UserAcademicDiagnosticMiddleware::class
+        'academic' => UserAcademicDiagnosticMiddleware::class,
+        'tag_level' => TagLevelMiddleware::class,
     ];
 }

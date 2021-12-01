@@ -7,6 +7,7 @@
                 class="row justify-content-center align-items-center"
                 style="margin-bottom: 50px; margin-top: -20px"
             >
+                <div class="blue-text" v-on:click="showFrame = true">Read</div>
                 <div
                     class="progress"
                     style="height: 5px; width: 370px; margin: 0 20px"
@@ -21,7 +22,7 @@
                         style="background: #56c880"
                     ></div>
                 </div>
-                <!--                <div class="blue-text">Skip</div>-->
+
             </div>
             <div>
                 <form class="form" method="POST">
@@ -56,6 +57,8 @@
                             </div>
                         </div>
                     </div>
+                    <read-frame v-if="showFrame" :link="layer.content.link"/>
+
                     <div v-for="(question, index) in layer.questions">
                         <div v-if="form.currentstep === index + 2"
                              class="row w-100 m-0 justify-content-center flex-column align-items-center">
@@ -79,6 +82,8 @@
                                             >
                                                 <div class="options">
                                                     <input :id="'option-' +answer.id"
+                                                           :disabled="form.answers[form.currentstep]"
+                                                           v-on:click="showExplanation(answer.id)"
                                                            :key="answer.title"
                                                            v-model="form.answers[form.currentstep]"
                                                            :name="form.answers[form.currentstep]"
@@ -90,6 +95,15 @@
                                                         <div class="dot"></div>
                                                         <span>{{ answer.title }}</span>
                                                     </label>
+                                                    <div class="explanation-box shadow"
+                                                         v-bind:class="[answer.is_correct ? 'correct':'incorrect']"
+                                                         v-if="form.explanations[answer.id]">
+                                                        <p class="text-center font-weight-bold">Explanation</p>
+                                                        <hr>
+                                                        <p class="text-justify text">{{
+                                                                answer.explanation
+                                                            }}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,29 +148,42 @@
                             </button>
                         </div>
                     </div>
+                    <div v-if="form.currentstep > 1" class="row justify-content-center">
+                        <button class="retry-btn blue-text" v-on:click.prevent="retry()">Retry</button>
+                    </div>
                 </form>
             </div>
         </div>
     </app-layout>
 </template>
-
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import {reactive} from "vue";
+import ReadFrame from "@/components/ReadFrame";
 
 
 export default {
 
     components: {
         AppLayout,
+        'read-frame': ReadFrame
     },
     methods: {
-
+        showExplanation: function (index) {
+            this.form.explanations = []
+            this.form.explanations[index] = true
+        },
+        retry: function () {
+            this.form.explanations = []
+            this.form.answers[this.form.currentstep] = false
+        },
         next: function () {
             if (!this.validate()) {
                 this.toast.error('You need to select the answer')
                 return
             }
+            console.log('Answers')
+            console.log(this.form.answers)
             this.form.currentstep++;
             this.form.errors = [];
             this.form.progress_value = ((this.form.currentstep - 1) * 100) / this.layer.questions.length;
@@ -217,12 +244,38 @@ export default {
                 progress_value: 0,
                 currentstep: 1,
                 layer_id: this.layer.id,
-                layer: this.layer
-            }
+                layer: this.layer,
+                explanations: []
+            },
+            showFrame: false
         }
     },
     mounted() {
-
     }
 }
 </script>
+<style scoped>
+.explanation-box {
+    border: 1px solid lightgray;
+    padding: 5px 20px;
+}
+
+.explanation-box p.text {
+    color: #808080;
+    font-size: 12px;
+}
+
+.correct {
+    border-top: 2px solid green;
+}
+
+.incorrect {
+    border-top: 2px solid red;
+}
+
+.retry-btn {
+    border: none;
+    background: none;
+    text-decoration: underline;
+}
+</style>

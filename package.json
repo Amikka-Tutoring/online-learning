@@ -46,6 +46,7 @@
         "filepond": "^4.29.1",
         "fullpage.js": "^3.1.2",
         "laravel-vue-pagination": "^2.3.1",
+        "mathlive": "^0.69.8",
         "moment": "^2.29.1",
         "moment-duration-format": "^2.3.2",
         "v-calendar": "^3.0.0-alpha.5",

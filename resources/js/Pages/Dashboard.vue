@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left: 0;">
                                         <div class="blue-text">{{
-                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a :href="route('course',user_course.course.slug)"><h4>{{
-                                        user_course.course.name
+                                    user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -256,10 +256,10 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                                parseFloat(user_course.course.quizzes_attempted /
-                                                    (user_course.course.quizzes_count === 0 ? 1 :
-                                                        user_course.course.quizzes_count) *
-                                                    100).toFixed(0)
+                                            parseFloat(user_course.course.quizzes_attempted /
+                                            (user_course.course.quizzes_count === 0 ? 1 :
+                                            user_course.course.quizzes_count) *
+                                            100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -306,6 +306,7 @@
             <div class="notes">
                 <h1 class="blue-text">Notes</h1>
                 <select name="course" id="" class="form-control w-lg-25 float-right my-4"
+                        style="z-index: 999; position: relative"
                         v-on:change="getNotesByCourse(this.selected_course)"
                         v-model="selected_course">
                     <option value="All">All</option>
@@ -360,9 +361,9 @@
                                         v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
                                     </td>
                                     <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
-                                                                                                <a :href="route('notes-show',n)">{{
-                                                                                                        n.video.layer.name
-                                                                                                    }}</a></span>
+                                                                                                                                <a :href="route('notes-show',n)">{{
+                                                                                                                                        n.video.layer.name
+                                                                                                                                    }}</a></span>
                                     </td>
                                     <!--                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>-->
                                 </tr>
@@ -412,7 +413,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">{{
-                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -582,8 +583,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <cup v-if="this.cup"/>
     </app-layout>
 </template>
 
@@ -591,11 +592,13 @@
 import AppLayout from '@/Layouts/AppLayout'
 import moment from "moment";
 import FullCalendar from "@/components/FullCalendar";
+import Cup from "@/components/Cup";
 
 export default {
     components: {
         AppLayout,
-        FullCalendar
+        FullCalendar,
+        'cup': Cup
     },
     props: ['calendar_lessons', 'calendar_exams', 'flash', 'academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
@@ -610,7 +613,7 @@ export default {
             next_practice_exam_day: moment(this.next_practice_exam, ["YYYY-MM-DD HH:mm:ss"]).format("dddd"),
             next_practice_exam_date: moment(this.next_practice_exam, ["YYYY-MM-DD HH:mm:ss"]).format("D/M"),
             notesByDate: null,
-            notesByCourse: null,
+            notesByCourse: {},
             moment: moment,
             selected_course: 'All',
             loading: false,
@@ -619,7 +622,8 @@ export default {
                 first_day_time: this.profile.first_day_time,
                 second_day_time: this.profile.second_day_time
             },
-            learning_style_done: this.learning_style_done
+            learning_style_done: this.learning_style_done,
+            cup: false,
         }
     },
     setup() {
@@ -642,16 +646,21 @@ export default {
             this.loading = true
             axios.get(route('dashboard.notes.course', course)).then(response => {
                 this.notesByCourse = response.data.notes
-                console.log(response.data)
                 this.loading = false
+            }).catch(error => {
+                console.log(error.response)
             })
         },
     },
     mounted() {
         if (this.flash.message != null)
             this.toast(this.flash.message)
+        if (this.flash.cup != null) {
+            this.cup = true
+        }
     },
     beforeMount() {
+        console.log('notes')
         this.getNotesByCourse(this.selected_course)
     }
 }

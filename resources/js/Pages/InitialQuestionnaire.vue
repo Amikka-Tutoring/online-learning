@@ -266,8 +266,11 @@
                         <button v-if="form.currentstep!=7 && form.currentstep!=1" @click.prevent="next()"
                                 class="blue-button" style="font-size: 24px">Next
                         </button>
-                        <button v-if="form.currentstep==7" @click.prevent="submit()" class="blue-button"
-                                style="font-size: 24px">Finish
+                        <button :disabled="form.submitLoading" v-if="form.currentstep==7" @click.prevent="submit()"
+                                class="blue-button"
+                                style="font-size: 24px">Finish <span v-if="form.submitLoading"
+                                                                     class="spinner-border ml-2"
+                                                                     style="width: 1.5rem; height: 1.5rem"></span>
                         </button>
                     </div>
 
@@ -316,6 +319,8 @@ export default {
             tel: null,
             progress_value: 0,
             currentstep: 1,
+            plan: localStorage.getItem('plan'),
+            submitLoading: false
         })
 
         function next() {
@@ -359,7 +364,14 @@ export default {
             } else {
                 form.errors = []
                 form.progress_value = 100
-                Inertia.post(route('user.initial'), form);
+                form.submitLoading = true
+                axios.post(route('user.initial'), form).then(response => {
+                    window.location.href = '/dashboard';
+                }).catch(error => {
+                    Object.values(error.response.data.errors).flat().forEach(element => toast.error(element))
+                }).finally(() => {
+                    form.submitLoading = false
+                });
             }
         }
 

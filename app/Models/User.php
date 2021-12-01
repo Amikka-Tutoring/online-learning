@@ -175,7 +175,7 @@ class User extends Authenticatable
 
     public function enrollments()
     {
-        return $this->hasMany(\App\Models\Subscription::class, 'user_id', 'id')->whereIn('stripe_status', ['active', 'trialing'])->where('name', '!=', 'platform');
+        return $this->hasMany(\App\Models\Subscription::class, 'user_id', 'id')->whereIn('stripe_status', ['active', 'trialing'])->whereNotIn('name', ['basic', 'support', 'support+']);
     }
 
     public function exams_visited()
@@ -206,6 +206,16 @@ class User extends Authenticatable
     public function practice_exam_dates()
     {
         return $this->hasMany(UserPracticeExamDate::class, 'user_id', 'id')->orderBy('date_time');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(StudentLayerQuestion::class, 'user_id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->get();
+    }
+
+    public function viewed_videos()
+    {
+        return $this->belongsToMany(Video::class, 'user_viewed_videos')->where('user_id', auth()->user()->id);
     }
 
 }

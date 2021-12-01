@@ -36,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share('flash', function () {
             return [
                 'message' => Session::get('message'),
+                'cup' => Session::get('cup')
             ];
         });
         Inertia::share('appUrl', env('APP_URL'));

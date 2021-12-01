@@ -46,7 +46,6 @@ class Video extends Model
         return false;
     }
 
-
     public function notes()
     {
         return $this->hasMany(Note::class);

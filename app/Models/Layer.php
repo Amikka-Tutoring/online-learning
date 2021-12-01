@@ -20,13 +20,16 @@ class Layer extends Model
 
     protected static function booted()
     {
-//        static::addGlobalScope(new TagScope);
+        static::created(function ($model) {
+            $model->content()->create();
+        });
     }
 
     public function children()
     {
         return $this->hasMany(Layer::class, 'parent_id');
     }
+
 
     public function parent()
     {
@@ -79,5 +82,10 @@ class Layer extends Model
     public function studentQuestions()
     {
         return $this->hasMany(StudentLayerQuestion::class);
+    }
+
+    public function content()
+    {
+        return $this->hasOne(LayerContent::class);
     }
 }

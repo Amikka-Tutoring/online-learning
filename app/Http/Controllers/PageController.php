@@ -186,7 +186,7 @@ class PageController extends Controller
         $user = Auth::user();
         if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
-        $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers')->find($id);
+        $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers', 'content')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
     }
 
@@ -315,9 +315,13 @@ class PageController extends Controller
 
     public function test()
     {
-        return $video = Video::find(1266);
-        return $video->user_viewed_videos;
-        return Video::with('tags')->latest()->get();
+
+//        foreach (Layer::all() as $layer) {
+//            $layer->content()->create();
+//        }
+//        $watched = auth()->user()->viewed_videos->pluck('id');
+//        $videos = Video::whereNotIn('id', $watched)->get();
+//        return $videos->count();
 
 //        $user = Auth::user()->load('profile', 'tags');
 //        $tags = ['Medium', 'Auditory'];

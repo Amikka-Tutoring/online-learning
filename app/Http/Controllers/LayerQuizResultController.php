@@ -53,7 +53,7 @@ class LayerQuizResultController extends Controller
             'layer_id' => $layer_id,
             'score' => $score
         ]);
-        return ['message' => 'Submited Successfully', 'score' => 'Your score is: ' . $score];
+        return ['message' => 'Submited Successfully', 'score' => 'Your score is: ' . number_format($score, 1)];
     }
 
     /**

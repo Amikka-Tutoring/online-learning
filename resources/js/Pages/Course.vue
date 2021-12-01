@@ -214,6 +214,7 @@ export default {
         submitQuestion: function () {
             axios.post(route('notes.store.question'), this.questionForm)
                 .then(response => {
+                    console.log(response.data.message)
                     this.toast.info(response.data)
                     this.questionForm.question_text = null
                 })

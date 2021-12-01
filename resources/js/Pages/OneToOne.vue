@@ -118,7 +118,7 @@
                                     score improvements.
                                 </p>
                                 <div class="row justify-content-center">
-                                    <button>Choose Plan</button>
+                                    <button v-on:click="choosePlan(10)">Choose Plan</button>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                                     score improvements.
                                 </p>
                                 <div class="row justify-content-center">
-                                    <button>Choose Plan</button>
+                                    <button v-on:click="choosePlan(20)">Choose Plan</button>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                                     score improvements.
                                 </p>
                                 <div class="row justify-content-center">
-                                    <button>Choose Plan</button>
+                                    <button v-on:click="choosePlan(30)">Choose Plan</button>
                                 </div>
                             </div>
                         </div>
@@ -235,6 +235,34 @@
             </div>
         </div>
     </app-layout>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ this.plan }} Hours Plan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Select way of payment</label>
+                        <select name="" v-model="method" id="" class="form-control">
+                            <option value="2">Half</option>
+                            <option value="1">Full</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button :disabled="loading" type="button" class="btn btn-primary" v-on:click="makePayment">Proceed
+                        <div v-if="loading" class="spinner-border spinner-border-sm ml-2"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 
@@ -250,7 +278,6 @@ export default {
             this.disabled = true
             axios.post(route('submit-one-to-one'), this.form)
                 .then(response => {
-                    console.log(response.data)
                     this.toast.info(response.data.message)
                     this.form.phone = null;
                     this.form.email = null;
@@ -260,7 +287,30 @@ export default {
             }).finally(() => {
                 this.disabled = false
             });
-
+        },
+        choosePlan: function (plan) {
+            this.plan = plan
+            $('#modal').modal('show')
+        },
+        makePayment: function () {
+            if (this.method != null) {
+                this.loading = true
+                axios.post(route('pay.one-to-one'), {
+                    price: this.price / Number(this.method),
+                    payment_method_text: this.method === '2' ? 'Half' : 'Full',
+                    payment_method: this.method,
+                    plan: this.plan
+                }).then(response => {
+                    console.log(response.data)
+                    this.toast.info(response.data.message)
+                }).catch(error => {
+                    console.log(error.response)
+                    this.toast.error('Something went wrong!')
+                }).finally(() => {
+                    $('#modal').modal('hide')
+                    this.loading = false
+                })
+            }
         }
     },
 
@@ -271,7 +321,10 @@ export default {
                 phone: null,
                 discussion: null,
                 availability: null,
-            }
+            },
+            plan: null,
+            method: null,
+            loading: false
         }
     },
 }

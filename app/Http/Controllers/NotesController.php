@@ -109,19 +109,43 @@ class NotesController extends Controller
         return ['message' => $request->all()];
     }
 
+    public function validatePackage()
+    {
+        $plan = auth()->user()->subscriptions()->pluck('name');
+        $questions = auth()->user()->questions()->count();
+        if ($plan->contains('support+')) {
+            return 0;
+        } else if ($plan->contains('support')) {
+            if ($questions < 20)
+                return 0;
+            else
+                return 1;
+        }
+        return 2;
+    }
+
     public function storeQuestion(Request $request)
     {
         $request->validate([
             'question_text' => 'required',
             'video_id' => 'required|exists:videos,id',
         ]);
-
-        StudentLayerQuestion::create([
-            'user_id' => Auth::id(),
-            'video_id' => $request->video_id,
-            'question_text' => $request->question_text,
-        ]);
-        return 'Saved Successfully';
+        switch ($this->validatePackage()) {
+            case 0:
+                StudentLayerQuestion::create([
+                    'user_id' => Auth::id(),
+                    'video_id' => $request->video_id,
+                    'question_text' => $request->question_text,
+                ]);
+                return 'Saved Successfully';
+                break;
+            case 1:
+                return 'You have reached a limit of questions for this month';
+                break;
+            case 2:
+                return 'You are not allowed to ask questions';
+                break;
+        }
     }
 
     public function lessonQuestions($id)
