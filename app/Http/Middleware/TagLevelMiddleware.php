@@ -17,13 +17,17 @@ class TagLevelMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $watched = auth()->user()->viewed_videos->pluck('id');
-        $videos = Video::whereNotIn('id', $watched)->get();
+        $enrolled_courses = auth()->user()->enrollments->pluck('course.id');
 
-        if ($videos->count()) {
+        $watched = auth()->user()->viewed_videos->pluck('id');
+        $videos = Video::whereNotIn('id', $watched)->whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->get();
+
+        if ( $videos->count() ) {
             return $next($request);
-        } else if ($watched->count() > 0) {
-            switch (auth()->user()->getTag()) {
+        } else if ( auth()->user()->getTag() != 'All' && $watched->count() > 0 ) {
+            switch ( auth()->user()->getTag() ) {
                 case 'Easy':
                     auth()->user()->setTag('Medium');
                     break;

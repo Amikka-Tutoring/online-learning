@@ -9,7 +9,7 @@ class OneToOneController extends Controller
     public function pay(Request $request)
     {
         $price = '';
-        switch ($request->plan) {
+        switch ( $request->plan ) {
             case 10:
                 $price = 75;
                 break;
@@ -25,6 +25,6 @@ class OneToOneController extends Controller
         } catch (\Exception $e) {
             return ['error' => 'Oops something went wrong'];
         }
-        return ['message' => 'Payment is Proceeded'];
+        return ['message' => 'Payment Successful'];
     }
 }

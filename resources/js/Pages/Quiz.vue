@@ -7,7 +7,8 @@
                 class="row justify-content-center align-items-center"
                 style="margin-bottom: 50px; margin-top: -20px"
             >
-                <div class="blue-text" v-on:click="showFrame = true">Read</div>
+                <div class="blue-text" v-on:click="showFrame"><img src="/images/messenger.png" alt="">
+                </div>
                 <div
                     class="progress"
                     style="height: 5px; width: 370px; margin: 0 20px"
@@ -57,7 +58,22 @@
                             </div>
                         </div>
                     </div>
-                    <read-frame v-if="showFrame" :link="layer.content.link"/>
+                    <div class="modal fade" id="readFrame" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Excerpt</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe id="frame" :src="layer.content.link" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div v-for="(question, index) in layer.questions">
                         <div v-if="form.currentstep === index + 2"
@@ -101,7 +117,7 @@
                                                         <p class="text-center font-weight-bold">Explanation</p>
                                                         <hr>
                                                         <p class="text-justify text">{{
-                                                                answer.explanation
+                                                            answer.explanation
                                                             }}</p>
                                                     </div>
                                                 </div>
@@ -158,17 +174,20 @@
 </template>
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-import {reactive} from "vue";
-import ReadFrame from "@/components/ReadFrame";
-
 
 export default {
-
     components: {
-        AppLayout,
-        'read-frame': ReadFrame
+        AppLayout
     },
     methods: {
+        showFrame: function () {
+            $('#readFrame').modal('show');
+            var head = jQuery("#readFrame").contents().find("head");
+            var css = '<style type="text/css">' +
+                '*{display:none}; ' +
+                '</style>';
+            jQuery(head).append(css);
+        },
         showExplanation: function (index) {
             this.form.explanations = []
             this.form.explanations[index] = true
@@ -246,8 +265,7 @@ export default {
                 layer_id: this.layer.id,
                 layer: this.layer,
                 explanations: []
-            },
-            showFrame: false
+            }
         }
     },
     mounted() {
@@ -256,26 +274,49 @@ export default {
 </script>
 <style scoped>
 .explanation-box {
-    border: 1px solid lightgray;
-    padding: 5px 20px;
+    border  : 1px solid lightgray;
+    padding : 5px 20px;
 }
 
 .explanation-box p.text {
-    color: #808080;
-    font-size: 12px;
+    color     : #808080;
+    font-size : 12px;
 }
 
 .correct {
-    border-top: 2px solid green;
+    border-top : 2px solid green;
 }
 
 .incorrect {
-    border-top: 2px solid red;
+    border-top : 2px solid red;
 }
 
 .retry-btn {
-    border: none;
-    background: none;
-    text-decoration: underline;
+    border          : none;
+    background      : none;
+    text-decoration : underline;
+}
+
+iframe {
+    width      : 100%;
+    min-height : 400px;
+}
+
+.modal-dialog {
+    position  : absolute;
+    left      : 0;
+    top       : 58px;
+    width     : 700px;
+    max-width : 700px;
+}
+
+.modal-dialog-centered {
+    display : block !important;
+}
+
+@media (max-width : 767.98px) {
+    .modal-dialog {
+        width : 100% !important;
+    }
 }
 </style>
