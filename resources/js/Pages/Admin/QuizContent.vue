@@ -52,7 +52,7 @@ export default {
     methods: {
         update: function (content) {
             axios.put(route('store.quiz.content', content.id), content).then(response => {
-                this.toast.info(response.data.message)
+                this.toast.success(response.data.message)
             }).catch(error => {
                 console.log(error.response)
             })
@@ -60,7 +60,7 @@ export default {
         deleteContent: function (content) {
             if (!confirm('Are you sure want to remove?')) return;
             axios.delete(route('delete.quiz.content', content.id)).then(response => {
-                this.toast.info(response.data.message)
+                this.toast.success(response.data.message)
                 this.contents = response.data.contents
             }).catch(error => {
                 console.log(error.response)

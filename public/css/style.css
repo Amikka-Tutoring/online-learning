@@ -672,9 +672,6 @@ a {
         margin-top: 0;
     }
 
-    .notes-section .notes-section-content .notes-box .row {
-        border-right: none !important;
-    }
 
     .results-wrapper .plan, .result {
         height: 100% !important;
@@ -891,13 +888,18 @@ a {
     margin: 0;
     padding: 0;
     border: 3px solid rgb(14, 111, 255);
-    border-radius: 8px;
+    border-bottom: 2px solid rgb(14, 111, 255);
+    border-radius: 8px 8px 0 0;
+}
+
+.notes-box-content {
+    border-radius: 0 0 8px 8px !important;
 }
 
 .notes-section .notes-section-content .notes-box .row {
     border-right: 3px solid rgb(14, 111, 255);
     border-bottom: 3px solid rgb(14, 111, 255);
-    padding: 35px;
+    padding: 20px;
     justify-content: center;
 }
 
@@ -905,6 +907,7 @@ a {
     border-bottom: none;
 }
 
+.notes-section .notes-section-content .notes-box .row
 .notes-section .notes-section-content .notes-box h1 {
     font-weight: 600;
     font-size: 21px;
@@ -1675,6 +1678,10 @@ input[type="radio"] {
     font-size: 20px;
 }
 
+.notes-box-content {
+    border-top: 0 !important;
+}
+
 .custom-inputs ::-webkit-file-upload-button {
     background: rgba(240, 244, 243, 1);
     color: #4c6ed7;
@@ -1814,7 +1821,7 @@ input[type="radio"] {
     }
 
     .audio.h-100 {
-        margin: 0 !important;
+        margin: 50px !important;
     }
 
     #adioPlay {
@@ -2037,7 +2044,7 @@ input[type="radio"] {
     }
 
     .banner-img {
-        margin-bottom: 35px !important;
+        margin-bottom: 10px !important;
     }
 
     .reach-out .reach-form button {
@@ -2184,8 +2191,9 @@ input[type="radio"] {
     }
 
     .notes-section .notes-section-content .notes-box .row:last-child {
-        border-bottom: 3px solid rgb(14, 111, 255);
+        border-bottom: 0;
     }
+
 
     .notes-buttons .buttons {
         display: flex;

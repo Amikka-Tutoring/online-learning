@@ -59,31 +59,40 @@
                         </transition>
                     </div>
                     <div class="notes-box row w-75">
-                        <div class="col-lg-2 col-12">
+                        <div class="col-3">
                             <div class="row">
                                 <div class="notes-circle rounded-circle" title="Voice Notes"
-                                     @click="audio = true; questions = false; written= false"><i
+                                     v-on:click="openAudio"
+                                ><i
                                     class="fas fa-microphone-alt"></i>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-3">
                             <div class="row">
                                 <div v-on:click="flag(video)" class="notes-circle rounded-circle"
                                      title="Save for later"><i
                                     class="fas fa-flag"></i></div>
                             </div>
+                        </div>
+                        <div class="col-3">
                             <div class="row">
                                 <div class="notes-circle rounded-circle" title="Write Notes"
-                                     @click="questions = false; written = true; audio= false"><i class="fas fa-pen"></i>
+                                     v-on:click="openNotes"><i class="fas fa-pen"></i>
                                 </div>
                             </div>
-                            <div class="row">
+                        </div>
+                        <div class="col-3">
+                            <div class="row border-right-0">
                                 <div class="notes-circle rounded-circle" title="Ask a Question"
-                                     @click="questions = true; written = false; audio = false">
+                                     v-on:click="openQuestions">
                                     <i class="fas fa-question"></i></div>
                             </div>
                         </div>
-                        <div class="col-lg-10 col-12 p-4">
-                            <div v-if="written" class="written_notes">
+                    </div>
+                    <div class="notes-box row w-75 notes-box-content">
+                        <div class="col-12">
+                            <div v-if="written" class="written_notes p-md-4 p-2">
                                 <form action="" @submit.prevent="submit">
                                     <h1 class="blue-text">Written Notes</h1>
                                     <textarea required v-model="form.written_notes" id="" cols="80" rows="20"
@@ -92,7 +101,7 @@
                                     <button class="light-button">Submit</button>
                                 </form>
                             </div>
-                            <div v-if="questions" class="questions">
+                            <div v-if="questions" class="questions p-md-4 p-2">
                                 <form action="" @submit.prevent="submitQuestion">
                                     <h1 class="blue-text">Questions</h1>
                                     <textarea required v-model="questionForm.question_text" cols="80" rows="20"
@@ -102,7 +111,7 @@
                                 </form>
                             </div>
                             <div v-show="audio"
-                                 class="audio h-100" style="margin-top: 30%">
+                                 class="audio h-100" style="margin:100px">
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="w-50 d-flex flex-column align-items-center mb-4">
                                         <button v-show="started" id="btnStop" class="border-0 bg-transparent"><i
@@ -121,6 +130,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -185,6 +195,24 @@ export default {
         ToolsMenu,
     },
     methods: {
+        openAudio: function () {
+            this.audio = true;
+            this.questions = false;
+            this.written = false
+            this.toast.info('Record notes to review later');
+        },
+        openNotes: function () {
+            this.questions = false;
+            this.written = true;
+            this.audio = false
+            this.toast.info('Write notes to review later');
+        },
+        openQuestions: function () {
+            this.questions = true;
+            this.written = false;
+            this.audio = false
+            this.toast.info('Ask our tutors a question');
+        },
         disableNotification(attribute) {
             localStorage.setItem(attribute, false);
         },
@@ -197,7 +225,7 @@ export default {
         },
         flag: function (video) {
             axios.post(route('flag.video', video)).then(response => {
-                this.toast.info(response.data.message)
+                this.toast.success(response.data.message)
             }).catch(error => {
                 Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
             });
@@ -205,7 +233,7 @@ export default {
         submit: function () {
             axios.post(route('notes.store'), this.form)
                 .then(response => {
-                    this.toast.info(response.data.message)
+                    this.toast.success(response.data.message)
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -215,7 +243,7 @@ export default {
             axios.post(route('notes.store.question'), this.questionForm)
                 .then(response => {
                     console.log(response.data.message)
-                    this.toast.info(response.data)
+                    this.toast.success(response.data)
                     this.questionForm.question_text = null
                 })
                 .catch(error => {
@@ -270,7 +298,7 @@ export default {
                                     'Content-Type': 'multipart/form-data'
                                 }
                             }).then(response => {
-                                parentThis.toast.info(response.data.message);
+                                parentThis.toast.success(response.data.message);
                             });
                             playAudio.src = audioSrc;
                         }

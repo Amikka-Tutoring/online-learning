@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left: 0;">
                                         <div class="blue-text">{{
-                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a :href="route('course',user_course.course.slug)"><h4>{{
-                                    user_course.course.name
+                                        user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -256,10 +256,10 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                            parseFloat(user_course.course.quizzes_attempted /
-                                            (user_course.course.quizzes_count === 0 ? 1 :
-                                            user_course.course.quizzes_count) *
-                                            100).toFixed(0)
+                                                parseFloat(user_course.course.quizzes_attempted /
+                                                    (user_course.course.quizzes_count === 0 ? 1 :
+                                                        user_course.course.quizzes_count) *
+                                                    100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -292,7 +292,7 @@
                         </div>
                     </transition>
                     <div class="row justify-content-center my-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="my-4">
                                 <full-calendar :editable="true" :exams="calendar_exams" :lessons="calendar_lessons"/>
                             </div>
@@ -305,6 +305,22 @@
             <!--        Note-->
             <div class="notes">
                 <h1 class="blue-text">Notes</h1>
+                <transition name="list">
+                    <div v-if="notes" class="question-box text-left mt-5">
+                        <div class="row">
+                            <div class="col-lg-11 col-10">
+                                This is where all of your voice and written notes will be
+                                saved for all of the
+                                courses
+                                that you are taking.
+                            </div>
+                            <div class="col-lg-1 col-2 d-flex align-items-center">
+                                <i v-on:click="notes = disableNotification('notes')"
+                                   class="fas fa-times red-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
                 <select name="course" id="" class="form-control w-lg-25 float-right my-4"
                         style="z-index: 999; position: relative"
                         v-on:change="getNotesByCourse(this.selected_course)"
@@ -313,23 +329,9 @@
                     <option v-for="user_course in user_courses.enrollments">{{ user_course.course.name }}
                     </option>
                 </select>
+
                 <div class="notes-content pl-5" style="position: relative">
-                    <transition name="list">
-                        <div v-if="notes" class="question-box text-left">
-                            <div class="row">
-                                <div class="col-lg-11 col-10">
-                                    This is where all of your voice and written notes will be
-                                    saved for all of the
-                                    courses
-                                    that you are taking.
-                                </div>
-                                <div class="col-lg-1 col-2 d-flex align-items-center">
-                                    <i v-on:click="notes = disableNotification('notes')"
-                                       class="fas fa-times red-text"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
+
                     <div class="row">
                         <div class="spinner-container" v-if="loading"
                              style="position: absolute;width:100%;height: 253px;z-index: 1;">
@@ -413,7 +415,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">{{
-                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>

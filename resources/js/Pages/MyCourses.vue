@@ -95,7 +95,7 @@ export default {
       axios.post(route('cancel.subscription', plan_id))
           .then(response => {
             console.log(response.data)
-            this.toast.info(response.data.message);
+            this.toast.success(response.data.message);
           })
           .catch(error => {
             this.toast.error(error.response.data.message)

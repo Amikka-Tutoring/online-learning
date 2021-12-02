@@ -173,7 +173,7 @@ class DiagnosticUserTagSeeder extends Seeder
         DiagnosticUserTag::create([
             'title' => 'Auditory',
             'summary' => 'Based on your results we have found that you are an auditory learner. Below we will describe exactly what that means for your course.',
-            'learned' => serialize(['You are an auditory learner, you learn best by listening and hearing.',
+            'learned' => serialize(['You are an auditory learner, you learn best by speaking and hearing.',
                 'You have an easier time understanding spoken instructions than written instructions.',
                 'You learn better by reading out loud because hearing things and saying things helps you memorize better.']),
             'plan' => serialize(['We will recommend that you use the audio feature to take notes during your lessons since you learn best by speaking and hearing.',

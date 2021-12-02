@@ -61,7 +61,7 @@ export default {
       })
           .then(response => {
                 if (response.data.message) {
-                  this.toast.info(response.data.message);
+                  this.toast.success(response.data.message);
                   this.onsuccess = true
                   this.questions_added = response.data.questions
                 }

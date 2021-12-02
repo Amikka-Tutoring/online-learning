@@ -42,13 +42,14 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="notes-circle rounded-circle" title="Ask a question"
-                                     v-on:click="written_notes = false; question_box = true; audio=false"><i
-                                    class="fas fa-question"></i></div>
+                                     v-on:click="written_notes = false; question_box = true; audio=false; this.toast.info('Ask our tutors a question')">
+                                    <i
+                                        class="fas fa-question"></i></div>
                             </div>
                             <div class="col-3">
                                 <div class="notes-circle rounded-circle" title="Write notes"
-                                     v-on:click="written_notes = true; question_box = false; audio = false"><i
-                                    class="fas fa-pen"></i></div>
+                                     v-on:click="written_notes = true; question_box = false; audio = false; this.toast.info('Write notes to review later')">
+                                    <i class="fas fa-pen"></i></div>
                             </div>
                             <div class="col-3">
                                 <div v-on:click="flag(video)" class="notes-circle rounded-circle"
@@ -58,8 +59,9 @@
                             </div>
                             <div class="col-3">
                                 <div class="notes-circle rounded-circle" title="Voice notes"
-                                     v-on:click="audio = true; written_notes = false; question_box = false"><i
-                                    class="fas fa-microphone-alt"></i></div>
+                                     v-on:click="audio = true; written_notes = false; question_box = false;this.toast.info('Record notes to review later')">
+                                    <i
+                                        class="fas fa-microphone-alt"></i></div>
                             </div>
                         </div>
                         <collapse-transition>
@@ -118,7 +120,7 @@ export default {
         submit: function () {
             axios.post(route('notes.store'), this.form)
                 .then(response => {
-                    this.toast.info(response.data.message)
+                    this.toast.success(response.data.message)
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -127,7 +129,7 @@ export default {
         submitQuestion: function () {
             axios.post(route('notes.store.question'), this.question_form)
                 .then(response => {
-                    this.toast.info(response.data)
+                    this.toast.success(response.data)
                     this.question_form.question_text = null
                 })
                 .catch(error => {
@@ -136,7 +138,7 @@ export default {
         },
         flag: function (video) {
             axios.post(route('flag.video', video)).then(response => {
-                this.toast.info(response.data.message)
+                this.toast.success(response.data.message)
             }).catch(error => {
                 Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
             });
@@ -189,7 +191,7 @@ export default {
                                     'Content-Type': 'multipart/form-data'
                                 }
                             }).then(response => {
-                                parentThis.toast.info(response.data.message);
+                                parentThis.toast.success(response.data.message);
                             });
                             playAudio.src = audioSrc;
                         }

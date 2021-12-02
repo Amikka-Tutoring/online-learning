@@ -21,7 +21,7 @@
                         </div>
                     </transition>
                     <div class="row justify-content-center my-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="my-4">
                                 <full-calendar :editable="true" :exams="calendar_exams" :lessons="calendar_lessons"/>
                             </div>
@@ -320,7 +320,7 @@
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
                                         <h5 class="blue-text">{{
-                                                moment(user.profile.exam_date).format("MM/DD")
+                                            moment(user.profile.exam_date).format("MM/DD")
                                             }}</h5>
                                     </div>
                                 </div>
@@ -373,7 +373,7 @@ export default {
         updateLessonDates: function (lesson_date) {
             axios.put(route('update.lesson.dates'), lesson_date)
                 .then(response => {
-                    this.toast.info(response.data.message);
+                    this.toast.success(response.data.message);
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -382,7 +382,7 @@ export default {
         visitExam: function (exam) {
             axios.post(route('exams.visit', exam.id))
                 .then(response => {
-                    // this.toast.info(response.data.message);
+                    // this.toast.success(response.data.message);
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
@@ -396,7 +396,7 @@ export default {
         save: function () {
             axios.post(route('schedule.practice.exam', this.form.exam_id), this.form)
                 .then(response => {
-                    this.toast.info(response.data.message);
+                    this.toast.success(response.data.message);
                     this.practice_exams = response.data.exams
                     this.calendar_exams = response.data.calendar_exams
                 })
@@ -408,7 +408,7 @@ export default {
         newLessonDate: function () {
             axios.post(route('store.lesson.dates'), this.new_form)
                 .then(response => {
-                    this.toast.info(response.data.message);
+                    this.toast.success(response.data.message);
                     this.getLessonDates()
                     this.new_form.day = null
                     this.new_form.time = null
@@ -422,7 +422,7 @@ export default {
             axios.delete(route('delete.lesson.dates', lesson))
                 .then(response => {
                     this.getLessonDates()
-                    this.toast.info(response.data.message);
+                    this.toast.success(response.data.message);
                 });
         },
         getLessonDates: function () {
@@ -443,7 +443,7 @@ export default {
         check(event) {
             axios.post(route('change.lesson.length', event.target.value))
                 .then(response => {
-                    this.toast.info(response.data.message);
+                    this.toast.success(response.data.message);
                     this.lesson_length = event.target.value
                 })
                 .catch(error => {

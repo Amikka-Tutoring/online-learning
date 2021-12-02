@@ -4,7 +4,7 @@
         <div v-if="editable" class="row justify-content-center my-4 p-3">
             <div class="d-flex flex-mobile">
                 <input type="datetime-local" v-model="form.time" class="form-control">
-                <select name="" v-model="form.type" class="form-control mx-2">
+                <select name="" v-model="form.type" class="form-control mx-2" style="min-width: 210px">
                     <option value="exam">Next Practice Exam: 🚀</option>
                     <option value="lesson">Next Lesson: ⌛</option>
                 </select>
@@ -64,7 +64,7 @@ export default {
     methods: {
         submit: function (form) {
             axios.post(route('set.date'), form).then(response => {
-                this.toast.info(response.data.message);
+                this.toast.success(response.data.message);
                 window.location.reload()
             }).catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))

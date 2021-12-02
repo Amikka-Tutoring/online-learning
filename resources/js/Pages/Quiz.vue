@@ -7,7 +7,8 @@
                 class="row justify-content-center align-items-center"
                 style="margin-bottom: 50px; margin-top: -20px"
             >
-                <div class="blue-text" v-on:click="showFrame"><img src="/images/messenger.png" alt="">
+                <div v-if="layer.content.link" class="blue-text" v-on:click="showFrame"><img src="/images/messenger.png"
+                                                                                             alt="">
                 </div>
                 <div
                     class="progress"
@@ -117,7 +118,7 @@
                                                         <p class="text-center font-weight-bold">Explanation</p>
                                                         <hr>
                                                         <p class="text-justify text">{{
-                                                            answer.explanation
+                                                                answer.explanation
                                                             }}</p>
                                                     </div>
                                                 </div>
@@ -222,8 +223,8 @@ export default {
             this.form.answer_list.push(this.form.answers);
             axios.post(route('lesson.quiz.store', this.form.layer_id), this.form.answer_list[0])
                 .then(response => {
-                    this.toast.info(response.data.message);
-                    this.toast.info(response.data.score);
+                    this.toast.success(response.data.message);
+                    this.toast.success(response.data.score);
                     // setTimeout(function () {
                     window.location.href = "/";
                     // }, 2000);
@@ -274,49 +275,49 @@ export default {
 </script>
 <style scoped>
 .explanation-box {
-    border  : 1px solid lightgray;
-    padding : 5px 20px;
+    border: 1px solid lightgray;
+    padding: 5px 20px;
 }
 
 .explanation-box p.text {
-    color     : #808080;
-    font-size : 12px;
+    color: #808080;
+    font-size: 12px;
 }
 
 .correct {
-    border-top : 2px solid green;
+    border-top: 2px solid green;
 }
 
 .incorrect {
-    border-top : 2px solid red;
+    border-top: 2px solid red;
 }
 
 .retry-btn {
-    border          : none;
-    background      : none;
-    text-decoration : underline;
+    border: none;
+    background: none;
+    text-decoration: underline;
 }
 
 iframe {
-    width      : 100%;
-    min-height : 400px;
+    width: 100%;
+    min-height: 400px;
 }
 
 .modal-dialog {
-    position  : absolute;
-    left      : 0;
-    top       : 58px;
-    width     : 700px;
-    max-width : 700px;
+    position: absolute;
+    left: 0;
+    top: 58px;
+    width: 700px;
+    max-width: 700px;
 }
 
 .modal-dialog-centered {
-    display : block !important;
+    display: block !important;
 }
 
-@media (max-width : 767.98px) {
+@media (max-width: 767.98px) {
     .modal-dialog {
-        width : 100% !important;
+        width: 100% !important;
     }
 }
 </style>

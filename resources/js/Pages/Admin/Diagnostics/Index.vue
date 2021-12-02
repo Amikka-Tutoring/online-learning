@@ -1,78 +1,78 @@
 <template>
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ diagnostic_name }} Diagnostic Quiz</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            @click="closeModal()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" name="name" id="name" class="form-control"
-                               v-model="form.name">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" @click="deleteQuiz(form)">Delete
-                        <span
-                            v-if="deleteLoader"
-                            class="spinner-border ml-2"
-                            style="width: 1rem; height: 1rem"></span></button>
-                    <button type="button" class="btn btn-primary" @click="update(form)">Update <span
-                        v-if="loading"
-                        class="spinner-border ml-2"
-                        style="width: 1rem; height: 1rem"></span></button>
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ diagnostic_name }} Diagnostic Quiz</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                  @click="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" class="form-control"
+                   v-model="form.name">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" @click="deleteQuiz(form)">Delete
+            <span
+                v-if="deleteLoader"
+                class="spinner-border ml-2"
+                style="width: 1rem; height: 1rem"></span></button>
+          <button type="button" class="btn btn-primary" @click="update(form)">Update <span
+              v-if="loading"
+              class="spinner-border ml-2"
+              style="width: 1rem; height: 1rem"></span></button>
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            @click="closeModal()">Close
-                    </button>
-                </div>
-            </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                  @click="closeModal()">Close
+          </button>
         </div>
+      </div>
     </div>
-    <admin-layout>
-        <div class="container">
-            <div class="admin-courses">
-                <div class="courses" data-aos="fade-up">
-                    <h1 class="blue-text">{{ diagnostic_name }} Diagnostics</h1>
-                    <div class="courses-content" style="margin-top: 90px">
-                        <div class="row">
-                            <div v-if="quizzes.length" v-for="quiz in quizzes" class="col-lg-3 col-md-6"
-                                 data-aos="fade-up"
-                                 data-aos-delay="50"
-                                 data-aos-once="true">
-                                <div class="input-cards mb-4">
-                                    <img class="w-100" :src="'../../images/course-img.png'">
-                                    <h4>{{ quiz.name }}</h4>
-                                    <div class="row justify-content-center align-items-center mx-0"
-                                         style="margin-top: 60px; margin-bottom: 10px">
-                                        <div class="col-lg-7 col-7">
-                                        </div>
-                                        <div class="col-lg-3 col-3">
-                                            <div class="blue-text course-edit" @click="edit(quiz)" data-toggle="modal"
-                                                 data-target="#modal">Edit
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-2">
-                                            <div class="blue-text course-edit">
-                                                <a :href="quiz.diagnostic.slug+'/'+quiz.slug"><i
-                                                    class="blue-text fas fa-plus"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  </div>
+  <admin-layout>
+    <div class="container">
+      <div class="admin-courses">
+        <div class="courses" data-aos="fade-up">
+          <h1 class="blue-text">{{ diagnostic_name }} Diagnostics</h1>
+          <div class="courses-content" style="margin-top: 90px">
+            <div class="row">
+              <div v-if="quizzes.length" v-for="quiz in quizzes" class="col-lg-3 col-md-6"
+                   data-aos="fade-up"
+                   data-aos-delay="50"
+                   data-aos-once="true">
+                <div class="input-cards mb-4">
+                  <img class="w-100" :src="'../../images/course-img.png'">
+                  <h4>{{ quiz.name }}</h4>
+                  <div class="row justify-content-center align-items-center mx-0"
+                       style="margin-top: 60px; margin-bottom: 10px">
+                    <div class="col-lg-7 col-7">
                     </div>
+                    <div class="col-lg-3 col-3">
+                      <div class="blue-text course-edit" @click="edit(quiz)" data-toggle="modal"
+                           data-target="#modal">Edit
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-2">
+                      <div class="blue-text course-edit">
+                        <a :href="quiz.diagnostic.slug+'/'+quiz.slug"><i
+                            class="blue-text fas fa-plus"></i></a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </admin-layout>
+      </div>
+    </div>
+  </admin-layout>
 </template>
 
 
@@ -80,86 +80,86 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 
 export default {
-    components: {
-        AdminLayout,
+  components: {
+    AdminLayout,
+  },
+  methods: {
+    closeModal: function () {
+      $('#modal').modal('hide');
+      this.reset();
     },
-    methods: {
-        closeModal: function () {
-            $('#modal').modal('hide');
+    reset: function () {
+      this.form = {
+        name: null,
+        id: null
+      }
+      this.editMode = false;
+      this.loading = false;
+      this.deleteLoader = false;
+    },
+    edit: function (data) {
+      this.form.name = data.name
+      this.form.id = data.id
+    },
+    update: function (data) {
+      this.loading = true
+      axios.put(route('diagnostics.update', data.id), data)
+          .then(response => {
+            this.getQuizzes();
+            this.toast.success(response.data.message);
+            this.loading = false
+            this.closeModal();
             this.reset();
-        },
-        reset: function () {
-            this.form = {
-                name: null,
-                id: null
-            }
-            this.editMode = false;
-            this.loading = false;
-            this.deleteLoader = false;
-        },
-        edit: function (data) {
-            this.form.name = data.name
-            this.form.id = data.id
-        },
-        update: function (data) {
-            this.loading = true
-            axios.put(route('diagnostics.update', data.id), data)
-                .then(response => {
-                    this.getQuizzes();
-                    this.toast.info(response.data.message);
-                    this.loading = false
-                    this.closeModal();
-                    this.reset();
-                })
-                .catch(error => {
-                    Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
-                    this.loading = false
-                });
-        },
-        deleteQuiz: function (data) {
-            if (!confirm('Are you sure want to remove?')) return;
-            const toast = useToast();
-            this.deleteLoader = true
-            axios.delete(route('diagnostics.delete', data.id))
-                .then(response => {
-                    this.getQuizzes();
-                    this.toast.info(response.data.message);
-                    this.deleteLoader = false
-                    this.closeModal();
-                    this.reset();
-                })
-                .catch(error => {
-                        Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
-                        this.deleteLoader = false
-                    }
-                );
-        },
-        getQuizzes: function () {
-            console.log(route().params)
-            if (route().params.slug === 'academic') {
-                axios.get(route('academics.get')).then(response => {
-                    this.quizzes = response.data
-                })
-            } else {
-                axios.get(route('personalities.get')).then(response => {
-                    this.quizzes = response.data
-                })
-            }
-        }
+          })
+          .catch(error => {
+            Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+            this.loading = false
+          });
     },
-    props: ['quizzes', 'diagnostic_name'],
-
-    data() {
-        return {
-            quizzes: this.quizzes,
-            form: {
-                name: null,
-            },
-            loading: false,
-            deleteLoader: false
-        }
+    deleteQuiz: function (data) {
+      if (!confirm('Are you sure want to remove?')) return;
+      const toast = useToast();
+      this.deleteLoader = true
+      axios.delete(route('diagnostics.delete', data.id))
+          .then(response => {
+            this.getQuizzes();
+            this.toast.success(response.data.message);
+            this.deleteLoader = false
+            this.closeModal();
+            this.reset();
+          })
+          .catch(error => {
+                Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
+                this.deleteLoader = false
+              }
+          );
     },
-    mounted() {
+    getQuizzes: function () {
+      console.log(route().params)
+      if (route().params.slug === 'academic') {
+        axios.get(route('academics.get')).then(response => {
+          this.quizzes = response.data
+        })
+      } else {
+        axios.get(route('personalities.get')).then(response => {
+          this.quizzes = response.data
+        })
+      }
     }
+  },
+  props: ['quizzes', 'diagnostic_name'],
+
+  data() {
+    return {
+      quizzes: this.quizzes,
+      form: {
+        name: null,
+      },
+      loading: false,
+      deleteLoader: false
+    }
+  },
+  mounted() {
+  }
 }
 </script>

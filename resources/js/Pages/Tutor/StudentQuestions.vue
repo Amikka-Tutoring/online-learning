@@ -147,7 +147,7 @@ export default {
       console.log(data)
       axios.post(route('store.response'), data)
           .then(response => {
-            this.toast.info(response.data.message)
+            this.toast.success(response.data.message)
             this.closeModal();
           }).catch(error => {
         Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
