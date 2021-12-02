@@ -17,7 +17,30 @@
         </a>
 
 
-        <div class="dropdown">
+        <div class="dropdown d-flex">
+            <div class="btn-group dropleft">
+                <button type="button" class="btn btn-primary mr-2" data-toggle="dropdown" aria-haspopup="true"
+                        style="background: white; color:#4c6ed7; border:none; box-shadow: none"
+                        aria-expanded="false">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="notifications-number">{{ notifications.length }}</span>
+                </button>
+                <div class="dropdown-menu notifications-section" style="min-width: 280px">
+                    <div v-if="notifications.length" class="row mx-0" v-for="notification in notifications"
+                         v-on:click="readNotification(notification)">
+                        <div class="col-10">
+                            <a :href="notification.data.details.link"
+                               class="dropdown-item"
+                               href="#">{{ notification.data.details.title }}</a>
+                        </div>
+                        <div class="col-2">
+                            <button style="background: none; border: 0">X
+                            </button>
+                        </div>
+                    </div>
+                    <p v-else class="px-3 m-0">No new notifications</p>
+                </div>
+            </div>
             <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img style="object-fit: cover; width: 40px; height: 40px"
@@ -100,11 +123,10 @@ export default {
             isHidden: true,
             next: false,
             avatar: this.user.profile_photo_path,
-            user: this.user
+            user: this.user,
+            notifications: [],
         };
     },
-
-
     methods: {
         logout() {
             axios.post(route('logout'))
@@ -118,7 +140,24 @@ export default {
         },
         toggleClass: function (event) {
             this.isHidden = !this.isHidden;
+        },
+        getNotifications: function () {
+            axios.get(route('get.notifications')).then(response => {
+                this.notifications = response.data
+            }).catch(error => {
+                console.log(error.response)
+            })
+        },
+        readNotification: function (notification) {
+            axios.post(route('read.notification'), notification).then(response => {
+                this.notifications = response.data
+            }).catch(error => {
+                console.log(error.response)
+            })
         }
     },
+    mounted() {
+        this.getNotifications()
+    }
 };
 </script>

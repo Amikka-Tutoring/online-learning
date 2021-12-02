@@ -80,7 +80,13 @@
                         <div v-if="form.currentstep === index + 2"
                              class="row w-100 m-0 justify-content-center flex-column align-items-center">
                             <div class="col-12">
-                                <p class="quiz-question-box">{{ question.title }}</p>
+                                <p class="quiz-question-box">
+                                    <math-field id="formula" letterShapeStyle="upright"
+                                                smart-mode
+                                                style="font-size:28px;padding: 3px;border: none;display: inline-block; font-family: Arial">
+                                        {{ question.title }}
+                                    </math-field>
+                                </p>
                             </div>
 
                             <div class="col-md-5">
@@ -212,7 +218,6 @@ export default {
             if (this.form.currentstep === this.layer.questions.length + 2) {
                 this.form.errors = [];
                 this.form.progress_value = 100;
-
             }
         },
         finish: function () {

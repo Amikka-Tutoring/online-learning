@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\StudentLayerQuestion;
 use App\Models\Video;
 use App\Models\VideoResponse;
+use App\Notifications\QuestionResponded;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Notification;
 
 class TutorController extends Controller
 {
@@ -30,7 +32,7 @@ class TutorController extends Controller
                 'video_id' => 'required|exists:videos,id',
                 'question_id' => 'required|exists:student_layer_questions,id',
             ]);
-            VideoResponse::create([
+            $response = VideoResponse::create([
                 'title' => $request->title,
                 'url' => $request->url,
                 'message' => $request->message,
@@ -38,6 +40,12 @@ class TutorController extends Controller
                 'question_id' => $request->question_id,
                 'user_id' => Auth::id()
             ]);
+            $details = [
+                'title' => 'Question Responded',
+                'question' => $response->question->question_text,
+                'link' => route('video.response', ['video' => $response->video, 'response' => $response])
+            ];
+            Notification::send($response->question->user, new QuestionResponded($details));
             return ['message' => 'Success'];
         } else {
             abort(403);

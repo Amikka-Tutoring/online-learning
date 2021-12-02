@@ -74,6 +74,9 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
             Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
 
+            Route::get('/notifications/get', [PageController::class, 'getNotifications'])->name('get.notifications');
+            Route::post('/notification/read', [PageController::class, 'readNotification'])->name('read.notification');
+
             Route::get('notes', [NotesController::class, 'notesList'])->name('notes-list');
             Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');
 
@@ -162,6 +165,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('diagnostics/{id}', [DiagnosticController::class, 'deleteQuiz'])->name('diagnostics.delete');
     Route::get('diagnostics/academic/get', [DiagnosticController::class, 'getAcademicQuizzes'])->name('academics.get');
     Route::get('diagnostics/personality/get', [DiagnosticController::class, 'getPersonalityQuizzes'])->name('personalities.get');
+
+    Route::get('formula', [AdminController::class, 'math'])->name('formula');
 });
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {

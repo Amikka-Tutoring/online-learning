@@ -51,4 +51,9 @@ class AdminController extends Controller
     {
         return Inertia::render('Admin/Courses/Create');
     }
+
+    public function math()
+    {
+        return Inertia::render('Admin/MathFormula');
+    }
 }

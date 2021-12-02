@@ -27,4 +27,9 @@ class VideoResponse extends Model
     {
         return $this->belongsTo(Video::class);
     }
+
+    public function question()
+    {
+        return $this->belongsTo(StudentLayerQuestion::class, 'question_id');
+    }
 }

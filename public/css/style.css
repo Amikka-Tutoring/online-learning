@@ -1720,7 +1720,19 @@ input[type="radio"] {
     border: 1px solid #4C6ED8;
 }
 
+.notifications-section {
+    position: absolute;
+    right: 0 !important;
+    top: 50px !important;
+}
+
+.notifications-number {
+    position: absolute;
+    top: 0;
+}
+
 @media (max-width: 767.98px) {
+
     .flex-mobile {
         flex-direction: column;
         width: 100%;
@@ -2044,7 +2056,7 @@ input[type="radio"] {
     }
 
     .banner-img {
-        margin-bottom: 10px !important;
+        margin-bottom: 35px !important;
     }
 
     .reach-out .reach-form button {
