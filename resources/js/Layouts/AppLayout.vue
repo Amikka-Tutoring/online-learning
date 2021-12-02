@@ -15,42 +15,44 @@
         <a :href="route('dashboard')" style="height: 80%">
             <img src="/images/logo.png" alt="" style="height: 100%">
         </a>
-
-
-        <div class="dropdown d-flex">
-            <div class="btn-group dropleft">
-                <button type="button" class="btn btn-primary mr-2" data-toggle="dropdown" aria-haspopup="true"
-                        style="background: white; color:#4c6ed7; border:none; box-shadow: none"
-                        aria-expanded="false">
-                    <i class="bi bi-bell-fill"></i>
-                    <span class="notifications-number">{{ notifications.length }}</span>
-                </button>
-                <div class="dropdown-menu notifications-section" style="min-width: 280px">
-                    <div v-if="notifications.length" class="row mx-0" v-for="notification in notifications"
-                         v-on:click="readNotification(notification)">
-                        <div class="col-10">
-                            <a :href="notification.data.details.link"
-                               class="dropdown-item"
-                               href="#">{{ notification.data.details.title }}</a>
+        <div class="d-flex">
+            <div class="dropdown">
+                <div class="btn-group dropleft" v-if="user.profile">
+                    <button type="button" class="btn btn-primary mr-2" data-toggle="dropdown" aria-haspopup="true"
+                            style="background: white; color:#4c6ed7; border:none; box-shadow: none"
+                            aria-expanded="false">
+                        <i class="bi bi-bell-fill"></i>
+                        <span class="notifications-number">{{ notifications.length }}</span>
+                    </button>
+                    <div class="dropdown-menu notifications-section" style="min-width: 280px">
+                        <div v-if="notifications.length" class="row mx-0" v-for="notification in notifications"
+                             v-on:click="readNotification(notification)">
+                            <div class="col-10">
+                                <a :href="notification.data.details.link"
+                                   class="dropdown-item"
+                                   href="#">{{ notification.data.details.title }}</a>
+                            </div>
+                            <div class="col-2">
+                                <button style="background: none; border: 0">X
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <button style="background: none; border: 0">X
-                            </button>
-                        </div>
+                        <p v-else class="px-3 m-0">No new notifications</p>
                     </div>
-                    <p v-else class="px-3 m-0">No new notifications</p>
                 </div>
             </div>
-            <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img style="object-fit: cover; width: 40px; height: 40px"
-                     class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <!--                <a class="dropdown-item" :href="route('admin.dashboard')" v-if="this.user.is_admin">Admin Panel</a>-->
-                <!--                <a class="dropdown-item" :href="route('student.questions')" v-if="this.user.is_tutor">Tutor Panel</a>-->
-                <a class="dropdown-item" v-on:click.prevent="logout()" href="">Logout</a>
+            <div class="dropdown d-flex">
+
+                <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton1"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img style="object-fit: cover; width: 40px; height: 40px"
+                         class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                    <a class="dropdown-item" v-on:click.prevent="logout()" href="">Logout</a>
+                </div>
             </div>
+
         </div>
     </nav>
 
