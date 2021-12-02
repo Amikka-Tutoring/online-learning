@@ -152,7 +152,7 @@ class User extends Authenticatable
 
     public function getTag()
     {
-        if ($this->tags->count())
+        if ( $this->tags->count() )
             return $this->tags->last()->name;
     }
 
@@ -217,5 +217,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Video::class, 'user_viewed_videos')->where('user_id', auth()->user()->id);
     }
+
 
 }

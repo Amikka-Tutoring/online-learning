@@ -1,7 +1,7 @@
 <template>
     <admin-layout>
         <div class="container admin-dashboard">
-            <h1 class="blue-text">Dashboard</h1>
+            <h1 class="blue-text">Math Formula</h1>
             <div class="dashboard-content">
                 <math-field id="formula" virtual-keyboard-mode=manual
                             style="font-size: 32px;margin: 3em;padding: 8px;border-radius: 8px;">

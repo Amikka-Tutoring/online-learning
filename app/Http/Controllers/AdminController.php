@@ -13,8 +13,10 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $users = User::all();
-        return Inertia::render('Admin/Dashboard', ['user_count' => $users->count()]);
+        $students = User::where('role_id', 1)->get()->count();
+        $tutors = User::where('role_id', 2)->get()->count();
+        $admins = User::where('role_id', 3)->get()->count();
+        return Inertia::render('Admin/Dashboard', ['students' => $students, 'tutors' => $tutors, 'admins' => $admins]);
     }
 
 

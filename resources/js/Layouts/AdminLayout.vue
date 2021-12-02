@@ -60,6 +60,16 @@
                         v-bind:class="route().current('student.questions') ? 'active' : ''"
                         :href="route('student.questions')">Student Questions</a></li>
                 </template>
+                <template v-if="user.is_admin">
+                    <li><a
+                        v-bind:class="route().current('quiz.content') ? 'active' : ''"
+                        :href="route('quiz.content')">Quiz Contents</a></li>
+                </template>
+                <template v-if="user.is_admin">
+                    <li><a
+                        v-bind:class="route().current('formula') ? 'active' : ''"
+                        :href="route('formula')">Math Formula</a></li>
+                </template>
                 <li><a @click="logout" style="color: red; cursor: pointer; text-decoration: underline;">Logout</a></li>
             </ul>
         </div>

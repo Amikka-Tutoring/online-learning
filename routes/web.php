@@ -49,6 +49,8 @@ Route::get('/', [PageController::class, 'checkRoutes'])->name('main')->middlewar
 Route::middleware(['auth', 'student'])->group(function () {
     Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method');
     Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method');
+    Route::get('notifications/get', [PageController::class, 'getNotifications'])->name('get.notifications');
+    Route::post('notification/read', [PageController::class, 'readNotification'])->name('read.notification');
     Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
     Route::middleware(['has.payment.method', 'initial'])->group(function () {
         Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
@@ -74,8 +76,6 @@ Route::middleware(['auth', 'student'])->group(function () {
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
             Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
 
-            Route::get('/notifications/get', [PageController::class, 'getNotifications'])->name('get.notifications');
-            Route::post('/notification/read', [PageController::class, 'readNotification'])->name('read.notification');
 
             Route::get('notes', [NotesController::class, 'notesList'])->name('notes-list');
             Route::get('dashboard/notes/date', [NotesController::class, 'dashboardNotesByDate'])->name('dashboard.notes.date');

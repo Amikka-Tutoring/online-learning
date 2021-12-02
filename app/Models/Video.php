@@ -25,8 +25,7 @@ class Video extends Model
 
     protected static function booted()
     {
-        if (auth()->user()->is_student())
-            static::addGlobalScope(new VideoScope);
+        static::addGlobalScope(new VideoScope);
     }
 
     public function layer()
@@ -41,7 +40,7 @@ class Video extends Model
 
     public function getViewedAttribute()
     {
-        if ($this->user_viewed_videos->count())
+        if ( $this->user_viewed_videos->count() )
             return true;
         return false;
     }

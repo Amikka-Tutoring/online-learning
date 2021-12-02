@@ -17,7 +17,7 @@
         </a>
         <div class="d-flex">
             <div class="dropdown">
-                <div class="btn-group dropleft" v-if="user.profile">
+                <div class="btn-group dropleft">
                     <button type="button" class="btn btn-primary mr-2" data-toggle="dropdown" aria-haspopup="true"
                             style="background: white; color:#4c6ed7; border:none; box-shadow: none"
                             aria-expanded="false">
@@ -28,9 +28,9 @@
                         <div v-if="notifications.length" class="row mx-0" v-for="notification in notifications"
                              v-on:click="readNotification(notification)">
                             <div class="col-10">
-                                <a :href="notification.data.details.link"
-                                   class="dropdown-item"
-                                   href="#">{{ notification.data.details.title }}</a>
+                                <!--                                <a :href="notification.data.details.link"-->
+                                <!--                                   class="dropdown-item"-->
+                                <!--                                   href="#">{{ notification.data.details.title }}</a>-->
                             </div>
                             <div class="col-2">
                                 <button style="background: none; border: 0">X

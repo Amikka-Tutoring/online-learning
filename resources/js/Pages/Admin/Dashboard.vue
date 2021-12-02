@@ -7,16 +7,24 @@
                     <div class="col-lg-4 col-md-6 col-12 mb-4">
                         <div class="dashboard-boxes">
                             <div class="box-content">
-                                <h1>{{ user_count }}</h1>
-                                <h3>Active Users</h3>
+                                <h1>{{ students }}</h1>
+                                <h3>Students</h3>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-12 mb-4">
                         <div class="dashboard-boxes">
                             <div class="box-content">
-                                <h1>19</h1>
-                                <h3>New Users</h3>
+                                <h1>{{ tutors }}</h1>
+                                <h3>Tutors</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12 mb-4">
+                        <div class="dashboard-boxes">
+                            <div class="box-content">
+                                <h1>{{ admins }}</h1>
+                                <h3>Admins</h3>
                             </div>
                         </div>
                     </div>
@@ -35,7 +43,7 @@ export default {
         AdminLayout,
     },
     methods: {},
-    props: ['user_count'],
+    props: ['students', 'tutors', 'admins'],
 
     data() {
         return {}
