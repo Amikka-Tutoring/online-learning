@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Laravel\Cashier\Exceptions\IncompletePayment;
 use Laravel\Cashier\Subscription;
 use Stripe\BaseStripeClient;
 use Stripe\Plan;
@@ -21,7 +22,7 @@ class SubscriptionController extends Controller
     public function subscribe()
     {
         $user = Auth::user();
-        if ( $user->subscriptions->count() )
+        if ($user->subscriptions->count())
             return redirect()->route('dashboard');
         $key = env('STRIPE_SECRET');
         $stripe = new StripeClient($key);
@@ -53,7 +54,7 @@ class SubscriptionController extends Controller
 
     public function cancelSubscription($plan_id)
     {
-        if ( Auth::user()->enrollments->where('ends_at', null)->count() == 1 ) {
+        if (Auth::user()->enrollments->where('ends_at', null)->count() == 1) {
             return Response::json([
                 'code' => 401,
                 'message' => 'You need to be subscribed at least in one course'
@@ -70,7 +71,7 @@ class SubscriptionController extends Controller
         $plan = env('PLAN_ID');
         $paymentMethod = $user->defaultPaymentMethod();
         try {
-            if ( $user->subscriptions->count() )
+            if ($user->subscriptions->count())
                 $user->newSubscription('default', $plan)->create($paymentMethod);
             else
                 $user->newSubscription('default', $plan)->trialDays(7)->create($paymentMethod);
@@ -97,7 +98,7 @@ class SubscriptionController extends Controller
     public function checkStatus()
     {
         $user = Auth::user();
-        if ( $user->subscribed('default') ) {
+        if ($user->subscribed('default')) {
             dd('trial');
         }
         dd('not trial');
@@ -108,5 +109,32 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         dd($user->subscriptions);
 //        if ($user->)
+    }
+
+    public function plans()
+    {
+        return Inertia::render('Auth/Plans');
+    }
+
+    public function subscribePlan($plan)
+    {
+        $new_plan = '';
+        switch ($plan) {
+            case 'basic':
+                $new_plan = env('STRIPE_BASIC');
+                break;
+            case 'support':
+                $new_plan = env('STRIPE_SUPPORT');
+                break;
+            case 'support+':
+                $new_plan = env('STRIPE_SUPPORT_PLUS');
+                break;
+            default:
+                $new_plan = env('STRIPE_BASIC');
+        }
+        try {
+            auth()->user()->newSubscription($plan, $new_plan)->add();
+        } catch (IncompletePayment $e) {
+        }
     }
 }

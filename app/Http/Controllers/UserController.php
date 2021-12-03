@@ -108,7 +108,7 @@ class UserController extends Controller
         $user->createOrGetStripeCustomer();
         $user->addPaymentMethod($paymentMethod);
         $user->updateDefaultPaymentMethod($paymentMethod);
-        return redirect()->route('main');
+        return redirect()->route('initial.questionnaire');
     }
 
     public function addPaymentMethod()

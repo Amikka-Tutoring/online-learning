@@ -10,6 +10,7 @@ use App\Models\Layer;
 use App\Models\LayerQuizResult;
 use App\Models\Note;
 use App\Models\PracticeExam;
+use App\Models\Subscription;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\UserVideoToReview;
@@ -22,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use phpDocumentor\Reflection\Types\Boolean;
 use Vimeo\Vimeo;
 
 class PageController extends Controller
@@ -40,7 +42,7 @@ class PageController extends Controller
     public function initialQuestionnaire()
     {
         $courses = Course::where('name', 'not like', 'SAT%')->get();
-        if ( Auth::user()->profile ) {
+        if (Auth::user()->profile) {
             return redirect()->route('dashboard');
         }
         return Inertia::render('InitialQuestionnaire', ['courses_data' => $courses]);
@@ -48,9 +50,9 @@ class PageController extends Controller
 
     public function checkRoutes()
     {
-        if ( auth()->user()->is_tutor() ) {
+        if (auth()->user()->is_tutor()) {
             return redirect()->route('student.questions');
-        } else if ( auth()->user()->is_admin() ) {
+        } else if (auth()->user()->is_admin()) {
             return redirect()->route('admin.dashboard');
         } else {
             return redirect()->route('dashboard');
@@ -66,9 +68,9 @@ class PageController extends Controller
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
-        if ( $user_profile->tutor_match )
+        if ($user_profile->tutor_match)
             $tutor_match_done = true;
-        if ( $user_profile->learning_style )
+        if ($user_profile->learning_style)
             $learning_style_done = true;
         $userTag = Auth::user()->getTag();
 
@@ -82,7 +84,7 @@ class PageController extends Controller
         }
         $next = 0;
         foreach ($lesson_days as $d) {
-            if ( $d['day'] > $date_now )
+            if ($d['day'] > $date_now)
                 $next = $d;
             else
                 $next = min($lesson_days);
@@ -99,7 +101,7 @@ class PageController extends Controller
         $next_lesson_day = '';
         $next_lesson_time = '';
         $next_lesson = '';
-        if ( $next != 0 ) {
+        if ($next != 0) {
             $next_lesson_day = $days[$next['day']];
             $next_lesson_time = $next['time'];
 
@@ -173,7 +175,7 @@ class PageController extends Controller
         $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
         $next_videos = Video::where('id', '>', $video->id)->with('tags')->take(5)->get();
         $user = Auth::user()->load('layer_quiz_results');
-        if ( !$user->subscribed($video->layer->course->slug) )
+        if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
         $notes = Note::where('video_id', $video)->where('user_id', auth()->user()->id)->first();
 
@@ -184,7 +186,7 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
-        if ( count($user->layer_quiz_results->where('layer_id', $id)) )
+        if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers', 'content')->find($id);
         return Inertia::render('Quiz', ['layer' => $layer]);
@@ -336,7 +338,8 @@ class PageController extends Controller
 
     public function test()
     {
-        return redirect()->route('subscribe');
+
+        return auth()->user()->subscribedToPrice(env('STRIPE_BASIC'), 'basic');
 
 //        foreach (Layer::all() as $layer) {
 //            $layer->content()->create();

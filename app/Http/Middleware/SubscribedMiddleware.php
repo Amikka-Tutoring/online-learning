@@ -17,8 +17,11 @@ class SubscribedMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && !$request->user()->subscribed())
-            return redirect()->route('subscribe');
+        foreach (auth()->user()->subscriptions()->get() as $subscription) {
+            optional(auth()->user()->subscription($subscription->name))->syncStripeStatus();
+        }
+        if ($request->user() && !$request->user()->subscriptions()->active()->whereIn('name', ['basic', 'support', 'support+'])->where('stripe_status', '!=', 'canceled')->count())
+            return redirect()->route('subscribe.plans');
         return $next($request);
     }
 }

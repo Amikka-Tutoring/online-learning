@@ -119,12 +119,22 @@
 <script>
 export default {
     name: "Plans",
-    props: ['parent'],
+    props: ['parent', 'user'],
     methods: {
         select: function (plan) {
-            console.log(plan)
-            this.parent.plan = plan
             localStorage.setItem('plan', plan)
+            if (this.user) {
+                this.toast.info('Payment is being processed')
+                axios.post(route('post.subscribe.plan', plan)).then(response => {
+                    this.toast.success('Payment is finished')
+                    window.location.href = '/dashboard'
+                }).catch(error => {
+                    console.log(error.response())
+                })
+            } else {
+                this.parent.plan = plan
+            }
+
         }
     },
     mounted() {

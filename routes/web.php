@@ -43,14 +43,16 @@ Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
+Route::get('plans', [\App\Http\Controllers\SubscriptionController::class, 'plans'])->name('subscribe.plans');
+Route::post('subscribe/plan/{plan}', [\App\Http\Controllers\SubscriptionController::class, 'subscribePlan'])->name('post.subscribe.plan');
 
 Route::get('/', [PageController::class, 'checkRoutes'])->name('main')->middleware('auth');
 
-Route::middleware(['auth', 'student'])->group(function () {
-    Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method');
-    Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method');
-    Route::get('notifications/get', [PageController::class, 'getNotifications'])->name('get.notifications');
-    Route::post('notification/read', [PageController::class, 'readNotification'])->name('read.notification');
+Route::middleware(['auth', 'student', 'subscribed'])->group(function () {
+    Route::get('set-payment-method', [\App\Http\Controllers\UserController::class, 'addPaymentMethod'])->name('add.payment.method')->withoutMiddleware('subscribed');
+    Route::post('set-payment-method', [\App\Http\Controllers\UserController::class, 'setPaymentMethod'])->name('set.payment.method')->withoutMiddleware('subscribed');
+    Route::get('notifications/get', [PageController::class, 'getNotifications'])->name('get.notifications')->withoutMiddleware('subscribed');
+    Route::post('notification/read', [PageController::class, 'readNotification'])->name('read.notification')->withoutMiddleware('subscribed');
     Route::get('dashboard/notes/course/{course?}', [NotesController::class, 'dashboardNotesByCourse'])->name('dashboard.notes.course');
     Route::middleware(['has.payment.method', 'initial'])->group(function () {
         Route::get('dashboard', [PageController::class, 'dashboard'])->name('dashboard');
@@ -112,7 +114,7 @@ Route::middleware(['auth', 'student'])->group(function () {
     });
 });
 
-Route::prefix('admin')->middleware(['auth', 'admin', 'subscribed'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [PageController::class, 'checkRoutes'])->name('admin.main');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('admin.users');

@@ -85,11 +85,12 @@ export default {
                 }).then(response => {
                     this.submit_text = 'SUCCESS'
                     this.onsuccess = true
-                    window.location.href = '/dashboard'
+                    window.location.href = '/initial-questionnaire'
                 }).catch(error => {
                     this.toast.error('Something went wrong!')
                 }).finally(() => {
                     this.loading = false
+                    this.submit_text = 'SUBMIT'
                 });
             }
         });
