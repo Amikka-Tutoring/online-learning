@@ -43,7 +43,7 @@ Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
 Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
-Route::get('plans', [\App\Http\Controllers\SubscriptionController::class, 'plans'])->name('subscribe.plans');
+Route::get('plans', [\App\Http\Controllers\SubscriptionController::class, 'plans'])->name('subscribe.plans')->middleware('initial');
 Route::post('subscribe/plan/{plan}', [\App\Http\Controllers\SubscriptionController::class, 'subscribePlan'])->name('post.subscribe.plan');
 
 Route::get('/', [PageController::class, 'checkRoutes'])->name('main')->middleware('auth');
