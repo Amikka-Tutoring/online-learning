@@ -336,6 +336,7 @@ class PageController extends Controller
 
     public function test()
     {
+        return redirect()->route('subscribe');
 
 //        foreach (Layer::all() as $layer) {
 //            $layer->content()->create();

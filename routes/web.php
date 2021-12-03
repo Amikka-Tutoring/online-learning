@@ -112,7 +112,7 @@ Route::middleware(['auth', 'student'])->group(function () {
     });
 });
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin', 'subscribed'])->group(function () {
     Route::get('/', [PageController::class, 'checkRoutes'])->name('admin.main');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('admin.users');
