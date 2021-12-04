@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
-Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware('auth');
+Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware(['auth','has.payment.method']);
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
 Route::get('plans', [\App\Http\Controllers\SubscriptionController::class, 'plans'])->name('subscribe.plans')->middleware('initial');
 Route::post('subscribe/plan/{plan}', [\App\Http\Controllers\SubscriptionController::class, 'subscribePlan'])->name('post.subscribe.plan');
