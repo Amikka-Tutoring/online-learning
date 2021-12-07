@@ -6,6 +6,7 @@ use App\Mail\OneOnOne;
 use App\Mail\ReminderMail;
 use App\Models\Course;
 use App\Models\Diagnostic;
+use App\Models\DiagnosticQuiz;
 use App\Models\Layer;
 use App\Models\LayerQuizResult;
 use App\Models\Note;
@@ -65,6 +66,7 @@ class PageController extends Controller
         $personality = Diagnostic::with('quizzes')->where('name', 'Personality')->first();
         $academic = Diagnostic::with('quizzes', 'quizzes.questions')->where('name', 'Academic')->first();
         $user = Auth::user();
+        $has_notes = auth()->user()->notes()->count();
         $user_profile = $user->profile;
         $tutor_match_done = false;
         $learning_style_done = false;
@@ -124,7 +126,7 @@ class PageController extends Controller
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'next_practice_exam' => $next_practice_exam,
             'user_courses' => $user_courses, 'profile' => $user_profile,
             'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag
-            , 'calendar_exams' => $calendar_exams, 'calendar_lessons' => $calendar_lessons]);
+            , 'calendar_exams' => $calendar_exams, 'calendar_lessons' => $calendar_lessons, 'has_notes' => $has_notes]);
 
     }
 
@@ -135,8 +137,9 @@ class PageController extends Controller
         $user = Auth::user()->load(['enrollments', 'enrollments.course', 'profile', 'lesson_dates', 'practice_exam_dates']);
         $enrollments = $user->enrollments->pluck('stripe_price');
         $available_courses = Course::whereNotIn('plan_id', $enrollments)->get();
+        $plan = auth()->user()->subscriptions()->active()->whereIn('name', ['basic', 'support', 'support+'])->first()->name;
 //        $practice_exams = $user->practice_exam_dates->pluck('date_time'));
-        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses]);
+        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses, 'plan' => $plan]);
     }
 
     public function mathDiagnostic()
@@ -214,14 +217,6 @@ class PageController extends Controller
         $recommended_courses = Video::whereNotIn('id', $watched)->whereNotIn('layer_id', $completed_layers)->whereHas('layer', function ($q) use ($enrolled_courses) {
             $q->whereIn('course_id', $enrolled_courses);
         })->with('tags')->latest()->take(10)->get();
-//
-//        $watched = auth()->user()->viewed_videos->pluck('id');
-//        $videos = Video::whereHas('layer', function ($layer) {
-//            $layer->with(['course' => function ($q) {
-//            }]);
-//        })->whereNotIn('id', $watched)->get();
-//        dd(auth()->user()->enrollments()->with('course')->get()->pluck('course.id'), $videos);
-
         return Inertia::render('Recommended', ['courses' => $courses, 'videos' => $recommended_courses]);
     }
 
@@ -233,14 +228,20 @@ class PageController extends Controller
 
 
         $courses = $user->enrollments()->where('stripe_price', $course->plan_id)->with(['course', 'course.layers' => function ($query) {
-            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos', 'videos.tags', 'children.videos', 'children.videos.tags', 'children.children.videos', 'children.children.videos.tags']);
+            $query->whereNull('layers.parent_id')->with(['children', 'children.children', 'videos' => function ($query) {
+                $query->withoutGlobalScopes([VideoScope::class]);
+            }, 'videos.tags', 'children.videos' => function ($query) {
+                $query->withoutGlobalScopes([VideoScope::class]);
+            }, 'children.videos.tags', 'children.children.videos' => function ($query) {
+                $query->withoutGlobalScopes([VideoScope::class]);
+            }, 'children.children.videos.tags']);
         }])->get()->pluck('course');
 
-        $recommended_courses = Video::whereNotIn('layer_id', $completed_layers)->whereHas('layer', function ($q) use ($course, $completed_layers) {
+        $watched = auth()->user()->viewed_videos->pluck('id');
+
+        $recommended_courses = Video::whereNotIn('id', $watched)->whereNotIn('layer_id', $completed_layers)->whereHas('layer', function ($q) use ($course, $completed_layers) {
             $q->where('course_id', $course->id);
         })->with('tags')->latest()->take(10)->get();
-
-//        return $recommended_courses;
         return Inertia::render('Recommended', ['courses' => $courses, 'videos' => $recommended_courses]);
     }
 
@@ -338,10 +339,9 @@ class PageController extends Controller
 
     public function test()
     {
+//        return auth()->user()->subscribedToPrice(env('STRIPE_BASIC'), 'basic');
 
-        return auth()->user()->subscribedToPrice(env('STRIPE_BASIC'), 'basic');
-
-//        foreach (Layer::all() as $layer) {
+//        foreach (DiagnosticQuiz::all() as $layer) {
 //            $layer->content()->create();
 //        }
 //        $watched = auth()->user()->viewed_videos->pluck('id');

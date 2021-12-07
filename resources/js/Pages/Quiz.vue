@@ -61,7 +61,7 @@
                     </div>
                     <div class="modal fade" id="readFrame" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered m-0" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLongTitle">Excerpt</h5>
@@ -69,8 +69,8 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <iframe id="frame" :src="layer.content.link" frameborder="0"></iframe>
+                                <div class="modal-body p-0">
+                                    <iframe id="frame" :src="layer.content.link" type="application/pdf"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                                 <p class="quiz-question-box" v-if="hasFormula(question.title)">
                                     <math-field id="formula" letterShapeStyle="upright"
                                                 smart-mode
-                                                style="font-size:28px;padding: 3px;border: none;display: inline-block; font-family: Arial"
+                                                style="font-size:18px;padding: 3px;border: none;display: inline-block; font-family: Arial"
                                                 readOnly="true">
                                         {{ removeText(question.title) }}
                                     </math-field>
@@ -126,7 +126,7 @@
                                                         <p class="text-center font-weight-bold">Explanation</p>
                                                         <hr>
                                                         <p class="text-justify text">{{
-                                                                answer.explanation
+                                                            answer.explanation
                                                             }}</p>
                                                     </div>
                                                 </div>
@@ -290,49 +290,54 @@ export default {
 </script>
 <style scoped>
 .explanation-box {
-    border  : 1px solid lightgray;
-    padding : 5px 20px;
+    border: 1px solid lightgray;
+    padding: 5px 20px;
 }
 
 .explanation-box p.text {
-    color     : #808080;
-    font-size : 12px;
+    color: #808080;
+    font-size: 0.9em;
 }
 
 .correct {
-    border-top : 2px solid green;
+    border-top: 2px solid green;
 }
 
 .incorrect {
-    border-top : 2px solid red;
+    border-top: 2px solid red;
 }
 
 .retry-btn {
-    border          : none;
-    background      : none;
-    text-decoration : underline;
+    border: none;
+    background: none;
+    text-decoration: underline;
 }
 
 iframe {
-    width      : 100%;
-    min-height : 400px;
+    width: 100%;
+    min-height: 400px;
+    height: 100%;
 }
 
 .modal-dialog {
-    position  : absolute;
-    left      : 0;
-    top       : 58px;
-    width     : 700px;
-    max-width : 700px;
+    position: absolute;
+    left: 0;
+    top: 85px;
+    width: 700px;
+    max-width: 700px;
+}
+
+.modal-content {
+    height: 80vh;
 }
 
 .modal-dialog-centered {
-    display : block !important;
+    display: block !important;
 }
 
-@media (max-width : 767.98px) {
+@media (max-width: 767.98px) {
     .modal-dialog {
-        width : 100% !important;
+        width: 100% !important;
     }
 }
 </style>

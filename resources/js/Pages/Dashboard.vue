@@ -321,60 +321,62 @@
                         </div>
                     </div>
                 </transition>
-                <select name="course" id="" class="form-control w-lg-25 float-right my-4"
-                        style="z-index: 999; position: relative"
-                        v-on:change="getNotesByCourse(this.selected_course)"
-                        v-model="selected_course">
-                    <option value="All">All</option>
-                    <option v-for="user_course in user_courses.enrollments">{{ user_course.course.name }}
-                    </option>
-                </select>
+                <template v-if="has_notes">
+                    <select name="course" id="" class="form-control w-lg-25 float-right my-4"
+                            style="z-index: 999; position: relative"
+                            v-on:change="getNotesByCourse(this.selected_course)"
+                            v-model="selected_course">
+                        <option value="All">All</option>
+                        <option v-for="user_course in user_courses.enrollments">{{ user_course.course.name }}
+                        </option>
+                    </select>
 
-                <div class="notes-content pl-5" style="position: relative">
+                    <div class="notes-content pl-5" style="position: relative">
 
-                    <div class="row">
-                        <div class="spinner-container" v-if="loading"
-                             style="position: absolute;width:100%;height: 253px;z-index: 1;">
-                            <div class="spinner-border" role="status"
-                                 style="top: 40%;position: absolute;left: 48%; width: 4rem !important; height: 4rem !important;">
-                                <span class="sr-only">Loading...</span>
+                        <div class="row">
+                            <div class="spinner-container" v-if="loading"
+                                 style="position: absolute;width:100%;height: 253px;z-index: 1;">
+                                <div class="spinner-border" role="status"
+                                     style="top: 40%;position: absolute;left: 48%; width: 4rem !important; height: 4rem !important;">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100"
+                             :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
+                            <div class="notes-table">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 25%"><i
+                                            class="fas fa-calendar-day blue-text mr-2"></i>Dates
+                                        </th>
+                                        <th style=" width: 15%"><i class="fas fa-book-open blue-text mr-2"></i>Class
+                                        </th>
+                                        <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Topics
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(note,itemObjKey) in notesByCourse">
+                                        <td>{{ itemObjKey }}</td>
+                                        <td><span v-for="(n,index) in note"><span
+                                            v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
+                                        </td>
+                                        <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
+                                        <a :href="route('notes-show',n)">{{
+                                                n.video.layer.name
+                                            }}</a></span>
+                                        </td>
+                                    </tr>
+                                    <p v-if="!Object.keys(this.notesByCourse).length">No rows found</p>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="w-100"
-                         :style="[loading ? {'opacity':'50%'}:{'opacity':'100%'}]">
-                        <div class="notes-table">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th style="width: 25%"><i
-                                        class="fas fa-calendar-day blue-text mr-2"></i>Dates
-                                    </th>
-                                    <th style=" width: 15%"><i class="fas fa-book-open blue-text mr-2"></i>Class
-                                    </th>
-                                    <th style="width: 30%"><i class="fas fa-pen blue-text mr-2"></i>Topics
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(note,itemObjKey) in notesByCourse">
-                                    <td>{{ itemObjKey }}</td>
-                                    <td><span v-for="(n,index) in note"><span
-                                        v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
-                                    </td>
-                                    <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
-                                                                                                                                <a :href="route('notes-show',n)">{{
-                                                                                                                                        n.video.layer.name
-                                                                                                                                    }}</a></span>
-                                    </td>
-                                    <!--                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>-->
-                                </tr>
-                                <p v-if="!Object.keys(this.notesByCourse).length">No rows found</p>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                </template>
+
             </div>
 
             <div v-if="profile.math_score && profile.grammar_score && profile.reading_score" class="academic my-5">
@@ -602,7 +604,7 @@ export default {
         FullCalendar,
         'cup': Cup
     },
-    props: ['calendar_lessons', 'calendar_exams', 'flash', 'academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
+    props: ['has_notes', 'calendar_lessons', 'calendar_exams', 'flash', 'academic_data', 'personality_data', 'user_courses', 'profile', 'next_lesson_time', 'next_lesson', 'next_lesson_day', 'next_practice_exam', 'tutor_match_done', 'learning_style_done', 'user_tag'],
     data() {
         return {
             academic: localStorage.getItem('academic') === 'true',
@@ -660,6 +662,8 @@ export default {
         if (this.flash.cup != null) {
             this.cup = true
         }
+        if (localStorage.getItem('plan'))
+            localStorage.removeItem('plan')
     },
     beforeMount() {
         console.log('notes')

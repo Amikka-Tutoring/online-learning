@@ -152,7 +152,7 @@ class User extends Authenticatable
 
     public function getTag()
     {
-        if ( $this->tags->count() )
+        if ($this->tags->count())
             return $this->tags->last()->name;
     }
 
@@ -197,6 +197,7 @@ class User extends Authenticatable
     {
         return count($this->layer_quiz_results->where('layer_id', $id));
     }
+
 
     public function lesson_dates()
     {

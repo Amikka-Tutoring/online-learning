@@ -13,6 +13,9 @@
                                 <input id="payment_method" type="hidden" name="payment_method" v-model="payment_method">
                                 <!-- Stripe Elements Placeholder -->
                                 <div id="card-element" class="form-control"></div>
+                                <p class="text-right mt-2 mb-0" v-if="this.price">Total price: <span
+                                    class="blue-text font-weight-bold" style="font-size: 20px">{{ this.price }} $</span>
+                                </p>
                             </div>
                         </div>
                         <div class="">
@@ -46,10 +49,23 @@ export default {
         return {
             loading: false,
             onsuccess: false,
-            submit_text: 'SUBMIT'
+            submit_text: 'SUBMIT',
+            price: null
         }
     },
     mounted() {
+        if (localStorage.getItem('plan')) {
+            switch (localStorage.getItem('plan')) {
+                case 'support+':
+                    this.price = 200
+                    break
+                case 'support':
+                    this.price = 150
+                    break
+                default:
+                    this.price = 50
+            }
+        }
         const stripe = Stripe(this.STRIPE_KEY);
 
         const elements = stripe.elements();

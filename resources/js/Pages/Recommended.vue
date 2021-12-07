@@ -22,34 +22,35 @@
                     </transition>
                     <div v-for="top_videos in videos"
                          class="recommended-item">
-                        <div class="row">
-                            <div
-                                class="col-2 d-flex justify-content-center align-items-center text-center">
-                                <a :href="route('lesson',top_videos.id)">
+                        <a :href="route('lesson',top_videos.id)">
+                            <div class="row">
+                                <div
+                                    class="col-2 d-flex justify-content-center align-items-center text-center">
+
                                     <i v-if="top_videos.viewed" class="bi bi-check-circle-fill fa-2x"
                                        style="color: #4C6ED7"></i>
                                     <i v-else
                                        class="far fa-circle fa-2x"
                                        style="color: #4C6ED7"></i>
-                                </a>
-                            </div>
-                            <div
-                                class="col-8 d-flex align-items-center justify-content-between">
-                                <h5>{{ top_videos.title }}</h5>
-                                <div><span v-for="tag in top_videos.tags"
-                                           class="ml-2 badges lightblue-badge">{{
-                                        tag.name
-                                    }}</span>
+                                </div>
+                                <div
+                                    class="col-8 d-flex align-items-center justify-content-between">
+                                    <h5>{{ top_videos.title }}</h5>
+                                    <div><span v-for="tag in top_videos.tags"
+                                               class="ml-2 badges lightblue-badge">{{
+                                            tag.name
+                                        }}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-2 d-flex justify-content-center align-items-center text-center">
+                                    <h5>{{
+                                            moment.duration(top_videos.duration,
+                                                'seconds').format("hh:mm:ss")
+                                        }}</h5>
                                 </div>
                             </div>
-                            <div
-                                class="col-2 d-flex justify-content-center align-items-center text-center">
-                                <h5>{{
-                                        moment.duration(top_videos.duration,
-                                            'seconds').format("hh:mm:ss")
-                                    }}</h5>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -92,34 +93,36 @@
                                     <div :class="'toplayer-' +topLayer.id">
                                         <div v-for="top_videos in topLayer.videos"
                                              class="recommended-item w-75">
-                                            <div class="row">
-                                                <div
-                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                    <a :href="route('lesson',top_videos.id)">
+                                            <a :href="route('lesson',top_videos.id)">
+                                                <div class="row">
+                                                    <div
+                                                        class="col-2 d-flex justify-content-center align-items-center text-center">
+
                                                         <i v-if="top_videos.viewed"
                                                            class="bi bi-check-circle-fill fa-2x"
                                                            style="color: #4C6ED7"></i>
                                                         <i v-else
                                                            class="far fa-circle fa-2x"
                                                            style="color: #4C6ED7"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="col-8 d-flex align-items-center justify-content-between">
-                                                    <h5>{{ top_videos.title }}</h5>
-                                                    <div><span v-for="tag in top_videos.tags"
-                                                               class="ml-2 badges lightblue-badge">{{
-                                                            tag.name
-                                                        }}</span>
+                                                    </div>
+                                                    <div
+                                                        class="col-8 d-flex align-items-center justify-content-between">
+                                                        <h5>{{ top_videos.title }}</h5>
+                                                        <div><span v-for="tag in top_videos.tags"
+                                                                   class="ml-2 badges lightblue-badge">{{
+                                                                tag.name
+                                                            }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                        <h5>{{
+                                                                moment.duration(top_videos.duration,
+                                                                    'seconds').format("hh:mm:ss")
+                                                            }}</h5>
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                    <h5>{{
-                                                            moment.duration(top_videos.duration,
-                                                                'seconds').format("hh:mm:ss")
-                                                        }}</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <template v-for="midLayer in topLayer.children">
                                             <div class="third-list grammar-list w-60"
@@ -139,35 +142,35 @@
                                                 <div :class="'midlayer-' +midLayer.id">
                                                     <div v-for="mid_videos in midLayer.videos"
                                                          class="recommended-item w-60">
-                                                        <div class="row">
-                                                            <div
-                                                                class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                <a :href="route('lesson',mid_videos.id)">
+                                                        <a :href="route('lesson',mid_videos.id)">
+                                                            <div class="row">
+                                                                <div
+                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
                                                                     <i v-if="mid_videos.viewed"
                                                                        class="bi bi-check-circle-fill fa-2x"
                                                                        style="color: #4C6ED7"></i>
                                                                     <i v-else
                                                                        class="far fa-circle fa-2x"
                                                                        style="color: #4C6ED7"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div
-                                                                class="col-8 d-flex align-items-center justify-content-between">
-                                                                <h5>{{ mid_videos.title }}</h5>
-                                                                <div><span v-for="tag in mid_videos.tags"
-                                                                           class="ml-2 badges lightblue-badge">{{
-                                                                        tag.name
-                                                                    }}</span>
+                                                                </div>
+                                                                <div
+                                                                    class="col-8 d-flex align-items-center justify-content-between">
+                                                                    <h5>{{ mid_videos.title }}</h5>
+                                                                    <div><span v-for="tag in mid_videos.tags"
+                                                                               class="ml-2 badges lightblue-badge">{{
+                                                                            tag.name
+                                                                        }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                                    <h5>{{
+                                                                            moment.duration(mid_videos.duration,
+                                                                                'seconds').format("hh:mm:ss")
+                                                                        }}</h5>
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                <h5>{{
-                                                                        moment.duration(mid_videos.duration,
-                                                                            'seconds').format("hh:mm:ss")
-                                                                    }}</h5>
-                                                            </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                     <div class="w-50">
                                                         <template v-for="lesson in midLayer.children">
@@ -187,35 +190,36 @@
                                                             <div :class="'lesson-' +lesson.id">
                                                                 <div v-for="less_videos in lesson.videos"
                                                                      class="recommended-item">
-                                                                    <div class="row">
-                                                                        <div
-                                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                            <a :href="route('lesson',less_videos.id)">
+                                                                    <a :href="route('lesson',less_videos.id)">
+                                                                        <div class="row">
+                                                                            <div
+                                                                                class="col-2 d-flex justify-content-center align-items-center text-center">
                                                                                 <i v-if="less_videos.viewed"
                                                                                    class="bi bi-check-circle-fill fa-2x"
                                                                                    style="color: #4C6ED7"></i>
                                                                                 <i v-else
                                                                                    class="far fa-circle fa-2x"
                                                                                    style="color: #4C6ED7"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-8 d-flex align-items-center justify-content-between">
-                                                                            <h5>{{ less_videos.title }}</h5>
-                                                                            <div><span v-for="tag in less_videos.tags"
-                                                                                       class="ml-2 badges lightblue-badge">{{
-                                                                                    tag.name
-                                                                                }}</span>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-8 d-flex align-items-center justify-content-between">
+                                                                                <h5>{{ less_videos.title }}</h5>
+                                                                                <div><span
+                                                                                    v-for="tag in less_videos.tags"
+                                                                                    class="ml-2 badges lightblue-badge">{{
+                                                                                        tag.name
+                                                                                    }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-2 d-flex justify-content-center align-items-center text-center">
+                                                                                <h5>{{
+                                                                                        moment.duration(less_videos.duration,
+                                                                                            'seconds').format("hh:mm:ss")
+                                                                                    }}</h5>
                                                                             </div>
                                                                         </div>
-                                                                        <div
-                                                                            class="col-2 d-flex justify-content-center align-items-center text-center">
-                                                                            <h5>{{
-                                                                                    moment.duration(less_videos.duration,
-                                                                                        'seconds').format("hh:mm:ss")
-                                                                                }}</h5>
-                                                                        </div>
-                                                                    </div>
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </template>
@@ -310,3 +314,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+a:hover {
+    text-decoration: none;
+}
+</style>

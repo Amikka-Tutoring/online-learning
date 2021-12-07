@@ -4,10 +4,13 @@
             <calculator v-if="diagnostic.name=='Mathematics'"/>
             <template v-if="form.currentstep != 1 && form.currentstep != diagnostic.length">
                 <div
-
                     class="row justify-content-center align-items-center"
                     style="margin-bottom: 50px; margin-top: -20px"
                 >
+                    <div v-if="diagnostic.content.link" class="blue-text" v-on:click="showFrame"><img
+                        src="/images/messenger.png"
+                        alt="">
+                    </div>
                     <div
                         class="progress"
                         style="height: 5px; width: 370px; margin: 0 20px"
@@ -22,11 +25,10 @@
                             style="background: #56c880"
                         ></div>
                     </div>
-                    <!--                    <div class="blue-text">Skip</div>-->
 
                 </div>
-                <reading-diagnostic v-if="diagnostic.name=='Reading'"/>
-                <grammar-diagnostic v-if="diagnostic.name=='Grammar'"/>
+                <!--                <reading-diagnostic v-if="diagnostic.name=='Reading'"/>-->
+                <!--                <grammar-diagnostic v-if="diagnostic.name=='Grammar'"/>-->
             </template>
             <div>
                 <form class="form" method="POST">
@@ -65,6 +67,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="readFrame" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered m-0" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Excerpt</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-0">
+                                    <iframe id="frame" :src="diagnostic.content.link" type="application/pdf"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div v-for="(question, index) in diagnostic.questions">
                         <div v-if="form.currentstep === index + 2"
                              class="row w-100 m-0 justify-content-center flex-column align-items-center">
@@ -72,7 +90,7 @@
                                 <p class="quiz-question-box" v-if="hasFormula(question.title)">
                                     <math-field id="formula" letterShapeStyle="upright"
                                                 smart-mode
-                                                style="font-size:28px;padding: 3px;border: none;display: inline-block; font-family: Arial"
+                                                style="font-size:18px;padding: 3px;border: none;display: inline-block; font-family: Arial"
                                                 readOnly="true">
                                         {{ removeText(question.title) }}
                                     </math-field>
@@ -178,6 +196,14 @@ export default {
         GrammarDiagnostic
     },
     methods: {
+        showFrame: function () {
+            $('#readFrame').modal('show');
+            var head = jQuery("#readFrame").contents().find("head");
+            var css = '<style type="text/css">' +
+                '*{display:none}; ' +
+                '</style>';
+            jQuery(head).append(css);
+        },
         hasFormula(text) {
             return text.startsWith('&&&')
         },
@@ -261,3 +287,32 @@ export default {
     }
 }
 </script>
+<style>
+iframe {
+    width: 100%;
+    min-height: 400px;
+    height: 100%;
+}
+
+.modal-dialog {
+    position: absolute;
+    left: 0;
+    top: 85px;
+    width: 700px;
+    max-width: 700px;
+}
+
+.modal-content {
+    height: 80vh;
+}
+
+.modal-dialog-centered {
+    display: block !important;
+}
+
+@media (max-width: 767.98px) {
+    .modal-dialog {
+        width: 100% !important;
+    }
+}
+</style>

@@ -11,7 +11,12 @@
                             <a :href="route('lesson',video)" style="text-decoration: none">
                                 <div class="row m-0 py-2" style="overflow: hidden">
                                     <div class="col-2 d-flex justify-content-center align-items-center text-center">
-                                        <i class="fas fa-play-circle" style="color: #4C6ED7; font-size: 1.5rem"></i>
+                                        <i v-if="video.viewed"
+                                           class="bi bi-check-circle-fill"
+                                           style="color: #4C6ED7; font-size: 1.5em"></i>
+                                        <i v-else
+                                           class="far fa-circle fa-2x"
+                                           style="color: #4C6ED7; font-size: 1.5em"></i>
                                     </div>
                                     <div class="col-5 align-self-center">
                                         <div class="row">
@@ -81,7 +86,7 @@
                         </collapse-transition>
                         <collapse-transition>
                             <div v-show="audio"
-                                 class="audio h-100" style="margin-top: 30%">
+                                 class="audio h-100" style="margin-top: 5%">
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="w-50 d-flex flex-column align-items-center mb-4">
                                         <button v-show="started" id="btnStop" class="border-0 bg-transparent"><i

@@ -21,6 +21,7 @@ use App\Http\Controllers\TutorController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\OneToOneController;
 use App\Http\Controllers\LayerContentController;
+use App\Http\Controllers\DiagnosticContentController;
 
 
 /*
@@ -41,9 +42,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('test', [PageController::class, 'test'])->name('test');
 Route::get('test2', [PageController::class, 'test2'])->name('test2');
 
-Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware(['auth','has.payment.method']);
+Route::get('initial-questionnaire', [PageController::class, 'initialQuestionnaire'])->name('initial.questionnaire')->middleware(['auth', 'has.payment.method']);
 Route::post('initial', [UserController::class, 'initialQuestionnaire'])->name('user.initial');
-Route::get('plans', [\App\Http\Controllers\SubscriptionController::class, 'plans'])->name('subscribe.plans')->middleware('initial');
+Route::get('plans', [\App\Http\Controllers\SubscriptionController::class, 'plans'])->name('subscribe.plans')->middleware(['initial', 'auth']);
 Route::post('subscribe/plan/{plan}', [\App\Http\Controllers\SubscriptionController::class, 'subscribePlan'])->name('post.subscribe.plan');
 
 Route::get('/', [PageController::class, 'checkRoutes'])->name('main')->middleware('auth');
@@ -77,6 +78,8 @@ Route::middleware(['auth', 'student', 'subscribed'])->group(function () {
             Route::get('recommended', [PageController::class, 'recommended'])->name('recommended')->middleware('tag_level');
             Route::get('calendar', [PageController::class, 'calendar'])->name('calendar');
             Route::get('set-calendar', [PageController::class, 'setCalendar'])->name('set-calendar');
+
+            Route::get('user/get/tokens', [NotesController::class, 'getTokens'])->name('get.tokens');
 
 
             Route::get('notes', [NotesController::class, 'notesList'])->name('notes-list');
@@ -152,6 +155,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('quiz/contents', [LayerContentController::class, 'index'])->name('quiz.content');
     Route::put('quiz/contents/{content}', [LayerContentController::class, 'store'])->name('store.quiz.content');
     Route::delete('quiz/contents/{content}/delete', [LayerContentController::class, 'destroy'])->name('delete.quiz.content');
+
+    Route::get('diagnostic/quiz/contents', [DiagnosticContentController::class, 'index'])->name('diagnostic.content');
+    Route::put('diagnostic/quiz/contents/{content}', [DiagnosticContentController::class, 'store'])->name('store.diagnostic.content');
+    Route::delete('diagnostic/quiz/contents/{content}/delete', [DiagnosticContentController::class, 'destroy'])->name('delete.diagnostic.content');
 
 
     Route::post('exams', [PracticeExamController::class, 'store'])->name('exams.store');

@@ -2,7 +2,7 @@
     <app-layout>
         <div class="container">
 
-
+            <tokens class="justify-content-center"/>
             <div class="profile-wrapper" data-aos="fade-up">
                 <div class="btn-group">
                     <button @click="tab = changeTab('specific')"
@@ -240,6 +240,15 @@
                                 </div>
                             </li>
                             <li>
+                                <div class="row">
+
+                                    <div class="col-lg-11 col-9 align-items-center">
+                                        <h5>Plan ({{ this.plan }})</h5>
+                                        <a :href="route('subscribe.plans')"><h6>Tap to Change Plan</h6></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
                                 <div class="row justify-content-between">
                                     <div class="col-lg-10 col-7 align-items-center">
                                         <h5>Privacy Policy</h5>
@@ -346,11 +355,13 @@
 import AppLayout from '@/Layouts/AppLayout'
 import CheckList from "../components/CheckList";
 import moment from "moment";
+import Tokens from "@/components/Tokens";
 
 export default {
     components: {
         AppLayout,
-        CheckList
+        CheckList,
+        Tokens
     },
 
     methods: {
@@ -428,7 +439,7 @@ export default {
             });
         }
     },
-    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses'],
+    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses', 'plan'],
     data() {
         return {
             avatar: this.user.profile_photo_path,

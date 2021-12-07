@@ -9,7 +9,7 @@ class OneToOneController extends Controller
     public function pay(Request $request)
     {
         $price = '';
-        switch ( $request->plan ) {
+        switch ($request->plan) {
             case 10:
                 $price = 75;
                 break;
@@ -20,8 +20,11 @@ class OneToOneController extends Controller
                 $price = 65;
                 break;
         }
+        $percentace = 1;
+        if ($request->payment_method === '1')
+            $percentace = 0.9;
         try {
-            auth()->user()->charge($price * 100 / $request->payment_method * $request->plan, auth()->user()->defaultPaymentMethod()->id, ['description' => $request->payment_method_text . ' of ' . $request->plan . ' Hours - ' . auth()->user()->name]);
+            auth()->user()->charge(($price * 100 / $request->payment_method * $request->plan) * $percentace, auth()->user()->defaultPaymentMethod()->id, ['description' => $request->payment_method_text . ' of ' . $request->plan . ' Hours - ' . auth()->user()->name]);
         } catch (\Exception $e) {
             return ['error' => 'Oops something went wrong'];
         }

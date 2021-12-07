@@ -143,8 +143,21 @@ class NotesController extends Controller
                 return 'You have reached a limit of questions for this month';
                 break;
             case 2:
-                return 'You are not allowed to ask questions';
+                return 'Please upgrade your membership to ask questions';
                 break;
+        }
+    }
+
+    public function getTokens()
+    {
+        $plan = auth()->user()->subscriptions()->pluck('name');
+        $questions = auth()->user()->questions()->count();
+        if ($plan->contains('support+')) {
+            return ['tokens' => 'Unlimited'];
+        } else if ($plan->contains('support')) {
+            return ['tokens' => (20 - auth()->user()->questions()->count()) * 10];
+        } else {
+            return ['tokens' => 0];
         }
     }
 
@@ -154,7 +167,7 @@ class NotesController extends Controller
         $questions = $layer->studentQuestions()->with(['user', 'layer'])->latest()->get();
 
         foreach ($questions as $question) {
-            print_r('Student: ' . $question->user->name . ', Question: ' . $question->question_text . ', Layer: ' . $question->layer->name . '<br>');
+            print_r('Student: ' . $question->user->name . ', Question: ' . $question->question_text . ', Layer: ' . $question->layer->name . ' < br>');
         }
     }
 }

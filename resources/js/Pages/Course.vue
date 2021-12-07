@@ -58,6 +58,7 @@
                             </div>
                         </transition>
                     </div>
+                    <tokens class="w-75 justify-content-start"/>
                     <div class="notes-box row w-75">
                         <div class="col-3">
                             <div class="row">
@@ -184,6 +185,7 @@ import AppLayout from '@/Layouts/AppLayout'
 import Button from "@/Jetstream/Button";
 import ToolsMenu from "../components/ToolsMenu";
 import {Inertia} from '@inertiajs/inertia'
+import Tokens from "@/components/Tokens";
 
 
 export default {
@@ -193,6 +195,7 @@ export default {
         Button,
         AppLayout,
         ToolsMenu,
+        Tokens
     },
     methods: {
         openAudio: function () {

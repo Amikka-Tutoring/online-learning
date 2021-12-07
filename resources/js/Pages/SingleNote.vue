@@ -20,14 +20,14 @@
                             </div>
 
                         </div>
-                        <div class="row">
-                            <div class="col-12 text-center my-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 text-center my-5">
                                 <h5 class="written-notes-title mb-4">Written Notes</h5>
                                 <div class="written-notes-box position-relative">
                                     <a class="blue-text position-absolute"
                                        style="bottom: 10px; right: 50px"
                                        @click="writtenNotesStore(index)">Edit</a>
-                                    <textarea class="text-box" name="" id="" cols="30" rows="7"
+                                    <textarea class="text-box" name="" id="" cols="30" rows="3"
                                               v-model="form.written_notes[index]"></textarea>
                                 </div>
                             </div>

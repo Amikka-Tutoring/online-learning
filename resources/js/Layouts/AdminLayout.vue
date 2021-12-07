@@ -64,6 +64,9 @@
                     <li><a
                         v-bind:class="route().current('quiz.content') ? 'active' : ''"
                         :href="route('quiz.content')">Quiz Contents</a></li>
+                    <li><a
+                        v-bind:class="route().current('diagnostic.content') ? 'active' : ''"
+                        :href="route('diagnostic.content')">Diagnostic Quiz Contents</a></li>
                 </template>
                 <template v-if="user.is_admin">
                     <li><a

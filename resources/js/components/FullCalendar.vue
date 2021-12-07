@@ -11,7 +11,10 @@
                 <select name="" v-model="form.exam" v-if="form.type=='exam'" class="form-control mr-2">
                     <option v-for="exam in exams" :value="exam.id">{{ exam.title }}</option>
                 </select>
-                <button v-on:click="submit(form)" class="btn btn-primary">Schedule
+                <button v-on:click="submit(form)" class="btn btn-primary d-flex" :disabled="submitted">Schedule <span
+                    v-if="submitted"
+                    class="spinner-border ml-2 mt-1"
+                    style="width: 1rem; height: 1rem"></span>
                 </button>
             </div>
         </div>
@@ -45,7 +48,8 @@ export default {
                 type: null,
                 exam: null
             },
-            exams: null
+            exams: null,
+            submitted: false
         }
     },
     created() {
@@ -63,13 +67,16 @@ export default {
     },
     methods: {
         submit: function (form) {
+            this.submitted = true
             axios.post(route('set.date'), form).then(response => {
                 this.toast.success(response.data.message);
                 window.location.reload()
             }).catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
                 }
-            );
+            ).finally(() => {
+                this.submitted = false
+            });
         },
         handleDateClick: function (arg) {
             this.form.time = arg.dateStr + 'T00:00'

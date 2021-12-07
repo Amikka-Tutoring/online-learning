@@ -23,7 +23,7 @@
                             <p>Enjoy your first 7 days free, then</p>
                             <h2>50$<span>/ month</span></h2>
                             <div class="row justify-content-center">
-                                <button v-on:click="select('basic')">Start now</button>
+                                <button v-on:click="select('basic')" :disabled="planSelected">Start now</button>
                             </div>
                             <hr>
                             <div class="box-content">
@@ -53,7 +53,7 @@
                             <p>Enjoy your first 7 days free, then</p>
                             <h2>150$<span>/ month</span></h2>
                             <div class="row justify-content-center">
-                                <button v-on:click="select('support')">Start now</button>
+                                <button v-on:click="select('support')" :disabled="planSelected">Start now</button>
                             </div>
                             <hr>
                             <div class="box-content">
@@ -86,7 +86,7 @@
                             <p>Enjoy your first 7 days free, then</p>
                             <h2>200$<span>/ month</span></h2>
                             <div class="row justify-content-center">
-                                <button v-on:click="select('support+')">Start now</button>
+                                <button v-on:click="select('support+')" :disabled="planSelected">Start now</button>
                             </div>
                             <hr>
                             <div class="box-content">
@@ -120,16 +120,25 @@
 export default {
     name: "Plans",
     props: ['parent', 'user'],
+    data() {
+        return {
+            planSelected: false
+        }
+    },
     methods: {
         select: function (plan) {
+            if (!confirm('Are you sure want to choose ' + plan + ' plan?')) return;
             localStorage.setItem('plan', plan)
             if (this.user) {
+                this.planSelected = true
                 this.toast.info('Payment is being processed')
                 axios.post(route('post.subscribe.plan', plan)).then(response => {
                     this.toast.success('Payment is finished')
                     window.location.href = '/dashboard'
                 }).catch(error => {
-                    console.log(error.response())
+                    console.log(error.response)
+                }).finally(() => {
+                    this.planSelected = false
                 })
             } else {
                 this.parent.plan = plan

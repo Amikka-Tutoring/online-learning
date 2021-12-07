@@ -118,23 +118,29 @@ class SubscriptionController extends Controller
 
     public function subscribePlan($plan)
     {
-        $new_plan = '';
-        switch ($plan) {
-            case 'basic':
-                $new_plan = env('STRIPE_BASIC');
-                break;
-            case 'support':
-                $new_plan = env('STRIPE_SUPPORT');
-                break;
-            case 'support+':
-                $new_plan = env('STRIPE_SUPPORT_PLUS');
-                break;
-            default:
-                $new_plan = env('STRIPE_BASIC');
+        $subscriptions = auth()->user()->subscriptions()->active()->whereIn('name', ['basic', 'support', 'support+']);
+        if ($subscriptions->where('stripe_status', '!=', 'canceled')->count()) {
+            $subscriptions->first()->cancel();
         }
-        try {
-            auth()->user()->newSubscription($plan, $new_plan)->add();
-        } catch (IncompletePayment $e) {
+        if ($subscriptions->first()->name != $plan) {
+            $new_plan = '';
+            switch ($plan) {
+                case 'basic':
+                    $new_plan = env('STRIPE_BASIC');
+                    break;
+                case 'support':
+                    $new_plan = env('STRIPE_SUPPORT');
+                    break;
+                case 'support+':
+                    $new_plan = env('STRIPE_SUPPORT_PLUS');
+                    break;
+                default:
+                    $new_plan = env('STRIPE_BASIC');
+            }
+            try {
+                auth()->user()->newSubscription($plan, $new_plan)->add();
+            } catch (IncompletePayment $e) {
+            }
         }
     }
 }

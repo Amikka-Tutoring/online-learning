@@ -1033,7 +1033,7 @@ a {
 
 .next-lessons .next-item .badges {
     font-weight: normal !important;
-    font-size: 16px !important;
+    font-size: 12px !important;
 }
 
 .next-lessons .next-up {
@@ -1738,6 +1738,10 @@ input[type="radio"] {
         width: 100%;
     }
 
+    form .first-step ol li {
+        font-size: 14px;
+    }
+
     .flex-mobile select {
         margin: 5px 0px !important;
     }
@@ -1938,6 +1942,12 @@ input[type="radio"] {
     .tools-menu {
         width: 100% !important;
         position: sticky;
+        margin-top: -35px;
+        margin-bottom: 40px;
+    }
+
+    .tools-menu .next-item p, .tools-menu .next-item span {
+        font-size: 12px !important;
     }
 
     .video-frame {
@@ -2374,6 +2384,11 @@ input[type="radio"] {
 .fc tbody .fc-day {
     border-style: none !important;
 }
+
+.fc .fc-daygrid-day-frame {
+    cursor: pointer;
+}
+
 
 .fc th {
     border-bottom: 1px solid #4c6ed7 !important;

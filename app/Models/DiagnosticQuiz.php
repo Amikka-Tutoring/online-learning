@@ -9,7 +9,12 @@ class DiagnosticQuiz extends Model
 {
     use HasFactory;
 
-//    protected $primaryKey = 'slug';
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            $model->content()->create();
+        });
+    }
 
     protected $fillable = [
         'name',
@@ -25,5 +30,10 @@ class DiagnosticQuiz extends Model
     public function diagnostic()
     {
         return $this->belongsTo(Diagnostic::class);
+    }
+
+    public function content()
+    {
+        return $this->hasOne(DiagnosticContent::class);
     }
 }
