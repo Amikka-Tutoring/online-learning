@@ -20,7 +20,7 @@
         <div class="dropdown">
             <button class="dropleft" style="background: none; border: none" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img style="object-fit: cover; width: 40px; height: 40px"
+                <img v-if="user" style="object-fit: cover; width: 40px; height: 40px"
                      class="d-flex align-items-center rounded-circle" alt="" :src="avatar">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -38,7 +38,7 @@
                 <h1><a :href="route('admin.dashboard')" style="color: black">Ammika Admin</a></h1>
             </ul>
             <ul class="list">
-                <template v-if="user.is_admin">
+                <template v-if="user?.is_admin">
                     <li><a
                         v-bind:class="route().current('admin.users') || route().current('admin.user') ? 'active' : ''"
                         :href="route('admin.users')">Users</a>
@@ -55,12 +55,12 @@
                         v-bind:class="route().current('diagnostics', { slug: 'personality' }) || route().current('personality.diagnostics.create') ? 'active' : ''"
                         :href="route('diagnostics','personality')">Personality Diagnostics</a></li>
                 </template>
-                <template v-if="user.is_admin || user.is_tutor">
+                <template v-if="user?.is_admin || user?.is_tutor">
                     <li><a
                         v-bind:class="route().current('student.questions') ? 'active' : ''"
                         :href="route('student.questions')">Student Questions</a></li>
                 </template>
-                <template v-if="user.is_admin">
+                <template v-if="user?.is_admin">
                     <li><a
                         v-bind:class="route().current('quiz.content') ? 'active' : ''"
                         :href="route('quiz.content')">Quiz Contents</a></li>
@@ -68,7 +68,7 @@
                         v-bind:class="route().current('diagnostic.content') ? 'active' : ''"
                         :href="route('diagnostic.content')">Diagnostic Quiz Contents</a></li>
                 </template>
-                <template v-if="user.is_admin">
+                <template v-if="user?.is_admin">
                     <li><a
                         v-bind:class="route().current('formula') ? 'active' : ''"
                         :href="route('formula')">Math Formula</a></li>
@@ -107,7 +107,7 @@ export default {
         return {
             showingNavigationDropdown: false,
             isHidden: true,
-            avatar: this.user.profile_photo_path,
+            avatar: this.user?.profile_photo_path,
             user: this.user
         };
     },

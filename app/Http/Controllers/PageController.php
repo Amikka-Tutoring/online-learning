@@ -60,6 +60,19 @@ class PageController extends Controller
         }
     }
 
+    public function getTokens()
+    {
+        $plan = auth()->user()->subscriptions()->pluck('name');
+        $questions = auth()->user()->questions()->count();
+        if ($plan->contains('support+')) {
+            return ['tokens' => 'Unlimited'];
+        } else if ($plan->contains('support')) {
+            return ['tokens' => (20 - auth()->user()->questions()->count()) * 10];
+        } else {
+            return ['tokens' => 0];
+        }
+    }
+
     public function dashboard()
     {
         $user_courses = Auth::user()->load(['enrollments', 'enrollments.course', 'layer_quiz_results']);
@@ -122,7 +135,7 @@ class PageController extends Controller
                 'daysOfWeek' => date('N', strtotime($item['day'])),
             ];
         });
-//            dd($user_courses);
+
         return Inertia::render('Dashboard', ['personality_data' => $personality, 'academic_data' => $academic, 'next_practice_exam' => $next_practice_exam,
             'user_courses' => $user_courses, 'profile' => $user_profile,
             'next_lesson' => $next_lesson, 'next_lesson_day' => $next_lesson_day, 'next_lesson_time' => $next_lesson_time, 'tutor_match_done' => $tutor_match_done, 'learning_style_done' => $learning_style_done, 'user_tag' => $userTag
@@ -138,8 +151,9 @@ class PageController extends Controller
         $enrollments = $user->enrollments->pluck('stripe_price');
         $available_courses = Course::whereNotIn('plan_id', $enrollments)->get();
         $plan = auth()->user()->subscriptions()->active()->whereIn('name', ['basic', 'support', 'support+'])->first()->name;
+        $tokens = $this->getTokens();
 //        $practice_exams = $user->practice_exam_dates->pluck('date_time'));
-        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses, 'plan' => $plan]);
+        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses, 'plan' => $plan, 'tokens' => $tokens]);
     }
 
     public function mathDiagnostic()
@@ -174,16 +188,17 @@ class PageController extends Controller
     public function lesson($video)
     {
         $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions', 'responses', 'responses');
-        $next_link = $video->layer->videos->where('id', '>', $video->id)->first();
-        $prev_link = $video->layer->videos->where('id', '<', $video->id)->first();
+        $next_link = Video::where('id', '>', $video->id)->first();
+        $prev_link = Video::where('id', '<', $video->id)->first();
         $next_videos = Video::where('id', '>', $video->id)->with('tags')->take(5)->get();
         $user = Auth::user()->load('layer_quiz_results');
         if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
         $notes = Note::where('video_id', $video)->where('user_id', auth()->user()->id)->first();
+        $tokens = $this->getTokens();
 
         $user_attempt = count($user->layer_quiz_results->where('layer_id', $video->layer->id));
-        return Inertia::render('Course', ['video' => $video, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt, 'next_link' => $next_link, 'prev_link' => $prev_link, 'next_videos' => $next_videos]);
+        return Inertia::render('Course', ['video' => $video, 'tokens' => $tokens, 'notes' => $notes, 'user' => $user, 'user_attempt' => $user_attempt, 'next_link' => $next_link, 'prev_link' => $prev_link, 'next_videos' => $next_videos]);
     }
 
     public function lessonQuiz($id)
@@ -242,6 +257,7 @@ class PageController extends Controller
         $recommended_courses = Video::whereNotIn('id', $watched)->whereNotIn('layer_id', $completed_layers)->whereHas('layer', function ($q) use ($course, $completed_layers) {
             $q->where('course_id', $course->id);
         })->with('tags')->latest()->take(10)->get();
+
         return Inertia::render('Recommended', ['courses' => $courses, 'videos' => $recommended_courses]);
     }
 

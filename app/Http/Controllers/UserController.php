@@ -19,10 +19,14 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-//      filter by name
-        $users = User::with('profile')->get();
-        return Inertia::render('Admin/Users/Index', ['users' => $users]);
+        return Inertia::render('Admin/Users/Index', [
+            'users' => User::when($request->term, function ($query, $term) {
+                $query->where('name', 'like', '%' . $term . '%');
+            })->paginate(20)
+        ]);
+
     }
+
 
     public function show($id)
     {
@@ -143,5 +147,12 @@ class UserController extends Controller
         $user->profile->desire_score = $score;
         $user->profile->save();
         return ['message' => 'Score Goal has been updated!'];
+    }
+
+    public function setTutor(User $user)
+    {
+        $user->role_id = 2;
+        $user->save();
+        return ['message' => 'User set as Tutor'];
     }
 }

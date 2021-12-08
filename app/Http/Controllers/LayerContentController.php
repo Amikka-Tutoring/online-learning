@@ -31,7 +31,8 @@ class LayerContentController extends Controller
 
     public function destroy(LayerContent $content)
     {
-        $content->delete();
+        $content->link = null;
+        $content->save();
         return ['message' => 'Deleted Successfully', 'contents' => LayerContent::with('layer')->get()];
     }
 }

@@ -247,7 +247,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="">Select way of payment</label>
+                        <label for="">How do you want to pay</label>
                         <select name="" v-model="method" id="" class="form-control">
                             <option value="2">Half now, half later</option>
                             <option value="1">Full (10% off)</option>

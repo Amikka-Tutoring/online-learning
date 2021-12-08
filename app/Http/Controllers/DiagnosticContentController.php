@@ -30,7 +30,8 @@ class DiagnosticContentController extends Controller
 
     public function destroy(DiagnosticContent $content): array
     {
-        $content->delete();
+        $content->link = null;
+        $content->save();
         return ['message' => 'Deleted Successfully', 'contents' => DiagnosticContent::with('quiz')->get()];
     }
 }

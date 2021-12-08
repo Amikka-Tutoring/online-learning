@@ -54,7 +54,7 @@ export default {
             axios.put(route('store.quiz.content', content.id), content).then(response => {
                 this.toast.success(response.data.message)
             }).catch(error => {
-                console.log(error.response)
+                Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
             })
         },
         deleteContent: function (content) {

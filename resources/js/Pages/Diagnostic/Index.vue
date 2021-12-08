@@ -90,7 +90,7 @@
                                 <p class="quiz-question-box" v-if="hasFormula(question.title)">
                                     <math-field id="formula" letterShapeStyle="upright"
                                                 smart-mode
-                                                style="font-size:18px;padding: 3px;border: none;display: inline-block; font-family: Arial"
+                                                style="font-size:18px;padding: 3px;border: none;display: inline-block; font-family: Inter"
                                                 readOnly="true">
                                         {{ removeText(question.title) }}
                                     </math-field>
@@ -122,7 +122,14 @@
                                                     <label :class="'option option-' +answer.id"
                                                            :for="'option-' +answer.id">
                                                         <div class="dot"></div>
-                                                        <span>{{ answer.title }}</span>
+                                                        <span v-if="hasFormula(answer.title)">
+                                                            <math-field letterShapeStyle="upright" readOnly="true"
+                                                                        smart-mode
+                                                                        style="font-size:18px;padding: 0px;border: none;display: inline-block; font-family: Inter;">
+                                                                {{ removeText(answer.title) }}
+                                                            </math-field>
+                                                        </span>
+                                                        <span v-else>{{ answer.title }}</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -133,7 +140,7 @@
                         </div>
 
                     </div>
-                    <div class="row justify-content-center">
+                    <div class=" row justify-content-center">
                         <div class="col-md-2 col-5">
                             <button
                                 v-if="form.currentstep > 1"

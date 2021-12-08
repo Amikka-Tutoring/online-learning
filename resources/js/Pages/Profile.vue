@@ -1,8 +1,7 @@
 <template>
     <app-layout>
         <div class="container">
-
-            <tokens class="justify-content-center"/>
+            <tokens class="justify-content-center" :tokens="tokens"/>
             <div class="profile-wrapper" data-aos="fade-up">
                 <div class="btn-group">
                     <button @click="tab = changeTab('specific')"
@@ -439,7 +438,7 @@ export default {
             });
         }
     },
-    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses', 'plan'],
+    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses', 'plan', 'tokens'],
     data() {
         return {
             avatar: this.user.profile_photo_path,

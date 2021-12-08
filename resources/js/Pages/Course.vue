@@ -58,7 +58,7 @@
                             </div>
                         </transition>
                     </div>
-                    <tokens class="w-75 justify-content-start"/>
+                    <tokens class="w-75 justify-content-start" :tokens="tokens"/>
                     <div class="notes-box row w-75">
                         <div class="col-3">
                             <div class="row">
@@ -189,7 +189,7 @@ import Tokens from "@/components/Tokens";
 
 
 export default {
-    props: ['video', 'notes', 'user', 'user_attempt', 'appUrl', 'next_link', 'prev_link', 'next_videos'],
+    props: ['video', 'notes', 'user', 'user_attempt', 'appUrl', 'next_link', 'prev_link', 'next_videos', 'tokens'],
 
     components: {
         Button,

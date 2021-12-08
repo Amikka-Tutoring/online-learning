@@ -152,6 +152,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('exams', [PracticeExamController::class, 'index'])->name('admin.exams');
 
+    Route::post('setTutor/{user}', [UserController::class, 'setTutor'])->name('set.tutor');
+
     Route::get('quiz/contents', [LayerContentController::class, 'index'])->name('quiz.content');
     Route::put('quiz/contents/{content}', [LayerContentController::class, 'store'])->name('store.quiz.content');
     Route::delete('quiz/contents/{content}/delete', [LayerContentController::class, 'destroy'])->name('delete.quiz.content');
@@ -192,3 +194,5 @@ Route::post('subscribe', [\App\Http\Controllers\SubscriptionController::class, '
 Route::post('subscription/cancel/{plan_id}', [\App\Http\Controllers\SubscriptionController::class, 'cancelSubscription'])->name('cancel.subscription');
 Route::post('subscribe-course', [UserController::class, 'subscribeForCourse'])->name('subscribe.course');
 Route::get('subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribeUserGet']);
+
+Route::get('math-formula-for-quiz', [AdminController::class, 'math'])->name('math.formula.for.quiz');
