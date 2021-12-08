@@ -187,11 +187,20 @@ class PageController extends Controller
 
     public function lesson($video)
     {
-        $video = Video::findOrFail($video)->load('layer', 'notes', 'layer.questions', 'responses', 'responses');
-        $next_link = Video::where('id', '>', $video->id)->first();
-        $prev_link = Video::where('id', '<', $video->id)->first();
-        $next_videos = Video::where('id', '>', $video->id)->with('tags')->take(5)->get();
         $user = Auth::user()->load('layer_quiz_results');
+        $enrolled_courses = $user->enrollments->pluck('course.id');
+        $video = Video::whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->findOrFail($video)->load('layer', 'notes', 'layer.questions', 'responses', 'responses');
+        $next_link = Video::whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->where('id', '>', $video->id)->first();
+        $prev_link = Video::whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->where('id', '<', $video->id)->first();
+        $next_videos = Video::whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->where('id', '>', $video->id)->with('tags')->take(5)->get();
         if (!$user->subscribed($video->layer->course->slug))
             return redirect()->route('dashboard')->with('message', 'You are not subscribed to this course');
         $notes = Note::where('video_id', $video)->where('user_id', auth()->user()->id)->first();
