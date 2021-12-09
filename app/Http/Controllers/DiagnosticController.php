@@ -344,28 +344,36 @@ class DiagnosticController extends Controller
             if (count($row) != 7) {
                 return ['error' => 'Wrong format'];
             }
-            $question = new Question();
-            $question->title = $row[0];
-            $learning_style->questions()->save($question);
-            array_push($questions, $question->title);
-            Answer::create([
-                'title' => $row[1],
-                'is_correct' => 0,
-                'explanation' => $row[2],
-                'question_id' => $question->id,
-            ]);
-            Answer::create([
-                'title' => $row[3],
-                'is_correct' => 0,
-                'explanation' => $row[4],
-                'question_id' => $question->id,
-            ]);
-            Answer::create([
-                'title' => $row[5],
-                'is_correct' => 0,
-                'explanation' => $row[6],
-                'question_id' => $question->id,
-            ]);
+            if ($row[0] != '' && $row[0] != ' ' && $row[0] != null) {
+                $question = new Question();
+                $question->title = $row[0];
+                $learning_style->questions()->save($question);
+                array_push($questions, $question->title);
+                if ($row[1] != '' && $row[1] != ' ' && $row[1] != null) {
+                    Answer::create([
+                        'title' => $row[1],
+                        'is_correct' => 0,
+                        'explanation' => $row[2],
+                        'question_id' => $question->id,
+                    ]);
+                }
+                if ($row[3] != '' && $row[3] != ' ' && $row[3] != null) {
+                    Answer::create([
+                        'title' => $row[3],
+                        'is_correct' => 0,
+                        'explanation' => $row[4],
+                        'question_id' => $question->id,
+                    ]);
+                }
+                if ($row[5] != '' && $row[5] != ' ' && $row[5] != null) {
+                    Answer::create([
+                        'title' => $row[5],
+                        'is_correct' => 0,
+                        'explanation' => $row[6],
+                        'question_id' => $question->id,
+                    ]);
+                }
+            }
         }
         return ['message' => 'Saved Successfully', 'questions' => $questions];
     }
@@ -416,21 +424,27 @@ class DiagnosticController extends Controller
             if (count($row) != 6) {
                 return ['error' => 'Wrong format'];
             }
-            $question = new Question();
-            $question->title = $row[0];
-            $question->explanation = $row[1];
-            $tutor_match->questions()->save($question);
-            array_push($questions, '[ ' . $question->explanation . '] / ' . $question->title);
-            Answer::create([
-                'title' => $row[2],
-                'is_correct' => $row[3],
-                'question_id' => $question->id,
-            ]);
-            Answer::create([
-                'title' => $row[4],
-                'is_correct' => $row[5],
-                'question_id' => $question->id,
-            ]);
+            if ($row[0] != '' && $row[0] != ' ' && $row[0] != null) {
+                $question = new Question();
+                $question->title = $row[0];
+                $question->explanation = $row[1];
+                $tutor_match->questions()->save($question);
+                array_push($questions, '[ ' . $question->explanation . '] / ' . $question->title);
+                if ($row[2] != '' && $row[2] != ' ' && $row[2] != null) {
+                    Answer::create([
+                        'title' => $row[2],
+                        'is_correct' => $row[3],
+                        'question_id' => $question->id,
+                    ]);
+                }
+                if ($row[4] != '' && $row[4] != ' ' && $row[4] != null) {
+                    Answer::create([
+                        'title' => $row[4],
+                        'is_correct' => $row[5],
+                        'question_id' => $question->id,
+                    ]);
+                }
+            }
         }
         return ['message' => 'Saved Successfully', 'questions' => $questions];
     }

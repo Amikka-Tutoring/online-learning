@@ -41,45 +41,6 @@ class UserSeeder extends Seeder
             'profile_photo_path' => 'https://ui-avatars.com/api/?name=John+Doe&color=7F9CF5&background=EBF4FF',
             'role_id' => $role3->id
         ]);
-        $user1 = User::create([
-            'name' => 'Student',
-            'email' => 'student@email.com',
-            'password' => bcrypt('password'),
-            'profile_photo_path' => 'https://ui-avatars.com/api/?name=Student&color=7F9CF5&background=EBF4FF',
-            'role_id' => $role1->id,
-        ]);
 
-//        $profile = UserProfile::create([
-//            'desire_score' => '60',
-//            'exam_date' => '2021-12-12',
-//            'reminder_phone' => '(130) 123-4567',
-//            'reminder_email' => 'zohopuli@mailinator.com',
-//            'tutor_match' => 'ESTJ',
-//            'math_score' => '70',
-//            'grammar_score' => '80',
-//            'reading_score' => '60',
-//            'user_id' => $user->id
-//        ]);
-//
-//        $profile->learning_style = 2;
-//        $profile->save();
-//
-//        UserLessonDate::create([
-//            'day' => 'Monday',
-//            'time' => '15:48',
-//            'user_id' => $user->id
-//        ]);
-//        UserLessonDate::create([
-//            'day' => 'Tuesday',
-//            'time' => '15:48',
-//            'user_id' => $user->id
-//        ]);
-//
-//        $user->enrollments()->create([
-//            'course_id' => 1
-//        ]);
-//        $user->enrollments()->create([
-//            'course_id' => 2
-//        ]);
     }
 }
