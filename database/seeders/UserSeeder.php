@@ -36,10 +36,17 @@ class UserSeeder extends Seeder
         $role3->save();
         $user = User::create([
             'name' => 'John Doe',
-            'email' => 'email@company.com',
+            'email' => 'admin@email.com',
             'password' => bcrypt('password'),
             'profile_photo_path' => 'https://ui-avatars.com/api/?name=John+Doe&color=7F9CF5&background=EBF4FF',
             'role_id' => $role3->id
+        ]);
+        $user1 = User::create([
+            'name' => 'Student',
+            'email' => 'student@email.com',
+            'password' => bcrypt('password'),
+            'profile_photo_path' => 'https://ui-avatars.com/api/?name=Student&color=7F9CF5&background=EBF4FF',
+            'role_id' => $role1->id,
         ]);
 
 //        $profile = UserProfile::create([
