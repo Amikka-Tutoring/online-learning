@@ -217,8 +217,6 @@ export default {
                 this.toast.error('You need to select the answer')
                 return
             }
-            console.log('Answers')
-            console.log(this.form.answers)
             this.form.currentstep++;
             this.form.errors = [];
             this.form.progress_value = ((this.form.currentstep - 1) * 100) / this.layer.questions.length;

@@ -238,7 +238,6 @@ export default {
                 return
             }
             form.currentstep++;
-            console.log(form.currentstep)
             form.errors = [];
             form.progress_value = ((form.currentstep - 1) * 100) / props.diagnostic.questions.length;
             form.answer_list.push(form.answers);
@@ -257,7 +256,6 @@ export default {
             }
             form.answer_list.push(form.answers);
             toast.success('Submitted')
-            console.log(form)
             Inertia.post(route('quiz.result'), form);
         }
 
@@ -290,12 +288,7 @@ export default {
     },
 
     mounted(props) {
-        $('.ML__base').css('display', 'inline')
-        $('.ML__mathlive').css('width', 'auto')
-        $('.ML__base').attr('style', 'display:inline !important')
-        $('.ML__mathlive').attr('style', 'width:auto')
-        $('.ML__mathlive').attr('style', 'white-space:normal')
-        $("math-field").contents().find(".ML__base").attr("style", "display:inline !important; width:auto !important")
+
 
     }
 }

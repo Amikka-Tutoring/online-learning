@@ -114,4 +114,11 @@ export default {
     background-color: #ffd900 !important;
 }
 
+@media (max-width: 767.98px) {
+    #calWrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+}
 </style>
