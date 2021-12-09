@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://js.stripe.com/v3/"></script>
     {{--    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>--}}
-    <script defer src="//unpkg.com/mathlive/dist/mathlive.min.js"></script>
+    <script defer src="{{asset('js/mathlive.js')}}"></script>
+
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">

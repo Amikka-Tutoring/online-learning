@@ -90,7 +90,7 @@
                                 <p class="quiz-question-box" v-if="hasFormula(question.title)">
                                     <math-field id="formula" letterShapeStyle="upright"
                                                 smart-mode
-                                                style="font-size:18px;padding: 3px;border: none;display: inline-block; font-family: Inter"
+                                                style="font-size:18px;padding: 3px;border: none;font-family: Inter"
                                                 readOnly="true">
                                         {{ removeText(question.title) }}
                                     </math-field>
@@ -125,7 +125,7 @@
                                                         <span v-if="hasFormula(answer.title)">
                                                             <math-field letterShapeStyle="upright" readOnly="true"
                                                                         smart-mode
-                                                                        style="font-size:18px;padding: 0px;border: none;display: inline-block; font-family: Inter;">
+                                                                        style="font-size:18px;padding: 0px;border: none; font-family: Inter;">
                                                                 {{ removeText(answer.title) }}
                                                             </math-field>
                                                         </span>
@@ -200,7 +200,7 @@ export default {
         Question,
         Calculator,
         ReadingDiagnostic,
-        GrammarDiagnostic
+        GrammarDiagnostic,
     },
     methods: {
         showFrame: function () {
@@ -290,7 +290,13 @@ export default {
     },
 
     mounted(props) {
-        console.log(this.diagnostic);
+        $('.ML__base').css('display', 'inline')
+        $('.ML__mathlive').css('width', 'auto')
+        $('.ML__base').attr('style', 'display:inline !important')
+        $('.ML__mathlive').attr('style', 'width:auto')
+        $('.ML__mathlive').attr('style', 'white-space:normal')
+        $("math-field").contents().find(".ML__base").attr("style", "display:inline !important; width:auto !important")
+
     }
 }
 </script>
@@ -299,6 +305,16 @@ iframe {
     width: 100%;
     min-height: 400px;
     height: 100%;
+}
+
+.ML__base {
+    display: inline !important;
+    width: auto !important;
+}
+
+.ML__mathlive {
+    width: auto !important;
+    white-space: normal !important;
 }
 
 .modal-dialog {
