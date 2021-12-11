@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\LayerScope;
+use App\Scopes\VideoScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +24,7 @@ class StudentLayerQuestion extends Model
 
     public function video()
     {
-        return $this->belongsTo(Video::class, 'video_id');
+        return $this->belongsTo(Video::class, 'video_id')->withoutGlobalScope(VideoScope::class);
     }
 
     public function response()

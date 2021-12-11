@@ -6,6 +6,7 @@ use App\Models\StudentLayerQuestion;
 use App\Models\Video;
 use App\Models\VideoResponse;
 use App\Notifications\QuestionResponded;
+use App\Scopes\VideoScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -16,7 +17,9 @@ class TutorController extends Controller
     public function studentQuestions()
     {
         if (Auth::user()->is_tutor() || Auth::user()->is_admin()) {
-            $questions = StudentLayerQuestion::with('user', 'video', 'video.layer', 'video.responses', 'response', 'response.user')->get();
+            $questions = StudentLayerQuestion::with(['user', 'video' => function ($query) {
+                $query->withoutGlobalScopes([VideoScope::class]);
+            }, 'video.layer', 'video.responses', 'response', 'response.user'])->get();
             return Inertia::render('Tutor/StudentQuestions', ['questions' => $questions]);
         } else {
             abort(403);

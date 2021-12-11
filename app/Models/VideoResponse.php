@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\VideoScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +26,7 @@ class VideoResponse extends Model
 
     public function video()
     {
-        return $this->belongsTo(Video::class);
+        return $this->belongsTo(Video::class)->withoutGlobalScope(VideoScope::class);
     }
 
     public function question()
