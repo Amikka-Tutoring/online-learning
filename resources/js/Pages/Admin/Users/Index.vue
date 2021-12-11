@@ -102,7 +102,7 @@ export default {
             axios.post(route('set.tutor', user)).then(response => {
                 this.toast.success(response.data.message)
             }).catch(error => {
-                this.toast.error('Something went wrong!')
+                this.toast.error('Something went wrong! Please try again')
                 console.log(error.response)
             })
         },
