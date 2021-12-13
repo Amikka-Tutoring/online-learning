@@ -175,7 +175,7 @@
                             "
                                 class="blue-button w-100"
                                 style="font-size: 24px"
-                                @click.prevent="finish()">
+                                @click.prevent="finish()" :disabled="submitted">
                                 Finish
                             </button>
                         </div>
@@ -233,17 +233,18 @@ export default {
                 return
             }
             this.form.answer_list.push(this.form.answers);
+            this.submitted = true
             axios.post(route('lesson.quiz.store', this.form.layer_id), this.form.answer_list[0])
                 .then(response => {
                     this.toast.success(response.data.message);
                     this.toast.success(response.data.score);
-                    // setTimeout(function () {
-                    window.location.href = "/";
-                    // }, 2000);
+                    window.location.href = this.next_video
                 })
                 .catch(error => {
                     Object.values(error.response.data.errors).flat().forEach(element => this.toast.error(element))
-                });
+                }).finally(() => {
+                this.submitted = false
+            });
         },
         validate: function () {
             if (this.form.answers[this.form.currentstep]) {
@@ -269,9 +270,7 @@ export default {
             return text.replace('&&&', '')
         }
     },
-    props: {
-        layer: Object,
-    },
+    props: ['layer', 'next_video'],
     data() {
         return {
             currenstep: 1,
@@ -284,11 +283,14 @@ export default {
                 layer_id: this.layer.id,
                 layer: this.layer,
                 explanations: []
-            }
+            },
+            next_video: this.next_video,
+            submitted: false
         }
     },
     mounted() {
         const mf = document.querySelector('#formula');
+        console.log(this.next_video)
         // mf.replace('&&&', '');
     }
 }

@@ -50,23 +50,27 @@
                                      v-on:click="written_notes = false; question_box = true; audio=false; this.toast.info('Ask our tutors a question')">
                                     <i
                                         class="fas fa-question"></i></div>
+                                <p>Ask</p>
                             </div>
                             <div class="col-3">
                                 <div class="notes-circle rounded-circle" title="Write notes"
                                      v-on:click="written_notes = true; question_box = false; audio = false; this.toast.info('Write notes to review later')">
                                     <i class="fas fa-pen"></i></div>
+                                <p>Write</p>
                             </div>
                             <div class="col-3">
                                 <div v-on:click="flag(video)" class="notes-circle rounded-circle"
                                      title="Save for later"><i
                                     class="fas fa-flag"></i>
                                 </div>
+                                <p>Save</p>
                             </div>
                             <div class="col-3">
                                 <div class="notes-circle rounded-circle" title="Voice notes"
                                      v-on:click="audio = true; written_notes = false; question_box = false;this.toast.info('Record notes to review later')">
                                     <i
                                         class="fas fa-microphone-alt"></i></div>
+                                <p>Speak</p>
                             </div>
                         </div>
                         <collapse-transition>
@@ -250,5 +254,18 @@ export default {
 
 .tools {
     padding-bottom: 5px;
+}
+
+.tools .row .col-3 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tools .row .col-3 p {
+    color: rgba(14, 111, 255, 1);
+    font-size: 16px;
+    margin-top: 10px;
 }
 </style>

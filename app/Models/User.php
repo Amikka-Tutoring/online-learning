@@ -219,5 +219,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Video::class, 'user_viewed_videos')->where('user_id', auth()->user()->id);
     }
 
+    public function updateTag()
+    {
+        $total_score = $this->profile->total_score;
+        if ($total_score <= 600) {
+            $this->setEasy();
+        } else if ($total_score <= 1200) {
+            $this->setMedium();
+        } else if ($total_score <= 1800) {
+            $this->setHard();
+        } else if ($total_score <= 2400) {
+            $this->setTag('Expert');
+        }
+    }
 
 }

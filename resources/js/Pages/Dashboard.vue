@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left: 0;">
                                         <div class="blue-text">{{
-                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                             <div class="input-cards">
                                 <img class="w-100" :src="'images/course-img.png'">
                                 <a :href="route('course',user_course.course.slug)"><h4>{{
-                                        user_course.course.name
+                                    user_course.course.name
                                     }}</h4></a>
                                 <div class="row justify-content-center align-items-center"
                                      style="margin-top: 60px; margin-bottom: 10px">
@@ -256,10 +256,10 @@
                                     <div class="col-3">
                                         <div class="blue-text">
                                             {{
-                                                parseFloat(user_course.course.quizzes_attempted /
-                                                    (user_course.course.quizzes_count === 0 ? 1 :
-                                                        user_course.course.quizzes_count) *
-                                                    100).toFixed(0)
+                                            parseFloat(user_course.course.quizzes_attempted /
+                                            (user_course.course.quizzes_count === 0 ? 1 :
+                                            user_course.course.quizzes_count) *
+                                            100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>
@@ -357,9 +357,12 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="(note,itemObjKey) in notesByCourse">
-                                        <td>{{ itemObjKey }}</td>
+                                        <td><span v-for="(n,index) in note"> <a v-if="index==0"
+                                                                                :href="route('notes-show',n)">{{ itemObjKey }}</a></span>
+                                        </td>
                                         <td><span v-for="(n,index) in note"><span
-                                            v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
+                                            v-if="index !== 0">, </span>  <a
+                                            :href="route('notes-show',n)">{{ n.video.layer.course.name }}</a></span>
                                         </td>
                                         <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
                                         <a :href="route('notes-show',n)">{{
@@ -415,7 +418,7 @@
                                     </div>
                                     <div class="col-3" style="padding-left:0">
                                         <div class="blue-text">{{
-                                                parseFloat(profile.math_score / 800 * 100).toFixed(0)
+                                            parseFloat(profile.math_score / 800 * 100).toFixed(0)
                                             }} %
                                         </div>
                                     </div>

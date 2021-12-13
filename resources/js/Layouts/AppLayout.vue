@@ -28,9 +28,9 @@
                         <div v-if="notifications.length" class="row mx-0" v-for="notification in notifications"
                              v-on:click="readNotification(notification)">
                             <div class="col-10">
-                                <!--                                <a :href="notification.data.details.link"-->
-                                <!--                                   class="dropdown-item"-->
-                                <!--                                   href="#">{{ notification.data.details.title }}</a>-->
+                                <a :href="notification.data.details.link"
+                                   class="dropdown-item"
+                                   href="#">{{ notification.data.details.title }}</a>
                             </div>
                             <div class="col-2">
                                 <button style="background: none; border: 0">X

@@ -214,10 +214,15 @@ class PageController extends Controller
     public function lessonQuiz($id)
     {
         $user = Auth::user();
+        $enrolled_courses = $user->enrollments->pluck('course.id');
+        $next_video = Video::whereHas('layer', function ($q) use ($enrolled_courses) {
+            $q->whereIn('course_id', $enrolled_courses);
+        })->where('id', '>', request()->get('video'))->first();
+
         if (count($user->layer_quiz_results->where('layer_id', $id)))
             return back();
         $layer = Layer::withoutGlobalScope(LayerScope::class)->with('questions', 'questions.answers', 'content')->find($id);
-        return Inertia::render('Quiz', ['layer' => $layer]);
+        return Inertia::render('Quiz', ['layer' => $layer, 'next_video' => $next_video ? route('lesson', $next_video) : route('recommended')]);
     }
 
     public function recommended()
@@ -236,12 +241,10 @@ class PageController extends Controller
         }])->get()->pluck('course');
 
         $enrolled_courses = $user->enrollments->pluck('course.id');
-
-
         $watched = auth()->user()->viewed_videos->pluck('id');
         $recommended_courses = Video::whereNotIn('id', $watched)->whereNotIn('layer_id', $completed_layers)->whereHas('layer', function ($q) use ($enrolled_courses) {
             $q->whereIn('course_id', $enrolled_courses);
-        })->with('tags')->latest()->take(10)->get();
+        })->with('tags')->orderBy('id', 'asc')->take(10)->get();
         return Inertia::render('Recommended', ['courses' => $courses, 'videos' => $recommended_courses]);
     }
 
@@ -365,6 +368,8 @@ class PageController extends Controller
 
     public function test()
     {
+//        $completed = auth()->user()->layer_quiz_results()->pluck('layer_id');
+//        return Layer::whereHas('questions')->whereNotIn('id', $completed)->get();
 //        return auth()->user()->subscribedToPrice(env('STRIPE_BASIC'), 'basic');
 
 //        foreach (DiagnosticQuiz::all() as $layer) {
@@ -405,7 +410,7 @@ class PageController extends Controller
 //
 //        $notes = $user->notes()->latest()->with(['lesson', 'lesson.course', 'lesson.tags'])->whereHas('lesson', function ($query) {
 //            $query->whereHas('course', function ($q) {
-//                $q->where('name', 'like', ' % ' . '' . ' % ');
+//                $q->where('name', 'like', ' % '.''.' % ');
 //            });
 //        })->paginate(12)->groupBy(function ($val) {
 //            return Carbon::parse($val->created_at)->format('m / d');

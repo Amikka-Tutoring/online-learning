@@ -29,7 +29,7 @@
 
             <div v-if="video.layer.questions.length" class="video-quiz-btn row justify-content-center"
                  style="margin-bottom: 100px">
-                <button class="blue-button" @click="quiz(video.layer.id)" v-if="user_attempt === 0">Quiz
+                <button class="blue-button" @click="quiz(video.layer.id,video)" v-if="user_attempt === 0">Quiz
                 </button>
                 <button class="blue-button" v-if="user_attempt !== 0"
                         disabled="">Quiz Completed <i class="ml-2 bi bi-check-circle-fill"
@@ -68,6 +68,7 @@
                                 ><i
                                     class="fas fa-microphone-alt"></i>
                                 </div>
+                                <span>Speak</span>
                             </div>
                         </div>
                         <div class="col-3">
@@ -75,6 +76,7 @@
                                 <div v-on:click="flag(video)" class="notes-circle rounded-circle"
                                      title="Save for later"><i
                                     class="fas fa-flag"></i></div>
+                                <span>Save</span>
                             </div>
                         </div>
                         <div class="col-3">
@@ -82,14 +84,18 @@
                                 <div class="notes-circle rounded-circle" title="Write Notes"
                                      v-on:click="openNotes"><i class="fas fa-pen"></i>
                                 </div>
+                                <span>Write</span>
                             </div>
+
                         </div>
                         <div class="col-3">
                             <div class="row border-right-0">
                                 <div class="notes-circle rounded-circle" title="Ask a Question"
                                      v-on:click="openQuestions">
                                     <i class="fas fa-question"></i></div>
+                                <span>Ask</span>
                             </div>
+
                         </div>
                     </div>
                     <div class="notes-box row w-75 notes-box-content">
@@ -224,8 +230,10 @@ export default {
             let embeddedUrl = "https://player.vimeo.com/video/" + str + "?h=af48f9e87f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479";
             return embeddedUrl;
         },
-        quiz: function (lesson_id) {
-            Inertia.get(route('lesson.quiz', lesson_id))
+        quiz: function (lesson_id, video) {
+            Inertia.get(route('lesson.quiz', lesson_id), {
+                video: video.id
+            })
         },
         flag: function (video) {
             axios.post(route('flag.video', video)).then(response => {
@@ -361,5 +369,18 @@ export default {
     }
 }
 </script>
+<style scoped>
+.notes-box.row .col-3 .row {
+    flex-direction: column;
+    align-content: center
+}
+
+.notes-box.row .col-3 .row span {
+    margin-top: 10px;
+    color: rgba(14, 111, 255, 1);
+    font-size: 16px;
+    text-align: center;
+}
+</style>
 
 

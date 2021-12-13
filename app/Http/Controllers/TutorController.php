@@ -44,12 +44,15 @@ class TutorController extends Controller
                 'user_id' => Auth::id()
             ]);
             $details = [
-                'title' => 'Question Responded',
+                'title' => 'Your tutor has responded to your question',
                 'question' => $response->question->question_text,
                 'link' => route('video.response', ['video' => $response->video, 'response' => $response])
             ];
             Notification::send($response->question->user, new QuestionResponded($details));
-            return ['message' => 'Success'];
+            $questions = StudentLayerQuestion::with(['user', 'video' => function ($query) {
+                $query->withoutGlobalScopes([VideoScope::class]);
+            }, 'video.layer', 'video.responses', 'response', 'response.user'])->get();
+            return ['message' => 'Success', 'questions' => $questions];
         } else {
             abort(403);
         }

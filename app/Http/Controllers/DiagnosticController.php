@@ -157,10 +157,10 @@ class DiagnosticController extends Controller
                     $score = 800;
                     break;
             }
-
             $user->profile->math_score = $score;
             $user->profile->total_score += $score;
             $user->profile->save();
+            $user->updateTag();
             return redirect()->route('main');
         } else if ($request->all()['diagnostic_name'] == 'grammar') {
             $points = 0;
@@ -213,6 +213,7 @@ class DiagnosticController extends Controller
             $user->profile->grammar_score = $score;
             $user->profile->total_score += $score;
             $user->profile->save();
+            $user->updateTag();
             return redirect()->route('main');
         } else if ($request->all()['diagnostic_name'] == 'reading') {
             $points = 0;
@@ -265,6 +266,7 @@ class DiagnosticController extends Controller
             $user->profile->reading_score = $score;
             $user->profile->total_score += $score;
             $user->profile->save();
+            $user->updateTag();
             return redirect()->route('main');
         }
     }

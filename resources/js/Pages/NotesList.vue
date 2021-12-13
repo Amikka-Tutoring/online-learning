@@ -36,16 +36,20 @@
                         </thead>
                         <tbody>
                         <tr v-for="(note,itemObjKey) in s_notes">
-                            <td>{{ itemObjKey }}</td>
+                            <td><span v-for="(n,index) in note"> <a v-if="index==0"
+                                                                    :href="route('notes-show',n)">{{
+                                    itemObjKey
+                                }}</a></span>
+                            </td>
                             <td><span v-for="(n,index) in note"><span
-                                v-if="index !== 0">, </span>{{ n.video.layer.course.name }}</span>
+                                v-if="index !== 0">, </span>  <a
+                                :href="route('notes-show',n)">{{ n.video.layer.course.name }}</a></span>
                             </td>
                             <td><span v-for="(n,index) in note"><span v-if="index !== 0">, </span>
-                                <a :href="route('notes-show',n)">{{
-                                        n.video.layer.name
-                                    }}</a></span>
+                                        <a :href="route('notes-show',n)">{{
+                                                n.video.layer.name
+                                            }}</a></span>
                             </td>
-                            <!--                            <td><a :href="route('notes-show',note)">{{ note.video.title }}</a></td>-->
                         </tr>
                         <p v-if="!Object.keys(this.s_notes).length">No rows found</p>
                         </tbody>
