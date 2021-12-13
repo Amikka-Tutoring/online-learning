@@ -105,7 +105,11 @@
                                 </div>
                             </div>
                         </collapse-transition>
-
+                        <div class="row">
+                            <div class="tokens w-100">
+                                <tokens class="justify-content-center" :tokens="tokens"/>
+                            </div>
+                        </div>
                     </div>
                 </li>
             </collapse-transition>
@@ -116,10 +120,12 @@
 <script>
 
 import CollapseTransition from '@ivanv/vue-collapse-transition/src'
+import Tokens from "@/components/Tokens";
 
 export default {
     components: {
         CollapseTransition,
+        Tokens
     },
     methods: {
         submit: function () {
@@ -207,7 +213,7 @@ export default {
                 });
         }
     },
-    props: ['form', 'question_form', 'videos', 'video'],
+    props: ['form', 'question_form', 'videos', 'video', 'tokens'],
 
     data() {
         return {
@@ -227,3 +233,22 @@ export default {
     }
 }
 </script>
+<style>
+.tools .tokens img {
+    width: 40px;
+}
+
+.tools .tokens h1 {
+    font-size: 17px !important;
+    margin-left: 10px
+}
+
+.tools .tokens .row {
+    margin-bottom: 0 !important;
+    margin-top: 20px;
+}
+
+.tools {
+    padding-bottom: 5px;
+}
+</style>

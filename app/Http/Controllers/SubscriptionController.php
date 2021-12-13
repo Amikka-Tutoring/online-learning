@@ -65,6 +65,15 @@ class SubscriptionController extends Controller
         return ['message' => 'Canceled! Your subscription will end at: ' . $subscription->ends_at->format('Y-m-d')];
     }
 
+    public function cancelPlan($plan)
+    {
+        if (auth()->user()->subscription($plan)->ends_at == null) {
+            auth()->user()->subscription($plan)->cancel();
+            return ['message' => 'Your subscription is canceled'];
+        }
+        return ['message' => 'Your subscription is already canceled'];
+    }
+
     public function subscribeUser(Request $request)
     {
         $user = Auth::user();

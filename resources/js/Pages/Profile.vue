@@ -239,11 +239,21 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="row">
-
-                                    <div class="col-lg-11 col-9 align-items-center">
+                                <div class="row justify-content-between">
+                                    <div class="col-lg-8 col-7 align-items-center">
                                         <h5>Plan ({{ this.plan }})</h5>
                                         <a :href="route('subscribe.plans')"><h6>Tap to Change Plan</h6></a>
+                                    </div>
+                                    <div class="col-lg-4 align-self-center col-5 align-items-center">
+                                        <p class="text-right">
+                                            <span class="blue-text"
+                                                  v-if="subscription_ends_at">Ends at: {{
+                                                    moment(subscription_ends_at).format('MMMM d, YYYY')
+                                                }}</span>
+                                            <button v-else class="blue-text bg-transparent border-0"
+                                                    v-on:click="cancelSubscription(this.plan)">Cancel
+                                            </button>
+                                        </p>
                                     </div>
                                 </div>
                             </li>
@@ -367,6 +377,16 @@ export default {
         logout() {
             this.$inertia.post(route("logout"));
         },
+        cancelSubscription: function (plan) {
+            if (!confirm('Are you sure want to cancel your subscription?')) return;
+            axios.post(route('cancel.plan', plan)).then(response => {
+                this.toast.success(response.data.message)
+                console.log(response.data)
+            }).catch(error => {
+                console.log(error.response)
+                this.toast.error("Something went wrong")
+            })
+        },
         onChange(event, props) {
             axios.post(route('change.tag'), event.target.value)
                 .then(response => {
@@ -438,7 +458,7 @@ export default {
             });
         }
     },
-    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses', 'plan', 'tokens'],
+    props: ['user', 'tags', 'user_tag', 'user_data', 'available_courses', 'plan', 'tokens', 'subscription_ends_at'],
     data() {
         return {
             avatar: this.user.profile_photo_path,

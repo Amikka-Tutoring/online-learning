@@ -309,10 +309,8 @@
                     <div v-if="notes" class="question-box text-left mt-5">
                         <div class="row">
                             <div class="col-lg-11 col-10">
-                                This is where all of your voice and written notes will be
-                                saved for all of the
-                                courses
-                                that you are taking.
+                                All of your notes for a specific day will be saved on the same page. You can review old
+                                notes or add new ones by clicking a date.
                             </div>
                             <div class="col-lg-1 col-2 d-flex align-items-center">
                                 <i v-on:click="notes = disableNotification('notes')"

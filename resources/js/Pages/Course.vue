@@ -1,6 +1,7 @@
 <template>
     <app-layout>
-        <tools-menu :form="this.form" :question_form="this.questionForm" :videos="next_videos" :video="video"/>
+        <tools-menu :form="this.form" :question_form="this.questionForm" :videos="next_videos" :video="video"
+                    :tokens="tokens"/>
 
         <div class="container" style="margin-top: -50px">
 

@@ -151,9 +151,10 @@ class PageController extends Controller
         $enrollments = $user->enrollments->pluck('stripe_price');
         $available_courses = Course::whereNotIn('plan_id', $enrollments)->get();
         $plan = auth()->user()->subscriptions()->active()->whereIn('name', ['basic', 'support', 'support+'])->first()->name;
+        $subscription_ends_at = auth()->user()->subscription($plan)->ends_at;
         $tokens = $this->getTokens();
 //        $practice_exams = $user->practice_exam_dates->pluck('date_time'));
-        return Inertia::render('Profile', ['tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses, 'plan' => $plan, 'tokens' => $tokens]);
+        return Inertia::render('Profile', ['subscription_ends_at' => $subscription_ends_at, 'tags' => $tags, 'user_tag' => $userTag, 'user_data' => $user, 'available_courses' => $available_courses, 'plan' => $plan, 'tokens' => $tokens]);
     }
 
     public function mathDiagnostic()

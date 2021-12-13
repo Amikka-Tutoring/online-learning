@@ -144,7 +144,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center my-4">
+                    <div class="row justify-content-center my-3">
                         <div class="col-md-2 col-5">
                             <button
                                 v-if="form.currentstep > 1"
